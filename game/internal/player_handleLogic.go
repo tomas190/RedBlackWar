@@ -2,7 +2,7 @@ package internal
 
 import (
 	"github.com/name5566/leaf/log"
-	pb_msg "RedBlack-War/msg/Protocal"
+	pb_msg "server/msg/Protocal"
 )
 
 //PlayerMoneyHandler 玩家进入房间金额处理

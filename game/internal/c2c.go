@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"reflect"
-	"RedBlack-War/conf"
+	"server/conf"
 	"strconv"
 	"strings"
 	"time"
@@ -426,7 +426,7 @@ func (c4c *Conn4Center) ServerLoginCenter() {
 //UserLoginCenter 用户登录
 func (c4c *Conn4Center) UserLoginCenter(userId string, password string, callback func(data *UserInfo)) {
 	if !c4c.LoginStat {
-		log.Debug("<-------- RedBlack-War not ready~!!! -------->")
+		log.Debug("<-------- server not ready~!!! -------->")
 		return
 	}
 

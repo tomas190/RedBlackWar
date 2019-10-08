@@ -5,7 +5,7 @@ import (
 	"github.com/name5566/leaf/log"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"RedBlack-War/conf"
+	"server/conf"
 	"time"
 )
 

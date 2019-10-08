@@ -2,7 +2,7 @@ package internal
 
 import (
 	"github.com/name5566/leaf/module"
-	"RedBlack-War/base"
+	"server/base"
 )
 
 var (

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/name5566/leaf/log"
 	"math/rand"
-	pb_msg "RedBlack-War/msg/Protocal"
+	pb_msg "server/msg/Protocal"
 	"time"
 )
 

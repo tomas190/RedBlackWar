@@ -9,7 +9,7 @@ import (
 	"net"
 	"net/url"
 	"reflect"
-	pb_msg "RedBlack-War/msg/Protocal"
+	pb_msg "server/msg/Protocal"
 )
 
 //10.63.60.96

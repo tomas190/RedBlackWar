@@ -2,7 +2,7 @@ package internal
 
 import (
 	"github.com/name5566/leaf/log"
-	pb_msg "RedBlack-War/msg/Protocal"
+	pb_msg "server/msg/Protocal"
 	"strconv"
 	"time"
 )

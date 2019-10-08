@@ -3,9 +3,9 @@ package main
 import (
 	"github.com/name5566/leaf"
 	lconf "github.com/name5566/leaf/conf"
-	"RedBlack-War/conf"
-	"RedBlack-War/game"
-	"RedBlack-War/gate"
+	"server/conf"
+	"server/game"
+	"server/gate"
 )
 
 func main() {
