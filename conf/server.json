@@ -1,0 +1,18 @@
+{
+  "LogLevel": "debug",
+  "LogPath": "",
+  "WSAddr": "0.0.0.0:1214",
+  "MaxConnNum": 20000,
+
+  "MongoDBAddr": "172.16.100.5:27017",
+  "MongoDBAuth": "",
+  "MongoDBUser": "rbdz",
+  "MongoDBPwd": "123456",
+
+  "TokenServer": "http://172.16.100.2:9502/Token/getToken",
+  "CenterServer": "161.117.178.174",
+  "CenterServerPort": "12345",
+  "DevKey": "new_game_20",
+  "DevName": "新游戏开发",
+  "GameID": "5b1f3a3cb76a591e7f251719"
+}
