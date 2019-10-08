@@ -87,8 +87,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="918">
-                <caret line="54" selection-start-line="54" selection-end-line="54" />
+              <first_editor relative-caret-position="1309">
+                <caret line="77" selection-start-line="77" selection-end-line="77" />
               </first_editor>
               <second_editor />
             </state>
@@ -460,8 +460,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.5009009" side_tool="true" weight="0.4252101" />
       <window_info id="Favorites" order="1" side_tool="true" />
@@ -905,8 +904,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="918">
-            <caret line="54" selection-start-line="54" selection-end-line="54" />
+          <first_editor relative-caret-position="1309">
+            <caret line="77" selection-start-line="77" selection-end-line="77" />
           </first_editor>
           <second_editor />
         </state>
