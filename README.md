@@ -1,10 +1,10 @@
 
 ### **一、部署文件**
 ##### 1、克隆代码到本地
-git clone http://git.0717996.com/Tomas/server.git
+git clone http://git.0717996.com/Tomas/RedBlack-War.git
 
-##### 2、进入sever文件夹
-cd server
+##### 2、进入RedBlack-War文件夹
+cd RedBlack-War
 
 ##### 3、编译
 go build -o server ./main.go  `要权限`
