@@ -1,7 +1,7 @@
 package gate
 
 import (
-	"server/gate/internal"
+	"RedBlack-War/gate/internal"
 )
 
 var (

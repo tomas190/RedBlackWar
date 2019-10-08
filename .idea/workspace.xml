@@ -7,7 +7,6 @@
       <change beforePath="$PROJECT_DIR$/../github.com/name5566/leaf" beforeDir="false" afterPath="$PROJECT_DIR$/../github.com/name5566/leaf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../hongheidazhan" beforeDir="false" afterPath="$PROJECT_DIR$/../hongheidazhan" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../old-server" beforeDir="false" afterPath="$PROJECT_DIR$/../old-server" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -87,8 +86,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="1309">
-                <caret line="77" selection-start-line="77" selection-end-line="77" />
+              <first_editor relative-caret-position="221">
+                <caret line="34" column="3" lean-forward="true" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
               </first_editor>
               <second_editor />
             </state>
@@ -191,7 +190,7 @@
   </component>
   <component name="GOROOT" path="C:\Go" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -250,7 +249,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="948" />
     <option name="width" value="981" />
     <option name="height" value="1032" />
@@ -460,7 +459,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.5009009" side_tool="true" weight="0.4252101" />
       <window_info id="Favorites" order="1" side_tool="true" />
@@ -904,8 +904,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="1309">
-            <caret line="77" selection-start-line="77" selection-end-line="77" />
+          <first_editor relative-caret-position="221">
+            <caret line="34" column="3" lean-forward="true" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
           </first_editor>
           <second_editor />
         </state>

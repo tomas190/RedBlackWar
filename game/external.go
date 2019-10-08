@@ -1,7 +1,7 @@
 package game
 
 import (
-	"server/game/internal"
+	"RedBlack-War/game/internal"
 )
 
 var (
