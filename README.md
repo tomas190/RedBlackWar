@@ -33,28 +33,6 @@ cat load.log
 ##### 2、日志文件：`load.log`  `路径为：编译好可执行文件同级`
 ##### 3、服务配置信息：
 ```
-=======
-## **一、部署文件**
-### 1、克隆代码到本地
-git clone http://git.0717996.com/Tomas/RedBlack-War.git
-
-2、进入sever文件夹
-cd RedBlack-War
-mv server ../    将server移动到上层目录
-cd ../server
-
-3、
-
-2、进入
-**二、項目所需套件支持**
-  1、Go语言配置环境   go version go1.13 linux/amd64
-  2、Mongo数据库     MongoDB server version: 4.0.12
-
-**三、配置文件位置及文件名稱**
-  1、文件名称: server/conf/server.json
-  2、日志文件：load.log  路径为：编译好可执行文件同级
-  3、配置信息：
->>>>>>> 552f634aae0ba5a945fc6e0a3708d7c7fa5f803c
 {
   "LogLevel": "debug",
   "LogPath": "",
