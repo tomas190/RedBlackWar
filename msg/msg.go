@@ -3,7 +3,7 @@ package msg
 import (
 	"github.com/name5566/leaf/log"
 	"github.com/name5566/leaf/network/protobuf"
-	"server/msg/Protocal"
+	"RedBlack-War/msg/Protocal"
 )
 
 // 使用默认的 Json 消息处理器 (默认还提供了 protobuf 消息处理器)

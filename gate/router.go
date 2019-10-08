@@ -1,9 +1,9 @@
 package gate
 
 import (
-	"server/game"
-	"server/msg"
-	"server/msg/Protocal"
+	"RedBlack-War/game"
+	"RedBlack-War/msg"
+	"RedBlack-War/msg/Protocal"
 )
 
 func init() {

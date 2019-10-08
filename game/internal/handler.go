@@ -4,7 +4,7 @@ import (
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"reflect"
-	pb_msg "server/msg/Protocal"
+	pb_msg "RedBlack-War/msg/Protocal"
 	"time"
 )
 

@@ -7,52 +7,6 @@
       <change beforePath="$PROJECT_DIR$/../github.com/name5566/leaf" beforeDir="false" afterPath="$PROJECT_DIR$/../github.com/name5566/leaf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../hongheidazhan" beforeDir="false" afterPath="$PROJECT_DIR$/../hongheidazhan" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../old-server" beforeDir="false" afterPath="$PROJECT_DIR$/../old-server" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsonSchemas.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/server.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/skeleton.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/conf.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/json.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/server.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/external.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/Databases.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/Player.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/c2c.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/c2c_config.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/cards.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/cards_arithmetic.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/cards_rbdz.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/cards_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/chanrpc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/gameHall.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/gameHall_config.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/handler.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/module.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/msgData.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/player_config.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/player_handle.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/player_handleLogic.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/robot.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/robot_config.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room_config.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room_handle.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room_handleLogic.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/surplus_pool.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gamedata/reader.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gate/external.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gate/internal/module.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gate/router.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/msg/Protocal/gen_msg_go.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/msg/Protocal/pb_msg.pb.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/msg/Protocal/pb_msg.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/msg/msg.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/websocket.go" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -152,8 +106,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="289">
-                <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
+              <first_editor relative-caret-position="323">
+                <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
               </first_editor>
               <second_editor />
             </state>
@@ -297,7 +251,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="948" />
     <option name="width" value="981" />
     <option name="height" value="1032" />
@@ -482,7 +436,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.5009009" side_tool="true" weight="0.4252101" />
@@ -927,8 +881,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="289">
-            <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
+          <first_editor relative-caret-position="323">
+            <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
           </first_editor>
           <second_editor />
         </state>

@@ -2,9 +2,9 @@ package internal
 
 import (
 	"github.com/name5566/leaf/gate"
-	"server/conf"
-	"server/game"
-	"server/msg"
+	"RedBlack-War/conf"
+	"RedBlack-War/game"
+	"RedBlack-War/msg"
 )
 
 type Module struct {
