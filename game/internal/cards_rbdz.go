@@ -598,7 +598,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		InsertSurplusPool(sur)
 	}
 
-	//广播开牌结果
+	//广播开牌结果 todo
+	res.RedType = pb_msg.CardsType(Leopard)
+	res.BlackType = pb_msg.CardsType(Leopard)
 	r.BroadCastMsg(res)
 
 	//大厅用户添加列表数据
