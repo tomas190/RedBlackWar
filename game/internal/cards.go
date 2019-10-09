@@ -230,7 +230,7 @@ func HexInt(this []uint8) []int32 {
 		log.Debug("牌值类型字符串: %v %T", str, str)
 		log.Debug("牌值类型数据val: %v %T", val, val)
 		log.Debug("牌值类型数据str: %v %T", str, str)
-		a := []uint8(str)
+		a, _ := strconv.ParseUint(str, 10, 8)
 		log.Debug("牌值类型数据uint8: %v %T", a, a)
 
 		switch str {
