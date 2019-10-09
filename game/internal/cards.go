@@ -229,9 +229,6 @@ func HexInt(this []uint8) []int32 {
 		log.Debug("strconv.FormatUint转换:%v", strconv.FormatUint(uint64(val), 10))
 		log.Debug("牌值类型字符串: %v %T", str, str)
 		log.Debug("牌值类型数据val: %v %T", val, val)
-		log.Debug("牌值类型数据str: %v %T", str, str)
-		a, _ := strconv.ParseUint(str, 10, 8)
-		log.Debug("牌值类型数据uint8: %v %T", a, a)
 
 		switch str {
 		case "0x0e":
