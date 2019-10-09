@@ -4,7 +4,9 @@ import (
 	crand "crypto/rand"
 	"encoding/binary"
 	"fmt"
+	"github.com/name5566/leaf/log"
 	"math/rand"
+	"strconv"
 	"strings"
 )
 
@@ -224,6 +226,12 @@ func HexInt(this []uint8) []int32 {
 	hex := make([]int32, 0)
 	for _, val := range this {
 		str := fmt.Sprintf("0x"+"%.2x", val)
+		log.Debug("牌值类型字符串: %v", str)
+		r, _ := strconv.ParseUint(str, 10, 8)
+		log.Debug("牌值类型Uint8: %v", r)
+		sr := strconv.FormatUint(uint64(r),10)
+		log.Debug("牌值类型Uint8: %v", sr)
+
 		switch str {
 		case "0x0e":
 			hex = append(hex, 1)
