@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/name5566/leaf/log"
 	"math/rand"
+	"strconv"
 	"strings"
 )
 
@@ -225,8 +226,12 @@ func HexInt(this []uint8) []int32 {
 	hex := make([]int32, 0)
 	for _, val := range this {
 		str := fmt.Sprintf("0x"+"%.2x", val)
+		log.Debug("strconv.FormatUint转换:%v", strconv.FormatUint(uint64(val), 10))
 		log.Debug("牌值类型字符串: %v %T", str, str)
-		log.Debug("牌值类型数据: %v %T", val, val)
+		log.Debug("牌值类型数据val: %v %T", val, val)
+		log.Debug("牌值类型数据str: %v %T", str, str)
+		a := []uint8(str)
+		log.Debug("牌值类型数据uint8: %v %T", a, a)
 
 		switch str {
 		case "0x0e":
