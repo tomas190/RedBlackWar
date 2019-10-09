@@ -70,8 +70,8 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 
 //获取牌型并比牌
 func (r *Room) RBdzPk(a []byte, b []byte) {
-	a = []byte{14, 46, 62}
-	b = []byte{12, 28, 44}
+	//a = []byte{14, 46, 62}  //A
+	//b = []byte{12, 28, 44}  //Q
 	ha := Hex(a)
 	log.Debug("花牌 数据Red~ : %v", ha)
 	hb := Hex(b)
