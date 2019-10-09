@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"RedBlack-War/conf"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/websocket"
@@ -8,7 +9,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"reflect"
-	"RedBlack-War/conf"
+	"runtime/debug"
 	"strconv"
 	"strings"
 	"time"
@@ -34,6 +35,8 @@ type Conn4Center struct {
 	DevKey    string
 	conn      *websocket.Conn
 
+	closereceivechan chan bool
+	closebreathchan  chan bool
 	//除于登录成功状态
 	LoginStat bool
 
@@ -150,27 +153,63 @@ func (c4c *Conn4Center) CreatConnect() {
 	}
 }
 
+func (c4c *Conn4Center) reConnect() {
+	log.Debug("重连中心服")
+	if c4c.LoginStat {
+		return
+	}
+	c4c.closereceivechan <- true
+	c4c.closebreathchan <- true
+	c4c.CreatConnect()
+	time.AfterFunc(time.Second*5, c4c.reConnect)
+}
+
+func (c4c *Conn4Center) catchError() {
+	if err := recover(); err != nil {
+		log.Debug("Conn4Center err %v", err)
+		log.Debug(string(debug.Stack()))
+	}
+}
+
 //Run 开始运行,监听中心服务器的返回
 func (c4c *Conn4Center) Run() {
 	ticker := time.NewTicker(time.Second * 5)
 	go func() {
 		for { //循环
-			<-ticker.C
-			c4c.onBreath()
+			select {
+			case <-ticker.C:
+				c4c.onBreath()
+				break
+			case <-c4c.closebreathchan:
+				return
+			}
 		}
 	}()
 
 	go func() {
+		defer c4c.catchError()
 		for {
-			typeId, message, err := c4c.conn.ReadMessage()
-			if err != nil {
-				log.Debug("Here is error by ReadMessage~")
-				log.Error(err.Error())
+			select {
+			case <-c4c.closereceivechan:
+				return
+			default:
+				typeId, message, err := c4c.conn.ReadMessage()
+				if err != nil {
+					log.Debug("Here is error by ReadMessage~ %v", err)
+					log.Error(err.Error())
+				}
+				//log.Debug("Receive a message from Center~")
+				//log.Debug("typeId: %v", typeId)
+				//log.Debug("message: %v", string(message))
+				if typeId == -1 {
+					log.Debug("中心服异常消息")
+					c4c.LoginStat = false
+					c4c.reConnect()
+				} else {
+					c4c.onReceive(typeId, message)
+				}
+				break
 			}
-			log.Debug("Receive a message from Center~")
-			log.Debug("typeId: %v", typeId)
-			log.Debug("message: %v", string(message))
-			c4c.onReceive(typeId, message)
 		}
 	}()
 
