@@ -523,6 +523,7 @@ func (r *Room) CompareSettlement() {
 			//清空桌面注池
 			r.PotMoneyCount = new(PotRoomCount)
 			//计时数又重置为0,开始新的下注阶段时间倒计时
+			r.Cards = new(CardData)
 			r.RoomStat = RoomStatusOver
 			r.counter = 0
 			aCard = nil

@@ -144,27 +144,31 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		res.BlackType = pb_msg.CardsType(Straight)
 		log.Debug("Black 顺子2倍")
 	}
-	if (ag.Key.Pair() >> 8) >= 9 {
-		r.Cards.RedType = CardsType(Pair)
-		hallCard = int32(Pair)
-		res.RedType = pb_msg.CardsType(Pair)
-		log.Debug("Red 大对子(9-A)")
-	} else if ag.IsPair() {
-		r.Cards.RedType = CardsType(Pair)
-		hallCard = int32(Pair)
-		res.RedType = pb_msg.CardsType(Pair)
-		log.Debug("Red 小对子(2-8)")
+	if r.Cards.RedType != CardsType(Leopard) {
+		if (ag.Key.Pair() >> 8) >= 9 {
+			r.Cards.RedType = CardsType(Pair)
+			hallCard = int32(Pair)
+			res.RedType = pb_msg.CardsType(Pair)
+			log.Debug("Red 大对子(9-A)")
+		} else if ag.IsPair() {
+			r.Cards.RedType = CardsType(Pair)
+			hallCard = int32(Pair)
+			res.RedType = pb_msg.CardsType(Pair)
+			log.Debug("Red 小对子(2-8)")
+		}
 	}
-	if (bg.Key.Pair() >> 8) >= 9 {
-		r.Cards.BlackType = CardsType(Pair)
-		hallCard = int32(Pair)
-		res.BlackType = pb_msg.CardsType(Pair)
-		log.Debug("Black 大对子(9-A)")
-	} else if bg.IsPair() {
-		r.Cards.BlackType = CardsType(Pair)
-		hallCard = int32(Pair)
-		res.BlackType = pb_msg.CardsType(Pair)
-		log.Debug("Black 小对子(2-8)")
+	if r.Cards.BlackType != CardsType(Leopard) {
+		if (bg.Key.Pair() >> 8) >= 9 {
+			r.Cards.BlackType = CardsType(Pair)
+			hallCard = int32(Pair)
+			res.BlackType = pb_msg.CardsType(Pair)
+			log.Debug("Black 大对子(9-A)")
+		} else if bg.IsPair() {
+			r.Cards.BlackType = CardsType(Pair)
+			hallCard = int32(Pair)
+			res.BlackType = pb_msg.CardsType(Pair)
+			log.Debug("Black 小对子(2-8)")
+		}
 	}
 	if ag.IsZilch() {
 		r.Cards.RedType = CardsType(Leaflet)
