@@ -70,8 +70,8 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 
 //获取牌型并比牌
 func (r *Room) RBdzPk(a []byte, b []byte) {
-	//a = []byte{14, 46, 62}  //A
-	//b = []byte{12, 28, 44}  //Q
+	a = []byte{14, 46, 62}  //A
+	b = []byte{12, 28, 44}  //Q
 	ha := Hex(a)
 	log.Debug("花牌 数据Red~ : %v", ha)
 	hb := Hex(b)
@@ -231,15 +231,17 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			r.CardTypeList = append(r.CardTypeList, int32(Straight))
 			res.PotWinTypes.LuckDownPot = true
 		}
-		if (ag.Key.Pair() >> 8) >= 9 {
-			r.Cards.LuckType = CardsType(Pair)
-			gw.LuckWin = 1
-			gw.CardTypes = Pair
-			r.CardTypeList = append(r.CardTypeList, int32(Pair))
-			res.PotWinTypes.LuckDownPot = true
-		} else if ag.IsPair() {
-			gw.CardTypes = Pair
-			r.CardTypeList = append(r.CardTypeList, int32(Pair))
+		if r.Cards.LuckType != CardsType(Leopard) {
+			if (ag.Key.Pair() >> 8) >= 9 {
+				r.Cards.LuckType = CardsType(Pair)
+				gw.LuckWin = 1
+				gw.CardTypes = Pair
+				r.CardTypeList = append(r.CardTypeList, int32(Pair))
+				res.PotWinTypes.LuckDownPot = true
+			} else if ag.IsPair() {
+				gw.CardTypes = Pair
+				r.CardTypeList = append(r.CardTypeList, int32(Pair))
+			}
 		}
 		if ag.IsZilch() {
 			gw.CardTypes = Leaflet
@@ -430,15 +432,17 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			r.CardTypeList = append(r.CardTypeList, int32(Straight))
 			res.PotWinTypes.LuckDownPot = true
 		}
-		if (bg.Key.Pair() >> 8) >= 9 {
-			r.Cards.LuckType = CardsType(Pair)
-			gw.LuckWin = 1
-			gw.CardTypes = Pair
-			r.CardTypeList = append(r.CardTypeList, int32(Pair))
-			res.PotWinTypes.LuckDownPot = true
-		} else if bg.IsPair() {
-			gw.CardTypes = Pair
-			r.CardTypeList = append(r.CardTypeList, int32(Pair))
+		if r.Cards.LuckType != CardsType(Leopard) {
+			if (bg.Key.Pair() >> 8) >= 9 {
+				r.Cards.LuckType = CardsType(Pair)
+				gw.LuckWin = 1
+				gw.CardTypes = Pair
+				r.CardTypeList = append(r.CardTypeList, int32(Pair))
+				res.PotWinTypes.LuckDownPot = true
+			} else if bg.IsPair() {
+				gw.CardTypes = Pair
+				r.CardTypeList = append(r.CardTypeList, int32(Pair))
+			}
 		}
 		if bg.IsZilch() {
 			gw.CardTypes = Leaflet

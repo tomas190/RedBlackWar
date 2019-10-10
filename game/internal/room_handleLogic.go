@@ -1,9 +1,9 @@
 package internal
 
 import (
+	pb_msg "RedBlack-War/msg/Protocal"
 	"fmt"
 	"github.com/name5566/leaf/log"
-	pb_msg "RedBlack-War/msg/Protocal"
 	"time"
 )
 
@@ -331,11 +331,13 @@ func (r *Room) GameCheckout() bool {
 			gw.LuckWin = 1
 			gw.CardTypes = Straight
 		}
-		if (ag.Key.Pair() >> 8) >= 9 {
-			gw.LuckWin = 1
-			gw.CardTypes = Pair
-		} else if ag.IsPair() {
-			gw.CardTypes = Pair
+		if gw.CardTypes != Leopard {
+			if (ag.Key.Pair() >> 8) >= 9 {
+				gw.LuckWin = 1
+				gw.CardTypes = Pair
+			} else if ag.IsPair() {
+				gw.CardTypes = Pair
+			}
 		}
 		if ag.IsZilch() {
 			gw.CardTypes = Leaflet
@@ -395,11 +397,13 @@ func (r *Room) GameCheckout() bool {
 			gw.LuckWin = 1
 			gw.CardTypes = Straight
 		}
-		if (bg.Key.Pair() >> 8) >= 9 {
-			gw.LuckWin = 1
-			gw.CardTypes = Pair
-		} else if bg.IsPair() {
-			gw.CardTypes = Pair
+		if gw.CardTypes != Leopard {
+			if (bg.Key.Pair() >> 8) >= 9 {
+				gw.LuckWin = 1
+				gw.CardTypes = Pair
+			} else if bg.IsPair() {
+				gw.CardTypes = Pair
+			}
 		}
 		if bg.IsZilch() {
 			gw.CardTypes = Leaflet
