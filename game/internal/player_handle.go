@@ -1,9 +1,9 @@
 package internal
 
 import (
+	pb_msg "RedBlack-War/msg/Protocal"
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
-	pb_msg "RedBlack-War/msg/Protocal"
 	"time"
 )
 
@@ -128,6 +128,31 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 	p.IsAction = m.IsAction
 	//判断玩家是否行动,做相应处理
 	if p.IsAction == true {
+		//判断玩家下注金额是否限红1-20000
+		msg := &pb_msg.MsgInfo_S2C{}
+		msg.Error = recodeText[RECODE_DOWNBETMONEYFULL]
+		if m.DownPot == pb_msg.PotType_RedPot {
+			if (p.DownBetMoneys.RedDownBet+m.DownPot)+(p.DownBetMoneys.LuckDownBet*10)-p.DownBetMoneys.BlackDownBet > 20000 {
+				p.SendMsg(msg)
+				return
+			}
+		}
+		if m.DownPot == pb_msg.PotType_BlackPot {
+			if (p.DownBetMoneys.BlackDownBet+m.DownPot)+(p.DownBetMoneys.LuckDownBet*10)-p.DownBetMoneys.RedDownBet > 20000 {
+				p.SendMsg(msg)
+				return
+			}
+		}
+		if m.DownPot == pb_msg.PotType_LuckPot {
+			if p.DownBetMoneys.RedDownBet+((p.DownBetMoneys.LuckDownBet+m.DownPot)*10)-p.DownBetMoneys.BlackDownBet > 20000 {
+				p.SendMsg(msg)
+				return
+			}
+			if p.DownBetMoneys.BlackDownBet+((p.DownBetMoneys.LuckDownBet+m.DownPot)*10)-p.DownBetMoneys.RedDownBet > 20000 {
+				p.SendMsg(msg)
+				return
+			}
+		}
 		//记录玩家在该房间总下注 和 房间注池的总金额
 		if m.DownPot == pb_msg.PotType_RedPot {
 			p.Account -= float64(m.DownBet)
