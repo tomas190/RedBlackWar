@@ -132,23 +132,23 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 		msg := &pb_msg.MsgInfo_S2C{}
 		msg.Error = recodeText[RECODE_DOWNBETMONEYFULL]
 		if m.DownPot == pb_msg.PotType_RedPot {
-			if (p.DownBetMoneys.RedDownBet+m.DownPot)+(p.DownBetMoneys.LuckDownBet*10)-p.DownBetMoneys.BlackDownBet > 20000 {
+			if (p.DownBetMoneys.RedDownBet+m.DownBet)+(p.DownBetMoneys.LuckDownBet*10)-p.DownBetMoneys.BlackDownBet > 20000 {
 				p.SendMsg(msg)
 				return
 			}
 		}
 		if m.DownPot == pb_msg.PotType_BlackPot {
-			if (p.DownBetMoneys.BlackDownBet+m.DownPot)+(p.DownBetMoneys.LuckDownBet*10)-p.DownBetMoneys.RedDownBet > 20000 {
+			if (p.DownBetMoneys.BlackDownBet+m.DownBet)+(p.DownBetMoneys.LuckDownBet*10)-p.DownBetMoneys.RedDownBet > 20000 {
 				p.SendMsg(msg)
 				return
 			}
 		}
 		if m.DownPot == pb_msg.PotType_LuckPot {
-			if p.DownBetMoneys.RedDownBet+((p.DownBetMoneys.LuckDownBet+m.DownPot)*10)-p.DownBetMoneys.BlackDownBet > 20000 {
+			if p.DownBetMoneys.RedDownBet+((p.DownBetMoneys.LuckDownBet+m.DownBet)*10)-p.DownBetMoneys.BlackDownBet > 20000 {
 				p.SendMsg(msg)
 				return
 			}
-			if p.DownBetMoneys.BlackDownBet+((p.DownBetMoneys.LuckDownBet+m.DownPot)*10)-p.DownBetMoneys.RedDownBet > 20000 {
+			if p.DownBetMoneys.BlackDownBet+((p.DownBetMoneys.LuckDownBet+m.DownBet)*10)-p.DownBetMoneys.RedDownBet > 20000 {
 				p.SendMsg(msg)
 				return
 			}
