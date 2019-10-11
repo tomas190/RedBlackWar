@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c9afdff-253a-49cb-a98b-ad8c890a28f5" name="默认更改列表" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/c2c.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/c2c.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,15 +45,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game/internal/player_handle.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="23" column="21" lean-forward="true" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/go/src/cow-cow-game/src/client/test/client_test.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-221">
@@ -66,8 +56,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="977">
-              <caret line="217" column="1" lean-forward="true" selection-start-line="217" selection-start-column="1" selection-end-line="217" selection-end-column="1" />
+            <state relative-caret-position="348">
+              <caret line="212" column="40" lean-forward="true" selection-start-line="212" selection-start-column="40" selection-end-line="212" selection-end-column="40" />
+              <folding>
+                <element signature="e#18#220#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/internal/module.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="377">
+              <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -603,13 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/internal/module.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="32" column="22" lean-forward="true" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/msg/Protocal/pb_msg.pb.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
@@ -866,10 +861,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/game/internal/module.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="977">
-          <caret line="217" column="1" lean-forward="true" selection-start-line="217" selection-start-column="1" selection-end-line="217" selection-end-column="1" />
+        <state relative-caret-position="348">
+          <caret line="212" column="40" lean-forward="true" selection-start-line="212" selection-start-column="40" selection-end-line="212" selection-end-column="40" />
+          <folding>
+            <element signature="e#18#220#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
