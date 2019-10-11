@@ -153,6 +153,14 @@ func (c4c *Conn4Center) CreatConnect() {
 	}
 }
 
+func (c4c *Conn4Center) catchError() {
+	if err := recover(); err != nil {
+		log.Debug("Conn4Center err %v", err)
+		log.Debug(string(debug.Stack()))
+	}
+}
+
+//Run 开始运行,监听中心服务器的返回
 func (c4c *Conn4Center) reConnect() {
 	log.Debug("重连中心服")
 	if c4c.LoginStat {
@@ -162,13 +170,6 @@ func (c4c *Conn4Center) reConnect() {
 	c4c.closebreathchan <- true
 	c4c.CreatConnect()
 	time.AfterFunc(time.Second*5, c4c.reConnect)
-}
-
-func (c4c *Conn4Center) catchError() {
-	if err := recover(); err != nil {
-		log.Debug("Conn4Center err %v", err)
-		log.Debug(string(debug.Stack()))
-	}
 }
 
 //Run 开始运行,监听中心服务器的返回
