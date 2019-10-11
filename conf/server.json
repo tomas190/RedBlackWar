@@ -10,8 +10,8 @@
   "MongoDBPwd": "123456",
 
   "TokenServer": "http://172.16.100.2:9502/Token/getToken",
-  "CenterServer": "161.117.178.174",
-  "CenterServerPort": "12345",
+  "CenterServer": "172.16.100.2",
+  "CenterServerPort": "9502",
   "DevKey": "new_game_20",
   "DevName": "新游戏开发",
   "GameID": "5b1f3a3cb76a591e7f251719"
