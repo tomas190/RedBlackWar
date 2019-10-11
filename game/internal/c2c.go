@@ -137,8 +137,8 @@ func (c4c *Conn4Center) ReqCenterToken() {
 
 //CreatConnect 和Center建立链接
 func (c4c *Conn4Center) CreatConnect() {
-	//c4c.centerUrl = "ws://172.16.100.2:9502/" //上线
-	c4c.centerUrl = "ws://161.117.178.174:12345/"
+	c4c.centerUrl = "ws://172.16.100.2:9502/" //上线
+	//c4c.centerUrl = "ws://161.117.178.174:12345/"
 	//c4c.centerUrl = "ws" + strings.TrimPrefix(conf.Server.CenterServer, "http") //域名生成使用
 
 	log.Debug("--- dial: --- : %v", c4c.centerUrl)

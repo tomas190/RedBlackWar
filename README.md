@@ -44,8 +44,8 @@ cat load.log
   "MongoDBPwd": "123456",                Mongo连接密码
 
   "TokenServer": "http://172.16.100.2:9502/Token/getToken", 中心服Token
-  "CenterServer": "161.117.178.174",                        中心服地址               
-  "CenterServerPort": "12345",                              中心服端口
+  "CenterServer": "172.16.100.2",                        中心服地址               
+  "CenterServerPort": "9502",                              中心服端口
   "DevKey": "new_game_20",                                  devKey
   "DevName": "新游戏开发"                                    devName
   "GameID": "5b1f3a3cb76a591e7f251719"                      gameID
