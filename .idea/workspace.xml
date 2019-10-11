@@ -56,8 +56,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="212" column="40" lean-forward="true" selection-start-line="212" selection-start-column="40" selection-end-line="212" selection-end-column="40" />
+            <state relative-caret-position="249">
+              <caret line="519" column="75" selection-start-line="519" selection-start-column="75" selection-end-line="519" selection-end-column="75" />
               <folding>
                 <element signature="e#18#220#0" expanded="true" />
               </folding>
@@ -870,8 +870,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="212" column="40" lean-forward="true" selection-start-line="212" selection-start-column="40" selection-end-line="212" selection-end-column="40" />
+        <state relative-caret-position="249">
+          <caret line="519" column="75" selection-start-line="519" selection-start-column="75" selection-end-line="519" selection-end-column="75" />
           <folding>
             <element signature="e#18#220#0" expanded="true" />
           </folding>
