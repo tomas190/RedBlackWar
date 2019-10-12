@@ -10,6 +10,7 @@ var Server struct {
 	LogLevel    string
 	LogPath     string
 	WSAddr      string
+	Port        string
 	CertFile    string
 	KeyFile     string
 	TCPAddr     string

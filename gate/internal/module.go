@@ -1,10 +1,10 @@
 package internal
 
 import (
-	"github.com/name5566/leaf/gate"
 	"RedBlack-War/conf"
 	"RedBlack-War/game"
 	"RedBlack-War/msg"
+	"github.com/name5566/leaf/gate"
 )
 
 type Module struct {
@@ -16,7 +16,7 @@ func (m *Module) OnInit() {
 		MaxConnNum:      conf.Server.MaxConnNum,
 		PendingWriteNum: conf.PendingWriteNum,
 		MaxMsgLen:       conf.MaxMsgLen,
-		WSAddr:          conf.Server.WSAddr,
+		WSAddr:          conf.Server.WSAddr + conf.Server.Port,
 		HTTPTimeout:     conf.HTTPTimeout,
 		CertFile:        conf.Server.CertFile,
 		KeyFile:         conf.Server.KeyFile,
