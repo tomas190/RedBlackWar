@@ -16,7 +16,7 @@ func (m *Module) OnInit() {
 		MaxConnNum:      conf.Server.MaxConnNum,
 		PendingWriteNum: conf.PendingWriteNum,
 		MaxMsgLen:       conf.MaxMsgLen,
-		WSAddr:          conf.Server.WSAddr + conf.Server.Port,
+		WSAddr:          conf.Server.WSAddr + ":" + conf.Server.Port,
 		HTTPTimeout:     conf.HTTPTimeout,
 		CertFile:        conf.Server.CertFile,
 		KeyFile:         conf.Server.KeyFile,
