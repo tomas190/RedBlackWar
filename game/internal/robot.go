@@ -93,20 +93,20 @@ func (r *Room) RobotsDownBet() {
 				//判断玩家下注金额是否限红1-20000
 				if pot1 == int32(pb_msg.PotType_RedPot) {
 					if (r.PotMoneyCount.RedMoneyCount+bet1)+(r.PotMoneyCount.LuckMoneyCount*10)-r.PotMoneyCount.BlackMoneyCount > 20000 {
-						return
+						continue
 					}
 				}
 				if pot1 == int32(pb_msg.PotType_BlackPot) {
 					if (r.PotMoneyCount.BlackMoneyCount+bet1)+(r.PotMoneyCount.LuckMoneyCount*10)-r.PotMoneyCount.RedMoneyCount > 20000 {
-						return
+						continue
 					}
 				}
 				if pot1 == int32(pb_msg.PotType_LuckPot) {
 					if r.PotMoneyCount.RedMoneyCount+((r.PotMoneyCount.LuckMoneyCount+bet1)*10)-r.PotMoneyCount.BlackMoneyCount > 20000 {
-						return
+						continue
 					}
 					if r.PotMoneyCount.BlackMoneyCount+((r.PotMoneyCount.LuckMoneyCount+bet1)*10)-r.PotMoneyCount.RedMoneyCount > 20000 {
-						return
+						continue
 					}
 				}
 
