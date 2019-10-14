@@ -1,10 +1,10 @@
 package internal
 
 import (
+	pb_msg "RedBlack-War/msg/Protocal"
 	"fmt"
 	"github.com/name5566/leaf/log"
 	"math/rand"
-	pb_msg "RedBlack-War/msg/Protocal"
 	"time"
 )
 
@@ -92,20 +92,20 @@ func (r *Room) RobotsDownBet() {
 
 				//判断玩家下注金额是否限红1-20000
 				if pot1 == pb_msg.PotType_RedPot {
-					if (v.DownBetMoneys.RedDownBet+bet1)+(v.DownBetMoneys.LuckDownBet*10)-v.DownBetMoneys.BlackDownBet > 20000 {
+					if (r.PotMoneyCount.RedMoneyCount+bet1)+(r.PotMoneyCount.LuckMoneyCount*10)-r.PotMoneyCount.BlackMoneyCount > 20000 {
 						return
 					}
 				}
 				if pot1 == pb_msg.PotType_BlackPot {
-					if (v.DownBetMoneys.BlackDownBet+bet1)+(v.DownBetMoneys.LuckDownBet*10)-v.DownBetMoneys.RedDownBet > 20000 {
+					if (r.PotMoneyCount.BlackMoneyCount+bet1)+(r.PotMoneyCount.LuckMoneyCount*10)-r.PotMoneyCount.RedMoneyCount > 20000 {
 						return
 					}
 				}
 				if pot1 == pb_msg.PotType_LuckPot {
-					if v.DownBetMoneys.RedDownBet+((v.DownBetMoneys.LuckDownBet+bet1)*10)-v.DownBetMoneys.BlackDownBet > 20000 {
+					if r.PotMoneyCount.RedMoneyCount+((r.PotMoneyCount.LuckMoneyCount+bet1)*10)-r.PotMoneyCount.BlackMoneyCount > 20000 {
 						return
 					}
-					if v.DownBetMoneys.BlackDownBet+((v.DownBetMoneys.LuckDownBet+bet1)*10)-v.DownBetMoneys.RedDownBet > 20000 {
+					if r.PotMoneyCount.BlackMoneyCount+((r.PotMoneyCount.LuckMoneyCount+bet1)*10)-r.PotMoneyCount.RedMoneyCount > 20000 {
 						return
 					}
 				}
