@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c9afdff-253a-49cb-a98b-ad8c890a28f5" name="默认更改列表" comment="">
-      <change beforePath="$PROJECT_DIR$/game/internal/msgData.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/msgData.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/player_handle.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/player_handle.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,11 +36,32 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game/internal/player_handle.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="118" lean-forward="true" selection-start-line="118" selection-end-line="118" />
+            <state relative-caret-position="700">
+              <caret line="82" column="16" lean-forward="true" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/conf/server.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="204">
+                <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -50,15 +71,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
               <caret line="23" column="26" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/msg/Protocal/pb_msg.proto">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3257">
-              <caret line="193" selection-start-line="193" selection-end-line="194" />
             </state>
           </provider>
         </entry>
@@ -104,15 +116,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
               <caret line="10" column="25" lean-forward="true" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/go/src/github.com/name5566/leaf/network/ws_conn.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1955">
-              <caret line="121" column="17" lean-forward="true" selection-start-line="121" selection-start-column="17" selection-end-line="121" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -225,20 +228,20 @@
         <option value="$PROJECT_DIR$/game/internal/cards_rbdz.go" />
         <option value="$PROJECT_DIR$/game/internal/c2c.go" />
         <option value="$PROJECT_DIR$/game/internal/c2c.go" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/conf/json.go" />
-        <option value="$PROJECT_DIR$/conf/server.json" />
         <option value="$PROJECT_DIR$/gate/internal/module.go" />
         <option value="$PROJECT_DIR$/game/internal/handler.go" />
         <option value="$PROJECT_DIR$/game/internal/room_handle.go" />
         <option value="$PROJECT_DIR$/game/internal/robot.go" />
         <option value="$PROJECT_DIR$/game/internal/msgData.go" />
         <option value="$PROJECT_DIR$/game/internal/player_handle.go" />
+        <option value="$PROJECT_DIR$/conf/server.json" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="948" />
     <option name="width" value="981" />
     <option name="height" value="1032" />
@@ -263,36 +266,7 @@
             </path>
             <path>
               <item name="RedBlack-War" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RedBlack-War" type="462c0819:PsiDirectoryNode" />
-              <item name="game" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RedBlack-War" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RedBlack-War" type="462c0819:PsiDirectoryNode" />
-              <item name="game" type="462c0819:PsiDirectoryNode" />
-              <item name="internal" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RedBlack-War" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RedBlack-War" type="462c0819:PsiDirectoryNode" />
-              <item name="gate" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RedBlack-War" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RedBlack-War" type="462c0819:PsiDirectoryNode" />
-              <item name="gate" type="462c0819:PsiDirectoryNode" />
-              <item name="internal" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RedBlack-War" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RedBlack-War" type="462c0819:PsiDirectoryNode" />
-              <item name="msg" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RedBlack-War" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RedBlack-War" type="462c0819:PsiDirectoryNode" />
-              <item name="msg" type="462c0819:PsiDirectoryNode" />
-              <item name="Protocal" type="462c0819:PsiDirectoryNode" />
+              <item name="外部库" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -550,7 +524,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../github.com/name5566/leaf/network/tcp_msg.go" />
     <entry file="file://$PROJECT_DIR$/../gopkg.in/mgo.v2/bson/bson.go" />
     <entry file="file://$PROJECT_DIR$/../github.com/name5566/leaf/module/skeleton.go" />
     <entry file="file://$PROJECT_DIR$/../github.com/name5566/leaf/chanrpc/chanrpc.go" />
@@ -718,13 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conf/server.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/cards_arithmetic.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3451">
@@ -773,16 +739,6 @@
           <folding>
             <element signature="e#18#220#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="765">
-            <caret line="45" column="43" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
@@ -875,8 +831,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/player_handle.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="118" lean-forward="true" selection-start-line="118" selection-end-line="118" />
+        <state relative-caret-position="700">
+          <caret line="82" column="16" lean-forward="true" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/go/src/github.com/name5566/leaf/conf/conf.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/server.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="204">
+            <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

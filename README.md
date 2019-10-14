@@ -7,10 +7,10 @@ git clone http://git.0717996.com/Tomas/RedBlack-War.git
 cd RedBlack-War
 
 ##### 3、编译
-go build -o server ./main.go  `要权限`
+go build -o RedBlack-War ./main.go  `要权限`
 
 ##### 4、后台运行
-nohup ./server >load.log 2>&1 &  `要权限`
+nohup ./RedBlack-War >load.log 2>&1 &  `要权限`
 
 ##### 5、查看是否运行成功
 cat load.log
@@ -28,27 +28,28 @@ cat load.log
 
 
 ### **三、配置文件位置及文件名稱**
-##### 1、文件名称: `server/conf/server.json`
+##### 1、文件名称: `RedBlack-War/conf/server.json`
 ##### 2、日志文件：`load.log`  `路径为：编译好可执行文件同级`
 ##### 3、服务配置信息：
 ```
 {
   "LogLevel": "debug",
   "LogPath": "",
-  "WSAddr": "0.0.0.0:1214",     
+  "WSAddr": "0.0.0.0",
+  "Port": "1214",
   "MaxConnNum": 20000,
+    
+  "MongoDBAddr": "172.16.100.5:27017",                          Mongo数据库连接地址
+  "MongoDBAuth": "",                                            Mongo认证(可不填默认admin)
+  "MongoDBUser": "rbdz",                                        Mongo连接用户名
+  "MongoDBPwd": "123456",                                       Mongo连接密码
 
-  "MongoDBAddr": "172.16.100.5:27017",   Mongo数据库连接地址
-  "MongoDBAuth": "",                     Mongo认证(可不填默认admin)
-  "MongoDBUser": "rbdz",                 Mongo连接用户名
-  "MongoDBPwd": "123456",                Mongo连接密码
-
-  "TokenServer": "http://172.16.100.2:9502/Token/getToken", 中心服Token
-  "CenterServer": "172.16.100.2",                           中心服地址 (易动)           
-  "CenterServerPort": "9502",                               中心服端口 (易动)
-  "DevKey": "new_game_20",                                  devKey
-  "DevName": "新游戏开发"                                    devName
-  "GameID": "5b1f3a3cb76a591e7f251719"                      gameID
+  "TokenServer": "http://172.16.100.2:9502/Token/getToken",     中心服Token
+  "CenterServer": "172.16.100.2",                               中心服地址 (易动)
+  "CenterServerPort": "9502",                                   中心服端口 (易动)
+  "DevKey": "new_game_20"                                       devKey
+  "DevName": "新游戏开发",                                       devName
+  "GameID": "5b1f3a3cb76a591e7f251719"                          gameID
 }
 ```
 
