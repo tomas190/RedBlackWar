@@ -127,6 +127,30 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 		//判断玩家下注金额是否限红1-20000
 		msg := &pb_msg.MsgInfo_S2C{}
 		msg.Error = recodeText[RECODE_DOWNBETMONEYFULL]
+		//判断房间限红
+		if m.DownPot == pb_msg.PotType_RedPot {
+			if (p.room.PotMoneyCount.RedMoneyCount+m.DownBet)+(p.room.PotMoneyCount.LuckMoneyCount*10)-p.room.PotMoneyCount.BlackMoneyCount > 20000 {
+				p.SendMsg(msg)
+				return
+			}
+		}
+		if m.DownPot == pb_msg.PotType_BlackPot {
+			if (p.room.PotMoneyCount.BlackMoneyCount+m.DownBet)+(p.room.PotMoneyCount.LuckMoneyCount*10)-p.room.PotMoneyCount.RedMoneyCount > 20000 {
+				p.SendMsg(msg)
+				return
+			}
+		}
+		if m.DownPot == pb_msg.PotType_LuckPot {
+			if p.room.PotMoneyCount.RedMoneyCount+((p.room.PotMoneyCount.LuckMoneyCount+m.DownBet)*10)-p.room.PotMoneyCount.BlackMoneyCount > 20000 {
+				p.SendMsg(msg)
+				return
+			}
+			if p.room.PotMoneyCount.BlackMoneyCount+((p.room.PotMoneyCount.LuckMoneyCount+m.DownBet)*10)-p.room.PotMoneyCount.RedMoneyCount > 20000 {
+				p.SendMsg(msg)
+				return
+			}
+		}
+		//判断玩家下注限红
 		if m.DownPot == pb_msg.PotType_RedPot {
 			if (p.DownBetMoneys.RedDownBet+m.DownBet)+(p.DownBetMoneys.LuckDownBet*10)-p.DownBetMoneys.BlackDownBet > 20000 {
 				p.SendMsg(msg)
