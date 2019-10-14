@@ -146,6 +146,7 @@ func handleLeaveHall(args []interface{}) {
 	if ok {
 		//c4c.UserLogoutCenter(p.Id, p.PassWord)
 		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
+
 		p.SendMsg(leaveHall)
 		//DeletePlayer(p)
 		time.Sleep(time.Millisecond * 200)

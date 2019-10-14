@@ -90,6 +90,26 @@ func (r *Room) RobotsDownBet() {
 					continue
 				}
 
+				//判断玩家下注金额是否限红1-20000
+				if pot1 == pb_msg.PotType_RedPot {
+					if (v.DownBetMoneys.RedDownBet+bet1)+(v.DownBetMoneys.LuckDownBet*10)-v.DownBetMoneys.BlackDownBet > 20000 {
+						return
+					}
+				}
+				if pot1 == pb_msg.PotType_BlackPot {
+					if (v.DownBetMoneys.BlackDownBet+bet1)+(v.DownBetMoneys.LuckDownBet*10)-v.DownBetMoneys.RedDownBet > 20000 {
+						return
+					}
+				}
+				if pot1 == pb_msg.PotType_LuckPot {
+					if v.DownBetMoneys.RedDownBet+((v.DownBetMoneys.LuckDownBet+bet1)*10)-v.DownBetMoneys.BlackDownBet > 20000 {
+						return
+					}
+					if v.DownBetMoneys.BlackDownBet+((v.DownBetMoneys.LuckDownBet+bet1)*10)-v.DownBetMoneys.RedDownBet > 20000 {
+						return
+					}
+				}
+
 				//记录玩家在该房间总下注 和 房间注池的总金额
 				if pb_msg.PotType(pot1) == pb_msg.PotType_RedPot {
 					v.Account -= float64(bet1)

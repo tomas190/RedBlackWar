@@ -81,19 +81,15 @@ func (p *Player) PlayerReqExit() {
 				leave.PlayerInfo.Account = p.Account
 				p.SendMsg(leave)
 				log.Debug("<<===== 玩家下注总金额: %v =====>>", p.TotalAmountBet)
-				//if p.ResultMoney == 0 {
-				//	p.LoseResultMoney = 0
-				//	p.LoseResultMoney -= float64(p.DownBetMoneys.RedDownBet)
-				//	p.LoseResultMoney -= float64(p.DownBetMoneys.BlackDownBet)
-				//	p.LoseResultMoney -= float64(p.DownBetMoneys.LuckDownBet)
-				//	timeStr := time.Now().Format("2006-01-02_15:04:05")
-				//	nowTime := time.Now().Unix()
-				//	reason := "ExitRoomResult"
-				//
-				//	SurplusPool -= p.LoseResultMoney
-				//	//同时同步赢分和输分
-				//	c4c.UserSyncLoseScore(p, nowTime, timeStr, reason)
-				//}
+
+				//更新房间列表
+				p.room.UpdatePlayerList()
+				maintainList := p.room.PackageRoomPlayerList()
+				p.room.BroadCastExcept(maintainList, p)
+
+				//更新大厅时间
+				RspGameHallData(p)
+
 			} else {
 				p.room.ExitFromRoom(p)
 			}
