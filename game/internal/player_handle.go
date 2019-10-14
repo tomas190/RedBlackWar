@@ -126,7 +126,7 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 	if p.IsAction == true {
 		//判断玩家下注金额是否限红1-20000
 		msg := &pb_msg.MsgInfo_S2C{}
-		msg.Error = recodeText[RECODE_DOWNBETMONEYFULL]
+		msg.Error = recodeText[RECODE_CHAOCHUXIANHONG]
 		//判断房间限红
 		if m.DownPot == pb_msg.PotType_RedPot {
 			if (p.room.PotMoneyCount.RedMoneyCount+m.DownBet)+(p.room.PotMoneyCount.LuckMoneyCount*10)-p.room.PotMoneyCount.BlackMoneyCount > 20000 {

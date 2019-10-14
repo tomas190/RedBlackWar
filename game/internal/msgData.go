@@ -6,6 +6,7 @@ import (
 )
 
 const (
+	RECODE_CHAOCHUXIANHONG  = 4444
 	RECODE_BREATHSTOP       = 1000
 	RECODE_PLAYERDESTORY    = 1001
 	RECODE_PLAYERBREAKLINE  = 1002
@@ -20,6 +21,7 @@ const (
 )
 
 var recodeText = map[int32]string{
+	RECODE_CHAOCHUXIANHONG:  "4444",
 	RECODE_BREATHSTOP:       "用户长时间未响应心跳,停止心跳",
 	RECODE_PLAYERDESTORY:    "用户已在其他地方登录",
 	RECODE_PLAYERBREAKLINE:  "玩家断开服务器连接,关闭链接",
