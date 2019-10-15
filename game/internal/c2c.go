@@ -54,7 +54,6 @@ func (c4c *Conn4Center) Init() {
 var gt CGCenterRsp
 
 var BreathClose chan bool
-var ReadMsgClose chan bool
 
 //func changeToken() {
 //	for {
@@ -155,6 +154,7 @@ func (c4c *Conn4Center) CreatConnect() {
 
 //Run 开始运行,监听中心服务器的返回
 func (c4c *Conn4Center) Run() {
+	var ReadMsg = true
 	ticker := time.NewTicker(time.Second * 5)
 	go func() {
 		for { //循环
@@ -177,20 +177,19 @@ func (c4c *Conn4Center) Run() {
 			log.Debug("Receive a message from Center~")
 			log.Debug("typeId: %v", typeId)
 			log.Debug("message: %v", string(message))
-			typeId = -1
 			if typeId == -1 {
 				log.Debug("中心服连接异常，连接断开 ~")
 				BreathClose <- true
-				ReadMsgClose <- true
+				ReadMsg = false
 				return
 			}
 			c4c.onReceive(typeId, message)
 		}
 	}()
 
-	t := <-ReadMsgClose
-	if t == true {
+	if ReadMsg == false {
 		c4c.ReConnect()
+		return
 	}
 	c4c.ServerLoginCenter()
 }
