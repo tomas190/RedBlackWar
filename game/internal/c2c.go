@@ -188,10 +188,9 @@ func (c4c *Conn4Center) Run() {
 		}
 	}()
 
-	select {
-	case <-ReadMsgClose:
+	t := <-ReadMsgClose
+	if t == true {
 		c4c.ReConnect()
-		return
 	}
 	c4c.ServerLoginCenter()
 }
