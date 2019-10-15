@@ -20,7 +20,7 @@ cat load.log
 1. 2019/10/08 14:37:25 [release] Leaf 1.1.3 starting up
 1. 2019/10/08 14:37:25 [debug  ] Connect DataBase 数据库连接成功~
 1. 2019/10/08 14:37:25 [debug  ] GameHall Init~!!! This gameHall can hold 5000 player running ~
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
 ### **二、項目所需套件支持**
 ###### 1、Go语言配置环境   `go version go1.13 linux/amd64`
