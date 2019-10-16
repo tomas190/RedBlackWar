@@ -25,11 +25,11 @@ type ServerLogin struct {
 
 //UserReq 用户请求，用登录登出
 type UserReq struct {
-	ID       string `json:"id"`
-	GameId   string `json:"game_id"`
-	PassWord string `json:"password"`
-	DevName  string `json:"dev_name"`
-	DevKey   string `json:"dev_key"`
+	ID      string `json:"id"`
+	GameId  string `json:"game_id"`
+	Token   string `json:"token"`
+	DevName string `json:"dev_name"`
+	DevKey  string `json:"dev_key"`
 }
 
 //ServerLoginRsp 服务器登录返回

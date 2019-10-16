@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"reflect"
+	"runtime/debug"
 	"strconv"
 	"strings"
 	"time"
@@ -37,6 +38,9 @@ type Conn4Center struct {
 	//除于登录成功状态
 	LoginStat bool
 
+	closebreathchan  chan bool
+	closereceivechan chan bool
+
 	//待处理的用户登录请求
 	waitUser map[string]*UserCallback
 }
@@ -52,8 +56,6 @@ func (c4c *Conn4Center) Init() {
 }
 
 var gt CGCenterRsp
-
-var BreathClose chan bool
 
 //func changeToken() {
 //	for {
@@ -152,53 +154,67 @@ func (c4c *Conn4Center) CreatConnect() {
 	}
 }
 
+func (c4c *Conn4Center) reConnect() {
+	log.Debug("重连中心服")
+	if c4c.LoginStat {
+		return
+	}
+	c4c.closereceivechan <- true
+	c4c.closebreathchan <- true
+	c4c.CreatConnect()
+	time.AfterFunc(time.Second*5, c4c.reConnect)
+}
+
 //Run 开始运行,监听中心服务器的返回
 func (c4c *Conn4Center) Run() {
-	var ReadMsg = true
 	ticker := time.NewTicker(time.Second * 5)
 	go func() {
 		for { //循环
 			select {
 			case <-ticker.C:
 				c4c.onBreath()
-			case <-BreathClose:
+				break
+			case <-c4c.closebreathchan:
 				return
 			}
 		}
 	}()
 
 	go func() {
+		defer c4c.catchError()
 		for {
-			typeId, message, err := c4c.conn.ReadMessage()
-			if err != nil {
-				log.Debug("Here is error by ReadMessage~")
-				log.Error(err.Error())
-			}
-			log.Debug("Receive a message from Center~")
-			log.Debug("typeId: %v", typeId)
-			log.Debug("message: %v", string(message))
-			if typeId == -1 {
-				log.Debug("中心服连接异常，连接断开 ~")
-				BreathClose <- true
-				ReadMsg = false
+			select {
+			case <-c4c.closereceivechan:
 				return
+			default:
+				typeId, message, err := c4c.conn.ReadMessage()
+				if err != nil {
+					log.Debug("Here is error by ReadMessage~ %v", err)
+					log.Error(err.Error())
+				}
+				//log.Debug("Receive a message from Center~")
+				//log.Debug("typeId: %v", typeId)
+				//log.Debug("message: %v", string(message))
+				if typeId == -1 {
+					log.Debug("中心服异常消息")
+					c4c.LoginStat = false
+					c4c.reConnect()
+				} else {
+					c4c.onReceive(typeId, message)
+				}
+				break
 			}
-			c4c.onReceive(typeId, message)
 		}
 	}()
 
-	if ReadMsg == false {
-		c4c.ReConnect()
-		return
-	}
 	c4c.ServerLoginCenter()
 }
 
-//ReConnect 重连中心服
-func (c4c *Conn4Center) ReConnect() {
-	log.Debug("重连中心服~~~")
-	c4c.LoginStat = false
-	c4c.CreatConnect()
+func (c4c *Conn4Center) catchError() {
+	if err := recover(); err != nil {
+		log.Debug("Conn4Center err %v", err)
+		log.Debug(string(debug.Stack()))
+	}
 }
 
 //onBreath 中心服心跳
@@ -458,11 +474,11 @@ func (c4c *Conn4Center) UserLoginCenter(userId string, password string, callback
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserLogin
 	baseData.Data = &UserReq{
-		ID:       userId,
-		PassWord: password,
-		GameId:   c4c.GameId,
-		DevName:  conf.Server.DevName,
-		DevKey:   c4c.DevKey}
+		ID:      userId,
+		Token:   password,
+		GameId:  c4c.GameId,
+		DevName: conf.Server.DevName,
+		DevKey:  c4c.DevKey}
 
 	c4c.SendMsg2Center(baseData)
 
@@ -478,11 +494,11 @@ func (c4c *Conn4Center) UserLogoutCenter(userId string, password string) {
 	base := &BaseMessage{}
 	base.Event = msgUserLogout
 	base.Data = &UserReq{
-		ID:       userId,
-		PassWord: password,
-		GameId:   c4c.GameId,
-		DevName:  conf.Server.DevName,
-		DevKey:   c4c.DevKey,
+		ID:      userId,
+		Token:   password,
+		GameId:  c4c.GameId,
+		DevName: conf.Server.DevName,
+		DevKey:  c4c.DevKey,
 	}
 	// 发送消息到中心服
 	c4c.SendMsg2Center(base)
