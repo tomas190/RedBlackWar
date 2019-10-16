@@ -464,7 +464,7 @@ func (c4c *Conn4Center) ServerLoginCenter() {
 }
 
 //UserLoginCenter 用户登录
-func (c4c *Conn4Center) UserLoginCenter(userId string, password string, callback func(data *UserInfo)) {
+func (c4c *Conn4Center) UserLoginCenter(userId string, password string, token string, callback func(data *UserInfo)) {
 	if !c4c.LoginStat {
 		log.Debug("<-------- RedBlack-War not ready~!!! -------->")
 		return
@@ -473,12 +473,21 @@ func (c4c *Conn4Center) UserLoginCenter(userId string, password string, callback
 	log.Debug("<-------- UserLoginCenter c4c.token -------->: %v", c4c.token)
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserLogin
-	baseData.Data = &UserReq{
-		ID:      userId,
-		Token:   password,
-		GameId:  c4c.GameId,
-		DevName: conf.Server.DevName,
-		DevKey:  c4c.DevKey}
+	if password != "" {
+		baseData.Data = &UserReq{
+			ID:       userId,
+			PassWord: password,
+			GameId:   c4c.GameId,
+			DevName:  conf.Server.DevName,
+			DevKey:   c4c.DevKey}
+	} else {
+		baseData.Data = &UserReq{
+			ID:      userId,
+			Token:   token,
+			GameId:  c4c.GameId,
+			DevName: conf.Server.DevName,
+			DevKey:  c4c.DevKey}
+	}
 
 	c4c.SendMsg2Center(baseData)
 
@@ -489,17 +498,26 @@ func (c4c *Conn4Center) UserLoginCenter(userId string, password string, callback
 }
 
 //UserLogoutCenter 用户登出
-func (c4c *Conn4Center) UserLogoutCenter(userId string, password string) {
+func (c4c *Conn4Center) UserLogoutCenter(userId string, password string, token string) {
 	log.Debug("<-------- UserLogoutCenter c4c.token -------->: %v", c4c.token)
 	base := &BaseMessage{}
 	base.Event = msgUserLogout
-	base.Data = &UserReq{
-		ID:      userId,
-		Token:   password,
-		GameId:  c4c.GameId,
-		DevName: conf.Server.DevName,
-		DevKey:  c4c.DevKey,
+	if password != "" {
+		base.Data = &UserReq{
+			ID:       userId,
+			PassWord: password,
+			GameId:   c4c.GameId,
+			DevName:  conf.Server.DevName,
+			DevKey:   c4c.DevKey}
+	} else {
+		base.Data = &UserReq{
+			ID:      userId,
+			Token:   token,
+			GameId:  c4c.GameId,
+			DevName: conf.Server.DevName,
+			DevKey:  c4c.DevKey}
 	}
+
 	// 发送消息到中心服
 	c4c.SendMsg2Center(base)
 }

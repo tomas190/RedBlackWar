@@ -49,6 +49,7 @@ message MsgInfo_S2C {
 message LoginInfo_C2S {
     string Id = 1;
     string PassWord = 2;
+    string Token = 3;
 }
 
 message PlayerInfo {

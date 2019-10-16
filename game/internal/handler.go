@@ -1,10 +1,10 @@
 package internal
 
 import (
+	pb_msg "RedBlack-War/msg/Protocal"
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"reflect"
-	pb_msg "RedBlack-War/msg/Protocal"
 	"time"
 )
 
@@ -49,8 +49,9 @@ func handleLoginInfo(args []interface{}) {
 	if ok {
 		p.Id = m.GetId()
 		p.PassWord = m.GetPassWord()
+		p.Token = m.GetToken()
 		RegisterPlayer(p)
-		c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), func(data *UserInfo) {
+		c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(data *UserInfo) {
 			log.Debug("Login用户登录信息: %v ", data)
 			p.Id = data.ID
 			p.NickName = data.Nick

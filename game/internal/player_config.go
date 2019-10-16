@@ -63,6 +63,7 @@ type Player struct {
 
 	Id       string
 	PassWord string
+	Token    string
 	NickName string
 	HeadImg  string
 	Account  float64 // 玩家金额
