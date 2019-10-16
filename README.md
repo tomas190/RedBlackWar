@@ -27,7 +27,8 @@ cat load.log
 ###### 2、Mongo数据库     `MongoDB server version: 4.0.12`
 
 
-### **三、配置文件位置及文件名稱**
+### **三、配置文件位置及文件名稱**ll
+
 ##### 1、文件名称: `RedBlack-War/conf/server.json`
 ##### 2、日志文件：`load.log`  `路径为：编译好可执行文件同级`
 ##### 3、服务配置信息：
