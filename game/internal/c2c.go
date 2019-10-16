@@ -481,7 +481,7 @@ func (c4c *Conn4Center) UserLoginCenter(userId string, password string, token st
 			DevName:  conf.Server.DevName,
 			DevKey:   c4c.DevKey}
 	} else {
-		baseData.Data = &UserToken{
+		baseData.Data = &UserReq{
 			ID:      userId,
 			Token:   token,
 			GameId:  c4c.GameId,
@@ -510,7 +510,7 @@ func (c4c *Conn4Center) UserLogoutCenter(userId string, password string, token s
 			DevName:  conf.Server.DevName,
 			DevKey:   c4c.DevKey}
 	} else {
-		base.Data = &UserToken{
+		base.Data = &UserReq{
 			ID:      userId,
 			Token:   token,
 			GameId:  c4c.GameId,
