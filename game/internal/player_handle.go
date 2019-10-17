@@ -72,6 +72,12 @@ func (p *Player) PlayerReqExit() {
 		if p.IsRobot == false {
 			if p.IsAction == true {
 				p.IsOnline = false
+
+				//更新房间列表
+				p.room.UpdatePlayerList()
+				maintainList := p.room.PackageRoomPlayerList()
+				p.room.BroadCastExcept(maintainList, p)
+
 				//广播其他玩家该玩家退出房间
 				leave := &pb_msg.LeaveRoom_S2C{}
 				leave.PlayerInfo = new(pb_msg.PlayerInfo)
@@ -81,11 +87,6 @@ func (p *Player) PlayerReqExit() {
 				leave.PlayerInfo.Account = p.Account
 				p.SendMsg(leave)
 				log.Debug("<<===== 玩家下注总金额: %v =====>>", p.TotalAmountBet)
-
-				//更新房间列表
-				p.room.UpdatePlayerList()
-				maintainList := p.room.PackageRoomPlayerList()
-				p.room.BroadCastExcept(maintainList, p)
 
 				//更新大厅时间
 				RspGameHallData(p)
