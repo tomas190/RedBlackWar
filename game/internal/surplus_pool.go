@@ -29,6 +29,7 @@ var (
 	AllHistoryWin  float64 = 0
 	AllHistoryLose float64 = 0
 )
+
 //返回记录的玩家总数量
 func RecordPlayerCount() int32 {
 	log.Debug("游戏玩过总人数数量: %v", int32(len(AllPlayerCount)))

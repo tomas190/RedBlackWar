@@ -200,6 +200,7 @@ func (c4c *Conn4Center) Run() {
 					log.Debug("中心服异常消息~")
 					c4c.LoginStat = false
 					c4c.ReConnect()
+					return
 				} else {
 					c4c.onReceive(typeId, message)
 				}
