@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"reflect"
+	"runtime/debug"
 	"strconv"
 	"strings"
 	"time"
@@ -153,18 +154,22 @@ func (c4c *Conn4Center) CreatConnect() {
 	}
 }
 
-func (c4c *Conn4Center) ReConnect() {
-	go func() {
-		for {
-			c4c.closebreathchan <- true
-			c4c.closereceivechan <- true
-			if c4c.LoginStat == true {
-				return
-			}
-			time.Sleep(time.Second * 5)
-			c4c.CreatConnect()
-		}
-	}()
+func (c4c *Conn4Center) reConnect() {
+	log.Debug("重连中心服")
+	if c4c.LoginStat {
+		return
+	}
+	c4c.closereceivechan <- true
+	c4c.closebreathchan <- true
+	c4c.CreatConnect()
+	time.AfterFunc(time.Second*5, c4c.reConnect)
+}
+
+func (c4c *Conn4Center) catchError() {
+	if err := recover(); err != nil {
+		log.Debug("Conn4Center err %v", err)
+		log.Debug(string(debug.Stack()))
+	}
 }
 
 //Run 开始运行,监听中心服务器的返回
@@ -183,6 +188,7 @@ func (c4c *Conn4Center) Run() {
 	}()
 
 	go func() {
+		defer c4c.catchError()
 		for {
 			select {
 			case <-c4c.closereceivechan:
@@ -197,10 +203,9 @@ func (c4c *Conn4Center) Run() {
 				//log.Debug("typeId: %v", typeId)
 				//log.Debug("message: %v", string(message))
 				if typeId == -1 {
-					log.Debug("中心服异常消息~")
+					log.Debug("中心服异常消息")
 					c4c.LoginStat = false
-					c4c.ReConnect()
-					return
+					c4c.reConnect()
 				} else {
 					c4c.onReceive(typeId, message)
 				}
