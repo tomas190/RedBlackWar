@@ -29,6 +29,7 @@ var Server struct {
 	DevKey           string
 	DevName          string
 	GameID           string
+	CenterUrl        string
 }
 
 func init() {
