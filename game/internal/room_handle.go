@@ -88,10 +88,10 @@ Next:
 	msg.RoomData = roomData
 	if r.GameStat == DownBet {
 		msg.GameTime = DownBetTime - r.counter
-		log.Debug("加入房间 DownBetTime.GameTime: %v", msg.GameTime)
+		//log.Debug("加入房间 DownBetTime.GameTime: %v", msg.GameTime)
 	} else {
 		msg.GameTime = SettleTime - r.counter
-		log.Debug("加入房间 SettleTime GameTime: %v", msg.GameTime)
+		//log.Debug("加入房间 SettleTime GameTime: %v", msg.GameTime)
 	}
 	p.SendMsg(msg)
 	//log.Debug("返回客户端房间信息 JoinRoom_S2C ~")

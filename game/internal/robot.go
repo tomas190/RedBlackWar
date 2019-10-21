@@ -88,7 +88,7 @@ func (r *Room) RobotsDownBet() {
 				v.IsAction = true
 
 				if v.Account < float64(bet1) {
-					log.Debug("机器人:%v 下注金额小于身上筹码,下注失败~", v.Id)
+					//log.Debug("机器人:%v 下注金额小于身上筹码,下注失败~", v.Id)
 					continue
 				}
 

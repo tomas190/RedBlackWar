@@ -72,18 +72,18 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 func (r *Room) RBdzPk(a []byte, b []byte) {
 	//a = []byte{14, 46, 62}  //A
 	//b = []byte{12, 28, 44}  //Q
-	ha := Hex(a)
-	log.Debug("花牌 数据Red~ : %v", ha)
-	hb := Hex(b)
-	log.Debug("花牌 数据Black~ : %v", hb)
+	//ha := Hex(a)
+	//log.Debug("花牌 数据Red~ : %v", ha)
+	//hb := Hex(b)
+	//log.Debug("花牌 数据Black~ : %v", hb)
 
 	//红黑池牌型赋值
 	r.Cards.ReadCard = HexInt(a)
 	r.Cards.BlackCard = HexInt(b)
 
 	//字符串牌型
-	note := PokerArrayString(a) + " | " + PokerArrayString(b)
-	log.Debug("花牌 牌型~ : %v", note)
+	//note := PokerArrayString(a) + " | " + PokerArrayString(b)
+	//log.Debug("花牌 牌型~ : %v", note)
 
 	// 可下注的选项数量(0:红赢,1:黑赢,2:幸运一击)
 	ag := dealer.GetGroup(a)
@@ -185,7 +185,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 	log.Debug("Cards Data :%v", r.Cards)
 
-	log.Debug("<-------- 更新盈余池金额为Pre: %v --------->", SurplusPool)
+	//log.Debug("<-------- 更新盈余池金额为Pre: %v --------->", SurplusPool)
 
 	sur := &SurplusPoolDB{}
 	sur.TimeNow = time.Now().Format("2006-01-02 15:04:05")
@@ -641,7 +641,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 	//追加每局红黑Win、Luck、比牌类型的总集合
 	r.RPotWinList = append(r.RPotWinList, gw)
-	log.Debug("当前房间数据长度为: %v ~", len(r.RPotWinList))
+	//log.Debug("当前房间数据长度为: %v ~", len(r.RPotWinList))
 
 	if len(r.RPotWinList) > 72 {
 		r.RPotWinList = r.RPotWinList[1:]
@@ -649,5 +649,5 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	if len(r.CardTypeList) > 72 {
 		r.CardTypeList = r.CardTypeList[1:]
 	}
-	log.Debug("<-------- 更新盈余池金额为Last: %v --------->", SurplusPool)
+	//log.Debug("<-------- 更新盈余池金额为Last: %v --------->", SurplusPool)
 }

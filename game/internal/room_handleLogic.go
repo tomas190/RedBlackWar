@@ -579,7 +579,7 @@ func (r *Room) PrintPlayerList() {
 	for _, v := range r.PlayerList {
 		if v != nil { // && v.IsRobot == false
 			if v.IsRobot == true {
-				fmt.Println("机器人ID ：", v.Id, " 金额：", v.Account)
+				//fmt.Println("机器人ID ：", v.Id, " 金额：", v.Account)
 
 			} else {
 				fmt.Println("玩家ID ：", v.Id, " 金额：", v.Account)
