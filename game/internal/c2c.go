@@ -364,25 +364,41 @@ func (c4c *Conn4Center) onUserLogout(msgBody interface{}) {
 		log.Error(err.Error())
 	}
 
-	fmt.Println(code, err)
 	if data["status"] == "SUCCESS" && code == 200 {
-		fmt.Println("onUserLogout SUCCESS~")
+		log.Debug("<-------- UserLogin SUCCESS~ -------->")
 		userInfo, ok := data["msg"].(map[string]interface{})
+		var strId string
+		var userData *UserCallback
 		if ok {
-			userId := userInfo["id"]
-			log.Debug("userId: %v, %v", userId, reflect.TypeOf(userId))
+			log.Debug("userInfo: %v", userInfo)
+			gameUser, uok := userInfo["game_user"].(map[string]interface{})
+			if uok {
+				log.Debug("gameUser: %v", gameUser)
+				nick := gameUser["game_nick"]
+				headImg := gameUser["game_img"]
+				userId := gameUser["id"]
 
-			intID, err := userId.(json.Number).Int64()
-			if err != nil {
-				log.Error(err.Error())
-				return
+				intID, err := userId.(json.Number).Int64()
+				if err != nil {
+					log.Fatal(err.Error())
+				}
+				strId = strconv.Itoa(int(intID))
+				log.Debug("strId: %v %v", strId, reflect.TypeOf(strId))
+
+				//找到等待登录玩家
+				userData, ok = c4c.waitUser[strId]
+				if ok {
+					userData.Data.HeadImg = headImg.(string)
+					userData.Data.Nick = nick.(string)
+				}
 			}
-			strID := strconv.Itoa(int(intID))
-			log.Debug("<-------- strID -------->: %v, %v", strID, reflect.TypeOf(strID))
+			gameAccount, okA := userInfo["game_account"].(map[string]interface{})
+			if okA {
+				log.Debug("<-------- gameAccount -------->: %v", gameAccount)
+			}
 		}
 	}
 }
-
 
 func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 	log.Debug("<-------- onUserWinScore -------->: %v", msgBody)
