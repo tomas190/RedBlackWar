@@ -249,7 +249,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		}
 
 		for _, v := range r.PlayerList {
-			log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
+			//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
 			var taxMoney float64
 			var totalWinMoney float64
 			var totalLoseMoney float64
@@ -338,17 +338,17 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
-					log.Debug("<<===== 用户税收tax: %v =====>>", tax)
-					log.Debug("<<===== 用户结算金额: %v =====>>", v.ResultMoney)
-					log.Debug("<<===== 用户金额Last: %v =====>>", v.Account)
+					//log.Debug("<<===== 用户税收tax: %v =====>>", tax)
+					//log.Debug("<<===== 用户结算金额: %v =====>>", v.ResultMoney)
+					//log.Debug("<<===== 用户金额Last: %v =====>>", v.Account)
 					if v.ResultMoney > 0 {
-						v.WinTotalCount++
-						log.Debug("<<===== 盈余池1: %v =====>>", SurplusPool)
+						//v.WinTotalCount++
+						//log.Debug("<<===== 盈余池1: %v =====>>", SurplusPool)
 					} else if v.ResultMoney < 0 {
-						log.Debug("<<===== 盈余池2: %v =====>>", SurplusPool)
+						//log.Debug("<<===== 盈余池2: %v =====>>", SurplusPool)
 					}
-					log.Debug("<<===== 玩家下注: %v, 结算: %v =====>>", v.DownBetMoneys, v.ResultMoney)
-					log.Debug("<<===== 盈余池3: %v =====>>", SurplusPool)
+					//log.Debug("<<===== 玩家下注: %v, 结算: %v =====>>", v.DownBetMoneys, v.ResultMoney)
+					//log.Debug("<<===== 盈余池3: %v =====>>", SurplusPool)
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
 					taxMoney += float64(v.DownBetMoneys.RedDownBet)
@@ -394,7 +394,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						v.TotalAmountBet = 0
 						v.WinTotalCount = 0
 					}
-					log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
+					//log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
 				}
 			}
 		}
@@ -450,7 +450,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		}
 
 		for _, v := range r.PlayerList {
-			log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
+			//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
 			var taxMoney float64
 			var totalWinMoney float64
 			var totalLoseMoney float64
@@ -539,16 +539,16 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
-					log.Debug("<<===== 用户税收tax: %v =====>>", tax)
-					log.Debug("<<===== 用户结算金额: %v =====>>", v.ResultMoney)
-					log.Debug("<<===== 用户金额Last: %v =====>>", v.Account)
+					//log.Debug("<<===== 用户税收tax: %v =====>>", tax)
+					//log.Debug("<<===== 用户结算金额: %v =====>>", v.ResultMoney)
+					//log.Debug("<<===== 用户金额Last: %v =====>>", v.Account)
 					if v.ResultMoney > 0 {
 						v.WinTotalCount++
-						log.Debug("<<===== 盈余池1: %v =====>>", SurplusPool)
+						//log.Debug("<<===== 盈余池1: %v =====>>", SurplusPool)
 					} else if v.ResultMoney < 0 {
-						log.Debug("<<===== 盈余池2: %v =====>>", SurplusPool)
+						//log.Debug("<<===== 盈余池2: %v =====>>", SurplusPool)
 					}
-					log.Debug("<<===== 玩家下注: %v, 结算: %v =====>>", v.DownBetMoneys, v.ResultMoney)
+					//log.Debug("<<===== 玩家下注: %v, 结算: %v =====>>", v.DownBetMoneys, v.ResultMoney)
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
 					taxMoney += float64(v.DownBetMoneys.BlackDownBet)
@@ -595,7 +595,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						v.WinTotalCount = 0
 					}
 
-					log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
+					//log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
 				}
 			}
 		}

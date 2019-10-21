@@ -43,10 +43,10 @@ func (rc *RobotsCenter) CreateRobot() *Player {
 	r.Account = float64(money)
 
 	r.Index = RobotIndex
-	fmt.Println("robot Index :", r.Index)
+	//fmt.Println("robot Index :", r.Index)
 	rc.mapRobotList[r.Index] = r
 	RobotIndex++
-	log.Debug("创建机器人~ : %v", r.Id)
+	//log.Debug("创建机器人~ : %v", r.Id)
 	return r
 }
 

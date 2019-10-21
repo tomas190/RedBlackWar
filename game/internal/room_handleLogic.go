@@ -228,13 +228,13 @@ func (r *Room) StartGameRun() {
 		return
 	}
 
-	log.Debug("~~~~~~~~~~~~ Room Game Start Running ~~~~~~~~~~~~")
+	//log.Debug("~~~~~~~~~~~~ Room Game Start Running ~~~~~~~~~~~~")
 	//返回下注阶段倒计时
 	msg := &pb_msg.DownBetTime_S2C{}
 	msg.StartTime = DownBetTime
 	r.BroadCastMsg(msg)
 
-	log.Debug("~~~~~~~~ 下注阶段 Start : %v", time.Now().Format("2006.01.02 15:04:05")+" ~~~~~~~~")
+	//log.Debug("~~~~~~~~ 下注阶段 Start : %v", time.Now().Format("2006.01.02 15:04:05")+" ~~~~~~~~")
 
 	//记录房间游戏总局数
 	r.GameTotalCount++
@@ -267,7 +267,7 @@ func (r *Room) DownBetTimerTask() {
 	go func() {
 		for range r.clock.C {
 			r.counter++
-			log.Debug("downBet clock : %v ", r.counter)
+			//log.Debug("downBet clock : %v ", r.counter)
 			if r.counter == DownBetTime {
 				r.counter = 0
 				DownBetChannel <- true
@@ -473,7 +473,7 @@ func (r *Room) CompareSettlement() {
 	msg.StartTime = SettleTime
 	r.BroadCastMsg(msg)
 
-	log.Debug("~~~~~~~~ 结算阶段 Start : %v", time.Now().Format("2006.01.02 15:04:05")+" ~~~~~~~~")
+	//log.Debug("~~~~~~~~ 结算阶段 Start : %v", time.Now().Format("2006.01.02 15:04:05")+" ~~~~~~~~")
 
 	r.GameStat = Settle
 
@@ -519,7 +519,7 @@ func (r *Room) CompareSettlement() {
 
 	for range t.C {
 		r.counter++
-		log.Debug("settle clock : %v ", r.counter)
+		//log.Debug("settle clock : %v ", r.counter)
 		// 如果时间处理不及时,可以判断定时9秒的时候将处理这个数据然后发送给前端进行处理
 		if r.counter == SettleTime {
 			//踢出房间断线玩家

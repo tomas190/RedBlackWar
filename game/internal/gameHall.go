@@ -44,10 +44,10 @@ func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 					if room != nil && room.RoomId == rid {
 						if room.GameStat == DownBet {
 							msg.GameTime = DownBetTime - room.counter
-							log.Debug("加入房间 DownBetTime.GameTime: %v", msg.GameTime)
+							//log.Debug("加入房间 DownBetTime.GameTime: %v", msg.GameTime)
 						} else {
 							msg.GameTime = SettleTime - room.counter
-							log.Debug("加入房间 SettleTime GameTime: %v", msg.GameTime)
+							//log.Debug("加入房间 SettleTime GameTime: %v", msg.GameTime)
 						}
 					}
 					p.SendMsg(msg)
