@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/name5566/leaf"
 	lconf "github.com/name5566/leaf/conf"
+
 	"RedBlack-War/conf"
 	"RedBlack-War/game"
 	"RedBlack-War/gate"
@@ -20,6 +21,6 @@ func main() {
 	leaf.Run(
 		game.Module,
 		gate.Module,
-		//login.Module,  //login模块直接在game模块里面处理
+		// login.Module,  //login模块直接在game模块里面处理
 	)
 }

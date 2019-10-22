@@ -1,6 +1,7 @@
 package main
 
 import (
+	pb_msg "RedBlack-War/msg/Protocal"
 	"encoding/binary"
 	"fmt"
 	"github.com/golang/protobuf/proto"
@@ -9,7 +10,6 @@ import (
 	"net"
 	"net/url"
 	"reflect"
-	pb_msg "RedBlack-War/msg/Protocal"
 )
 
 //10.63.60.96
@@ -18,7 +18,7 @@ const Host = "10.63.90.45"
 const TCPPort = "8888"
 const WSPort = "8889"
 
-func main() {
+func testmain() {
 	wsTest()
 }
 
@@ -54,7 +54,6 @@ func wsMsg() []byte {
 		RoomId: "1",
 		//Id:     "tomas",
 	}
-
 
 	//message := &pb_msg.PlayerAction_C2S{
 	//	Id:       "tomas",
