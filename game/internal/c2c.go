@@ -137,8 +137,10 @@ func (c4c *Conn4Center) ReqCenterToken() {
 
 //CreatConnect 和Center建立链接
 func (c4c *Conn4Center) CreatConnect() {
-	//c4c.centerUrl = "ws://172.16.100.2:9502/" //上线
-	c4c.centerUrl = "ws://172.16.1.41:9502/" //Pre
+	// TODO
+	log.Debug("c4c.centerUrl: %v",conf.Server.CenterUrl)
+	//c4c.centerUrl = "ws://172.16.1.41:9502/" //Pre
+	c4c.centerUrl = "ws://172.16.100.2:9502/" //上线
 	//c4c.centerUrl = "ws" + strings.TrimPrefix(conf.Server.CenterServer, "http") //域名生成使用
 
 	log.Debug("--- dial: --- : %v", c4c.centerUrl)
@@ -313,9 +315,9 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 				nick := gameUser["game_nick"]
 				headImg := gameUser["game_img"]
 				userId := gameUser["id"]
-				log.Debug("nick: %v", nick)
-				log.Debug("headImg: %v", headImg)
-				log.Debug("userId: %v %v", userId, reflect.TypeOf(userId))
+				//log.Debug("nick: %v", nick)
+				//log.Debug("headImg: %v", headImg)
+				//log.Debug("userId: %v %v", userId, reflect.TypeOf(userId))
 
 				intID, err := userId.(json.Number).Int64()
 				if err != nil {
@@ -336,7 +338,7 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 			if okA {
 				log.Debug("<-------- gameAccount -------->: %v", gameAccount)
 				balance := gameAccount["balance"]
-				log.Debug("<-------- balance -------->: %v %v", balance, reflect.TypeOf(balance))
+				//log.Debug("<-------- balance -------->: %v %v", balance, reflect.TypeOf(balance))
 				floatBalance, err := balance.(json.Number).Float64()
 				if err != nil {
 					log.Error(err.Error())

@@ -34,8 +34,8 @@ func (p *Player) GetRoomCordData(r *Room) {
 	if roomGCount > RoomCordCount {
 		//大于40局则截取最新40局数据
 		num := roomGCount - RoomCordCount
-		log.Debug("num 长度: %v", num)
-		log.Debug("r.RPotWinList 长度: %v", len(r.RPotWinList))
+		//log.Debug("num 长度: %v", num)
+		//log.Debug("r.RPotWinList 长度: %v", len(r.RPotWinList))
 		p.PotWinList = append(p.PotWinList, r.RPotWinList[num:]...)
 		p.CardTypeList = append(p.CardTypeList, r.CardTypeList[num:]...)
 		for _, v := range p.PotWinList {

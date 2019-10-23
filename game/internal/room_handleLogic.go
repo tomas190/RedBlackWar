@@ -446,8 +446,8 @@ func (r *Room) GameCheckout() bool {
 	}
 	settle := (totalWinMoney + taxWinMoney) - totalLoseMoney
 	log.Debug("<-------- SurplusPool盈余池: %v --------->", SurplusPool)
-	log.Debug("<-------- settle  结 算 金 额: %v --------->", settle)
-	log.Debug("<-------- SurplusPool可输金额: %v --------->", SurplusPool*SurplusTax)
+	//log.Debug("<-------- settle  结 算 金 额: %v --------->", settle)
+	//log.Debug("<-------- SurplusPool可输金额: %v --------->", SurplusPool*SurplusTax)
 
 	//playerNum := r.PlayerLength()
 	//if settle > ((SurplusPool * SurplusTax) * float64(playerNum*6)) {}
@@ -457,7 +457,7 @@ func (r *Room) GameCheckout() bool {
 			bCard = b
 			return true
 		}
-		log.Debug("<<============== 盈余池金额不足,换牌 ==============>>")
+		//log.Debug("<<============== 盈余池金额不足,换牌 ==============>>")
 		return false
 	}
 	aCard = a
@@ -566,7 +566,7 @@ func (r *Room) CleanPlayerData() {
 		if v != nil && v.IsRobot == true {
 			if v.Account < RoomLimitMoney {
 				//退出一个机器人就在创建一个机器人
-				log.Debug("删除机器人！~~~~~~~~~~~~~~~~~~~~~: %v", v.Id)
+				//log.Debug("删除机器人！~~~~~~~~~~~~~~~~~~~~~: %v", v.Id)
 				v.room.ExitFromRoom(v)
 
 			}

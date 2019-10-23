@@ -79,7 +79,7 @@ func RegisterPlayer(p *Player) {
 		log.Debug("用户已在其他地方登录~")
 
 		up.ConnAgent.Destroy()
-		up.ConnAgent.Close()   //todo
+		up.ConnAgent.Close()
 		DeletePlayer(up)
 	}
 	//将链接的Player数据赋值给map缓存

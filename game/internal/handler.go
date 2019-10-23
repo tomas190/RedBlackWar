@@ -26,10 +26,10 @@ func handler(m interface{}, h interface{}) {
 
 func handlePing(args []interface{}) {
 	// 收到的 Hello 消息
-	m := args[0].(*pb_msg.Ping)
+	//m := args[0].(*pb_msg.Ping)
 	a := args[1].(gate.Agent)
 
-	log.Debug("Hello Pong: %v", m)
+	//log.Debug("Hello Pong: %v", m)
 
 	HeartBeatHandle(a)
 

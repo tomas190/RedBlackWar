@@ -19,7 +19,7 @@ func (r *Room) JoinGameRoom(p *Player) {
 			}
 		}
 		AllPlayerCount = append(AllPlayerCount, p.Id)
-		SurplusPool -= 6 //todo 盈余池开始-6，就会导致棋牌一直重复相同，数据也会导致一样  解决：数据库
+		SurplusPool -= 6 //
 
 		sur := &SurplusPoolDB{}
 		sur.TimeNow = time.Now().Format("2006-01-02 15:04:05")
@@ -105,7 +105,7 @@ Next:
 			msg.Msg = recodeText[RECODE_SELLTENOTDOWNBET]
 			p.SendMsg(msg)
 
-			log.Debug("当前结算阶段, 不能进行操作 ~")
+			//log.Debug("当前结算阶段, 不能进行操作 ~")
 		}
 	}
 }

@@ -108,7 +108,7 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 		msg := &pb_msg.MsgInfo_S2C{}
 		msg.Msg = recodeText[RECODE_NOTDOWNBETSTATUS]
 		p.SendMsg(msg)
-		log.Debug("当前不是下注阶段,玩家不能行动~")
+		//log.Debug("当前不是下注阶段,玩家不能行动~")
 		return
 	}
 
@@ -248,11 +248,11 @@ func RspGameHallData(p *Player) {
 			if r.GameStat == DownBet {
 				ht.GameStage = pb_msg.GameStage(DownBet)
 				ht.RoomTime = DownBetTime - r.counter
-				log.Debug("游戏大厅.DownBetTime : %v", ht.RoomTime)
+				//log.Debug("游戏大厅.DownBetTime : %v", ht.RoomTime)
 			} else {
 				ht.GameStage = pb_msg.GameStage(Settle)
 				ht.RoomTime = SettleTime - r.counter
-				log.Debug("游戏大厅 SettleTime : %v", ht.RoomTime)
+				//log.Debug("游戏大厅 SettleTime : %v", ht.RoomTime)
 			}
 			hallTime.HallTime = append(hallTime.HallTime, ht)
 
@@ -296,7 +296,7 @@ func RspGameHallData(p *Player) {
 	}
 	p.SendMsg(hallTime)
 	hallData.Account = p.Account
-	log.Debug("<====== 玩家金额:%v =====>", p.Account)
+	//log.Debug("<====== 玩家金额:%v =====>", p.Account)
 	p.SendMsg(hallData)
 
 }
