@@ -139,8 +139,9 @@ func (c4c *Conn4Center) ReqCenterToken() {
 func (c4c *Conn4Center) CreatConnect() {
 	// TODO
 	log.Debug("c4c.centerUrl: %v",conf.Server.CenterUrl)
+	c4c.centerUrl = conf.Server.CenterUrl
 	//c4c.centerUrl = "ws://172.16.1.41:9502/" //Pre
-	c4c.centerUrl = "ws://172.16.100.2:9502/" //上线
+	//c4c.centerUrl = "ws://172.16.100.2:9502/" //上线
 	//c4c.centerUrl = "ws" + strings.TrimPrefix(conf.Server.CenterServer, "http") //域名生成使用
 
 	log.Debug("--- dial: --- : %v", c4c.centerUrl)

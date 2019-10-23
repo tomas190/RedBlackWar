@@ -118,7 +118,7 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 		msg.Error = recodeText[RECODE_NOTDOWNMONEY]
 		p.SendMsg(msg)
 
-		log.Debug("玩家金额不足,不能进行下注~")
+		//log.Debug("玩家金额不足,不能进行下注~")
 		return
 	}
 
