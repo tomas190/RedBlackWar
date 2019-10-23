@@ -170,7 +170,7 @@ func (r *Room) ExitFromRoom(p *Player) {
 	//更新大厅时间
 	RspGameHallData(p)
 
-	log.Debug("Player Exit from the Room SUCCESS ~")
+	//log.Debug("Player Exit from the Room SUCCESS ~")
 }
 
 //LoadRoomRobots 装载机器人

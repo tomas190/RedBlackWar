@@ -632,7 +632,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					hallData.HallData = append(hallData.HallData, hd)
 
 					hallData.Account = v.Account
-					log.Debug("<====== 玩家金额:%v =====>", v.Account)
+					//log.Debug("<====== 玩家金额:%v =====>", v.Account)
 					v.SendMsg(hallData)
 				}
 			}

@@ -15,7 +15,7 @@ func (p *Player) PlayerMoneyHandler() {
 		errMsg.Msg = recodeText[RECODE_MONEYNOTFULL]
 		p.SendMsg(errMsg)
 
-		log.Debug("玩家金额不足,设为观战~")
+		//log.Debug("玩家金额不足,设为观战~")
 		return
 	}
 }

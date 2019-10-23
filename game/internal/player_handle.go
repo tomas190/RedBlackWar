@@ -86,7 +86,7 @@ func (p *Player) PlayerReqExit() {
 				leave.PlayerInfo.HeadImg = p.HeadImg
 				leave.PlayerInfo.Account = p.Account
 				p.SendMsg(leave)
-				log.Debug("<<===== 玩家下注总金额: %v =====>>", p.TotalAmountBet)
+				//log.Debug("<<===== 玩家下注总金额: %v =====>>", p.TotalAmountBet)
 
 				//更新大厅时间
 				RspGameHallData(p)
