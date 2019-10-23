@@ -51,6 +51,7 @@ cat load.log
   "DevKey": "new_game_20"                                       devKey
   "DevName": "新游戏开发",                                       devName
   "GameID": "5b1f3a3cb76a591e7f251719"                          gameID
+  "CenterUrl": "ws://172.16.1.41:9502/"                         连接中心服URL地址
 }
 ```
 

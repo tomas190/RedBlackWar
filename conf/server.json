@@ -16,5 +16,5 @@
   "DevKey": "new_game_20",
   "DevName": "新游戏开发",
   "GameID": "5b1f3a3cb76a591e7f251719",
-  "CenterUrl": "ws://172.16.1.41:9502/"
+  "CenterUrl": "ws://172.16.100.2:9502/"
 }
