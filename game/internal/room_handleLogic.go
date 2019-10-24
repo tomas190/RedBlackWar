@@ -2,7 +2,6 @@ package internal
 
 import (
 	pb_msg "RedBlack-War/msg/Protocal"
-	"fmt"
 	"github.com/name5566/leaf/log"
 	"time"
 )
@@ -495,7 +494,7 @@ func (r *Room) CompareSettlement() {
 	r.RBdzPk(aCard, bCard)
 
 	//测试，打印数据
-	r.PrintPlayerList()
+	//r.PrintPlayerList()
 
 	//更新房间赌神ID
 	r.GetGodGableId()
