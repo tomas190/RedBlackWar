@@ -582,8 +582,8 @@ func (r *Room) PrintPlayerList() {
 				//fmt.Println("机器人ID ：", v.Id, " 金额：", v.Account)
 
 			} else {
-				fmt.Println("玩家ID ：", v.Id, " 金额：", v.Account)
-				fmt.Println("玩家类型长度 ：", len(v.CardTypeList), " 玩家Win长度：", len(v.RedBlackList), "玩家下注：", v.DownBetMoneys)
+				//fmt.Println("玩家ID ：", v.Id, " 金额：", v.Account)
+				//fmt.Println("玩家类型长度 ：", len(v.CardTypeList), " 玩家Win长度：", len(v.RedBlackList), "玩家下注：", v.DownBetMoneys)
 			}
 			//fmt.Println("玩家ID ：", v.Id, "下注金额：", v.DownBetMoneys, "结算：", v.ResultMoney)
 			//fmt.Println("玩家:", v.Id, "行动 红、黑、Luck下注: ", v.DownBetMoneys, "玩家总下注金额: ", v.TotalAmountBet)
