@@ -98,61 +98,51 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	//获取牌型处理
 	if ag.IsThreeKind() {
 		r.Cards.RedType = CardsType(Leopard)
-		hallCard = int32(Leopard)
 		res.RedType = pb_msg.CardsType(Leopard)
 		//log.Debug("Red 三同10倍")
 	}
 	if bg.IsThreeKind() {
 		r.Cards.BlackType = CardsType(Leopard)
-		hallCard = int32(Leopard)
 		res.BlackType = pb_msg.CardsType(Leopard)
 		//log.Debug("Black 三同10倍")
 	}
 	if ag.IsStraightFlush() {
 		r.Cards.RedType = CardsType(Shunjin)
-		hallCard = int32(Shunjin)
 		res.RedType = pb_msg.CardsType(Shunjin)
 		//log.Debug("Red 顺金5倍")
 	}
 	if bg.IsStraightFlush() {
 		r.Cards.BlackType = CardsType(Shunjin)
-		hallCard = int32(Shunjin)
 		res.BlackType = pb_msg.CardsType(Shunjin)
 		//log.Debug("Black 顺金5倍")
 	}
 	if ag.IsFlush() {
 		r.Cards.RedType = CardsType(Golden)
-		hallCard = int32(Golden)
 		res.RedType = pb_msg.CardsType(Golden)
 		//log.Debug("Red 金花3倍")
 	}
 	if bg.IsFlush() {
 		r.Cards.BlackType = CardsType(Golden)
-		hallCard = int32(Golden)
 		res.BlackType = pb_msg.CardsType(Golden)
 		//log.Debug("Black 金花3倍")
 	}
 	if ag.IsStraight() {
 		r.Cards.RedType = CardsType(Straight)
-		hallCard = int32(Straight)
 		res.RedType = pb_msg.CardsType(Straight)
 		//log.Debug("Red 顺子2倍")
 	}
 	if bg.IsStraight() {
 		r.Cards.BlackType = CardsType(Straight)
-		hallCard = int32(Straight)
 		res.BlackType = pb_msg.CardsType(Straight)
 		//log.Debug("Black 顺子2倍")
 	}
 	if r.Cards.RedType != CardsType(Leopard) {
 		if (ag.Key.Pair() >> 8) >= 9 {
 			r.Cards.RedType = CardsType(Pair)
-			hallCard = int32(Pair)
 			res.RedType = pb_msg.CardsType(Pair)
 			//log.Debug("Red 大对子(9-A)")
 		} else if ag.IsPair() {
 			r.Cards.RedType = CardsType(Pair)
-			hallCard = int32(Pair)
 			res.RedType = pb_msg.CardsType(Pair)
 			//log.Debug("Red 小对子(2-8)")
 		}
@@ -160,25 +150,21 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	if r.Cards.BlackType != CardsType(Leopard) {
 		if (bg.Key.Pair() >> 8) >= 9 {
 			r.Cards.BlackType = CardsType(Pair)
-			hallCard = int32(Pair)
 			res.BlackType = pb_msg.CardsType(Pair)
 			//log.Debug("Black 大对子(9-A)")
 		} else if bg.IsPair() {
 			r.Cards.BlackType = CardsType(Pair)
-			hallCard = int32(Pair)
 			res.BlackType = pb_msg.CardsType(Pair)
 			//log.Debug("Black 小对子(2-8)")
 		}
 	}
 	if ag.IsZilch() {
 		r.Cards.RedType = CardsType(Leaflet)
-		hallCard = int32(Leaflet)
 		res.RedType = pb_msg.CardsType(Leaflet)
 		//log.Debug("Red 单张")
 	}
 	if bg.IsZilch() {
 		r.Cards.BlackType = CardsType(Leaflet)
-		hallCard = int32(Leaflet)
 		res.BlackType = pb_msg.CardsType(Leaflet)
 		//log.Debug("Black 单张")
 	}
@@ -205,6 +191,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 		if ag.IsThreeKind() {
 			r.Cards.LuckType = CardsType(Leopard)
+			hallCard = int32(Leopard)
 			gw.LuckWin = 1
 			gw.CardTypes = Leopard
 			r.CardTypeList = append(r.CardTypeList, int32(Leopard))
@@ -212,6 +199,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		}
 		if ag.IsStraightFlush() {
 			r.Cards.LuckType = CardsType(Shunjin)
+			hallCard = int32(Shunjin)
 			gw.LuckWin = 1
 			gw.CardTypes = Shunjin
 			r.CardTypeList = append(r.CardTypeList, int32(Shunjin))
@@ -219,6 +207,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		}
 		if ag.IsFlush() {
 			r.Cards.LuckType = CardsType(Golden)
+			hallCard = int32(Golden)
 			gw.LuckWin = 1
 			gw.CardTypes = Golden
 			r.CardTypeList = append(r.CardTypeList, int32(Golden))
@@ -226,6 +215,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		}
 		if ag.IsStraight() {
 			r.Cards.LuckType = CardsType(Straight)
+			hallCard = int32(Straight)
 			gw.LuckWin = 1
 			gw.CardTypes = Straight
 			r.CardTypeList = append(r.CardTypeList, int32(Straight))
@@ -234,16 +224,19 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		if r.Cards.LuckType != CardsType(Leopard) {
 			if (ag.Key.Pair() >> 8) >= 9 {
 				r.Cards.LuckType = CardsType(Pair)
+				hallCard = int32(Pair)
 				gw.LuckWin = 1
 				gw.CardTypes = Pair
 				r.CardTypeList = append(r.CardTypeList, int32(Pair))
 				res.PotWinTypes.LuckDownPot = true
 			} else if ag.IsPair() {
+				hallCard = int32(Pair)
 				gw.CardTypes = Pair
 				r.CardTypeList = append(r.CardTypeList, int32(Pair))
 			}
 		}
 		if ag.IsZilch() {
+			hallCard = int32(Leaflet)
 			gw.CardTypes = Leaflet
 			r.CardTypeList = append(r.CardTypeList, int32(Leaflet))
 		}
@@ -406,6 +399,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 		if bg.IsThreeKind() {
 			r.Cards.LuckType = CardsType(Leopard)
+			hallCard = int32(Leopard)
 			gw.LuckWin = 1
 			gw.CardTypes = Leopard
 			r.CardTypeList = append(r.CardTypeList, int32(Leopard))
@@ -413,6 +407,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		}
 		if bg.IsStraightFlush() {
 			r.Cards.LuckType = CardsType(Shunjin)
+			hallCard = int32(Shunjin)
 			gw.LuckWin = 1
 			gw.CardTypes = Shunjin
 			r.CardTypeList = append(r.CardTypeList, int32(Shunjin))
@@ -420,6 +415,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		}
 		if bg.IsFlush() {
 			r.Cards.LuckType = CardsType(Golden)
+			hallCard = int32(Golden)
 			gw.LuckWin = 1
 			gw.CardTypes = Golden
 			r.CardTypeList = append(r.CardTypeList, int32(Golden))
@@ -427,6 +423,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		}
 		if bg.IsStraight() {
 			r.Cards.LuckType = CardsType(Straight)
+			hallCard = int32(Straight)
 			gw.LuckWin = 1
 			gw.CardTypes = Straight
 			r.CardTypeList = append(r.CardTypeList, int32(Straight))
@@ -435,16 +432,19 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		if r.Cards.LuckType != CardsType(Leopard) {
 			if (bg.Key.Pair() >> 8) >= 9 {
 				r.Cards.LuckType = CardsType(Pair)
+				hallCard = int32(Pair)
 				gw.LuckWin = 1
 				gw.CardTypes = Pair
 				r.CardTypeList = append(r.CardTypeList, int32(Pair))
 				res.PotWinTypes.LuckDownPot = true
 			} else if bg.IsPair() {
+				hallCard = int32(Pair)
 				gw.CardTypes = Pair
 				r.CardTypeList = append(r.CardTypeList, int32(Pair))
 			}
 		}
 		if bg.IsZilch() {
+			hallCard = int32(Leaflet)
 			gw.CardTypes = Leaflet
 			r.CardTypeList = append(r.CardTypeList, int32(Leaflet))
 		}

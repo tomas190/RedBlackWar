@@ -167,7 +167,7 @@ func (r *Room) ExitFromRoom(p *Player) {
 	leave.PlayerInfo.Account = p.Account
 	p.SendMsg(leave)
 
-	//更新大厅时间
+	//更新大厅时间和数据
 	RspGameHallData(p)
 
 	//log.Debug("Player Exit from the Room SUCCESS ~")
