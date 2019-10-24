@@ -70,7 +70,7 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 
 //获取牌型并比牌
 func (r *Room) RBdzPk(a []byte, b []byte) {
-	a = []byte{4,6,10}  //A  豹子
+	a = []byte{42,11,28}  //A  豹子
 	b = []byte{54,39,8}  //Q  豹子
 
 	// 14,46,62  |   12,28,44  //豹子
