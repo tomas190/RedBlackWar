@@ -31,6 +31,7 @@ func rpcCloseAgent(args []interface{}) {
 	if ok {
 		log.Debug("Player Close Websocket address ~ : %v ", p.Id)
 
+
 		//用户中心服登出
 		c4c.UserLogoutCenter(p.Id, p.PassWord,p.Token) //, p.PassWord
 

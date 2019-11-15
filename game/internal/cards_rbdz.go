@@ -518,7 +518,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						AllHistoryWin += v.WinResultMoney
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
-						SurplusPool -= v.WinResultMoney * 1.03
+						SurplusPool -= v.WinResultMoney * 1.03   //todo
 						timeStr := time.Now().Format("2006-01-02_15:04:05")
 						nowTime := time.Now().Unix()
 						reason := "ResultWinScore"

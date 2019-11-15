@@ -32,6 +32,9 @@ func (m *Module) OnInit() {
 	c4c.Init()
 	c4c.CreatConnect()
 	//c4c.ReqCenterToken()
+
+	//中心服日志初始化
+	cc.Init()
 }
 
 func (m *Module) OnDestroy() {

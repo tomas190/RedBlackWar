@@ -2,6 +2,7 @@ package internal
 
 import (
 	"RedBlack-War/conf"
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/websocket"
@@ -9,6 +10,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"reflect"
+	"runtime"
 	"strconv"
 	"strings"
 	"time"
@@ -43,6 +45,7 @@ type Conn4Center struct {
 	//待处理的用户登录请求
 	waitUser map[string]*UserCallback
 }
+
 
 //Init 初始化
 func (c4c *Conn4Center) Init() {
@@ -302,6 +305,11 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 		return
 	}
 
+	if code != 200 {
+		cc.error("同步中心服用户登录失败",data)
+		return
+	}
+
 	if data["status"] == "SUCCESS" && code == 200 {
 		log.Debug("<-------- UserLogin SUCCESS~ -------->")
 		userInfo, ok := data["msg"].(map[string]interface{})
@@ -420,6 +428,12 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 		log.Error(err.Error())
 	}
 
+	if code != 200 {
+		cc.error("同步中心服赢钱失败",data)
+		return
+	}
+
+
 	log.Debug("data:%v, ok:%v", data, ok)
 	if data["status"] == "SUCCESS" && code == 200 {
 		log.Debug("<-------- UserWinScore SUCCESS~ -------->")
@@ -440,6 +454,8 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 			score, err := jsonScore.(json.Number).Float64()
 
 			log.Debug("<--------- final win score: %v", score)
+
+			cc.log("同步中心服赢钱成功",score)
 
 			if err != nil {
 				log.Error(err.Error())
@@ -467,6 +483,11 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 		log.Error(err.Error())
 	}
 
+	if code != 200 {
+		cc.error("同步中心服输钱失败",data)
+		return
+	}
+
 	fmt.Println(code, err)
 	if data["status"] == "SUCCESS" && code == 200 {
 		fmt.Println("UserWinScore SUCCESS~")
@@ -487,6 +508,9 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 			score, err := jsonScore.(json.Number).Float64()
 
 			log.Debug("<-------- final lose score -------->: %v", score)
+
+			cc.log("同步中心服输钱成功",score)
+
 			if err != nil {
 				log.Error(err.Error())
 				return
@@ -642,3 +666,87 @@ func (c4c *Conn4Center) UserSyncScoreChange(p *Player, reason string) {
 	c4c.UserSyncWinScore(p, nowTime, timeStr, reason)
 	c4c.UserSyncLoseScore(p, nowTime, timeStr, reason)
 }
+
+//Init 初始化
+func (cc *mylog) Init() {
+
+}
+func (cc *mylog) log(v ...interface{}) {
+	senddata := logmsg{
+		Type:     "LOG",
+		From:     "RedBlack-War",
+		GameName: "红黑大战",
+		Id:       conf.Server.GameID,
+		Host:     "",
+		Time:     time.Now().Unix(),
+	}
+
+	_, file, line, ok := runtime.Caller(2)
+	if ok {
+		senddata.File = file
+		senddata.Line = line
+	}
+	Msg := fmt.Sprintln(v...)
+	senddata.Msg = Msg
+	cc.sendMsg(senddata)
+}
+
+func (cc *mylog) debug(v ...interface{}) {
+	senddata := logmsg{
+		Type:     "DEG",
+		From:     "RedBlack-War",
+		GameName: "红黑大战",
+		Id:       conf.Server.GameID,
+		Host:     "",
+		Time:     time.Now().Unix(),
+	}
+
+	_, file, line, ok := runtime.Caller(2)
+	if ok {
+		senddata.File = file
+		senddata.Line = line
+	}
+	Msg := fmt.Sprintln(v...)
+	senddata.Msg = Msg
+	cc.sendMsg(senddata)
+}
+
+func (cc *mylog) error(v ...interface{}) {
+	senddata := logmsg{
+		Type:     "ERR",
+		From:     "RedBlack-War",
+		GameName: "RedBlack-War",
+		Id:       conf.Server.GameID,
+		Host:     "",
+		Time:     time.Now().Unix(),
+	}
+
+	_, file, line, ok := runtime.Caller(2)
+	if ok {
+		senddata.File = file
+		senddata.Line = line
+	}
+	Msg := fmt.Sprintln(v...)
+	senddata.Msg = Msg
+	cc.sendMsg(senddata)
+}
+
+func (cc *mylog) sendMsg(senddata logmsg) {
+	bodyJson, err1 := json.Marshal(senddata)
+	if err1 != nil {
+		log.Error(err1.Error())
+	}
+	req, err2 := http.NewRequest(http.MethodPost, conf.Server.LogAddr, bytes.NewBuffer(bodyJson))
+	if err2 != nil {
+		log.Error(err1.Error())
+	}
+	if req != nil {
+		req.Header.Add("content-type", "application/json")
+		err3 := req.Body.Close()
+		if err3 != nil {
+			log.Error(err1.Error())
+		}
+	}
+}
+
+var cc mylog
