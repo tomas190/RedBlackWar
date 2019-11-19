@@ -42,8 +42,8 @@ func PlayerLoginAgain(p *Player, a gate.Agent) {
 		}
 	}
 	p.IsOnline = true
-	//p.ConnAgent = a
-	//p.ConnAgent.SetUserData(p)
+	p.ConnAgent = a
+	p.ConnAgent.SetUserData(p)
 
 	//返回前端信息
 	//fmt.Println("LoginAgain房间信息:", p.room)

@@ -124,7 +124,7 @@ func (p *Player) StartBreathe() {
 			//已经超过9秒没有收到客户端心跳，踢掉好了
 			log.Debug("p.id:%v ,p.uClientDelay++:%v ", p.Id, p.uClientDelay)
 
-			if p.uClientDelay > 5 {
+			if p.uClientDelay > 4 {
 				p.IsOnline = false
 
 				errMsg := &pb_msg.MsgInfo_S2C{}
