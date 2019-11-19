@@ -52,6 +52,8 @@ cat load.log
   "DevName": "新游戏开发",                                       devName
   "GameID": "5b1f3a3cb76a591e7f251719"                          gameID
   "CenterUrl": "ws://172.16.1.41:9502/"                         连接中心服URL地址
+  
+  "LogAddr": "http://172.16.100.7:4151/pub?topic=game-server"   连接log日志地址
 }
 ```
 
