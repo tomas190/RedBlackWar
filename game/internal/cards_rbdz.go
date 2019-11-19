@@ -320,7 +320,11 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 
 					if totalLoseMoney > 0 {
-						v.LoseResultMoney = taxMoney - totalLoseMoney
+						if taxMoney > totalLoseMoney {
+							v.LoseResultMoney = totalLoseMoney - taxMoney
+						} else {
+							v.LoseResultMoney = taxMoney - totalLoseMoney
+						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
 						AllHistoryLose += v.LoseResultMoney
@@ -349,8 +353,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					} else if v.ResultMoney < 0 {
 						//log.Debug("<<===== 盈余池2: %v =====>>", SurplusPool)
 					}
+					if v.ResultMoney > PaoMaDeng {
+						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
+					}
 					//log.Debug("<<===== 玩家下注: %v, 结算: %v =====>>", v.DownBetMoneys, v.ResultMoney)
-					//log.Debug("<<===== 盈余池3: %v =====>>", SurplusPool)
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
 					taxMoney += float64(v.DownBetMoneys.RedDownBet)
@@ -518,7 +524,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						AllHistoryWin += v.WinResultMoney
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
-						SurplusPool -= v.WinResultMoney * 1.03   //todo
+						SurplusPool -= v.WinResultMoney * 1.03 //todo
 						timeStr := time.Now().Format("2006-01-02_15:04:05")
 						nowTime := time.Now().Unix()
 						reason := "ResultWinScore"
@@ -528,7 +534,11 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 
 					if totalLoseMoney > 0 {
-						v.LoseResultMoney = taxMoney - totalLoseMoney
+						if taxMoney > totalLoseMoney {
+							v.LoseResultMoney = totalLoseMoney - taxMoney
+						} else {
+							v.LoseResultMoney = taxMoney - totalLoseMoney
+						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
 						AllHistoryLose += v.LoseResultMoney
@@ -557,6 +567,11 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					} else if v.ResultMoney < 0 {
 						//log.Debug("<<===== 盈余池2: %v =====>>", SurplusPool)
 					}
+
+					if v.ResultMoney > PaoMaDeng {
+						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
+					}
+
 					//log.Debug("<<===== 玩家下注: %v, 结算: %v =====>>", v.DownBetMoneys, v.ResultMoney)
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
@@ -594,7 +609,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					if v.ResultMoney > 0 {
 						v.WinTotalCount++
 					}
-
 					if v.TotalAmountBet > 30000 {
 						v.TotalAmountBet = 0
 						v.WinTotalCount = 0

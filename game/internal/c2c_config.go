@@ -1,12 +1,15 @@
 package internal
 
 const (
-	msgServerLogin   string = "/GameServer/Login/login"
-	msgUserLogin     string = "/GameServer/GameUser/login"
-	msgUserLogout    string = "/GameServer/GameUser/loginout"
-	msgUserWinScore  string = "/GameServer/GameUser/winSettlement"
-	msgUserLoseScore string = "/GameServer/GameUser/loseSettlement"
+	msgServerLogin       string = "/GameServer/Login/login"
+	msgUserLogin         string = "/GameServer/GameUser/login"
+	msgUserLogout        string = "/GameServer/GameUser/loginout"
+	msgUserWinScore      string = "/GameServer/GameUser/winSettlement"
+	msgUserLoseScore     string = "/GameServer/GameUser/loseSettlement"
+	msgWinMoreThanNotice string = "/GameServer/Notice/notice" // 赢钱超过发送通知
 )
+
+var PaoMaDeng float64= 100
 
 //BaseMessage 基本消息结构
 type BaseMessage struct {
@@ -84,7 +87,7 @@ type mylog struct {
 
 //centerLog 中心服日志
 type logmsg struct {
-	Type     string `json:"type"`     // :"LOG"|"ERR"|"DEG",
+	Type     string `json:"type"`      // :"LOG"|"ERR"|"DEG",
 	From     string `json:"from"`      // : "game-server",
 	GameName string `json:"game_name"` // :游戏名称
 	Id       string `json:"id"`        // :用户ID
@@ -94,3 +97,14 @@ type logmsg struct {
 	Msg      string `json:"msg"`       // :  日志信息,
 	Time     int64  `json:"time"`      // : 时间(YYYY-MM-DD HH:II:SS),
 }
+
+type Notice struct {
+	DevName string `json:"dev_name"`
+	DevKey  string `json:"dev_key"`
+	ID      string `json:"id"`
+	GameId  string `json:"game_id"`
+	Type    int32  `json:"type"`
+	Message string `json:"message"`
+	Topic   string `json:"topic"`
+}
+

@@ -159,7 +159,7 @@ func (r *Room) RobotsDownBet() {
 func RobotRandBet() int32 {
 	slice := []int32{1, 10, 50, 100}
 	rand.Seed(int64(time.Now().UnixNano()))
-	num := rand.Intn(5)
+	num := rand.Intn(4)
 	return slice[num]
 }
 

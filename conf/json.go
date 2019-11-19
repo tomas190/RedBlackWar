@@ -31,7 +31,7 @@ var Server struct {
 	GameID           string
 	CenterUrl        string
 
-	LogAddr string
+	LogAddr   string
 }
 
 func init() {

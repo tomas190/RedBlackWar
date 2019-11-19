@@ -46,7 +46,6 @@ type Conn4Center struct {
 	waitUser map[string]*UserCallback
 }
 
-
 //Init 初始化
 func (c4c *Conn4Center) Init() {
 	c4c.GameId = conf.Server.GameID
@@ -260,6 +259,10 @@ func (c4c *Conn4Center) onReceive(messType int, messBody []byte) {
 			c4c.onUserLoseScore(baseData.Data)
 			log.Debug("<-------- baseData msgUserLoseScore -------->")
 			break
+		case msgWinMoreThanNotice:
+			c4c.onWinMoreThanNotice(baseData.Data)
+			log.Debug("<-------- baseData onWinMoreThanNotice -------->")
+			break
 		default:
 			log.Error("Receive a message but don't identify~")
 		}
@@ -306,7 +309,7 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 	}
 
 	if code != 200 {
-		cc.error("同步中心服用户登录失败",data)
+		cc.error("同步中心服用户登录失败", data)
 		return
 	}
 
@@ -429,10 +432,9 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 	}
 
 	if code != 200 {
-		cc.error("同步中心服赢钱失败",data)
+		cc.error("同步中心服赢钱失败", data)
 		return
 	}
-
 
 	log.Debug("data:%v, ok:%v", data, ok)
 	if data["status"] == "SUCCESS" && code == 200 {
@@ -455,7 +457,7 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 
 			log.Debug("<--------- final win score: %v", score)
 
-			cc.log("同步中心服赢钱成功",score)
+			cc.log("同步中心服赢钱成功", score)
 
 			if err != nil {
 				log.Error(err.Error())
@@ -484,7 +486,7 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 	}
 
 	if code != 200 {
-		cc.error("同步中心服输钱失败",data)
+		cc.error("同步中心服输钱失败", data)
 		return
 	}
 
@@ -509,12 +511,29 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 
 			log.Debug("<-------- final lose score -------->: %v", score)
 
-			cc.log("同步中心服输钱成功",score)
+			cc.log("同步中心服输钱成功", score)
 
 			if err != nil {
 				log.Error(err.Error())
 				return
 			}
+		}
+	}
+}
+
+//onServerLogin 服务器登录
+func (c4c *Conn4Center) onWinMoreThanNotice(msgBody interface{}) {
+	log.Debug("<-------- onWinMoreThanNotice -------->: %v", msgBody)
+	data, ok := msgBody.(map[string]interface{})
+	if ok {
+		code, err := data["code"].(json.Number).Int64()
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+
+		fmt.Println(code, reflect.TypeOf(code))
+		if data["status"] == "SUCCESS" && code == 200 {
+			log.Debug("<-------- onWinMoreThanNotice success~!!! -------->")
 		}
 	}
 }
@@ -665,6 +684,24 @@ func (c4c *Conn4Center) UserSyncScoreChange(p *Player, reason string) {
 	//同时同步赢分和输分
 	c4c.UserSyncWinScore(p, nowTime, timeStr, reason)
 	c4c.UserSyncLoseScore(p, nowTime, timeStr, reason)
+}
+
+func (c4c *Conn4Center) NoticeWinMoreThan(playerId, playerName string, winGold float64) {
+	log.Debug("<-------- NoticeWinMoreThan  -------->")
+	msg := fmt.Sprintf("<size=20><color=YELLOW>恭喜!</color><color=orange>%s</color><color=YELLOW>在</color></><color=WHITE><b><size=25>红黑大战</color></b></><color=YELLOW><size=20>中一把赢了</color></><color=YELLOW><b><size=35>%.2f</color></b></><color=YELLOW><size=20>金币！</color></>", playerName, winGold)
+
+	base := &BaseMessage{}
+	base.Event = msgWinMoreThanNotice
+	base.Data = &Notice{
+		DevName: conf.Server.DevName,
+		DevKey:  conf.Server.DevKey,
+		ID:      playerId,
+		GameId:  conf.Server.GameId,
+		Type:    2000,
+		Message: msg,
+		Topic:   "系统提示",
+	}
+	c4c.SendMsg2Center(base)
 }
 
 //Init 初始化
