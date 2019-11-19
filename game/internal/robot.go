@@ -39,7 +39,7 @@ func (rc *RobotsCenter) CreateRobot() *Player {
 	//生成机器人金币随机数
 	rand.Intn(int(time.Now().Unix()))
 	//money := rand.Intn(6000) + 1000
-	money := rand.Intn(1487) + 523
+	money := rand.Intn(1300) + 523
 	r.Account = float64(money)
 
 	r.Index = RobotIndex
@@ -219,7 +219,7 @@ func RandomIMG() string {
 
 //生成随机机器人NickName
 func RandomName() string {
-	randNum := fmt.Sprintf("%06v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(1000000))
-	RobotName := "A" + randNum
+	randNum := fmt.Sprintf("%06v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(100000000))
+	RobotName := randNum
 	return RobotName
 }

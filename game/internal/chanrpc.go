@@ -4,7 +4,6 @@ import (
 	pb_msg "RedBlack-War/msg/Protocal"
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
-	"time"
 )
 
 func init() {
@@ -38,7 +37,6 @@ func rpcCloseAgent(args []interface{}) {
 		errMsg.Msg = recodeText[RECODE_PLAYERBREAKLINE]
 		p.SendMsg(errMsg)
 
-		c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 		//log.Debug("玩家断开服务器连接,关闭链接~")
 		DeletePlayer(p)
 
