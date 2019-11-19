@@ -9,6 +9,7 @@ const (
 	msgWinMoreThanNotice string = "/GameServer/Notice/notice" // 赢钱超过发送通知
 )
 
+//跑马灯设置金额
 var PaoMaDeng float64= 100
 
 //BaseMessage 基本消息结构

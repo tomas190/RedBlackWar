@@ -78,7 +78,6 @@ func RegisterPlayer(p *Player) {
 		p.SendMsg(errMsg)
 		log.Debug("用户已在其他地方登录~")
 
-		up.ConnAgent.Destroy()
 		up.ConnAgent.Close()
 		DeletePlayer(up)
 	}
@@ -130,7 +129,6 @@ func (p *Player) StartBreathe() {
 				errMsg.Msg = recodeText[RECODE_BREATHSTOP]
 				p.SendMsg(errMsg)
 
-				p.ConnAgent.Destroy()
 				p.ConnAgent.Close()
 				log.Debug("用户长时间未响应心跳,停止心跳~: %v", p.Id)
 				return

@@ -1,9 +1,9 @@
 package internal
 
 import (
+	pb_msg "RedBlack-War/msg/Protocal"
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
-	pb_msg "RedBlack-War/msg/Protocal"
 )
 
 func init() {
@@ -31,9 +31,8 @@ func rpcCloseAgent(args []interface{}) {
 	if ok {
 		log.Debug("Player Close Websocket address ~ : %v ", p.Id)
 
-
 		//用户中心服登出
-		c4c.UserLogoutCenter(p.Id, p.PassWord,p.Token) //, p.PassWord
+		c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 
 		p.IsOnline = false
 
@@ -44,5 +43,6 @@ func rpcCloseAgent(args []interface{}) {
 		//log.Debug("玩家断开服务器连接,关闭链接~")
 		DeletePlayer(p)
 	}
+	a.Destroy()
 	a.SetUserData(nil)
 }
