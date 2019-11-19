@@ -145,8 +145,9 @@ func handleLeaveHall(args []interface{}) {
 	log.Debug("handleLeaveHall 玩家退出大厅~ : %v", p.Id)
 
 	if ok {
-		if userRoomMap[p.Id] == nil {
+		if p.room.GameStat == DownBet && p.IsAction == true {
 			waitTime := DownBetTime - p.room.counter
+			log.Debug("1111")
 			time.Sleep(time.Duration(waitTime + 1))
 		}
 
