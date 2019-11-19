@@ -219,7 +219,7 @@ func RandomIMG() string {
 
 //生成随机机器人NickName
 func RandomName() string {
-	randNum := fmt.Sprintf("%06v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(100000000))
+	randNum := fmt.Sprintf("%06v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(1000000000))
 	RobotName := randNum
 	return RobotName
 }

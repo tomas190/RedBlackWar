@@ -16,12 +16,13 @@ func rpcNewAgent(args []interface{}) {
 	a := args[0].(gate.Agent)
 	p := CreatPlayer()
 
-	//将用户信息塞到链接上
-	p.ConnAgent = a
-	p.ConnAgent.SetUserData(p)
-
-	//开始呼吸
-	p.StartBreathe()
+	p.connectAgent(a)
+	////将用户信息塞到链接上
+	//p.ConnAgent = a
+	//p.ConnAgent.SetUserData(p)
+	//
+	////开始呼吸
+	//p.StartBreathe()
 }
 
 func rpcCloseAgent(args []interface{}) {
