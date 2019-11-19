@@ -543,7 +543,7 @@ func (r *Room) KickOutPlayer() {
 			//玩家断线的话，退出房间信息，也要断开链接
 			v.PlayerReqExit()
 			//用户中心服登出
-			c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
+			//c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
 			log.Debug("踢出房间断线玩家 : %v", v.Id)
 		}
 	}

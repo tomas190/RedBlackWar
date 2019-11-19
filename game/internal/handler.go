@@ -5,6 +5,7 @@ import (
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"reflect"
+	"time"
 )
 
 func init() {
@@ -145,7 +146,8 @@ func handleLeaveHall(args []interface{}) {
 
 	if ok {
 		if userRoomMap[p.Id] == nil {
-			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
+			waitTime := DownBetTime - p.room.counter
+			time.Sleep(time.Duration(waitTime + 1))
 		}
 
 		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
