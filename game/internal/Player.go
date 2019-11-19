@@ -1,8 +1,8 @@
 package internal
 
 import (
-	"github.com/name5566/leaf/log"
 	pb_msg "RedBlack-War/msg/Protocal"
+	"github.com/name5566/leaf/log"
 	"time"
 )
 
@@ -122,7 +122,9 @@ func (p *Player) StartBreathe() {
 			<-ticker.C
 			p.uClientDelay++
 			//已经超过9秒没有收到客户端心跳，踢掉好了
-			if p.uClientDelay > 4 {
+			log.Debug("p.id:%v ,p.uClientDelay++:%v ", p.Id, p.uClientDelay)
+
+			if p.uClientDelay > 5 {
 				p.IsOnline = false
 
 				errMsg := &pb_msg.MsgInfo_S2C{}
