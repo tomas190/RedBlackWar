@@ -122,7 +122,7 @@ func (p *Player) StartBreathe() {
 			<-ticker.C
 			p.uClientDelay++
 			//已经超过9秒没有收到客户端心跳，踢掉好了
-			if p.uClientDelay > 5 {
+			if p.uClientDelay > 4 {
 				p.IsOnline = false
 
 				errMsg := &pb_msg.MsgInfo_S2C{}
