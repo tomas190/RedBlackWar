@@ -696,7 +696,7 @@ func (c4c *Conn4Center) NoticeWinMoreThan(playerId, playerName string, winGold f
 		DevName: conf.Server.DevName,
 		DevKey:  conf.Server.DevKey,
 		ID:      playerId,
-		GameId:  conf.Server.GameId,
+		GameId:  c4c.GameId,
 		Type:    2000,
 		Message: msg,
 		Topic:   "系统提示",
