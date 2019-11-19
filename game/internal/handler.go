@@ -145,16 +145,14 @@ func handleLeaveHall(args []interface{}) {
 	log.Debug("handleLeaveHall 玩家退出大厅~ : %v", p.Id)
 
 	if ok {
-		if p.room.GameStat == DownBet && p.IsAction == true {
-			waitTime := DownBetTime - p.room.counter
-			time.Sleep(time.Duration(waitTime + 1))
+		if userRoomMap[p.Id] == nil {
+			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 		}
-		//c4c.UserLogoutCenter(p.Id, p.PassWord)
-		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 
+		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 		p.SendMsg(leaveHall)
+
 		//DeletePlayer(p)
-		time.Sleep(time.Millisecond * 200)
 		p.ConnAgent.Close()
 	}
 }
