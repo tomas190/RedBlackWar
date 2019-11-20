@@ -325,8 +325,14 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					if totalLoseMoney > 0 {
 						if taxMoney > totalLoseMoney {
 							v.LoseResultMoney = totalLoseMoney - taxMoney
+							log.Debug("totalLoseMoney~~~ :%v",totalLoseMoney)
+							log.Debug("taxMoney~~~ :%v",taxMoney)
+							log.Debug("v.LoseResultMoney~~~ :%v", v.LoseResultMoney)
 						} else {
 							v.LoseResultMoney = taxMoney - totalLoseMoney
+							log.Debug("totalLoseMoney~~~ :%v",totalLoseMoney)
+							log.Debug("taxMoney~~~ :%v",taxMoney)
+							log.Debug("v.LoseResultMoney~~~ :%v", v.LoseResultMoney)
 						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
@@ -544,8 +550,14 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					if totalLoseMoney > 0 {
 						if taxMoney > totalLoseMoney {
 							v.LoseResultMoney = totalLoseMoney - taxMoney
+							log.Debug("totalLoseMoney~~~ :%v",totalLoseMoney)
+							log.Debug("taxMoney~~~ :%v",taxMoney)
+							log.Debug("v.LoseResultMoney~~~ :%v", v.LoseResultMoney)
 						} else {
 							v.LoseResultMoney = taxMoney - totalLoseMoney
+							log.Debug("totalLoseMoney~~~ :%v",totalLoseMoney)
+							log.Debug("taxMoney~~~ :%v",taxMoney)
+							log.Debug("v.LoseResultMoney~~~ :%v", v.LoseResultMoney)
 						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
