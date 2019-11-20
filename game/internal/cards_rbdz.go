@@ -273,6 +273,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 			if v != nil && v.IsAction == true {
 				if v.IsRobot == false {
+					//锁钱
+					c4c.LockSettlement(v)
+
 					totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
 					taxMoney += float64(v.DownBetMoneys.RedDownBet)
 
@@ -302,9 +305,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
 						}
 					}
-					//锁钱
-					c4c.LockSettlement(v)
-
 					//连接中心服金币处理
 					if totalWinMoney+taxMoney > 0 {
 						v.WinResultMoney = taxMoney
@@ -325,14 +325,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					if totalLoseMoney > 0 {
 						if taxMoney > totalLoseMoney {
 							v.LoseResultMoney = totalLoseMoney - taxMoney
-							log.Debug("totalLoseMoney~~~ :%v",totalLoseMoney)
-							log.Debug("taxMoney~~~ :%v",taxMoney)
-							log.Debug("v.LoseResultMoney~~~ :%v", v.LoseResultMoney)
 						} else {
 							v.LoseResultMoney = taxMoney - totalLoseMoney
-							log.Debug("totalLoseMoney~~~ :%v",totalLoseMoney)
-							log.Debug("taxMoney~~~ :%v",taxMoney)
-							log.Debug("v.LoseResultMoney~~~ :%v", v.LoseResultMoney)
 						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
@@ -348,8 +342,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//同时同步赢分和输分
 						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
 					}
-					//解锁
-					c4c.UnlockSettlement(v)
 
 					tax := taxMoney * taxRate
 					v.ResultMoney = totalWinMoney + taxMoney - tax
@@ -367,7 +359,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					if v.ResultMoney > PaoMaDeng {
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
-					//log.Debug("<<===== 玩家下注: %v, 结算: %v =====>>", v.DownBetMoneys, v.ResultMoney)
+					//解锁
+					c4c.UnlockSettlement(v)
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
 					taxMoney += float64(v.DownBetMoneys.RedDownBet)
@@ -498,6 +491,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 			if v != nil && v.IsAction == true {
 				if v.IsRobot == false {
+					//锁钱
+					c4c.LockSettlement(v)
+
 					totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
 					taxMoney += float64(v.DownBetMoneys.BlackDownBet)
 
@@ -527,9 +523,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
 						}
 					}
-					//锁钱
-					c4c.LockSettlement(v)
-
 					//连接中心服金币处理
 					if totalWinMoney+taxMoney > 0 {
 						v.WinResultMoney = taxMoney
@@ -550,14 +543,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					if totalLoseMoney > 0 {
 						if taxMoney > totalLoseMoney {
 							v.LoseResultMoney = totalLoseMoney - taxMoney
-							log.Debug("totalLoseMoney~~~ :%v",totalLoseMoney)
-							log.Debug("taxMoney~~~ :%v",taxMoney)
-							log.Debug("v.LoseResultMoney~~~ :%v", v.LoseResultMoney)
 						} else {
 							v.LoseResultMoney = taxMoney - totalLoseMoney
-							log.Debug("totalLoseMoney~~~ :%v",totalLoseMoney)
-							log.Debug("taxMoney~~~ :%v",taxMoney)
-							log.Debug("v.LoseResultMoney~~~ :%v", v.LoseResultMoney)
 						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
@@ -573,8 +560,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//同时同步赢分和输分
 						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
 					}
-					//解锁
-					c4c.UnlockSettlement(v)
 
 					tax := taxMoney * taxRate
 					v.ResultMoney = totalWinMoney + taxMoney - tax
@@ -594,7 +579,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
 
-					//log.Debug("<<===== 玩家下注: %v, 结算: %v =====>>", v.DownBetMoneys, v.ResultMoney)
+					//解锁
+					c4c.UnlockSettlement(v)
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
 					taxMoney += float64(v.DownBetMoneys.BlackDownBet)
