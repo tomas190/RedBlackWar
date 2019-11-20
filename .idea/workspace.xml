@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c9afdff-253a-49cb-a98b-ad8c890a28f5" name="默认更改列表" comment="">
-      <change beforePath="$PROJECT_DIR$/game/internal/Player.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/Player.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/c2c.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/c2c.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/c2c_config.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/c2c_config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/cards_rbdz.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/cards_rbdz.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/chanrpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/chanrpc.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/player_config.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/player_config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/player_handle.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/player_handle.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room_handle.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/room_handle.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -85,7 +78,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game/internal/cards_rbdz.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-4793">
@@ -109,11 +102,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="35">
-              <caret line="705" column="35" selection-start-line="705" selection-start-column="35" selection-end-line="705" selection-end-column="35" />
+            <state relative-caret-position="-1206">
+              <caret line="532" column="24" selection-start-line="532" selection-start-column="24" selection-end-line="532" selection-end-column="24" />
               <folding>
                 <element signature="e#18#223#0" expanded="true" />
               </folding>
@@ -136,8 +129,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game/internal/c2c_config.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="49" column="9" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
+            <state relative-caret-position="170">
+              <caret line="10" column="23" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -256,10 +249,10 @@
         <option value="$PROJECT_DIR$/game/internal/handler.go" />
         <option value="$PROJECT_DIR$/game/internal/Player.go" />
         <option value="$PROJECT_DIR$/game/internal/chanrpc.go" />
+        <option value="$PROJECT_DIR$/game/internal/cards_rbdz.go" />
         <option value="$PROJECT_DIR$/game/internal/c2c_config.go" />
         <option value="$PROJECT_DIR$/game/internal/c2c.go" />
         <option value="$PROJECT_DIR$/game/internal/c2c.go" />
-        <option value="$PROJECT_DIR$/game/internal/cards_rbdz.go" />
       </list>
     </option>
   </component>
@@ -569,7 +562,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/game/internal/c2c.go</url>
-          <line>622</line>
+          <line>664</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
@@ -926,13 +919,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/internal/c2c_config.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="49" column="9" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/chanrpc.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
@@ -953,22 +939,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="35">
-          <caret line="705" column="35" selection-start-line="705" selection-start-column="35" selection-end-line="705" selection-end-column="35" />
-          <folding>
-            <element signature="e#18#223#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/cards_rbdz.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4793">
           <caret line="303" column="21" selection-start-line="303" selection-start-column="21" selection-end-line="303" selection-end-column="21" />
           <folding>
             <element signature="e#18#104#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/internal/c2c_config.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1206">
+          <caret line="532" column="24" selection-start-line="532" selection-start-column="24" selection-end-line="532" selection-end-column="24" />
+          <folding>
+            <element signature="e#18#223#0" expanded="true" />
           </folding>
         </state>
       </provider>

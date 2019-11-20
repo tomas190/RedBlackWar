@@ -263,6 +263,14 @@ func (c4c *Conn4Center) onReceive(messType int, messBody []byte) {
 			c4c.onWinMoreThanNotice(baseData.Data)
 			log.Debug("<-------- baseData onWinMoreThanNotice -------->")
 			break
+		case msgLockSettlement:
+			c4c.onLockSettlement(baseData.Data)
+			log.Debug("<-------- baseData onLockSettlement -------->")
+			break
+		case msgUnlockSettlement:
+			c4c.onUnlockSettlement(baseData.Data)
+			log.Debug("<-------- baseData onUnlockSettlement -------->")
+			break
 		default:
 			log.Error("Receive a message but don't identify~")
 		}
@@ -522,6 +530,40 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 }
 
 //onWinMoreThanNotice 服务器登录
+func (c4c *Conn4Center) onLockSettlement(msgBody interface{}) {
+	log.Debug("<-------- onLockSettlement -------->: %v", msgBody)
+	data, ok := msgBody.(map[string]interface{})
+	if ok {
+		code, err := data["code"].(json.Number).Int64()
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+
+		fmt.Println(code, reflect.TypeOf(code))
+		if data["status"] == "SUCCESS" && code == 200 {
+			log.Debug("<-------- onLockSettlement success~!!! -------->")
+		}
+	}
+}
+
+//onWinMoreThanNotice 服务器登录
+func (c4c *Conn4Center) onUnlockSettlement(msgBody interface{}) {
+	log.Debug("<-------- onUnlockSettlement -------->: %v", msgBody)
+	data, ok := msgBody.(map[string]interface{})
+	if ok {
+		code, err := data["code"].(json.Number).Int64()
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+
+		fmt.Println(code, reflect.TypeOf(code))
+		if data["status"] == "SUCCESS" && code == 200 {
+			log.Debug("<-------- onUnlockSettlement success~!!! -------->")
+		}
+	}
+}
+
+//onWinMoreThanNotice 服务器登录
 func (c4c *Conn4Center) onWinMoreThanNotice(msgBody interface{}) {
 	log.Debug("<-------- onWinMoreThanNotice -------->: %v", msgBody)
 	data, ok := msgBody.(map[string]interface{})
@@ -710,7 +752,7 @@ func (c4c *Conn4Center) UnlockSettlement(p *Player) {
 	log.Debug("<-------- UnlockSettlement -------->")
 
 	baseData := &BaseMessage{}
-	baseData.Event = msgLockSettlement
+	baseData.Event = msgUnlockSettlement
 	lockMoney := &UserChangeScore{}
 	lockMoney.Auth.DevName = conf.Server.DevName
 	lockMoney.Auth.DevKey = c4c.DevKey

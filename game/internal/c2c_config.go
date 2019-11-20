@@ -8,7 +8,7 @@ const (
 	msgUserLoseScore     string = "/GameServer/GameUser/loseSettlement"
 	msgWinMoreThanNotice string = "/GameServer/Notice/notice"    // 赢钱超过发送通知
 	msgLockSettlement    string = "/GameServer/GameUser/lockSettlement"    //锁钱
-	msgUnlocksettlement  string = "/GameServer/GameUser/unlockSettlement"  //解锁
+	msgUnlockSettlement  string = "/GameServer/GameUser/unlockSettlement"  //解锁
 )
 
 //跑马灯设置金额
