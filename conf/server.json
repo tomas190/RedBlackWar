@@ -18,5 +18,6 @@
   "GameID": "5b1f3a3cb76a591e7f251719",
   "CenterUrl": "ws://172.16.100.2:9502/",
 
-  "LogAddr": "http://172.16.100.7:4151/pub?topic=game-server"
+  "LogAddr": "http://172.16.100.7:4151/pub?topic=game-server",
+  "RandNum": "http://172.16.100.4:8666/Lottery/lottery?dev_key=new_game_20&dev_name=新游戏开发"
 }

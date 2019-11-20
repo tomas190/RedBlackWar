@@ -881,3 +881,20 @@ func (cc *mylog) sendMsg(senddata logmsg) {
 }
 
 var cc mylog
+
+func GetRandNumber() {
+
+	res, err := http.Get(conf.Server.RandNum)
+	if err != nil {
+		log.Fatal("获取随机数值失败~", err)
+		return
+	}
+
+	result, err := ioutil.ReadAll(res.Body)
+	defer res.Body.Close()
+	if err != nil {
+		log.Fatal("解析随机数值失败", err)
+		return
+	}
+	fmt.Printf("%s", result)
+}
