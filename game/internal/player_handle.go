@@ -42,6 +42,9 @@ func PlayerLoginAgain(p *Player, a gate.Agent) {
 			log.Debug("用户链接1：%v",p.ConnAgent)
 		}
 	}
+	p.ConnAgent.Close()
+	p.ConnAgent.Destroy()
+	p.ConnAgent.SetUserData(nil)
 	p.IsOnline = true
 	p.ConnAgent = a
 	log.Debug("用户链接2：%v",p.ConnAgent)

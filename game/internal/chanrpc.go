@@ -41,8 +41,10 @@ func rpcCloseAgent(args []interface{}) {
 		//log.Debug("玩家断开服务器连接,关闭链接~")
 		DeletePlayer(p)
 
+		log.Debug("用户进来连接1:%v", p.ConnAgent)
 		p.ConnAgent.SetUserData(nil)
 		p.ConnAgent.Destroy()
 		p.ConnAgent.Close()
+		log.Debug("用户进来连接2:%v", p.ConnAgent)
 	}
 }

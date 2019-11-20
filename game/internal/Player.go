@@ -131,10 +131,11 @@ func (p *Player) StartBreathe() {
 				errMsg.Msg = recodeText[RECODE_BREATHSTOP]
 				p.SendMsg(errMsg)
 
-				p.ConnAgent.Close()
 				if userRoomMap[p.Id] == nil {
 					c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 				}
+				p.ConnAgent.Close()
+				p.ConnAgent.Destroy()
 				log.Debug("用户长时间未响应心跳,停止心跳~: %v", p.Id)
 				return
 			}
