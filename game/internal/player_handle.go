@@ -33,47 +33,19 @@ func (p *Player) GetUserRoomInfo() *Player {
 }
 
 //PlayerLoginAgain 用户重新登陆
-func PlayerLoginAgain(p *Player) {
+func PlayerLoginAgain(p *Player, a gate.Agent) {
 	log.Debug("<------- 用户重新登陆: %v ------->", p.Id)
 	p.room = userRoomMap[p.Id]
 	for _, v := range p.room.PlayerList {
 		if v.Id == p.Id {
-			p.Id = v.Id
-			p.PassWord = v.PassWord
-			p.Token = v.Token
-			p.NickName = v.NickName
-			p.HeadImg = v.HeadImg
-			p.Account = v.Account
-			p.DownBetMoneys = new(pb_msg.DownBetMoney)
-			p.DownBetMoneys.RedDownBet = v.DownBetMoneys.RedDownBet
-			p.DownBetMoneys.BlackDownBet = v.DownBetMoneys.BlackDownBet
-			p.DownBetMoneys.LuckDownBet = v.DownBetMoneys.LuckDownBet
-			p.TotalAmountBet = v.TotalAmountBet
-			p.Status = pb_msg.PlayerStatus(v.Status)
-			p.ContinueVot = new(pb_msg.ContinueBet)
-			p.ContinueVot.DownBetMoneys = new(pb_msg.DownBetMoney)
-			p.ContinueVot.DownBetMoneys.RedDownBet = v.ContinueVot.DownBetMoneys.RedDownBet
-			p.ContinueVot.DownBetMoneys.BlackDownBet = v.ContinueVot.DownBetMoneys.BlackDownBet
-			p.ContinueVot.DownBetMoneys.LuckDownBet = v.ContinueVot.DownBetMoneys.LuckDownBet
-			p.ContinueVot.TotalMoneyBet = v.ContinueVot.TotalMoneyBet
-			p.ResultMoney = v.ResultMoney
-			p.WinTotalCount = v.WinTotalCount
-			p.CardTypeList = v.CardTypeList
-			p.PotWinList = v.PotWinList
-			p.RedBlackList = v.RedBlackList
-			p.RedWinCount = v.RedWinCount
-			p.BlackWinCount = v.BlackWinCount
-			p.LuckWinCount = v.LuckWinCount
-			p.TotalCount = v.TotalCount
-			p.HallRoomData = v.HallRoomData
-			p.IsOnline = v.IsOnline
-			p.IsRobot = v.IsRobot
+			p = v
 			log.Debug("用户链接1：%v",p.ConnAgent)
 		}
 	}
 	p.IsOnline = true
+	p.ConnAgent = a
 	log.Debug("用户链接2：%v",p.ConnAgent)
-
+	p.ConnAgent.SetUserData(p)
 
 	//返回前端信息
 	//fmt.Println("LoginAgain房间信息:", p.room)

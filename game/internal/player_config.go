@@ -96,5 +96,6 @@ type Player struct {
 	//SeatNum        int32          //玩家座位号
 
 	// 是否是机器人
-	IsRobot bool
+	IsRobot  bool
+	IsInRoom bool  //是否在房间内
 }

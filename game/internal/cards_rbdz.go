@@ -302,6 +302,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
 						}
 					}
+					//锁钱
+					c4c.LockSettlement(v)
+
 					//连接中心服金币处理
 					if totalWinMoney+taxMoney > 0 {
 						v.WinResultMoney = taxMoney
@@ -339,6 +342,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//同时同步赢分和输分
 						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
 					}
+					//解锁
+					c4c.UnlockSettlement(v)
 
 					tax := taxMoney * taxRate
 					v.ResultMoney = totalWinMoney + taxMoney - tax
@@ -516,6 +521,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
 						}
 					}
+					//锁钱
+					c4c.LockSettlement(v)
+
 					//连接中心服金币处理
 					if totalWinMoney+taxMoney > 0 {
 						v.WinResultMoney = taxMoney
@@ -553,6 +561,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//同时同步赢分和输分
 						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
 					}
+					//解锁
+					c4c.UnlockSettlement(v)
 
 					tax := taxMoney * taxRate
 					v.ResultMoney = totalWinMoney + taxMoney - tax

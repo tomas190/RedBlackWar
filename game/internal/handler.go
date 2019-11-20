@@ -81,7 +81,7 @@ func handleLoginInfo(args []interface{}) {
 
 	//判断用户是否存在房间信息,如果有就返回
 	if userRoomMap[p.Id] != nil {
-		PlayerLoginAgain(p)
+		PlayerLoginAgain(p, a)
 	}
 
 	//player := p.GetUserRoomInfo()
@@ -144,11 +144,6 @@ func handleLeaveHall(args []interface{}) {
 	log.Debug("handleLeaveHall 玩家退出大厅~ : %v", p.Id)
 
 	if ok {
-		if userRoomMap[p.Id] == nil {
-			log.Debug("handleLeaveHall 进来了~~~~")
-			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
-		}
-
 		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 		p.SendMsg(leaveHall)
 

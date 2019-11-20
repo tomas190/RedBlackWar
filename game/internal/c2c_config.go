@@ -6,11 +6,13 @@ const (
 	msgUserLogout        string = "/GameServer/GameUser/loginout"
 	msgUserWinScore      string = "/GameServer/GameUser/winSettlement"
 	msgUserLoseScore     string = "/GameServer/GameUser/loseSettlement"
-	msgWinMoreThanNotice string = "/GameServer/Notice/notice" // 赢钱超过发送通知
+	msgWinMoreThanNotice string = "/GameServer/Notice/notice"    // 赢钱超过发送通知
+	msgLockSettlement    string = "/GameServer/GameUser/lockSettlement"    //锁钱
+	msgUnlocksettlement  string = "/GameServer/GameUser/unlockSettlement"  //解锁
 )
 
 //跑马灯设置金额
-var PaoMaDeng float64= 100
+var PaoMaDeng float64 = 100
 
 //BaseMessage 基本消息结构
 type BaseMessage struct {
@@ -108,4 +110,3 @@ type Notice struct {
 	Message string `json:"message"`
 	Topic   string `json:"topic"`
 }
-

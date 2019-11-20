@@ -1,8 +1,8 @@
 package internal
 
 import (
-	"github.com/name5566/leaf/log"
 	pb_msg "RedBlack-War/msg/Protocal"
+	"github.com/name5566/leaf/log"
 	"time"
 )
 
@@ -11,6 +11,8 @@ func (r *Room) JoinGameRoom(p *Player) {
 	//寻找可用的座位号
 	//p.SeatNum = r.FindUsableSeat()
 	//r.PlayerList[p.SeatNum] = p
+
+	p.IsInRoom = true
 
 	if p.IsRobot == false {
 		for _, v := range AllPlayerCount {
@@ -134,6 +136,7 @@ func (r *Room) ExitFromRoom(p *Player) {
 		if v != nil && v.Id == p.Id {
 			if v.IsRobot == false {
 				p.room = nil
+				p.IsInRoom = false
 				//userRoomMap = make(map[string]*Room)
 				//userRoomMap[p.Id] = nil
 				delete(userRoomMap, p.Id)
