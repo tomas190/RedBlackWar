@@ -2,7 +2,6 @@ package internal
 
 import (
 	pb_msg "RedBlack-War/msg/Protocal"
-	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"time"
 )
@@ -123,7 +122,7 @@ func (p *Player) StartBreathe() {
 			<-ticker.C
 			p.uClientDelay++
 			//已经超过9秒没有收到客户端心跳，踢掉好了
-			//log.Debug("p.id:%v ,p.uClientDelay++:%v ", p.Id, p.uClientDelay)
+			log.Debug("p.id:%v ,p.uClientDelay++:%v ", p.Id, p.uClientDelay)
 
 			if p.uClientDelay > 3 {
 				p.IsOnline = false
@@ -133,9 +132,9 @@ func (p *Player) StartBreathe() {
 				p.SendMsg(errMsg)
 
 				p.ConnAgent.Close()
-				//if userRoomMap[p.Id] == nil {
-				//	c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
-				//}
+				if userRoomMap[p.Id] == nil {
+					c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
+				}
 				log.Debug("用户长时间未响应心跳,停止心跳~: %v", p.Id)
 				return
 			}
@@ -148,26 +147,4 @@ func (p *Player) SyncScoreChangeToCenter(reason string) {
 	//跨模块调用到login，然后由login调用到Center
 	//login.ChanRPC.Go("SyncCenterScoreChange", p.ID, p.fWinScore, p.fLoseScore)
 	c4c.UserSyncScoreChange(p, reason)
-}
-
-func (p *Player) connectAgent(a gate.Agent) {
-	p.ConnAgent = a
-	p.ConnAgent.SetUserData(p)
-	p.StartHeartbeat() // 连接成功后需要立即进行心跳连接，不然会直接延时到断线重连
-}
-
-func (p *Player) StartHeartbeat() {
-	ticker := time.NewTicker(time.Second * 3)
-	go func() {
-		for { //循环
-			select {
-			case <-ticker.C:
-				p.uClientDelay++
-				if p.uClientDelay > 3 { //4次，12秒没有收到客户端心跳包，协程销毁
-					p.ConnAgent.Close()
-					return
-				}
-			}
-		}
-	}()
 }

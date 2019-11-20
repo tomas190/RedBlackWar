@@ -145,6 +145,7 @@ func handleLeaveHall(args []interface{}) {
 
 	if ok {
 		if userRoomMap[p.Id] == nil {
+			log.Debug("handleLeaveHall 进来了~~~~")
 			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 		}
 

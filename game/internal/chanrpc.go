@@ -16,13 +16,12 @@ func rpcNewAgent(args []interface{}) {
 	a := args[0].(gate.Agent)
 	p := CreatPlayer()
 
-	p.connectAgent(a)
-	////将用户信息塞到链接上
-	//p.ConnAgent = a
-	//p.ConnAgent.SetUserData(p)
-	//
-	////开始呼吸
-	//p.StartBreathe()
+	//将用户信息塞到链接上
+	p.ConnAgent = a
+	p.ConnAgent.SetUserData(p)
+
+	//开始呼吸
+	p.StartBreathe()
 }
 
 func rpcCloseAgent(args []interface{}) {
@@ -38,6 +37,7 @@ func rpcCloseAgent(args []interface{}) {
 		errMsg.Msg = recodeText[RECODE_PLAYERBREAKLINE]
 		p.SendMsg(errMsg)
 
+		//c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 		//log.Debug("玩家断开服务器连接,关闭链接~")
 		DeletePlayer(p)
 

@@ -521,7 +521,7 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 	}
 }
 
-//onServerLogin 服务器登录
+//onWinMoreThanNotice 服务器登录
 func (c4c *Conn4Center) onWinMoreThanNotice(msgBody interface{}) {
 	log.Debug("<-------- onWinMoreThanNotice -------->: %v", msgBody)
 	data, ok := msgBody.(map[string]interface{})
@@ -641,7 +641,7 @@ func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, rea
 	userWin.Info.CreateTime = timeUnix
 	userWin.Info.GameId = c4c.GameId
 	userWin.Info.ID = p.Id
-	userWin.Info.LockMoney = 0
+	userWin.Info.LockMoney = p.Account
 	userWin.Info.Money = p.WinResultMoney
 	userWin.Info.Order = winOrder
 	userWin.Info.PayReason = reason
@@ -665,7 +665,7 @@ func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, timeStr, re
 	userLose.Info.CreateTime = timeUnix
 	userLose.Info.GameId = c4c.GameId
 	userLose.Info.ID = p.Id
-	userLose.Info.LockMoney = 0
+	userLose.Info.LockMoney = p.Account
 	userLose.Info.Money = p.LoseResultMoney
 	userLose.Info.Order = loseOrder
 	userLose.Info.PayReason = reason
