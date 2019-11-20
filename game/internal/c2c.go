@@ -882,8 +882,8 @@ func (cc *mylog) sendMsg(senddata logmsg) {
 
 var cc mylog
 
+//GetRandNumber 获取中心服随机数值
 func GetRandNumber() {
-
 	res, err := http.Get(conf.Server.RandNum)
 	if err != nil {
 		log.Fatal("获取随机数值失败~", err)
@@ -896,5 +896,13 @@ func GetRandNumber() {
 		log.Fatal("解析随机数值失败", err)
 		return
 	}
-	fmt.Printf("%s", result)
+
+	var RandSlice []int32
+
+	for _, v := range result {
+		if v >= 1 && v <= 52 {
+			RandSlice = append(RandSlice, int32(v))
+		}
+	}
+	log.Debug("随机数值: %v", RandSlice)
 }

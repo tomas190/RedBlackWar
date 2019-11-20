@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c9afdff-253a-49cb-a98b-ad8c890a28f5" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/json.go" beforeDir="false" afterPath="$PROJECT_DIR$/conf/json.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/server.json" beforeDir="false" afterPath="$PROJECT_DIR$/conf/server.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/Player.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/Player.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/c2c.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/c2c.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/module.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/module.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,10 +83,22 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="883" lean-forward="true" selection-start-line="883" selection-end-line="883" />
+            <state relative-caret-position="329">
+              <caret line="902" column="30" lean-forward="true" selection-start-line="902" selection-start-column="30" selection-end-line="902" selection-end-column="30" />
               <folding>
                 <element signature="e#18#223#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/internal/cards.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1736">
+              <caret line="119" column="10" selection-start-line="119" selection-start-column="10" selection-end-line="119" selection-end-column="10" />
+              <folding>
+                <element signature="e#18#99#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -121,15 +127,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="418">
               <caret line="153" column="5" selection-start-line="153" selection-start-column="5" selection-end-line="153" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/go/src/github.com/name5566/leaf/network/conn.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -249,13 +246,13 @@
         <option value="$PROJECT_DIR$/game/internal/Player.go" />
         <option value="$PROJECT_DIR$/conf/server.json" />
         <option value="$PROJECT_DIR$/conf/json.go" />
-        <option value="$PROJECT_DIR$/game/internal/c2c.go" />
-        <option value="$PROJECT_DIR$/game/internal/c2c.go" />
         <option value="$PROJECT_DIR$/game/internal/module.go" />
+        <option value="$PROJECT_DIR$/game/internal/c2c.go" />
+        <option value="$PROJECT_DIR$/game/internal/c2c.go" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="60" />
     <option name="y" value="-20" />
     <option name="width" value="1940" />
@@ -834,16 +831,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/internal/cards.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="119" column="10" selection-start-line="119" selection-start-column="10" selection-end-line="119" selection-end-column="10" />
-          <folding>
-            <element signature="e#18#99#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/c2c_config.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -968,10 +955,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/game/internal/cards.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1736">
+          <caret line="119" column="10" selection-start-line="119" selection-start-column="10" selection-end-line="119" selection-end-column="10" />
+          <folding>
+            <element signature="e#18#99#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="883" lean-forward="true" selection-start-line="883" selection-end-line="883" />
+        <state relative-caret-position="329">
+          <caret line="902" column="30" lean-forward="true" selection-start-line="902" selection-start-column="30" selection-end-line="902" selection-end-column="30" />
           <folding>
             <element signature="e#18#223#0" expanded="true" />
           </folding>

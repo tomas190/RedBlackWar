@@ -36,7 +36,9 @@ func (m *Module) OnInit() {
 	//中心服日志初始化
 	cc.Init()
 
-	GetRandNumber()
+	for i := 0; i < 3; i ++ {
+		GetRandNumber()
+	}
 }
 
 func (m *Module) OnDestroy() {
