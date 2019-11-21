@@ -897,12 +897,5 @@ func GetRandNumber() {
 		return
 	}
 
-	var RandSlice []int32
-
-	for _, v := range result {
-		if v >= 1 && v <= 52 {
-			RandSlice = append(RandSlice, int32(v))
-		}
-	}
-	log.Debug("随机数值: %v", RandSlice)
+	fmt.Println(result)
 }

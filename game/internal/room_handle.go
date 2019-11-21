@@ -13,6 +13,8 @@ func (r *Room) JoinGameRoom(p *Player) {
 	//r.PlayerList[p.SeatNum] = p
 
 	p.IsInRoom = true
+	//锁钱
+	c4c.LockSettlement(p)
 
 	if p.IsRobot == false {
 		for _, v := range AllPlayerCount {
