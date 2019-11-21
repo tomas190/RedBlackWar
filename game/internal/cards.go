@@ -4,6 +4,7 @@ import (
 	crand "crypto/rand"
 	"encoding/binary"
 	"fmt"
+	"github.com/name5566/leaf/log"
 	"math/rand"
 	"strings"
 )
@@ -139,6 +140,7 @@ func NewPoker(p int, joker, upset bool) []byte {
 func Upset(src []byte) {
 	seed := make([]byte, 16)
 	crand.Read(seed)
+	log.Debug("seed : %v", seed)
 	a := binary.LittleEndian.Uint64(seed[:8])
 	b := binary.LittleEndian.Uint64(seed[8:])
 	UpsetPro(src, int64(a), int64(b))

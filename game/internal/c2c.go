@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/name5566/leaf/log"
+	"golang.org/x/net/html/atom"
 	"io/ioutil"
 	"net/http"
 	"reflect"
@@ -883,7 +884,7 @@ func (cc *mylog) sendMsg(senddata logmsg) {
 var cc mylog
 
 //GetRandNumber 获取中心服随机数值
-func GetRandNumber() []int32 {
+func GetRandNumber() []uint8 {
 	res, err := http.Get(conf.Server.RandNum)
 	if err != nil {
 		log.Fatal("获取随机数值失败~", err)
@@ -901,7 +902,7 @@ func GetRandNumber() []int32 {
 		panic(err2)
 	}
 
-	var hex []int32
+	var RandNum []uint8
 
 	data, ok := users.(map[string]interface{})
 	if ok {
@@ -909,6 +910,7 @@ func GetRandNumber() []int32 {
 		codeString := code.(string)
 		codeSlice := strings.Split(codeString, " ")
 
+		var hex []int32
 		for _, val := range codeSlice {
 			switch val {
 			case "1":
@@ -1017,7 +1019,117 @@ func GetRandNumber() []int32 {
 				hex = append(hex, 52)
 			}
 		}
+		log.Debug("获取的随机数值: %v", hex)
+
+
+		for _, val := range hex {
+			switch val {
+			case 1:
+				RandNum = append(RandNum, 14)
+			case 2:
+				RandNum = append(RandNum, 2)
+			case 3:
+				RandNum = append(RandNum, 3)
+			case 4:
+				RandNum = append(RandNum, 4)
+			case 5:
+				RandNum = append(RandNum, 5)
+			case 6:
+				RandNum = append(RandNum, 6)
+			case 7:
+				RandNum = append(RandNum, 7)
+			case 8:
+				RandNum = append(RandNum, 8)
+			case 9:
+				RandNum = append(RandNum, 9)
+			case 10:
+				RandNum = append(RandNum, 10)
+			case 11:
+				RandNum = append(RandNum, 11)
+			case 12:
+				RandNum = append(RandNum, 12)
+			case 13:
+				RandNum = append(RandNum, 13)
+			case 14:
+				RandNum = append(RandNum, 30)
+			case 15:
+				RandNum = append(RandNum, 18)
+			case 16:
+				RandNum = append(RandNum, 19)
+			case 17:
+				RandNum = append(RandNum, 20)
+			case 18:
+				RandNum = append(RandNum, 21)
+			case 19:
+				RandNum = append(RandNum, 22)
+			case 20:
+				RandNum = append(RandNum, 23)
+			case 21:
+				RandNum = append(RandNum, 24)
+			case 22:
+				RandNum = append(RandNum, 25)
+			case 23:
+				RandNum = append(RandNum, 26)
+			case 24:
+				RandNum = append(RandNum, 27)
+			case 25:
+				RandNum = append(RandNum, 28)
+			case 26:
+				RandNum = append(RandNum, 29)
+			case 27:
+				RandNum = append(RandNum, 46)
+			case 28:
+				RandNum = append(RandNum, 34)
+			case 29:
+				RandNum = append(RandNum, 35)
+			case 30:
+				RandNum = append(RandNum, 36)
+			case 31:
+				RandNum = append(RandNum, 37)
+			case 32:
+				RandNum = append(RandNum, 38)
+			case 33:
+				RandNum = append(RandNum, 39)
+			case 34:
+				RandNum = append(RandNum, 40)
+			case 35:
+				RandNum = append(RandNum, 41)
+			case 36:
+				RandNum = append(RandNum, 42)
+			case 37:
+				RandNum = append(RandNum, 43)
+			case 38:
+				RandNum = append(RandNum, 44)
+			case 39:
+				RandNum = append(RandNum, 45)
+			case 40:
+				RandNum = append(RandNum, 62)
+			case 41:
+				RandNum = append(RandNum, 50)
+			case 42:
+				RandNum = append(RandNum, 51)
+			case 43:
+				RandNum = append(RandNum, 52)
+			case 44:
+				RandNum = append(RandNum, 53)
+			case 45:
+				RandNum = append(RandNum, 54)
+			case 46:
+				RandNum = append(RandNum, 55)
+			case 47:
+				RandNum = append(RandNum, 56)
+			case 48:
+				RandNum = append(RandNum, 57)
+			case 49:
+				RandNum = append(RandNum, 58)
+			case 50:
+				RandNum = append(RandNum, 59)
+			case 51:
+				RandNum = append(RandNum, 60)
+			case 52:
+				RandNum = append(RandNum, 61)
+			}
+		}
 	}
-	log.Debug("获取的随机数值: %v",hex)
-	return hex
+	return RandNum
 }

@@ -56,9 +56,10 @@ var (
 func (this *RBdzDealer) Deal() ([]byte, []byte) {
 	// 检查剩余牌数量
 	offset := this.Offset
-	if offset >= len(this.Poker)/2 {
+	if len(this.Poker) < 6{
 		//获取牌值
-		this.Poker = NewPoker(1, false, true)
+		//this.Poker = NewPoker(1, false, true)
+		this.Poker = GetRandNumber()
 		log.Debug("获取的牌值: %v", this.Poker)
 		num := HexInt(this.Poker)
 		log.Debug("转换的数值: %v", num)
@@ -84,18 +85,18 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	// 42,58,9   |   4,52,7    //对子(小)
 	// 14,55,21  |   11,54,8   //单张
 
-	//ha := Hex(a)
-	//log.Debug("花牌 数据Red~ : %v", ha)
-	//hb := Hex(b)
-	//log.Debug("花牌 数据Black~ : %v", hb)
+	ha := Hex(a)
+	log.Debug("花牌 数据Red~ : %v", ha)
+	hb := Hex(b)
+	log.Debug("花牌 数据Black~ : %v", hb)
 
 	//红黑池牌型赋值
 	r.Cards.ReadCard = HexInt(a)
 	r.Cards.BlackCard = HexInt(b)
 
 	//字符串牌型
-	//note := PokerArrayString(a) + " | " + PokerArrayString(b)
-	//log.Debug("花牌 牌型~ : %v", note)
+	note := PokerArrayString(a) + " | " + PokerArrayString(b)
+	log.Debug("花牌 牌型~ : %v", note)
 
 	// 可下注的选项数量(0:红赢,1:黑赢,2:幸运一击)
 	ag := dealer.GetGroup(a)
