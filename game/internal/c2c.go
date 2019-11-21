@@ -883,19 +883,141 @@ func (cc *mylog) sendMsg(senddata logmsg) {
 var cc mylog
 
 //GetRandNumber 获取中心服随机数值
-func GetRandNumber() {
+func GetRandNumber() []int32 {
 	res, err := http.Get(conf.Server.RandNum)
 	if err != nil {
 		log.Fatal("获取随机数值失败~", err)
-		return
 	}
 
 	result, err := ioutil.ReadAll(res.Body)
 	defer res.Body.Close()
 	if err != nil {
-		log.Fatal("解析随机数值失败", err)
-		return
+		log.Fatal("解析随机数值失败: %v", err)
 	}
 
-	fmt.Println(result)
+	var users interface{}
+	err2 := json.Unmarshal(result, &users)
+	if err2 != nil {
+		panic(err2)
+	}
+
+	var hex []int32
+
+	data, ok := users.(map[string]interface{})
+	if ok {
+		code := data["msg"]
+		codeString := code.(string)
+		codeSlice := strings.Split(codeString, " ")
+
+		for _, val := range codeSlice {
+			switch val {
+			case "1":
+				hex = append(hex, 1)
+			case "2":
+				hex = append(hex, 2)
+			case "3":
+				hex = append(hex, 3)
+			case "4":
+				hex = append(hex, 4)
+			case "5":
+				hex = append(hex, 5)
+			case "6":
+				hex = append(hex, 6)
+			case "7":
+				hex = append(hex, 7)
+			case "8":
+				hex = append(hex, 8)
+			case "9":
+				hex = append(hex, 9)
+			case "10":
+				hex = append(hex, 10)
+			case "11":
+				hex = append(hex, 11)
+			case "12":
+				hex = append(hex, 12)
+			case "13":
+				hex = append(hex, 13)
+			case "14":
+				hex = append(hex, 14)
+			case "15":
+				hex = append(hex, 15)
+			case "16":
+				hex = append(hex, 16)
+			case "17":
+				hex = append(hex, 17)
+			case "18":
+				hex = append(hex, 18)
+			case "19":
+				hex = append(hex, 19)
+			case "20":
+				hex = append(hex, 20)
+			case "21":
+				hex = append(hex, 21)
+			case "22":
+				hex = append(hex, 22)
+			case "23":
+				hex = append(hex, 23)
+			case "24":
+				hex = append(hex, 24)
+			case "25":
+				hex = append(hex, 25)
+			case "26":
+				hex = append(hex, 26)
+			case "27":
+				hex = append(hex, 27)
+			case "28":
+				hex = append(hex, 28)
+			case "29":
+				hex = append(hex, 29)
+			case "30":
+				hex = append(hex, 30)
+			case "31":
+				hex = append(hex, 31)
+			case "32":
+				hex = append(hex, 32)
+			case "33":
+				hex = append(hex, 33)
+			case "34":
+				hex = append(hex, 34)
+			case "35":
+				hex = append(hex, 35)
+			case "36":
+				hex = append(hex, 36)
+			case "37":
+				hex = append(hex, 37)
+			case "38":
+				hex = append(hex, 38)
+			case "39":
+				hex = append(hex, 39)
+			case "40":
+				hex = append(hex, 40)
+			case "41":
+				hex = append(hex, 41)
+			case "42":
+				hex = append(hex, 42)
+			case "43":
+				hex = append(hex, 43)
+			case "44":
+				hex = append(hex, 44)
+			case "45":
+				hex = append(hex, 45)
+			case "46":
+				hex = append(hex, 46)
+			case "47":
+				hex = append(hex, 47)
+			case "48":
+				hex = append(hex, 48)
+			case "49":
+				hex = append(hex, 49)
+			case "50":
+				hex = append(hex, 50)
+			case "51":
+				hex = append(hex, 51)
+			case "52":
+				hex = append(hex, 52)
+			}
+		}
+	}
+	log.Debug("获取的随机数值: %v",hex)
+	return hex
 }

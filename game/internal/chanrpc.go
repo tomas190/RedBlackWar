@@ -38,8 +38,6 @@ func rpcCloseAgent(args []interface{}) {
 		p.SendMsg(errMsg)
 
 		if p.IsInRoom == false && p.IsAction == false {
-			//解锁
-			c4c.UnlockSettlement(p)
 			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 		}
 		//log.Debug("玩家断开服务器连接,关闭链接~")

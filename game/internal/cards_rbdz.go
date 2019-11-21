@@ -59,6 +59,9 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 	if offset >= len(this.Poker)/2 {
 		//获取牌值
 		this.Poker = NewPoker(1, false, true)
+		log.Debug("获取的牌值: %v", this.Poker)
+		num := HexInt(this.Poker)
+		log.Debug("转换的数值: %v", num)
 		offset = 0
 	}
 	// 红黑各取3张牌
