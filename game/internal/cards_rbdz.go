@@ -273,6 +273,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 			if v != nil && v.IsAction == true {
 				if v.IsRobot == false {
+					//锁钱
+					c4c.LockSettlement(v)
 
 					totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
 					taxMoney += float64(v.DownBetMoneys.RedDownBet)
@@ -357,6 +359,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					if v.ResultMoney > PaoMaDeng {
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
+					//解锁
+					c4c.UnlockSettlement(v)
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
 					taxMoney += float64(v.DownBetMoneys.RedDownBet)
@@ -487,6 +491,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 			if v != nil && v.IsAction == true {
 				if v.IsRobot == false {
+					//锁钱
+					c4c.LockSettlement(v)
 
 					totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
 					taxMoney += float64(v.DownBetMoneys.BlackDownBet)
@@ -573,6 +579,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
 
+					//解锁
+					c4c.UnlockSettlement(v)
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
 					taxMoney += float64(v.DownBetMoneys.BlackDownBet)
