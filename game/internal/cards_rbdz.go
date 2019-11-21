@@ -60,9 +60,9 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 		//获取牌值
 		//this.Poker = NewPoker(1, false, true)
 		this.Poker = GetRandNumber()
-		log.Debug("获取的牌值: %v", this.Poker)
-		num := HexInt(this.Poker)
-		log.Debug("转换的数值: %v", num)
+		//log.Debug("获取的牌值: %v", this.Poker)
+		//num := HexInt(this.Poker)
+		//log.Debug("转换的数值: %v", num)
 		offset = 0
 	}
 	// 红黑各取3张牌
@@ -85,18 +85,18 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	// 42,58,9   |   4,52,7    //对子(小)
 	// 14,55,21  |   11,54,8   //单张
 
-	ha := Hex(a)
-	log.Debug("花牌 数据Red~ : %v", ha)
-	hb := Hex(b)
-	log.Debug("花牌 数据Black~ : %v", hb)
+	//ha := Hex(a)
+	//log.Debug("花牌 数据Red~ : %v", ha)
+	//hb := Hex(b)
+	//log.Debug("花牌 数据Black~ : %v", hb)
 
 	//红黑池牌型赋值
 	r.Cards.ReadCard = HexInt(a)
 	r.Cards.BlackCard = HexInt(b)
 
 	//字符串牌型
-	note := PokerArrayString(a) + " | " + PokerArrayString(b)
-	log.Debug("花牌 牌型~ : %v", note)
+	//note := PokerArrayString(a) + " | " + PokerArrayString(b)
+	//log.Debug("花牌 牌型~ : %v", note)
 
 	// 可下注的选项数量(0:红赢,1:黑赢,2:幸运一击)
 	ag := dealer.GetGroup(a)
@@ -351,14 +351,13 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
-					//log.Debug("<<===== 用户税收tax: %v =====>>", tax)
-					//log.Debug("<<===== 用户结算金额: %v =====>>", v.ResultMoney)
-					//log.Debug("<<===== 用户金额Last: %v =====>>", v.Account)
+
 					if v.ResultMoney > 0 {
-						//v.WinTotalCount++
-						//log.Debug("<<===== 盈余池1: %v =====>>", SurplusPool)
+						v.WinTotalCount++
 					} else if v.ResultMoney < 0 {
-						//log.Debug("<<===== 盈余池2: %v =====>>", SurplusPool)
+						if v.WinTotalCount >= 12 {
+							v.WinTotalCount--
+						}
 					}
 					if v.ResultMoney > PaoMaDeng {
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
@@ -402,11 +401,11 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						v.WinTotalCount++
 					}
 
-					if v.TotalAmountBet > 30000 {
+					if v.TotalAmountBet > 18000 {
 						v.TotalAmountBet = 0
 						v.WinTotalCount = 0
 					}
-					if v.WinTotalCount > 18 {
+					if v.WinTotalCount > 12 {
 						v.TotalAmountBet = 0
 						v.WinTotalCount = 0
 					}
@@ -569,20 +568,17 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
-					//log.Debug("<<===== 用户税收tax: %v =====>>", tax)
-					//log.Debug("<<===== 用户结算金额: %v =====>>", v.ResultMoney)
-					//log.Debug("<<===== 用户金额Last: %v =====>>", v.Account)
+
 					if v.ResultMoney > 0 {
 						v.WinTotalCount++
-						//log.Debug("<<===== 盈余池1: %v =====>>", SurplusPool)
 					} else if v.ResultMoney < 0 {
-						//log.Debug("<<===== 盈余池2: %v =====>>", SurplusPool)
+						if v.WinTotalCount >= 12 {
+							v.WinTotalCount--
+						}
 					}
-
-					if v.ResultMoney > PaoMaDeng {
+					if v.ResultMoney > PaoMaDeng {  //跑马灯
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
-
 					//解锁
 					c4c.UnlockSettlement(v)
 				} else {
@@ -621,11 +617,11 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					if v.ResultMoney > 0 {
 						v.WinTotalCount++
 					}
-					if v.TotalAmountBet > 30000 {
+					if v.TotalAmountBet > 18000 {
 						v.TotalAmountBet = 0
 						v.WinTotalCount = 0
 					}
-					if v.WinTotalCount > 18 {
+					if v.WinTotalCount > 12 {
 						v.TotalAmountBet = 0
 						v.WinTotalCount = 0
 					}

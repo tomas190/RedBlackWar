@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/name5566/leaf/log"
-	"golang.org/x/net/html/atom"
 	"io/ioutil"
 	"net/http"
 	"reflect"
@@ -910,223 +909,113 @@ func GetRandNumber() []uint8 {
 		codeString := code.(string)
 		codeSlice := strings.Split(codeString, " ")
 
-		var hex []int32
+		log.Debug("获取的随机数值: %v", codeSlice)
+
 		for _, val := range codeSlice {
 			switch val {
 			case "1":
-				hex = append(hex, 1)
-			case "2":
-				hex = append(hex, 2)
-			case "3":
-				hex = append(hex, 3)
-			case "4":
-				hex = append(hex, 4)
-			case "5":
-				hex = append(hex, 5)
-			case "6":
-				hex = append(hex, 6)
-			case "7":
-				hex = append(hex, 7)
-			case "8":
-				hex = append(hex, 8)
-			case "9":
-				hex = append(hex, 9)
-			case "10":
-				hex = append(hex, 10)
-			case "11":
-				hex = append(hex, 11)
-			case "12":
-				hex = append(hex, 12)
-			case "13":
-				hex = append(hex, 13)
-			case "14":
-				hex = append(hex, 14)
-			case "15":
-				hex = append(hex, 15)
-			case "16":
-				hex = append(hex, 16)
-			case "17":
-				hex = append(hex, 17)
-			case "18":
-				hex = append(hex, 18)
-			case "19":
-				hex = append(hex, 19)
-			case "20":
-				hex = append(hex, 20)
-			case "21":
-				hex = append(hex, 21)
-			case "22":
-				hex = append(hex, 22)
-			case "23":
-				hex = append(hex, 23)
-			case "24":
-				hex = append(hex, 24)
-			case "25":
-				hex = append(hex, 25)
-			case "26":
-				hex = append(hex, 26)
-			case "27":
-				hex = append(hex, 27)
-			case "28":
-				hex = append(hex, 28)
-			case "29":
-				hex = append(hex, 29)
-			case "30":
-				hex = append(hex, 30)
-			case "31":
-				hex = append(hex, 31)
-			case "32":
-				hex = append(hex, 32)
-			case "33":
-				hex = append(hex, 33)
-			case "34":
-				hex = append(hex, 34)
-			case "35":
-				hex = append(hex, 35)
-			case "36":
-				hex = append(hex, 36)
-			case "37":
-				hex = append(hex, 37)
-			case "38":
-				hex = append(hex, 38)
-			case "39":
-				hex = append(hex, 39)
-			case "40":
-				hex = append(hex, 40)
-			case "41":
-				hex = append(hex, 41)
-			case "42":
-				hex = append(hex, 42)
-			case "43":
-				hex = append(hex, 43)
-			case "44":
-				hex = append(hex, 44)
-			case "45":
-				hex = append(hex, 45)
-			case "46":
-				hex = append(hex, 46)
-			case "47":
-				hex = append(hex, 47)
-			case "48":
-				hex = append(hex, 48)
-			case "49":
-				hex = append(hex, 49)
-			case "50":
-				hex = append(hex, 50)
-			case "51":
-				hex = append(hex, 51)
-			case "52":
-				hex = append(hex, 52)
-			}
-		}
-		log.Debug("获取的随机数值: %v", hex)
-
-
-		for _, val := range hex {
-			switch val {
-			case 1:
 				RandNum = append(RandNum, 14)
-			case 2:
+			case "2":
 				RandNum = append(RandNum, 2)
-			case 3:
+			case "3":
 				RandNum = append(RandNum, 3)
-			case 4:
+			case "4":
 				RandNum = append(RandNum, 4)
-			case 5:
+			case "5":
 				RandNum = append(RandNum, 5)
-			case 6:
+			case "6":
 				RandNum = append(RandNum, 6)
-			case 7:
+			case "7":
 				RandNum = append(RandNum, 7)
-			case 8:
+			case "8":
 				RandNum = append(RandNum, 8)
-			case 9:
+			case "9":
 				RandNum = append(RandNum, 9)
-			case 10:
+			case "10":
 				RandNum = append(RandNum, 10)
-			case 11:
+			case "11":
 				RandNum = append(RandNum, 11)
-			case 12:
+			case "12":
 				RandNum = append(RandNum, 12)
-			case 13:
+			case "13":
 				RandNum = append(RandNum, 13)
-			case 14:
+			case "14":
 				RandNum = append(RandNum, 30)
-			case 15:
+			case "15":
 				RandNum = append(RandNum, 18)
-			case 16:
+			case "16":
 				RandNum = append(RandNum, 19)
-			case 17:
+			case "17":
 				RandNum = append(RandNum, 20)
-			case 18:
+			case "18":
 				RandNum = append(RandNum, 21)
-			case 19:
+			case "19":
 				RandNum = append(RandNum, 22)
-			case 20:
+			case "20":
 				RandNum = append(RandNum, 23)
-			case 21:
+			case "21":
 				RandNum = append(RandNum, 24)
-			case 22:
+			case "22":
 				RandNum = append(RandNum, 25)
-			case 23:
+			case "23":
 				RandNum = append(RandNum, 26)
-			case 24:
+			case "24":
 				RandNum = append(RandNum, 27)
-			case 25:
+			case "25":
 				RandNum = append(RandNum, 28)
-			case 26:
+			case "26":
 				RandNum = append(RandNum, 29)
-			case 27:
+			case "27":
 				RandNum = append(RandNum, 46)
-			case 28:
+			case "28":
 				RandNum = append(RandNum, 34)
-			case 29:
+			case "29":
 				RandNum = append(RandNum, 35)
-			case 30:
+			case "30":
 				RandNum = append(RandNum, 36)
-			case 31:
+			case "31":
 				RandNum = append(RandNum, 37)
-			case 32:
+			case "32":
 				RandNum = append(RandNum, 38)
-			case 33:
+			case "33":
 				RandNum = append(RandNum, 39)
-			case 34:
+			case "34":
 				RandNum = append(RandNum, 40)
-			case 35:
+			case "35":
 				RandNum = append(RandNum, 41)
-			case 36:
+			case "36":
 				RandNum = append(RandNum, 42)
-			case 37:
+			case "37":
 				RandNum = append(RandNum, 43)
-			case 38:
+			case "38":
 				RandNum = append(RandNum, 44)
-			case 39:
+			case "39":
 				RandNum = append(RandNum, 45)
-			case 40:
+			case "40":
 				RandNum = append(RandNum, 62)
-			case 41:
+			case "41":
 				RandNum = append(RandNum, 50)
-			case 42:
+			case "42":
 				RandNum = append(RandNum, 51)
-			case 43:
+			case "43":
 				RandNum = append(RandNum, 52)
-			case 44:
+			case "44":
 				RandNum = append(RandNum, 53)
-			case 45:
+			case "45":
 				RandNum = append(RandNum, 54)
-			case 46:
+			case "46":
 				RandNum = append(RandNum, 55)
-			case 47:
+			case "47":
 				RandNum = append(RandNum, 56)
-			case 48:
+			case "48":
 				RandNum = append(RandNum, 57)
-			case 49:
+			case "49":
 				RandNum = append(RandNum, 58)
-			case 50:
+			case "50":
 				RandNum = append(RandNum, 59)
-			case 51:
+			case "51":
 				RandNum = append(RandNum, 60)
-			case 52:
+			case "52":
 				RandNum = append(RandNum, 61)
 			}
 		}
