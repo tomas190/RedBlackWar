@@ -54,6 +54,7 @@ cat load.log
   "CenterUrl": "ws://172.16.1.41:9502/"                         连接中心服URL地址
   
   "LogAddr": "http://172.16.100.7:4151/pub?topic=game-server"   连接log日志地址
+  "RandNum": "http://172.16.100.4:8666/Lottery/lottery?dev_key=new_game_20&dev_name=新游戏开发"  获取奖号池的地址
 }
 ```
 

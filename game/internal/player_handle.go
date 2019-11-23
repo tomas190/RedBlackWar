@@ -39,13 +39,11 @@ func PlayerLoginAgain(p *Player, a gate.Agent) {
 	for _, v := range p.room.PlayerList {
 		if v.Id == p.Id {
 			p = v
-			log.Debug("用户链接1：%v",p.ConnAgent)
 		}
 	}
 
 	p.IsOnline = true
 	p.ConnAgent = a
-	log.Debug("用户链接2：%v",p.ConnAgent)
 	p.ConnAgent.SetUserData(p)
 
 	//返回前端信息

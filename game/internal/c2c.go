@@ -909,7 +909,7 @@ func GetRandNumber() []uint8 {
 		codeString := code.(string)
 		codeSlice := strings.Split(codeString, " ")
 
-		log.Debug("获取的随机数值: %v", codeSlice)
+		//log.Debug("获取的随机数值: %v", codeSlice)
 
 		for _, val := range codeSlice {
 			switch val {
@@ -1020,5 +1020,6 @@ func GetRandNumber() []uint8 {
 			}
 		}
 	}
+	log.Debug("随机数值: %v",RandNum)
 	return RandNum
 }
