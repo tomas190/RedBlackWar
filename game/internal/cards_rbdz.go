@@ -292,7 +292,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
 					totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
 
-					c4c.LockSettlement(v, totalLoseMoney)
+					//c4c.LockSettlement(v, totalLoseMoney)
 
 					if gw.LuckWin == 1 {
 						if gw.CardTypes == Leopard {
@@ -370,7 +370,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
 					//解锁
-					c4c.UnlockSettlement(v, totalLoseMoney)
+					//c4c.UnlockSettlement(v, totalLoseMoney)
+
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
 					taxMoney += float64(v.DownBetMoneys.RedDownBet)
@@ -510,7 +511,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
 					totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
 
-					c4c.LockSettlement(v, totalLoseMoney)
+					//c4c.LockSettlement(v, totalLoseMoney)
 
 					if gw.LuckWin == 1 {
 						v.LuckWinCount++
@@ -589,7 +590,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
 					//解锁
-					c4c.UnlockSettlement(v,totalLoseMoney)
+					//c4c.UnlockSettlement(v,totalLoseMoney)
 
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
