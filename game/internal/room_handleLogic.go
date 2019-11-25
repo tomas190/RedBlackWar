@@ -495,6 +495,7 @@ func (r *Room) CompareSettlement() {
 
 	//测试，打印数据
 	//r.PrintPlayerList()
+	log.Debug("玩家列表 r.PlayerList :%v", r.PlayerList)
 
 	//更新房间赌神ID
 	r.GetGodGableId()
@@ -565,7 +566,7 @@ func (r *Room) CleanPlayerData() {
 	}
 	for _, v := range r.PlayerList {
 		if v != nil && v.IsRobot == true {
-			if v.Account < RoomLimitMoney && v.Account > 2000{
+			if v.Account < RoomLimitMoney && v.Account > 2000 {
 				//退出一个机器人就在创建一个机器人
 				//log.Debug("删除机器人！~~~~~~~~~~~~~~~~~~~~~: %v", v.Id)
 				v.room.ExitFromRoom(v)

@@ -56,10 +56,16 @@ var (
 func (this *RBdzDealer) Deal() ([]byte, []byte) {
 	// 检查剩余牌数量
 	offset := this.Offset
-	if len(this.Poker) < 6{
+	if len(this.Poker) < 6 {
 		//获取牌值
-		//this.Poker = NewPoker(1, false, true)
-		this.Poker = GetRandNumber()
+		RandNum, code := GetRandNumber()
+		if code == 200 {
+			this.Poker = RandNum
+			log.Debug("<<====== RandNum随机数值 ======>>")
+		} else {
+			this.Poker = NewPoker(1, false, true)
+			log.Debug("<<====== NewPoker随机数值 ======>>")
+		}
 		//log.Debug("获取的牌值: %v", this.Poker)
 		//num := HexInt(this.Poker)
 		//log.Debug("转换的数值: %v", num)
@@ -576,7 +582,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							v.WinTotalCount--
 						}
 					}
-					if v.ResultMoney > PaoMaDeng {  //跑马灯
+					if v.ResultMoney > PaoMaDeng { //跑马灯
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
 					//解锁
