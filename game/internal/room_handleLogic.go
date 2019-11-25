@@ -495,7 +495,7 @@ func (r *Room) CompareSettlement() {
 
 	//测试，打印数据
 	//r.PrintPlayerList()
-	log.Debug("玩家列表 r.PlayerList :%v", r.PlayerList)
+	//log.Debug("玩家列表 r.PlayerList :%v", r.PlayerList)
 
 	//更新房间赌神ID
 	r.GetGodGableId()
@@ -581,10 +581,10 @@ func (r *Room) PrintPlayerList() {
 	for _, v := range r.PlayerList {
 		if v != nil { // && v.IsRobot == false
 			if v.IsRobot == true {
-				//fmt.Println("机器人ID ：", v.Id, " 金额：", v.Account)
+				log.Debug("机器人ID ：", v.Id, " 金额：", v.Account)
 
 			} else {
-				//fmt.Println("玩家ID ：", v.Id, " 金额：", v.Account)
+				log.Debug("玩家ID ：", v.Id, " 金额：", v.Account)
 				//fmt.Println("玩家类型长度 ：", len(v.CardTypeList), " 玩家Win长度：", len(v.RedBlackList), "玩家下注：", v.DownBetMoneys)
 			}
 			//fmt.Println("玩家ID ：", v.Id, "下注金额：", v.DownBetMoneys, "结算：", v.ResultMoney)
