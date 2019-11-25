@@ -43,6 +43,7 @@ func PlayerLoginAgain(p *Player, a gate.Agent) {
 	}
 
 	p.IsOnline = true
+	p.IsInRoom = true
 	p.ConnAgent = a
 	p.ConnAgent.SetUserData(p)
 
