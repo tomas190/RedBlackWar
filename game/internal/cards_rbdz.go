@@ -58,17 +58,19 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 	offset := this.Offset
 	if len(this.Poker) < 6 {
 		//获取牌值
-		RandNum, code := GetRandNumber()
-		if code == 200 {
-			this.Poker = RandNum
-			log.Debug("<<====== RandNum随机数值 ======>>")
-		} else {
-			this.Poker = NewPoker(1, false, true)
-			log.Debug("<<====== NewPoker随机数值 ======>>")
-		}
+		//RandNum, code := GetRandNumber()
+		//if code == 200 {
+		//	this.Poker = RandNum
+		//	log.Debug("<<====== RandNum随机数值 ======>>")
+		//} else {
+		//	this.Poker = NewPoker(1, false, true)
+		//	log.Debug("<<====== NewPoker随机数值 ======>>")
+		//}
 		//log.Debug("获取的牌值: %v", this.Poker)
 		//num := HexInt(this.Poker)
 		//log.Debug("转换的数值: %v", num)
+
+		this.Poker = NewPoker(1, false, true)
 		offset = 0
 	}
 	// 红黑各取3张牌
