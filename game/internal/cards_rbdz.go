@@ -70,7 +70,7 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 		//num := HexInt(this.Poker)
 		//log.Debug("转换的数值: %v", num)
 
-		this.Poker = NewPoker(1, false, true)
+		this.Poker = GetRandNumber()
 		offset = 0
 	}
 	// 红黑各取3张牌

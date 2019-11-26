@@ -884,7 +884,7 @@ func (cc *mylog) sendMsg(senddata logmsg) {
 var cc mylog
 
 //GetRandNumber 获取中心服随机数值
-func GetRandNumber() ([]uint8, float64) {
+func GetRandNumber() []uint8 {
 	res, err := http.Get(conf.Server.RandNum)
 	if err != nil {
 		log.Error("获取随机数值失败~", err)
@@ -905,8 +905,6 @@ func GetRandNumber() ([]uint8, float64) {
 	var RandNum []uint8
 
 	data, ok := users.(map[string]interface{})
-	code := data["code"]
-	codeFloat := code.(float64)
 	if ok {
 		msg := data["msg"]
 		codeString := msg.(string)
@@ -1023,6 +1021,5 @@ func GetRandNumber() ([]uint8, float64) {
 			}
 		}
 	}
-	log.Debug("状态: %v , 随机数值: %v", codeFloat, RandNum)
-	return RandNum, codeFloat
+	return RandNum
 }
