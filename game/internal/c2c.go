@@ -622,7 +622,6 @@ func (c4c *Conn4Center) UserLoginCenter(userId string, password string, token st
 			DevKey:  c4c.DevKey}
 	}
 
-
 	c4c.SendMsg2Center(baseData)
 
 	//加入待处理map，等待处理
@@ -887,7 +886,13 @@ var cc mylog
 func GetRandNumber() []uint8 {
 	res, err := http.Get(conf.Server.RandNum)
 	if err != nil {
-		log.Error("获取随机数值失败~", err)
+		log.Debug("获取随机值失败，再次请求连接~")
+
+		res2, err2 := http.Get(conf.Server.RandNum)
+		if err2 != nil {
+			log.Error("再次获取随机数值失败: %v", err)
+		}
+		res = res2
 	}
 
 	result, err := ioutil.ReadAll(res.Body)
@@ -895,6 +900,8 @@ func GetRandNumber() []uint8 {
 	if err != nil {
 		log.Error("解析随机数值失败: %v", err)
 	}
+
+	fmt.Printf("读取的奖源池数据: %s", result)
 
 	var users interface{}
 	err2 := json.Unmarshal(result, &users)
