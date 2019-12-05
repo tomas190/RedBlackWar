@@ -3,7 +3,7 @@
   "LogPath": "",
   "WSAddr": "0.0.0.0",
   "Port": "1214",
-  "HTTPPort": "8190",
+  "HTTPPort": "1236",
   "MaxConnNum": 20000,
 
   "MongoDBAddr": "172.16.100.5:27017",

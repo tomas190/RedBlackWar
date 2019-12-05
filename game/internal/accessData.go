@@ -49,14 +49,14 @@ const (
 )
 
 func StartHttpServer() {
-	http.HandleFunc("/hhdz/api/accessData", getAccessData)
+	http.HandleFunc("/api/accessData", getAccessData)
+	log.Debug("========================")
 
 	err := http.ListenAndServe(":"+ conf.Server.HTTPPort, nil)
 	if err != nil {
 		log.Error("Http server启动异常:", err.Error())
 		panic(err)
 	}
-	log.Error("httpServer 启动成功...")
 }
 
 func getAccessData(w http.ResponseWriter, r *http.Request) {
