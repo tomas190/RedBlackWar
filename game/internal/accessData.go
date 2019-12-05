@@ -50,7 +50,6 @@ const (
 
 func StartHttpServer() {
 	http.HandleFunc("/api/accessData", getAccessData)
-	log.Debug("========================")
 
 	err := http.ListenAndServe(":"+ conf.Server.HTTPPort, nil)
 	if err != nil {
@@ -70,11 +69,11 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	skip := r.FormValue("skip")
 	limit := r.FormValue("limit")
 
-	if req.Id == "" || req.GameId == "" || req.RoundId == "" || startTime == "" ||
-		endTime == "" || skip == "" || limit == "" {
-		fmt.Fprint(w, NewResp(ErrCode, "", nil))
-		return
-	}
+	//if req.Id == "" || req.GameId == "" || req.RoundId == "" || startTime == "" ||
+	//	endTime == "" || skip == "" || limit == "" {
+	//	fmt.Fprint(w, NewResp(ErrCode, "", nil))
+	//	return
+	//}
 
 	selector := bson.M{}
 
