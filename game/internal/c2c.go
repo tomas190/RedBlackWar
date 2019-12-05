@@ -901,7 +901,7 @@ func GetRandNumber() []uint8 {
 		log.Error("解析随机数值失败: %v", err)
 	}
 
-	fmt.Printf("读取的奖源池数据: %s", result)
+	//fmt.Printf("读取的奖源池数据: %s", result)
 
 	var users interface{}
 	err2 := json.Unmarshal(result, &users)

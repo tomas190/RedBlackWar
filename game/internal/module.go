@@ -35,6 +35,8 @@ func (m *Module) OnInit() {
 
 	//中心服日志初始化
 	cc.Init()
+
+	go StartHttpServer()
 }
 
 func (m *Module) OnDestroy() {

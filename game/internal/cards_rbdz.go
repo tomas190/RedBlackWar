@@ -3,6 +3,7 @@ package internal
 import (
 	pb_msg "RedBlack-War/msg/Protocal"
 	"github.com/name5566/leaf/log"
+	"strconv"
 	"time"
 )
 
@@ -57,7 +58,7 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 	// 检查剩余牌数量
 	offset := this.Offset
 	if len(this.Poker) < 6 {
-		//获取牌值
+		//获取牌值 TODO
 		//RandNum, code := GetRandNumber()
 		//if code == 200 {
 		//	this.Poker = RandNum
@@ -374,6 +375,18 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					//解锁
 					//c4c.UnlockSettlement(v, totalLoseMoney)
 
+					timeNow := time.Now().Unix()
+					data := PlayerDownBetRecode{}
+					data.Id = v.Id
+					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
+					data.RoomId = v.room.RoomId
+					data.DownBetInfo = v.DownBetMoneys
+					data.DownBetTime = timeNow
+					data.CardResult = v.room.Cards
+					data.ResultMoney = v.ResultMoney
+					data.TaxRate = taxRate
+					InsertAccessData(&data)
+
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
 					taxMoney += float64(v.DownBetMoneys.RedDownBet)
@@ -593,6 +606,18 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 					//解锁
 					//c4c.UnlockSettlement(v,totalLoseMoney)
+
+					timeNow := time.Now().Unix()
+					data := PlayerDownBetRecode{}
+					data.Id = v.Id
+					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
+					data.RoomId = v.room.RoomId
+					data.DownBetInfo = v.DownBetMoneys
+					data.DownBetTime = timeNow
+					data.CardResult = v.room.Cards
+					data.ResultMoney = v.ResultMoney
+					data.TaxRate = taxRate
+					InsertAccessData(&data)
 
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)

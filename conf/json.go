@@ -17,6 +17,7 @@ var Server struct {
 	MaxConnNum  int
 	ConsolePort int
 	ProfilePath string
+	HTTPPort    string
 
 	MongoDBAddr string
 	MongoDBAuth string
