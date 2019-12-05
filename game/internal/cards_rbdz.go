@@ -376,7 +376,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					//c4c.UnlockSettlement(v, totalLoseMoney)
 
 					timeNow := time.Now().Unix()
-					data := PlayerDownBetRecode{}
+					data := &PlayerDownBetRecode{}
 					data.Id = v.Id
 					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
 					data.RoomId = v.room.RoomId
@@ -392,7 +392,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					data.CardResult.BlackType = v.room.Cards.BlackType
 					data.ResultMoney = v.ResultMoney
 					data.TaxRate = taxRate
-					InsertAccessData(&data)
+					InsertAccessData(data)
 
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
@@ -615,7 +615,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					//c4c.UnlockSettlement(v,totalLoseMoney)
 
 					timeNow := time.Now().Unix()
-					data := PlayerDownBetRecode{}
+					data := &PlayerDownBetRecode{}
 					data.Id = v.Id
 					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
 					data.RoomId = v.room.RoomId
@@ -631,7 +631,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					data.CardResult.BlackType = v.room.Cards.BlackType
 					data.ResultMoney = v.ResultMoney
 					data.TaxRate = taxRate
-					InsertAccessData(&data)
+					InsertAccessData(data)
 
 				} else {
 					totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
