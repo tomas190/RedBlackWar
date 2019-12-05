@@ -62,7 +62,7 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 		//RandNum, code := GetRandNumber()
 		//if code == 200 {
 		//	this.Poker = RandNum
-		//	log.Debug("<<====== RandNum随机数值 ======>>")
+
 		//} else {
 		//	this.Poker = NewPoker(1, false, true)
 		//	log.Debug("<<====== NewPoker随机数值 ======>>")
@@ -71,7 +71,15 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 		//num := HexInt(this.Poker)
 		//log.Debug("转换的数值: %v", num)
 
-		this.Poker = GetRandNumber()
+		RandNum, err := GetRandNumber()
+		if err == nil {
+			this.Poker = RandNum
+			log.Debug("<<====== RandNum随机数值 ======>>")
+		} else {
+			this.Poker = NewPoker(1, false, true)
+			log.Debug("<<====== NewPoker随机数值 ======>>")
+		}
+
 		offset = 0
 	}
 	// 红黑各取3张牌
@@ -619,7 +627,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					data.Id = v.Id
 					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
 					data.RoomId = v.room.RoomId
-					data.DownBetInfo =  new(DownBetMoney)
+					data.DownBetInfo = new(DownBetMoney)
 					data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
 					data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
 					data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet

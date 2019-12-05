@@ -883,16 +883,11 @@ func (cc *mylog) sendMsg(senddata logmsg) {
 var cc mylog
 
 //GetRandNumber 获取中心服随机数值
-func GetRandNumber() []uint8 {
+func GetRandNumber() ([]uint8, error) {
 	res, err := http.Get(conf.Server.RandNum)
 	if err != nil {
-		log.Debug("获取随机值失败，再次请求连接~")
-
-		res2, err2 := http.Get(conf.Server.RandNum)
-		if err2 != nil {
-			log.Error("再次获取随机数值失败: %v", err)
-		}
-		res = res2
+		log.Debug("再次获取随机数值失败: %v", err)
+		return nil, err
 	}
 
 	result, err := ioutil.ReadAll(res.Body)
@@ -1028,5 +1023,5 @@ func GetRandNumber() []uint8 {
 			}
 		}
 	}
-	return RandNum
+	return RandNum, nil
 }
