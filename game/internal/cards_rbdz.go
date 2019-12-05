@@ -380,9 +380,16 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					data.Id = v.Id
 					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
 					data.RoomId = v.room.RoomId
-					data.DownBetInfo = v.DownBetMoneys
+					data.DownBetInfo = new(pb_msg.DownBetMoney)
+					data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
+					data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
+					data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
 					data.DownBetTime = timeNow
-					data.CardResult = v.room.Cards
+					data.CardResult = new(pb_msg.CardData)
+					data.CardResult.ReadCard = v.room.Cards.ReadCard
+					data.CardResult.BlackCard = v.room.Cards.BlackCard
+					data.CardResult.RedType = v.room.Cards.RedType
+					data.CardResult.BlackType = v.room.Cards.BlackType
 					data.ResultMoney = v.ResultMoney
 					data.TaxRate = taxRate
 					InsertAccessData(&data)
@@ -612,9 +619,16 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					data.Id = v.Id
 					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
 					data.RoomId = v.room.RoomId
-					data.DownBetInfo = v.DownBetMoneys
+					data.DownBetInfo = new(pb_msg.DownBetMoney)
+					data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
+					data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
+					data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
 					data.DownBetTime = timeNow
-					data.CardResult = v.room.Cards
+					data.CardResult = new(pb_msg.CardData)
+					data.CardResult.ReadCard = v.room.Cards.ReadCard
+					data.CardResult.BlackCard = v.room.Cards.BlackCard
+					data.CardResult.RedType = v.room.Cards.RedType
+					data.CardResult.BlackType = v.room.Cards.BlackType
 					data.ResultMoney = v.ResultMoney
 					data.TaxRate = taxRate
 					InsertAccessData(&data)
