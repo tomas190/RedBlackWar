@@ -37,7 +37,7 @@ func rpcCloseAgent(args []interface{}) {
 		errMsg.Msg = recodeText[RECODE_PLAYERBREAKLINE]
 		p.SendMsg(errMsg)
 
-		if p.IsInRoom == false && p.IsAction == false {
+		if p.IsAction == false {
 			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 		}
 		//log.Debug("玩家断开服务器连接,关闭链接~")

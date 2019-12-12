@@ -49,7 +49,9 @@ func handleLoginInfo(args []interface{}) {
 		p.Id = m.GetId()
 		p.PassWord = m.GetPassWord()
 		p.Token = m.GetToken()
+		p.IsOnline = true
 		RegisterPlayer(p)
+
 		c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(data *UserInfo) {
 			log.Debug("Login用户登录信息: %v ", data)
 			p.Id = data.ID
@@ -68,36 +70,45 @@ func handleLoginInfo(args []interface{}) {
 			a.WriteMsg(msg)
 		})
 	}
-	//msg := &pb_msg.LoginInfo_S2C{}
-	//msg.PlayerInfo = new(pb_msg.PlayerInfo)
-	//msg.PlayerInfo.Id = "tomas"
-	//msg.PlayerInfo.NickName = "nice"
-	//msg.PlayerInfo.HeadImg = "24.png"
-	//msg.PlayerInfo.Account = 10000
-	//a.WriteMsg(msg)
 
 	// 返回游戏大厅数据
 	RspGameHallData(p)
 
 	//判断用户是否存在房间信息,如果有就返回
 	if userRoomMap[p.Id] != nil {
-		PlayerLoginAgain(p, a)
-	}
+		//PlayerLoginAgain(p, a)
+		log.Debug("<------- 用户重新登陆: %v ------->", p.Id)
+		p.room = userRoomMap[p.Id]
+		for _, v := range p.room.PlayerList {
+			if v.Id == p.Id {
+				p = v
+			}
+		}
 
-	//player := p.GetUserRoomInfo()
-	//log.Debug("用户断线重连数据: %v", player)
-	//if player != nil {
-	//	p = player
-	//	p.IsOnline = true
-	//	p.ConnAgent = a
-	//	p.ConnAgent.SetUserData(p)
-	//	//返回前端信息
-	//	r := p.room.RspRoomData()
-	//	enter := &pb_msg.EnterRoom_S2C{}
-	//	enter.RoomData = r
-	//	p.SendMsg(enter)
-	//	log.Debug("用户断线重连成功,返回客户端数据~")
-	//}
+		p.IsOnline = true
+		p.ConnAgent = a
+		p.ConnAgent.SetUserData(p)
+
+		//返回前端信息
+		//fmt.Println("LoginAgain房间信息:", p.room)
+		r := p.room.RspRoomData()
+		enter := &pb_msg.EnterRoom_S2C{}
+		enter.RoomData = r
+		if p.room.GameStat == DownBet {
+			enter.GameTime = DownBetTime - p.room.counter
+			log.Debug("用户重新登陆 DownBetTime.GameTime: %v", enter.GameTime)
+		} else {
+			enter.GameTime = SettleTime - p.room.counter
+			log.Debug("用户重新登陆 SettleTime.GameTime: %v", enter.GameTime)
+		}
+		p.SendMsg(enter)
+
+		//更新房间列表
+		p.room.UpdatePlayerList()
+		maintainList := p.room.PackageRoomPlayerList()
+		p.room.BroadCastExcept(maintainList, p)
+		log.Debug("用户断线重连成功,返回客户端数据~ ")
+	}
 }
 
 func handleJoinRoom(args []interface{}) {
@@ -144,10 +155,12 @@ func handleLeaveHall(args []interface{}) {
 	log.Debug("handleLeaveHall 玩家退出大厅~ : %v", p.Id)
 
 	if ok {
+		if p.IsAction == false {
+			DeletePlayer(p)
+			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
+		}
+
 		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 		p.SendMsg(leaveHall)
-
-		//DeletePlayer(p)
-		p.ConnAgent.Close()
 	}
 }

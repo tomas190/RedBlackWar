@@ -43,7 +43,6 @@ func PlayerLoginAgain(p *Player, a gate.Agent) {
 	}
 
 	p.IsOnline = true
-	p.IsInRoom = true
 	p.ConnAgent = a
 	p.ConnAgent.SetUserData(p)
 
@@ -73,7 +72,6 @@ func (p *Player) PlayerReqExit() {
 	if p.room != nil {
 		if p.IsRobot == false {
 			if p.IsAction == true {
-				p.IsOnline = false
 
 				//更新房间列表
 				p.room.UpdatePlayerList()

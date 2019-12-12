@@ -97,5 +97,4 @@ type Player struct {
 
 	// 是否是机器人
 	IsRobot  bool
-	IsInRoom bool  //是否在房间内
 }
