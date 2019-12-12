@@ -156,8 +156,8 @@ func handleLeaveHall(args []interface{}) {
 	log.Debug("handleLeaveHall 玩家退出大厅~ : %v", p.Id)
 
 	if ok {
+		p.IsOnline = false
 		if p.IsAction == false {
-			p.IsOnline = false
 			DeletePlayer(p)
 			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 		}

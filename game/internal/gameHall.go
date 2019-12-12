@@ -36,7 +36,7 @@ func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 	p.IsOnline = true
 	if userRoomMap[p.Id] != nil {
 		p.room = userRoomMap[p.Id]
-		log.Debug("返回用户房间信息 :%v", p.room)
+		log.Debug("返回用户房间信息 :%v", *p.room)
 
 		msg := &pb_msg.JoinRoom_S2C{}
 		roomData := p.room.RspRoomData()

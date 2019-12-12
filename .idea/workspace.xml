@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c9afdff-253a-49cb-a98b-ad8c890a28f5" name="默认更改列表" comment="">
-      <change beforePath="$PROJECT_DIR$/game/internal/Player.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/Player.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/cards_rbdz.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/cards_rbdz.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/chanrpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/chanrpc.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/gameHall.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/gameHall.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/player_config.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/player_config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room_handleLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/room_handleLogic.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,8 +33,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game/internal/player_config.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="27" column="31" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
+            <state relative-caret-position="292">
+              <caret line="94" column="10" lean-forward="true" selection-start-line="94" selection-start-column="10" selection-end-line="94" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -83,32 +78,32 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/game/internal/handler.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="258">
+              <caret line="158" column="26" selection-start-line="158" selection-start-column="26" selection-end-line="158" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game/internal/player_handle.go">
+        <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="171">
-              <caret line="35" column="15" selection-start-line="35" selection-start-column="15" selection-end-line="35" selection-end-column="15" />
+              <caret line="633" column="30" lean-forward="true" selection-start-line="633" selection-start-column="30" selection-end-line="633" selection-end-column="30" />
               <folding>
-                <element signature="e#18#137#0" expanded="true" />
+                <element signature="e#18#223#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game/internal/handler.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="123" column="22" selection-start-line="123" selection-start-column="22" selection-end-line="123" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game/internal/gameHall.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="70" selection-start-line="70" selection-end-line="70" />
+            <state relative-caret-position="306">
+              <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
               <folding>
                 <element signature="e#18#115#0" expanded="true" />
               </folding>
@@ -256,8 +251,8 @@
         <option value="$PROJECT_DIR$/game/internal/chanrpc.go" />
         <option value="$PROJECT_DIR$/game/internal/room_handleLogic.go" />
         <option value="$PROJECT_DIR$/game/internal/cards_rbdz.go" />
-        <option value="$PROJECT_DIR$/game/internal/handler.go" />
         <option value="$PROJECT_DIR$/game/internal/gameHall.go" />
+        <option value="$PROJECT_DIR$/game/internal/handler.go" />
       </list>
     </option>
   </component>
@@ -888,16 +883,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="633" column="30" lean-forward="true" selection-start-line="633" selection-start-column="30" selection-end-line="633" selection-end-column="30" />
-          <folding>
-            <element signature="e#18#223#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/player_handle.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -952,13 +937,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/internal/player_config.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="27" column="31" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/room_config.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -966,20 +944,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/internal/handler.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="123" column="22" selection-start-line="123" selection-start-column="22" selection-end-line="123" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/gameHall.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="70" selection-start-line="70" selection-end-line="70" />
+        <state relative-caret-position="306">
+          <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
           <folding>
             <element signature="e#18#115#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/internal/c2c.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="633" column="30" lean-forward="true" selection-start-line="633" selection-start-column="30" selection-end-line="633" selection-end-column="30" />
+          <folding>
+            <element signature="e#18#223#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/internal/player_config.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="94" column="10" lean-forward="true" selection-start-line="94" selection-start-column="10" selection-end-line="94" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/internal/handler.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="158" column="26" selection-start-line="158" selection-start-column="26" selection-end-line="158" selection-end-column="26" />
         </state>
       </provider>
     </entry>
