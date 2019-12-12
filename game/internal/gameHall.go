@@ -1,8 +1,8 @@
 package internal
 
 import (
-	"github.com/name5566/leaf/log"
 	pb_msg "RedBlack-War/msg/Protocal"
+	"github.com/name5566/leaf/log"
 	"strconv"
 	"time"
 )
@@ -34,56 +34,40 @@ func (gh *GameHall) CreatGameRoom() *Room {
 //PlayerJoinRoom 玩家大厅加入房间
 func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 	p.IsOnline = true
-	for _, room := range gameHall.roomList {
-		if room != nil {
-			for _, v := range room.PlayerList {
-				if v != nil && v.IsRobot == false && v.Id == p.Id {
-					msg := &pb_msg.JoinRoom_S2C{}
-					roomData := p.room.RspRoomData()
-					msg.RoomData = roomData
-					if room != nil && room.RoomId == rid {
-						if room.GameStat == DownBet {
-							msg.GameTime = DownBetTime - room.counter
-							//log.Debug("加入房间 DownBetTime.GameTime: %v", msg.GameTime)
-						} else {
-							msg.GameTime = SettleTime - room.counter
-							//log.Debug("加入房间 SettleTime GameTime: %v", msg.GameTime)
-						}
-					}
-					p.SendMsg(msg)
-					log.Debug("进来了呀~~~~~~~~~")
+	if userRoomMap[p.Id] != nil {
+		p.room = userRoomMap[p.Id]
+		log.Debug("返回用户房间信息 :%v", p.room)
 
-					//玩家各注池下注金额
-					pool := &pb_msg.PlayerPoolMoney_S2C{}
-					pool.DownBetMoney = new(pb_msg.DownBetMoney)
-					pool.DownBetMoney.RedDownBet = p.DownBetMoneys.RedDownBet
-					pool.DownBetMoney.BlackDownBet = p.DownBetMoneys.BlackDownBet
-					pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
-					p.SendMsg(pool)
-
-					//更新列表
-					p.room.UpdatePlayerList()
-					maintainList := p.room.PackageRoomPlayerList()
-					p.room.BroadCastMsg(maintainList)
-
-					return
-				}
+		msg := &pb_msg.JoinRoom_S2C{}
+		roomData := p.room.RspRoomData()
+		msg.RoomData = roomData
+		if p.room != nil && p.room.RoomId == rid {
+			if p.room.GameStat == DownBet {
+				msg.GameTime = DownBetTime - p.room.counter
+			} else {
+				msg.GameTime = SettleTime - p.room.counter
 			}
 		}
+		p.SendMsg(msg)
+
+		//玩家各注池下注金额
+		pool := &pb_msg.PlayerPoolMoney_S2C{}
+		pool.DownBetMoney = new(pb_msg.DownBetMoney)
+		pool.DownBetMoney.RedDownBet = p.DownBetMoneys.RedDownBet
+		pool.DownBetMoney.BlackDownBet = p.DownBetMoneys.BlackDownBet
+		pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
+		p.SendMsg(pool)
+
+		//更新列表
+		p.room.UpdatePlayerList()
+		maintainList := p.room.PackageRoomPlayerList()
+		p.room.BroadCastMsg(maintainList)
+
+		return
 	}
 
 	for _, room := range gh.roomList {
 		if room != nil && room.RoomId == rid { // 这里要不要遍历房间，查看用户id是否存在
-			//for _, v := range room.PlayerList {
-			//	if v != nil && v.Id == p.Id {
-			//		msg := &pb_msg.MsgInfo_S2C{}
-			//		msg.Msg = recodeText[RECODE_PLAYERHAVESAME]
-			//		v.ConnAgent.WriteMsg(msg)
-			//		log.Debug("当前房间已存在相同的用户ID~")
-			//		return
-			//	}
-			//}
-			//加入房间
 			room.JoinGameRoom(p)
 			return
 		}

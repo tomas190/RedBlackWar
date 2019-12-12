@@ -44,73 +44,13 @@ func handleLoginInfo(args []interface{}) {
 
 	log.Debug("handleLoginInfo 用户登录成功~ : %v", m)
 
-	p, ok := mapUserIDPlayer[m.GetId()]
+	p, ok := a.UserData().(*Player)
 	if ok {
-		if p.ConnAgent == a { // 用户和连接都相同
-			log.Debug("rpcUserLogin 同一用户相同连接重复登录")
-			return
-		} else { // 用户存在，但连接不同
-			p.ConnAgent.Destroy()
-			p.ConnAgent = a
-			p.ConnAgent.SetUserData(p)
-			p.IsOnline = true
-
-			msg := &pb_msg.LoginInfo_S2C{}
-			msg.PlayerInfo = new(pb_msg.PlayerInfo)
-			msg.PlayerInfo.Id = p.Id
-			msg.PlayerInfo.NickName = p.NickName
-			msg.PlayerInfo.HeadImg = p.HeadImg
-			msg.PlayerInfo.Account = p.Account
-
-			a.WriteMsg(msg)
-
-			//判断用户是否存在房间信息,如果有就返回
-			if userRoomMap[p.Id] != nil {
-				//PlayerLoginAgain(p, a)
-				log.Debug("<------- 用户重新登陆: %v ------->", p.Id)
-				p.room = userRoomMap[p.Id]
-				for _, v := range p.room.PlayerList {
-					if v.Id == p.Id {
-						p = v
-					}
-				}
-
-				p.IsOnline = true
-				p.ConnAgent = a
-				p.ConnAgent.SetUserData(p)
-
-				//返回前端信息
-				//fmt.Println("LoginAgain房间信息:", p.room)
-				r := p.room.RspRoomData()
-				enter := &pb_msg.EnterRoom_S2C{}
-				enter.RoomData = r
-				if p.room.GameStat == DownBet {
-					enter.GameTime = DownBetTime - p.room.counter
-					log.Debug("用户重新登陆 DownBetTime.GameTime: %v", enter.GameTime)
-				} else {
-					enter.GameTime = SettleTime - p.room.counter
-					log.Debug("用户重新登陆 SettleTime.GameTime: %v", enter.GameTime)
-				}
-				p.SendMsg(enter)
-
-				//更新房间列表
-				p.room.UpdatePlayerList()
-				maintainList := p.room.PackageRoomPlayerList()
-				p.room.BroadCastExcept(maintainList, p)
-				log.Debug("用户断线重连成功,返回客户端数据~ ")
-			}
-		}
-	} else {
 		p.Id = m.GetId()
 		p.PassWord = m.GetPassWord()
 		p.Token = m.GetToken()
-
 		p.IsOnline = true
 		RegisterPlayer(p)
-
-		// 重新绑定信息
-		p.ConnAgent = a
-		a.SetUserData(p)
 
 		c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(data *UserInfo) {
 			log.Debug("Login用户登录信息: %v ", data)
@@ -134,6 +74,43 @@ func handleLoginInfo(args []interface{}) {
 	// 返回游戏大厅数据
 	RspGameHallData(p)
 
+	//判断用户是否存在房间信息,如果有就返回
+	if userRoomMap[p.Id] != nil {
+		//PlayerLoginAgain(p, a)
+		p.room = userRoomMap[p.Id]
+		log.Debug("<------- 用户重新登陆: %v ------->", p.Id)
+		log.Debug("<------- 用户重新登陆: %v ------->", p.room)
+
+		for _, v := range p.room.PlayerList {
+			if v.Id == p.Id {
+				p = v
+			}
+		}
+
+		p.IsOnline = true
+		p.ConnAgent = a
+		p.ConnAgent.SetUserData(p)
+
+		//返回前端信息
+		//fmt.Println("LoginAgain房间信息:", p.room)
+		r := p.room.RspRoomData()
+		enter := &pb_msg.EnterRoom_S2C{}
+		enter.RoomData = r
+		if p.room.GameStat == DownBet {
+			enter.GameTime = DownBetTime - p.room.counter
+			log.Debug("用户重新登陆 DownBetTime.GameTime: %v", enter.GameTime)
+		} else {
+			enter.GameTime = SettleTime - p.room.counter
+			log.Debug("用户重新登陆 SettleTime.GameTime: %v", enter.GameTime)
+		}
+		p.SendMsg(enter)
+
+		//更新房间列表
+		p.room.UpdatePlayerList()
+		maintainList := p.room.PackageRoomPlayerList()
+		p.room.BroadCastExcept(maintainList, p)
+		log.Debug("用户断线重连成功,返回客户端数据~ ")
+	}
 }
 
 func handleJoinRoom(args []interface{}) {
@@ -142,7 +119,6 @@ func handleJoinRoom(args []interface{}) {
 
 	p, ok := a.UserData().(*Player)
 	log.Debug("handleJoinRoom 玩家加入房间~ : %v", p.Id)
-	log.Debug("<<<+++++++++++++++++++++++++++++++++加入房间~ : %v", p.Id)
 
 	if ok {
 		gameHall.PlayerJoinRoom(m.RoomId, p)
@@ -181,6 +157,7 @@ func handleLeaveHall(args []interface{}) {
 
 	if ok {
 		if p.IsAction == false {
+			p.IsOnline = false
 			DeletePlayer(p)
 			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 		}

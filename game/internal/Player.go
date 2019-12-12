@@ -2,7 +2,6 @@ package internal
 
 import (
 	pb_msg "RedBlack-War/msg/Protocal"
-	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"time"
 )
@@ -79,7 +78,7 @@ func RegisterPlayer(p *Player) {
 		p.SendMsg(errMsg)
 		log.Debug("用户已在其他地方登录~")
 
-		up.ConnAgent.Close()
+		//up.ConnAgent.Close()
 		DeletePlayer(up)
 	}
 	//将链接的Player数据赋值给map缓存

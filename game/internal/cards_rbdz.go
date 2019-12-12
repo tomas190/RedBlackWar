@@ -74,10 +74,10 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 		RandNum, err := GetRandNumber()
 		if err == nil {
 			this.Poker = RandNum
-			log.Debug("<<====== RandNum随机数值 ======>>")
+			//log.Debug("<<====== RandNum随机数值 ======>>")
 		} else {
 			this.Poker = NewPoker(1, false, true)
-			log.Debug("<<====== NewPoker随机数值 ======>>")
+			//log.Debug("<<====== NewPoker随机数值 ======>>")
 		}
 
 		offset = 0

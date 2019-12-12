@@ -444,7 +444,7 @@ func (r *Room) GameCheckout() bool {
 		}
 	}
 	settle := (totalWinMoney + taxWinMoney) - totalLoseMoney
-	log.Debug("<-------- SurplusPool盈余池: %v --------->", SurplusPool)
+	//log.Debug("<-------- SurplusPool盈余池: %v --------->", SurplusPool)
 	//log.Debug("<-------- settle  结 算 金 额: %v --------->", settle)
 	//log.Debug("<-------- SurplusPool可输金额: %v --------->", SurplusPool*SurplusTax)
 

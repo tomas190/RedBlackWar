@@ -97,4 +97,5 @@ type Player struct {
 
 	// 是否是机器人
 	IsRobot  bool
+
 }
