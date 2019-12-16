@@ -21,7 +21,6 @@ var RobotIndex uint32
 func (rc *RobotsCenter) Init() {
 	log.Debug("-------------- RobotsCenter Init~! ---------------")
 	rc.mapRobotList = make(map[uint32]*Player)
-	RobotIndex = 0
 }
 
 //CreateRobot 创建一个机器人
@@ -44,7 +43,6 @@ func (rc *RobotsCenter) CreateRobot() *Player {
 
 	r.Index = RobotIndex
 	//fmt.Println("robot Index :", r.Index)
-	rc.mapRobotList[r.Index] = r
 	RobotIndex++
 	//log.Debug("创建机器人~ : %v", r.Id)
 	return r

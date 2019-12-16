@@ -137,12 +137,11 @@ func (r *Room) ExitFromRoom(p *Player) {
 				//userRoomMap = make(map[string]*Room)
 				//userRoomMap[p.Id] = nil
 				delete(userRoomMap, p.Id)
-				r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...) //这里两个同样的用户名退出，会报错
+				r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...) //这里两个同样的用户名退出，会报错 todo
 				log.Debug("%v 玩家从房间列表删除成功 ~", v.Id)
 			} else {
 				p.room = nil
 				delete(userRoomMap, p.Id)
-				delete(gRobotCenter.mapRobotList, p.Index)
 				r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...)
 
 				//创建机器人
