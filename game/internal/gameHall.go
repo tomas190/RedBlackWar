@@ -22,6 +22,7 @@ func (gh *GameHall) Init() {
 		gh.roomList[i] = r
 		log.Debug("大厅房间数量: %d,房间号: %v", i, gh.roomList[i].RoomId)
 	}
+	gh.userAndRoom = nil
 }
 
 //CreatGameRoom 创建游戏房间
@@ -34,38 +35,36 @@ func (gh *GameHall) CreatGameRoom() *Room {
 //PlayerJoinRoom 玩家大厅加入房间
 func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 	p.IsOnline = true
-	for _, room := range gameHall.roomList {
-		if room != nil {
-			for _, v := range room.PlayerList {
-				if v != nil && v.IsRobot == false && v.Id == p.Id {
-					msg := &pb_msg.JoinRoom_S2C{}
-					roomData := p.room.RspRoomData()
-					msg.RoomData = roomData
-					if room.RoomId == rid {
-						if room.GameStat == DownBet {
-							msg.GameTime = DownBetTime - room.counter
-						} else {
-							msg.GameTime = SettleTime - room.counter
-						}
-					}
-					p.SendMsg(msg)
+	if gh.userAndRoom[p.Id] != nil {
+		p.room = userRoomMap[p.Id]
+		log.Debug("返回用户房间信息 :%v", *p.room)
 
-					//玩家各注池下注金额
-					pool := &pb_msg.PlayerPoolMoney_S2C{}
-					pool.DownBetMoney = new(pb_msg.DownBetMoney)
-					pool.DownBetMoney.RedDownBet = p.DownBetMoneys.RedDownBet
-					pool.DownBetMoney.BlackDownBet = p.DownBetMoneys.BlackDownBet
-					pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
-					p.SendMsg(pool)
-
-					//更新列表
-					p.room.UpdatePlayerList()
-					maintainList := p.room.PackageRoomPlayerList()
-					p.room.BroadCastMsg(maintainList)
-					return
-				}
+		msg := &pb_msg.JoinRoom_S2C{}
+		roomData := p.room.RspRoomData()
+		msg.RoomData = roomData
+		if p.room != nil && p.room.RoomId == rid {
+			if p.room.GameStat == DownBet {
+				msg.GameTime = DownBetTime - p.room.counter
+			} else {
+				msg.GameTime = SettleTime - p.room.counter
 			}
 		}
+		p.SendMsg(msg)
+
+		//玩家各注池下注金额
+		pool := &pb_msg.PlayerPoolMoney_S2C{}
+		pool.DownBetMoney = new(pb_msg.DownBetMoney)
+		pool.DownBetMoney.RedDownBet = p.DownBetMoneys.RedDownBet
+		pool.DownBetMoney.BlackDownBet = p.DownBetMoneys.BlackDownBet
+		pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
+		p.SendMsg(pool)
+
+		//更新列表
+		p.room.UpdatePlayerList()
+		maintainList := p.room.PackageRoomPlayerList()
+		p.room.BroadCastMsg(maintainList)
+
+		return
 	}
 
 	for _, room := range gh.roomList {
