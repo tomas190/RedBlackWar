@@ -22,7 +22,7 @@ func (gh *GameHall) Init() {
 		gh.roomList[i] = r
 		log.Debug("大厅房间数量: %d,房间号: %v", i, gh.roomList[i].RoomId)
 	}
-	gh.userAndRoom = nil
+	gh.userAndRoom = make(map[string]*Room)
 }
 
 //CreatGameRoom 创建游戏房间
@@ -35,36 +35,35 @@ func (gh *GameHall) CreatGameRoom() *Room {
 //PlayerJoinRoom 玩家大厅加入房间
 func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 	p.IsOnline = true
-	if gh.userAndRoom[p.Id] != nil {
-		p.room = userRoomMap[p.Id]
-		log.Debug("返回用户房间信息 :%v", *p.room)
 
-		msg := &pb_msg.JoinRoom_S2C{}
-		roomData := p.room.RspRoomData()
-		msg.RoomData = roomData
-		if p.room != nil && p.room.RoomId == rid {
-			if p.room.GameStat == DownBet {
-				msg.GameTime = DownBetTime - p.room.counter
-			} else {
-				msg.GameTime = SettleTime - p.room.counter
+	for _, r := range gh.roomList {
+		for _, v := range r.PlayerList {
+			if v != nil && v.Id == p.Id {
+				msg := &pb_msg.JoinRoom_S2C{}
+				roomData := p.room.RspRoomData()
+				msg.RoomData = roomData
+				if p.room.GameStat == DownBet {
+					msg.GameTime = DownBetTime - p.room.counter
+				} else {
+					msg.GameTime = SettleTime - p.room.counter
+				}
+				p.SendMsg(msg)
+
+				//玩家各注池下注金额
+				pool := &pb_msg.PlayerPoolMoney_S2C{}
+				pool.DownBetMoney = new(pb_msg.DownBetMoney)
+				pool.DownBetMoney.RedDownBet = p.DownBetMoneys.RedDownBet
+				pool.DownBetMoney.BlackDownBet = p.DownBetMoneys.BlackDownBet
+				pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
+				p.SendMsg(pool)
+
+				//更新列表
+				p.room.UpdatePlayerList()
+				maintainList := p.room.PackageRoomPlayerList()
+				p.room.BroadCastMsg(maintainList)
+				return
 			}
 		}
-		p.SendMsg(msg)
-
-		//玩家各注池下注金额
-		pool := &pb_msg.PlayerPoolMoney_S2C{}
-		pool.DownBetMoney = new(pb_msg.DownBetMoney)
-		pool.DownBetMoney.RedDownBet = p.DownBetMoneys.RedDownBet
-		pool.DownBetMoney.BlackDownBet = p.DownBetMoneys.BlackDownBet
-		pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
-		p.SendMsg(pool)
-
-		//更新列表
-		p.room.UpdatePlayerList()
-		maintainList := p.room.PackageRoomPlayerList()
-		p.room.BroadCastMsg(maintainList)
-
-		return
 	}
 
 	for _, room := range gh.roomList {
