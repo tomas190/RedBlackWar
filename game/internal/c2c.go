@@ -386,7 +386,7 @@ func (c4c *Conn4Center) onUserLogout(msgBody interface{}) {
 	}
 
 	if data["status"] == "SUCCESS" && code == 200 {
-		log.Debug("<-------- UserLogin SUCCESS~ -------->")
+		log.Debug("<-------- UserLogout SUCCESS~ -------->")
 		userInfo, ok := data["msg"].(map[string]interface{})
 		var strId string
 		var userData *UserCallback
