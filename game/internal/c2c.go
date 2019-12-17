@@ -139,7 +139,6 @@ func (c4c *Conn4Center) ReqCenterToken() {
 
 //CreatConnect 和Center建立链接
 func (c4c *Conn4Center) CreatConnect() {
-	// TODO
 	c4c.centerUrl = conf.Server.CenterUrl
 	//c4c.centerUrl = "ws://172.16.1.41:9502/" //Pre
 	//c4c.centerUrl = "ws://172.16.100.2:9502/" //上线
@@ -197,9 +196,6 @@ func (c4c *Conn4Center) Run() {
 					log.Debug("Here is error by ReadMessage~ %v", err)
 					log.Error(err.Error())
 				}
-				//log.Debug("Receive a message from Center~")
-				//log.Debug("typeId: %v", typeId)
-				//log.Debug("message: %v", string(message))
 				if typeId == -1 {
 					log.Debug("中心服异常消息~")
 					c4c.LoginStat = false
@@ -289,11 +285,12 @@ func (c4c *Conn4Center) onServerLogin(msgBody interface{}) {
 
 //onUserLogin 收到中心服的用户登录回应
 func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
-	log.Debug("<-------- onUserLogin -------->: %v", msgBody)
-	data, _ := msgBody.(map[string]interface{})
+	data, ok := msgBody.(map[string]interface{})
+	if !ok {
+		log.Debug("onUserLogout Error")
+	}
 
 	code, err := data["code"].(json.Number).Int64()
-	//fmt.Println("code,err", code, err)
 	if err != nil {
 		log.Error(err.Error())
 		return
@@ -306,14 +303,14 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 
 	if data["status"] == "SUCCESS" && code == 200 {
 		log.Debug("<-------- UserLogin SUCCESS~ -------->")
+		log.Debug("data:%v,ok:%v", data, ok)
+
 		userInfo, ok := data["msg"].(map[string]interface{})
 		var strId string
 		var userData *UserCallback
 		if ok {
-			//log.Debug("userInfo: %v", userInfo)
 			gameUser, uok := userInfo["game_user"].(map[string]interface{})
 			if uok {
-				log.Debug("gameUser: %v", gameUser)
 				nick := gameUser["game_nick"]
 				headImg := gameUser["game_img"]
 				userId := gameUser["id"]
@@ -352,9 +349,10 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 }
 
 func (c4c *Conn4Center) onUserLogout(msgBody interface{}) {
-	log.Debug("<-------- onUserLogout -------->: %v", msgBody)
-
-	data, _ := msgBody.(map[string]interface{})
+	data, ok := msgBody.(map[string]interface{})
+	if !ok {
+		log.Debug("onUserLogout Error")
+	}
 
 	code, err := data["code"].(json.Number).Int64()
 	if err != nil {
@@ -363,14 +361,14 @@ func (c4c *Conn4Center) onUserLogout(msgBody interface{}) {
 
 	if data["status"] == "SUCCESS" && code == 200 {
 		log.Debug("<-------- UserLogout SUCCESS~ -------->")
+		log.Debug("data:%v,ok:%v", data, ok)
+
 		userInfo, ok := data["msg"].(map[string]interface{})
 		var strId string
 		var userData *UserCallback
 		if ok {
-			log.Debug("userInfo: %v", userInfo)
 			gameUser, uok := userInfo["game_user"].(map[string]interface{})
 			if uok {
-				log.Debug("gameUser: %v", gameUser)
 				nick := gameUser["game_nick"]
 				headImg := gameUser["game_img"]
 				userId := gameUser["id"]
@@ -392,12 +390,10 @@ func (c4c *Conn4Center) onUserLogout(msgBody interface{}) {
 }
 
 func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
-	log.Debug("<-------- onUserWinScore -------->: %v", msgBody)
-	//将Win数据插入数据
-	InsertWinMoney(msgBody)
-
 	data, ok := msgBody.(map[string]interface{})
-	log.Debug("data:%v,ok:%v", data, ok)
+	if !ok {
+		log.Debug("onUserWinScore Error")
+	}
 
 	code, err := data["code"].(json.Number).Int64()
 	if err != nil {
@@ -409,15 +405,17 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 		return
 	}
 
-	log.Debug("data:%v, ok:%v", data, ok)
 	if data["status"] == "SUCCESS" && code == 200 {
 		log.Debug("<-------- UserWinScore SUCCESS~ -------->")
+		log.Debug("data:%v,ok:%v", data, ok)
+
+		//将Win数据插入数据
+		InsertWinMoney(msgBody)
+
 		userInfo, ok := data["msg"].(map[string]interface{})
 		if ok {
 			jsonScore := userInfo["final_pay"]
 			score, err := jsonScore.(json.Number).Float64()
-
-			log.Debug("<--------- final win score: %v", score)
 
 			cc.log("同步中心服赢钱成功", score)
 
@@ -430,34 +428,31 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 }
 
 func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
-	log.Debug("<-------- onUserLoseScore -------->: %v", msgBody)
-	//将Lose数据插入数据
-	InsertLoseMoney(msgBody)
-
 	data, ok := msgBody.(map[string]interface{})
-
-	log.Debug("data:%v, ok:%v", data, ok)
+	if !ok {
+		log.Debug("onUserLoseScore Error")
+	}
 
 	code, err := data["code"].(json.Number).Int64()
-	//fmt.Println("code,err", code, err)
 	if err != nil {
 		log.Error(err.Error())
 	}
-
 	if code != 200 {
 		cc.error("同步中心服输钱失败", data)
 		return
 	}
 
-	fmt.Println(code, err)
 	if data["status"] == "SUCCESS" && code == 200 {
 		log.Debug("<-------- UserLoseScore SUCCESS~ -------->")
+		log.Debug("data:%v,ok:%v", data, ok)
+
+		//将Lose数据插入数据
+		InsertLoseMoney(msgBody)
+
 		userInfo, ok := data["msg"].(map[string]interface{})
 		if ok {
 			jsonScore := userInfo["final_pay"]
 			score, err := jsonScore.(json.Number).Float64()
-
-			log.Debug("<-------- final lose score -------->: %v", score)
 
 			cc.log("同步中心服输钱成功", score)
 
@@ -469,9 +464,8 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 	}
 }
 
-//onWinMoreThanNotice 服务器登录
+//onWinMoreThanNotice 加锁金额
 func (c4c *Conn4Center) onLockSettlement(msgBody interface{}) {
-	log.Debug("<-------- onLockSettlement -------->: %v", msgBody)
 	data, ok := msgBody.(map[string]interface{})
 	if ok {
 		code, err := data["code"].(json.Number).Int64()
@@ -486,9 +480,8 @@ func (c4c *Conn4Center) onLockSettlement(msgBody interface{}) {
 	}
 }
 
-//onWinMoreThanNotice 服务器登录
+//onWinMoreThanNotice 解锁金额
 func (c4c *Conn4Center) onUnlockSettlement(msgBody interface{}) {
-	log.Debug("<-------- onUnlockSettlement -------->: %v", msgBody)
 	data, ok := msgBody.(map[string]interface{})
 	if ok {
 		code, err := data["code"].(json.Number).Int64()
@@ -505,7 +498,6 @@ func (c4c *Conn4Center) onUnlockSettlement(msgBody interface{}) {
 
 //onWinMoreThanNotice 服务器登录
 func (c4c *Conn4Center) onWinMoreThanNotice(msgBody interface{}) {
-	log.Debug("<-------- onWinMoreThanNotice -------->: %v", msgBody)
 	data, ok := msgBody.(map[string]interface{})
 	if ok {
 		code, err := data["code"].(json.Number).Int64()
@@ -522,7 +514,6 @@ func (c4c *Conn4Center) onWinMoreThanNotice(msgBody interface{}) {
 
 //ServerLoginCenter 服务器登录Center
 func (c4c *Conn4Center) ServerLoginCenter() {
-	log.Debug("<-------- ServerLoginCenter c4c.token -------->: %v", c4c.token)
 	baseData := &BaseMessage{}
 	baseData.Event = msgServerLogin
 	baseData.Data = ServerLogin{
@@ -542,8 +533,6 @@ func (c4c *Conn4Center) UserLoginCenter(userId string, password string, token st
 		log.Debug("<-------- RedBlack-War not ready~!!! -------->")
 		return
 	}
-
-	log.Debug("<-------- UserLoginCenter c4c.token -------->: %v", c4c.token)
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserLogin
 	if password != "" {
@@ -572,7 +561,6 @@ func (c4c *Conn4Center) UserLoginCenter(userId string, password string, token st
 
 //UserLogoutCenter 用户登出
 func (c4c *Conn4Center) UserLogoutCenter(userId string, password string, token string) {
-	log.Debug("<-------- UserLogoutCenter c4c.token -------->: %v", c4c.token)
 	base := &BaseMessage{}
 	base.Event = msgUserLogout
 	if password != "" {
@@ -602,7 +590,7 @@ func (c4c *Conn4Center) SendMsg2Center(data interface{}) {
 	if err1 != nil {
 		log.Error(err1.Error())
 	}
-	log.Debug("<-------- 发送消息中心服 -------->: %v", string(codeData))
+	log.Debug("Msg to Send Center:%v", string(codeData))
 
 	err2 := c4c.conn.WriteMessage(websocket.TextMessage, []byte(codeData))
 	if err2 != nil {
@@ -613,7 +601,6 @@ func (c4c *Conn4Center) SendMsg2Center(data interface{}) {
 //UserSyncWinScore 同步赢分
 func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, reason string) {
 	winOrder := p.Id + "_" + timeStr + "_win"
-	log.Debug("<-------- GenWinOrder -------->: %v", winOrder)
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserWinScore
 	userWin := &UserChangeScore{}
@@ -629,15 +616,12 @@ func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, rea
 	userWin.Info.PreMoney = 0
 	userWin.Info.RoundId = p.room.RoomId
 	baseData.Data = userWin
-	log.Debug("<<===== UserSyncWinScore: %v =====>>", baseData)
 	c4c.SendMsg2Center(baseData)
 }
 
 //UserSyncWinScore 同步输分
 func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, timeStr, reason string) {
 	loseOrder := p.Id + "_" + timeStr + "_lose"
-	log.Debug("<-------- GenLoseOrder -------->: %v", loseOrder)
-
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserLoseScore
 	userLose := &UserChangeScore{}
@@ -653,7 +637,6 @@ func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, timeStr, re
 	userLose.Info.PreMoney = 0
 	userLose.Info.RoundId = p.room.RoomId
 	baseData.Data = userLose
-	log.Debug("<<===== UserSyncLoseScore: %v =====>>", baseData)
 	c4c.SendMsg2Center(baseData)
 }
 
@@ -661,8 +644,6 @@ func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, timeStr, re
 func (c4c *Conn4Center) LockSettlement(p *Player) {
 	timeStr := time.Now().Format("2006-01-02_15:04:05")
 	loseOrder := p.Id + "_" + timeStr + "_LockMoney"
-
-	log.Debug("<-------- LockSettlement -------->")
 
 	baseData := &BaseMessage{}
 	baseData.Event = msgLockSettlement
@@ -679,7 +660,6 @@ func (c4c *Conn4Center) LockSettlement(p *Player) {
 	lockMoney.Info.PreMoney = 0
 	lockMoney.Info.RoundId = p.room.RoomId
 	baseData.Data = lockMoney
-	log.Debug("<<===== LockSettlement: %v =====>>", baseData)
 	c4c.SendMsg2Center(baseData)
 }
 
@@ -687,8 +667,6 @@ func (c4c *Conn4Center) LockSettlement(p *Player) {
 func (c4c *Conn4Center) UnlockSettlement(p *Player) {
 	timeStr := time.Now().Format("2006-01-02_15:04:05")
 	loseOrder := p.Id + "_" + timeStr + "_UnlockMoney"
-
-	log.Debug("<-------- UnlockSettlement -------->")
 
 	baseData := &BaseMessage{}
 	baseData.Event = msgUnlockSettlement
@@ -705,7 +683,6 @@ func (c4c *Conn4Center) UnlockSettlement(p *Player) {
 	lockMoney.Info.PreMoney = 0
 	lockMoney.Info.RoundId = p.room.RoomId
 	baseData.Data = lockMoney
-	log.Debug("<<===== UnlockSettlement: %v =====>>", baseData)
 	c4c.SendMsg2Center(baseData)
 }
 

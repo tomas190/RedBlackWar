@@ -240,6 +240,8 @@ func (r *Room) StartGameRun() {
 	r.RoomStat = RoomStatusRun
 	r.GameStat = DownBet
 
+	go r.PrintPlayerList()
+
 	//下注阶段定时任务
 	r.DownBetTimerTask()
 
@@ -494,7 +496,7 @@ func (r *Room) CompareSettlement() {
 	r.RBdzPk(aCard, bCard)
 
 	//测试，打印数据
-	r.PrintPlayerList()
+	//r.PrintPlayerList()
 	//log.Debug("玩家列表 r.PlayerList :%v", r.PlayerList)
 
 	//更新房间赌神ID
@@ -581,18 +583,16 @@ func (r *Room) CleanPlayerData() {
 
 //看数据用,为了打印房间玩家列表
 func (r *Room) PrintPlayerList() {
-	for _, v := range r.PlayerList {
-		if v != nil { // && v.IsRobot == false
-			if v.IsRobot == true {
-				//log.Debug("机器人ID ：", v.Id, " 金额：", v.Account)
-			} else {
-				log.Debug("当前玩家人数为 :%v", r.PlayerLength())
-				log.Debug("玩家ID ：%v, 金额：%v, 状态:%v", v.IsOnline, v.Id, v.Account)
-				//fmt.Println("玩家类型长度 ：", len(v.CardTypeList), " 玩家Win长度：", len(v.RedBlackList), "玩家下注：", v.DownBetMoneys)
+	for  {
+		for _, v := range r.PlayerList {
+			if v != nil { // && v.IsRobot == false
+				if v.IsRobot == false && v.IsOnline == false {
+					log.Debug("玩家ID ：%v, 金额：%v, 状态:%v", v.Id, v.Account, v.IsOnline)
+				}
+				//fmt.Println("玩家ID ：", v.Id, "下注金额：", v.DownBetMoneys, "结算：", v.ResultMoney)
+				//fmt.Println("玩家:", v.Id, "行动 红、黑、Luck下注: ", v.DownBetMoneys, "玩家总下注金额: ", v.TotalAmountBet)
+				//fmt.Println("房间池红、黑、Luck总下注: ", v.room.PotMoneyCount, "续投总额:", v.ContinueVot.TotalMoneyBet)
 			}
-			//fmt.Println("玩家ID ：", v.Id, "下注金额：", v.DownBetMoneys, "结算：", v.ResultMoney)
-			//fmt.Println("玩家:", v.Id, "行动 红、黑、Luck下注: ", v.DownBetMoneys, "玩家总下注金额: ", v.TotalAmountBet)
-			//fmt.Println("房间池红、黑、Luck总下注: ", v.room.PotMoneyCount, "续投总额:", v.ContinueVot.TotalMoneyBet)
 		}
 	}
 }

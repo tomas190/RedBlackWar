@@ -1,8 +1,8 @@
 package internal
 
 import (
-	"github.com/name5566/leaf/module"
 	"RedBlack-War/base"
+	"github.com/name5566/leaf/module"
 )
 
 var (
@@ -42,3 +42,4 @@ func (m *Module) OnInit() {
 func (m *Module) OnDestroy() {
 	c4c.onDestroy()
 }
+

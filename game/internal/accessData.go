@@ -34,7 +34,7 @@ type GameData struct {
 	RoomId     string      `json:"room_id"`
 	TaxRate    float64     `json:"tax_rate"`
 	Card       interface{} `json:"card"`       // 开牌信息
-	BetInfo    interface{} `json:"bet_info"`   // 玩家下注信息  //todo  betinfo
+	BetInfo    interface{} `json:"bet_info"`   // 玩家下注信息
 	Settlement interface{} `json:"settlement"` // 结算信息 输赢结果
 }
 

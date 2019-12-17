@@ -142,7 +142,7 @@ func (r *Room) ExitFromRoom(p *Player) {
 				delete(userRoomMap, p.Id)
 				delete(gameHall.userAndRoom, p.Id)
 				log.Debug("p.id:%v k:%v", p.Id, k)
-				r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...) //这里两个同样的用户名退出，会报错 todo
+				r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...) //这里两个同样的用户名退出，会报错
 				log.Debug("%v 玩家从房间列表删除成功 ~", v.Id)
 			} else {
 				p.room = nil
