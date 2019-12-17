@@ -36,9 +36,6 @@ func (r *Room) JoinGameRoom(p *Player) {
 	}
 
 Next:
-	p.GameState = InGameRoom
-	p.IsOnline = true
-
 	//将用户添加到用户列表
 	r.PlayerList = append(r.PlayerList, p)
 	p.room = r
@@ -47,6 +44,9 @@ Next:
 
 	userRoomMap = make(map[string]*Room)
 	userRoomMap[p.Id] = r
+
+	p.GameState = InGameRoom
+	p.IsOnline = true
 
 	//进入房间玩家是否大于 50金币，否则处于观战状态
 	p.PlayerMoneyHandler()

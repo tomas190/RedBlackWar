@@ -494,7 +494,7 @@ func (r *Room) CompareSettlement() {
 	r.RBdzPk(aCard, bCard)
 
 	//测试，打印数据
-	//r.PrintPlayerList()
+	r.PrintPlayerList()
 	//log.Debug("玩家列表 r.PlayerList :%v", r.PlayerList)
 
 	//更新房间赌神ID
