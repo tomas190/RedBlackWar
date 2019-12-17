@@ -87,9 +87,9 @@ func handleLoginInfo(args []interface{}) {
 			}
 		}
 
-		p.IsOnline = true
 		p.ConnAgent = a
 		p.ConnAgent.SetUserData(p)
+		p.IsOnline = true
 
 		//返回前端信息
 		//fmt.Println("LoginAgain房间信息:", p.room)
@@ -157,6 +157,7 @@ func handleLeaveHall(args []interface{}) {
 
 	if ok {
 		p.IsOnline = false
+		log.Debug("退出大厅玩家状态: %v", p.IsOnline)
 		if p.IsAction == false {
 			DeletePlayer(p)
 			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord

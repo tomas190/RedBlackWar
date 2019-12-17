@@ -540,11 +540,12 @@ func (r *Room) CompareSettlement() {
 //KickOutPlayer 踢出房间断线玩家
 func (r *Room) KickOutPlayer() {
 	for _, v := range r.PlayerList {
-		if v != nil && v.IsOnline == false {
+		if v != nil && v.IsOnline == false  {
+			log.Debug("玩家ID:%v, 状态:%v, 房间状态:%v", v.Id, v.IsOnline, v.GameState)
+
 			//玩家断线的话，退出房间信息，也要断开链接
 			v.PlayerReqExit()
 			DeletePlayer(v)
-
 			//用户中心服登出
 			c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
 			log.Debug("踢出房间断线玩家 : %v", v.Id)
@@ -583,10 +584,9 @@ func (r *Room) PrintPlayerList() {
 	for _, v := range r.PlayerList {
 		if v != nil { // && v.IsRobot == false
 			if v.IsRobot == true {
-				log.Debug("机器人ID ：", v.Id, " 金额：", v.Account)
-
+				//log.Debug("机器人ID ：", v.Id, " 金额：", v.Account)
 			} else {
-				log.Debug("玩家ID ：", v.Id, " 金额：", v.Account)
+				log.Debug("玩家ID ：%v", v.Id, " 金额：%v", v.Account, "状态:%v", v.IsOnline)
 				//fmt.Println("玩家类型长度 ：", len(v.CardTypeList), " 玩家Win长度：", len(v.RedBlackList), "玩家下注：", v.DownBetMoneys)
 			}
 			//fmt.Println("玩家ID ：", v.Id, "下注金额：", v.DownBetMoneys, "结算：", v.ResultMoney)

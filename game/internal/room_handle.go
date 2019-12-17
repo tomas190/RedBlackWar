@@ -37,6 +37,7 @@ func (r *Room) JoinGameRoom(p *Player) {
 
 Next:
 	p.GameState = InGameRoom
+	p.IsOnline = true
 
 	//将用户添加到用户列表
 	r.PlayerList = append(r.PlayerList, p)
