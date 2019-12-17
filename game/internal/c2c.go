@@ -236,40 +236,31 @@ func (c4c *Conn4Center) onReceive(messType int, messBody []byte) {
 		if err != nil {
 			log.Error(err.Error())
 		}
-		//log.Debug("<-------- baseData -------->: %v", baseData)
 
 		switch baseData.Event {
 		case msgServerLogin:
 			c4c.onServerLogin(baseData.Data)
-			log.Debug("<-------- baseData onServerLogin -------->")
 			break
 		case msgUserLogin:
 			c4c.onUserLogin(baseData.Data)
-			log.Debug("<-------- baseData msgUserLogin -------->")
 			break
 		case msgUserLogout:
 			c4c.onUserLogout(baseData.Data)
-			log.Debug("<-------- baseData onUserLogout -------->")
 			break
 		case msgUserWinScore:
 			c4c.onUserWinScore(baseData.Data)
-			log.Debug("<-------- baseData msgUserWinScore -------->")
 			break
 		case msgUserLoseScore:
 			c4c.onUserLoseScore(baseData.Data)
-			log.Debug("<-------- baseData msgUserLoseScore -------->")
 			break
 		case msgWinMoreThanNotice:
 			c4c.onWinMoreThanNotice(baseData.Data)
-			log.Debug("<-------- baseData onWinMoreThanNotice -------->")
 			break
 		case msgLockSettlement:
 			c4c.onLockSettlement(baseData.Data)
-			log.Debug("<-------- baseData onLockSettlement -------->")
 			break
 		case msgUnlockSettlement:
 			c4c.onUnlockSettlement(baseData.Data)
-			log.Debug("<-------- baseData onUnlockSettlement -------->")
 			break
 		default:
 			log.Error("Receive a message but don't identify~")
@@ -282,18 +273,14 @@ func (c4c *Conn4Center) onServerLogin(msgBody interface{}) {
 	log.Debug("<-------- onServerLogin -------->: %v", msgBody)
 	data, ok := msgBody.(map[string]interface{})
 	if ok {
-		//fmt.Println(data["status"], reflect.TypeOf(data["status"]))
-		//fmt.Println(data["code"], reflect.TypeOf(data["code"]))
-		//fmt.Println(data["msg"], reflect.TypeOf(data["msg"]))
 		code, err := data["code"].(json.Number).Int64()
-		//fmt.Println("code,err", code, err)
 		if err != nil {
 			log.Fatal(err.Error())
 		}
 
 		fmt.Println(code, reflect.TypeOf(code))
 		if data["status"] == "SUCCESS" && code == 200 {
-			log.Debug("<-------- serverLogin success~!!! -------->")
+			log.Debug("<-------- serverLogin SUCCESS~!!! -------->")
 
 			c4c.LoginStat = true
 		}
@@ -303,12 +290,8 @@ func (c4c *Conn4Center) onServerLogin(msgBody interface{}) {
 //onUserLogin 收到中心服的用户登录回应
 func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 	log.Debug("<-------- onUserLogin -------->: %v", msgBody)
-	data, ok := msgBody.(map[string]interface{})
-	log.Debug("data:%v, ok:%v", data, ok)
+	data, _ := msgBody.(map[string]interface{})
 
-	//fmt.Println(data["status"], reflect.TypeOf(data["status"]))
-	//fmt.Println(data["code"], reflect.TypeOf(data["code"]))
-	//fmt.Println(data["msg"], reflect.TypeOf(data["msg"]))
 	code, err := data["code"].(json.Number).Int64()
 	//fmt.Println("code,err", code, err)
 	if err != nil {
@@ -327,23 +310,19 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 		var strId string
 		var userData *UserCallback
 		if ok {
-			log.Debug("userInfo: %v", userInfo)
+			//log.Debug("userInfo: %v", userInfo)
 			gameUser, uok := userInfo["game_user"].(map[string]interface{})
 			if uok {
 				log.Debug("gameUser: %v", gameUser)
 				nick := gameUser["game_nick"]
 				headImg := gameUser["game_img"]
 				userId := gameUser["id"]
-				//log.Debug("nick: %v", nick)
-				//log.Debug("headImg: %v", headImg)
-				//log.Debug("userId: %v %v", userId, reflect.TypeOf(userId))
 
 				intID, err := userId.(json.Number).Int64()
 				if err != nil {
 					log.Fatal(err.Error())
 				}
 				strId = strconv.Itoa(int(intID))
-				log.Debug("strId: %v %v", strId, reflect.TypeOf(strId))
 
 				//找到等待登录玩家
 				userData, ok = c4c.waitUser[strId]
@@ -355,9 +334,7 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 			gameAccount, okA := userInfo["game_account"].(map[string]interface{})
 
 			if okA {
-				log.Debug("<-------- gameAccount -------->: %v", gameAccount)
 				balance := gameAccount["balance"]
-				//log.Debug("<-------- balance -------->: %v %v", balance, reflect.TypeOf(balance))
 				floatBalance, err := balance.(json.Number).Float64()
 				if err != nil {
 					log.Error(err.Error())
@@ -377,8 +354,7 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 func (c4c *Conn4Center) onUserLogout(msgBody interface{}) {
 	log.Debug("<-------- onUserLogout -------->: %v", msgBody)
 
-	data, ok := msgBody.(map[string]interface{})
-	log.Debug("data:%v, ok:%v", data, ok)
+	data, _ := msgBody.(map[string]interface{})
 
 	code, err := data["code"].(json.Number).Int64()
 	if err != nil {
@@ -404,18 +380,12 @@ func (c4c *Conn4Center) onUserLogout(msgBody interface{}) {
 					log.Fatal(err.Error())
 				}
 				strId = strconv.Itoa(int(intID))
-				log.Debug("strId: %v %v", strId, reflect.TypeOf(strId))
-
 				//找到等待登录玩家
 				userData, ok = c4c.waitUser[strId]
 				if ok {
 					userData.Data.HeadImg = headImg.(string)
 					userData.Data.Nick = nick.(string)
 				}
-			}
-			gameAccount, okA := userInfo["game_account"].(map[string]interface{})
-			if okA {
-				log.Debug("<-------- gameAccount -------->: %v", gameAccount)
 			}
 		}
 	}
@@ -427,14 +397,9 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 	InsertWinMoney(msgBody)
 
 	data, ok := msgBody.(map[string]interface{})
+	log.Debug("data:%v,ok:%v", data, ok)
 
-	log.Debug("<-------- data -------->:%v, <-------- ok -------->:%v", data, ok)
-
-	//fmt.Println(data["status"], reflect.TypeOf(data["status"]))
-	//fmt.Println(data["code"], reflect.TypeOf(data["code"]))
-	//fmt.Println(data["msg"], reflect.TypeOf(data["msg"]))
 	code, err := data["code"].(json.Number).Int64()
-	//fmt.Println("code,err", code, err)
 	if err != nil {
 		log.Error(err.Error())
 	}
@@ -449,17 +414,6 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 		log.Debug("<-------- UserWinScore SUCCESS~ -------->")
 		userInfo, ok := data["msg"].(map[string]interface{})
 		if ok {
-			userId := userInfo["id"]
-			log.Debug("userId: %v, %v", userId, reflect.TypeOf(userId))
-
-			intID, err := userId.(json.Number).Int64()
-			if err != nil {
-				log.Error(err.Error())
-				return
-			}
-			strID := strconv.Itoa(int(intID))
-			log.Debug("<-------- strID -------->: %v, %v", strID, reflect.TypeOf(strID))
-
 			jsonScore := userInfo["final_pay"]
 			score, err := jsonScore.(json.Number).Float64()
 
@@ -484,9 +438,6 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 
 	log.Debug("data:%v, ok:%v", data, ok)
 
-	//fmt.Println(data["status"], reflect.TypeOf(data["status"]))
-	//fmt.Println(data["code"], reflect.TypeOf(data["code"]))
-	//fmt.Println(data["msg"], reflect.TypeOf(data["msg"]))
 	code, err := data["code"].(json.Number).Int64()
 	//fmt.Println("code,err", code, err)
 	if err != nil {
@@ -500,20 +451,9 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 
 	fmt.Println(code, err)
 	if data["status"] == "SUCCESS" && code == 200 {
-		fmt.Println("UserWinScore SUCCESS~")
+		log.Debug("<-------- UserLoseScore SUCCESS~ -------->")
 		userInfo, ok := data["msg"].(map[string]interface{})
 		if ok {
-			userId := userInfo["id"]
-			log.Debug("userId: %v, %v", userId, reflect.TypeOf(userId))
-
-			intID, err := userId.(json.Number).Int64()
-			if err != nil {
-				log.Error(err.Error())
-				return
-			}
-			strID := strconv.Itoa(int(intID))
-			log.Debug("<-------- strID -------->: %v, %v", strID, reflect.TypeOf(strID))
-
 			jsonScore := userInfo["final_pay"]
 			score, err := jsonScore.(json.Number).Float64()
 
@@ -541,7 +481,7 @@ func (c4c *Conn4Center) onLockSettlement(msgBody interface{}) {
 
 		fmt.Println(code, reflect.TypeOf(code))
 		if data["status"] == "SUCCESS" && code == 200 {
-			log.Debug("<-------- onLockSettlement success~!!! -------->")
+			log.Debug("<-------- onLockSettlement SUCCESS~!!! -------->")
 		}
 	}
 }
@@ -558,7 +498,7 @@ func (c4c *Conn4Center) onUnlockSettlement(msgBody interface{}) {
 
 		fmt.Println(code, reflect.TypeOf(code))
 		if data["status"] == "SUCCESS" && code == 200 {
-			log.Debug("<-------- onUnlockSettlement success~!!! -------->")
+			log.Debug("<-------- onUnlockSettlement SUCCESS~!!! -------->")
 		}
 	}
 }
@@ -575,7 +515,7 @@ func (c4c *Conn4Center) onWinMoreThanNotice(msgBody interface{}) {
 
 		fmt.Println(code, reflect.TypeOf(code))
 		if data["status"] == "SUCCESS" && code == 200 {
-			log.Debug("<-------- onWinMoreThanNotice success~!!! -------->")
+			log.Debug("<-------- onWinMoreThanNotice SUCCESS~!!! -------->")
 		}
 	}
 }
@@ -668,7 +608,6 @@ func (c4c *Conn4Center) SendMsg2Center(data interface{}) {
 	if err2 != nil {
 		log.Fatal(err2.Error())
 	}
-	log.Debug("<==========================================================>")
 }
 
 //UserSyncWinScore 同步赢分
