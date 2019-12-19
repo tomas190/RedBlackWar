@@ -29,7 +29,6 @@ const (
 	RoomLimitMoney = 50 //房间限定金额50,否则处于观战状态
 )
 
-
 //游戏状态channel
 var DownBetChannel chan bool
 var RobotDownBetChan chan bool
@@ -75,4 +74,6 @@ type Room struct {
 	clock   *time.Ticker //计时器
 	//是否加载机器人
 	IsLoadRobots bool
+
+	UserLeave []*Player
 }
