@@ -345,391 +345,389 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 
 					if totalLoseMoney > 0 {
-						if totalLoseMoney > 0 {
-							if taxMoney > 0 {
-								goto A
-							}
-
-							v.LoseResultMoney -= totalLoseMoney
-							log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
-
-							AllHistoryLose += v.LoseResultMoney
-							sur.TotalLoseMoney += v.LoseResultMoney
-							//将玩家输的金额添加到盈余池
-							SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
-
-							timeStr := time.Now().Format("2006-01-02_15:04:05")
-							nowTime := time.Now().Unix()
-							reason := "ResultLoseScore"
-
-							//同时同步赢分和输分
-							c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
+						if taxMoney > 0 {
+							goto A
 						}
 
-					A:
-						tax := taxMoney * taxRate
-						v.ResultMoney = totalWinMoney + taxMoney - tax
-						v.Account += v.ResultMoney
-						v.ResultMoney -= totalLoseMoney
+						v.LoseResultMoney -= totalLoseMoney
+						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
-						if v.ResultMoney > 0 {
-							v.WinTotalCount++
-						} else if v.ResultMoney < 0 {
-							if v.WinTotalCount >= 12 {
-								v.WinTotalCount--
-							}
-						}
-						if v.ResultMoney > PaoMaDeng {
-							c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
-						}
-						//解锁
-						//c4c.UnlockSettlement(v, totalLoseMoney)
+						AllHistoryLose += v.LoseResultMoney
+						sur.TotalLoseMoney += v.LoseResultMoney
+						//将玩家输的金额添加到盈余池
+						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
 
-						timeNow := time.Now().Unix()
-						data := &PlayerDownBetRecode{}
-						data.Id = v.Id
-						data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
-						data.RoomId = v.room.RoomId
-						data.DownBetInfo = new(DownBetMoney)
-						data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
-						data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
-						data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
-						data.DownBetTime = timeNow
-						data.CardResult = new(CardData)
-						data.CardResult.ReadCard = v.room.Cards.ReadCard
-						data.CardResult.BlackCard = v.room.Cards.BlackCard
-						data.CardResult.RedType = v.room.Cards.RedType
-						data.CardResult.BlackType = v.room.Cards.BlackType
-						data.ResultMoney = v.ResultMoney
-						data.TaxRate = taxRate
-						InsertAccessData(data)
+						timeStr := time.Now().Format("2006-01-02_15:04:05")
+						nowTime := time.Now().Unix()
+						reason := "ResultLoseScore"
 
-					} else {
-
-						if gw.LuckWin == 1 {
-							if gw.CardTypes == Leopard {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
-							}
-							if gw.CardTypes == Shunjin {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
-							}
-							if gw.CardTypes == Golden {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
-							}
-							if gw.CardTypes == Straight {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
-							}
-							if gw.CardTypes == Pair {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
-							}
-						}
-						tax := taxMoney * taxRate
-						v.ResultMoney = totalWinMoney + taxMoney - tax
-						v.Account += v.ResultMoney
-						v.ResultMoney -= totalLoseMoney
-						if v.ResultMoney > 0 {
-							v.WinTotalCount++
-						}
-
-						if v.TotalAmountBet > 18000 {
-							v.TotalAmountBet = 0
-							v.WinTotalCount = 0
-						}
-						if v.WinTotalCount > 12 {
-							v.TotalAmountBet = 0
-							v.WinTotalCount = 0
-						}
-						//log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
+						//同时同步赢分和输分
+						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
 					}
-				}
-			}
-		} else if ag.Weight < bg.Weight { //blackWin
-			//log.Debug("Black Win ~")
-			gw.BlackWin = 1
-			hallRBWin = int32(BlackWin)
-			res.PotWinTypes.BlackDownPot = true
+				A:
+					tax := taxMoney * taxRate
+					v.ResultMoney = totalWinMoney + taxMoney - tax
+					v.Account += v.ResultMoney
+					v.ResultMoney -= totalLoseMoney
 
-			if bg.IsThreeKind() {
-				r.Cards.LuckType = CardsType(Leopard)
-				hallCard = int32(Leopard)
-				gw.LuckWin = 1
-				gw.CardTypes = Leopard
-				r.CardTypeList = append(r.CardTypeList, int32(Leopard))
-				res.PotWinTypes.LuckDownPot = true
-			}
-			if bg.IsStraightFlush() {
-				r.Cards.LuckType = CardsType(Shunjin)
-				hallCard = int32(Shunjin)
-				gw.LuckWin = 1
-				gw.CardTypes = Shunjin
-				r.CardTypeList = append(r.CardTypeList, int32(Shunjin))
-				res.PotWinTypes.LuckDownPot = true
-			}
-			if bg.IsFlush() {
-				r.Cards.LuckType = CardsType(Golden)
-				hallCard = int32(Golden)
-				gw.LuckWin = 1
-				gw.CardTypes = Golden
-				r.CardTypeList = append(r.CardTypeList, int32(Golden))
-				res.PotWinTypes.LuckDownPot = true
-			}
-			if bg.IsStraight() {
-				r.Cards.LuckType = CardsType(Straight)
-				hallCard = int32(Straight)
-				gw.LuckWin = 1
-				gw.CardTypes = Straight
-				r.CardTypeList = append(r.CardTypeList, int32(Straight))
-				res.PotWinTypes.LuckDownPot = true
-			}
-			if r.Cards.LuckType != CardsType(Leopard) {
-				if (bg.Key.Pair() >> 8) >= 9 {
-					r.Cards.LuckType = CardsType(Pair)
-					hallCard = int32(Pair)
-					gw.LuckWin = 1
-					gw.CardTypes = Pair
-					r.CardTypeList = append(r.CardTypeList, int32(Pair))
-					res.PotWinTypes.LuckDownPot = true
-				} else if bg.IsPair() {
-					hallCard = int32(Pair)
-					gw.CardTypes = Pair
-					r.CardTypeList = append(r.CardTypeList, int32(Pair))
-				}
-			}
-			if bg.IsZilch() {
-				hallCard = int32(Leaflet)
-				gw.CardTypes = Leaflet
-				r.CardTypeList = append(r.CardTypeList, int32(Leaflet))
-			}
-
-			for _, v := range r.PlayerList {
-				//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
-				var taxMoney float64
-				var totalWinMoney float64
-				var totalLoseMoney float64
-
-				totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
-				taxMoney += float64(v.DownBetMoneys.BlackDownBet)
-
-				totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
-				totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
-				totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
-
-				v.BlackWinCount++
-				v.TotalCount++
-
-				if gw.LuckWin == 1 {
-					v.LuckWinCount++
-				}
-
-				v.PotWinList = append(v.PotWinList, gw)
-				v.CardTypeList = append(v.CardTypeList, int32(gw.CardTypes))
-				v.RedBlackList = append(v.RedBlackList, BlackWin)
-
-				if len(v.CardTypeList) > 72 {
-					v.CardTypeList = v.CardTypeList[1:]
-				}
-
-				if v != nil && v.IsAction == true {
-					if v.IsRobot == false {
-						//锁钱
-
-						//c4c.LockSettlement(v, totalLoseMoney)
-
-						if gw.LuckWin == 1 {
-							v.LuckWinCount++
-							if gw.CardTypes == Leopard {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
-							}
-							if gw.CardTypes == Shunjin {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
-							}
-							if gw.CardTypes == Golden {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
-							}
-							if gw.CardTypes == Straight {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
-							}
-							if gw.CardTypes == Pair {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
-							}
+					if v.ResultMoney > 0 {
+						v.WinTotalCount++
+					} else if v.ResultMoney < 0 {
+						if v.WinTotalCount >= 12 {
+							v.WinTotalCount--
 						}
-						//连接中心服金币处理
-						if totalWinMoney+taxMoney > 0 {
-							v.WinResultMoney = taxMoney
-							log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
-
-							AllHistoryWin += v.WinResultMoney
-							sur.TotalWinMoney += v.WinResultMoney
-							//将玩家的税收金额添加到盈余池
-							SurplusPool -= v.WinResultMoney * 1.03 //todo
-							timeStr := time.Now().Format("2006-01-02_15:04:05")
-							nowTime := time.Now().Unix()
-							reason := "ResultWinScore"
-
-							//同时同步赢分和输分
-							c4c.UserSyncWinScore(v, nowTime, timeStr, reason)
-						}
-
-						if totalLoseMoney > 0 {
-							if taxMoney > 0 {
-								goto B
-							}
-
-							v.LoseResultMoney -= totalLoseMoney
-							log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
-
-							AllHistoryLose += v.LoseResultMoney
-							sur.TotalLoseMoney += v.LoseResultMoney
-							//将玩家输的金额添加到盈余池
-							SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
-
-							timeStr := time.Now().Format("2006-01-02_15:04:05")
-							nowTime := time.Now().Unix()
-							reason := "ResultLoseScore"
-
-							//同时同步赢分和输分
-							c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
-						}
-					B:
-						tax := taxMoney * taxRate
-						v.ResultMoney = totalWinMoney + taxMoney - tax
-						v.Account += v.ResultMoney
-						v.ResultMoney -= totalLoseMoney
-
-						if v.ResultMoney > 0 {
-							v.WinTotalCount++
-						} else if v.ResultMoney < 0 {
-							if v.WinTotalCount >= 12 {
-								v.WinTotalCount--
-							}
-						}
-						if v.ResultMoney > PaoMaDeng { //跑马灯
-							c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
-						}
-						//解锁
-						//c4c.UnlockSettlement(v,totalLoseMoney)
-
-						timeNow := time.Now().Unix()
-						data := &PlayerDownBetRecode{}
-						data.Id = v.Id
-						data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
-						data.RoomId = v.room.RoomId
-						data.DownBetInfo = new(DownBetMoney)
-						data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
-						data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
-						data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
-						data.DownBetTime = timeNow
-						data.CardResult = new(CardData)
-						data.CardResult.ReadCard = v.room.Cards.ReadCard
-						data.CardResult.BlackCard = v.room.Cards.BlackCard
-						data.CardResult.RedType = v.room.Cards.RedType
-						data.CardResult.BlackType = v.room.Cards.BlackType
-						data.ResultMoney = v.ResultMoney
-						data.TaxRate = taxRate
-						InsertAccessData(data)
-
-					} else {
-						if gw.LuckWin == 1 {
-							if gw.CardTypes == Leopard {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
-							}
-							if gw.CardTypes == Shunjin {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
-							}
-							if gw.CardTypes == Golden {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
-							}
-							if gw.CardTypes == Straight {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
-							}
-							if gw.CardTypes == Pair {
-								totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
-								taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
-							}
-						}
-						tax := taxMoney * taxRate
-						v.ResultMoney = totalWinMoney + taxMoney - tax
-						v.Account += v.ResultMoney
-						v.ResultMoney -= totalLoseMoney
-						if v.ResultMoney > 0 {
-							v.WinTotalCount++
-						}
-						if v.TotalAmountBet > 18000 {
-							v.TotalAmountBet = 0
-							v.WinTotalCount = 0
-						}
-						if v.WinTotalCount > 12 {
-							v.TotalAmountBet = 0
-							v.WinTotalCount = 0
-						}
-
-						//log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
 					}
-				}
-			}
-		}
-		sur.HistoryWin = AllHistoryWin
-		sur.HistoryLose = AllHistoryLose
-		sur.PoolMoney = SurplusPool
-		sur.PlayerNum = RecordPlayerCount()
-		if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
-			InsertSurplusPool(sur)
-		}
-
-		//广播开牌结果
-		r.BroadCastMsg(res)
-
-		//大厅用户添加列表数据
-		hallData := &pb_msg.GameHallData_S2C{}
-		for _, v := range mapUserIDPlayer {
-			if v != nil && v.GameState == InGameHall {
-				for _, data := range v.HallRoomData {
-					if data.Rid == r.RoomId {
-						hd := &pb_msg.HallData{}
-						hd.RoomId = data.Rid
-						// 判断该房间大厅数据列表是否已大于指定数据
-						if len(data.HallRedBlackList) == 48 {
-							log.Debug("<---------- 清空大厅列表数据~ ---------->")
-							data.HallCardTypeList = nil
-							data.HallRedBlackList = nil
-						}
-						data.HallCardTypeList = append(data.HallCardTypeList, hallCard)
-						data.HallRedBlackList = append(data.HallRedBlackList, hallRBWin)
-						hd.CardTypeList = data.HallCardTypeList
-						hd.RedBlackList = data.HallRedBlackList
-						hallData.HallData = append(hallData.HallData, hd)
-
-						hallData.Account = v.Account
-						//log.Debug("<====== 玩家金额:%v =====>", v.Account)
-						v.SendMsg(hallData)
+					if v.ResultMoney > PaoMaDeng {
+						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
+					//解锁
+					//c4c.UnlockSettlement(v, totalLoseMoney)
+
+					timeNow := time.Now().Unix()
+					data := &PlayerDownBetRecode{}
+					data.Id = v.Id
+					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
+					data.RoomId = v.room.RoomId
+					data.DownBetInfo = new(DownBetMoney)
+					data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
+					data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
+					data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
+					data.DownBetTime = timeNow
+					data.CardResult = new(CardData)
+					data.CardResult.ReadCard = v.room.Cards.ReadCard
+					data.CardResult.BlackCard = v.room.Cards.BlackCard
+					data.CardResult.RedType = v.room.Cards.RedType
+					data.CardResult.BlackType = v.room.Cards.BlackType
+					data.ResultMoney = v.ResultMoney
+					data.TaxRate = taxRate
+					InsertAccessData(data)
+
+				} else {
+
+					if gw.LuckWin == 1 {
+						if gw.CardTypes == Leopard {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
+						}
+						if gw.CardTypes == Shunjin {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
+						}
+						if gw.CardTypes == Golden {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
+						}
+						if gw.CardTypes == Straight {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
+						}
+						if gw.CardTypes == Pair {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
+						}
+					}
+					tax := taxMoney * taxRate
+					v.ResultMoney = totalWinMoney + taxMoney - tax
+					v.Account += v.ResultMoney
+					v.ResultMoney -= totalLoseMoney
+					if v.ResultMoney > 0 {
+						v.WinTotalCount++
+					}
+
+					if v.TotalAmountBet > 18000 {
+						v.TotalAmountBet = 0
+						v.WinTotalCount = 0
+					}
+					if v.WinTotalCount > 12 {
+						v.TotalAmountBet = 0
+						v.WinTotalCount = 0
+					}
+					//log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
 				}
 			}
 		}
+	} else if ag.Weight < bg.Weight { //blackWin
+		//log.Debug("Black Win ~")
+		gw.BlackWin = 1
+		hallRBWin = int32(BlackWin)
+		res.PotWinTypes.BlackDownPot = true
 
-		//追加每局红黑Win、Luck、比牌类型的总集合
-		r.RPotWinList = append(r.RPotWinList, gw)
-		//log.Debug("当前房间数据长度为: %v ~", len(r.RPotWinList))
+		if bg.IsThreeKind() {
+			r.Cards.LuckType = CardsType(Leopard)
+			hallCard = int32(Leopard)
+			gw.LuckWin = 1
+			gw.CardTypes = Leopard
+			r.CardTypeList = append(r.CardTypeList, int32(Leopard))
+			res.PotWinTypes.LuckDownPot = true
+		}
+		if bg.IsStraightFlush() {
+			r.Cards.LuckType = CardsType(Shunjin)
+			hallCard = int32(Shunjin)
+			gw.LuckWin = 1
+			gw.CardTypes = Shunjin
+			r.CardTypeList = append(r.CardTypeList, int32(Shunjin))
+			res.PotWinTypes.LuckDownPot = true
+		}
+		if bg.IsFlush() {
+			r.Cards.LuckType = CardsType(Golden)
+			hallCard = int32(Golden)
+			gw.LuckWin = 1
+			gw.CardTypes = Golden
+			r.CardTypeList = append(r.CardTypeList, int32(Golden))
+			res.PotWinTypes.LuckDownPot = true
+		}
+		if bg.IsStraight() {
+			r.Cards.LuckType = CardsType(Straight)
+			hallCard = int32(Straight)
+			gw.LuckWin = 1
+			gw.CardTypes = Straight
+			r.CardTypeList = append(r.CardTypeList, int32(Straight))
+			res.PotWinTypes.LuckDownPot = true
+		}
+		if r.Cards.LuckType != CardsType(Leopard) {
+			if (bg.Key.Pair() >> 8) >= 9 {
+				r.Cards.LuckType = CardsType(Pair)
+				hallCard = int32(Pair)
+				gw.LuckWin = 1
+				gw.CardTypes = Pair
+				r.CardTypeList = append(r.CardTypeList, int32(Pair))
+				res.PotWinTypes.LuckDownPot = true
+			} else if bg.IsPair() {
+				hallCard = int32(Pair)
+				gw.CardTypes = Pair
+				r.CardTypeList = append(r.CardTypeList, int32(Pair))
+			}
+		}
+		if bg.IsZilch() {
+			hallCard = int32(Leaflet)
+			gw.CardTypes = Leaflet
+			r.CardTypeList = append(r.CardTypeList, int32(Leaflet))
+		}
 
-		if len(r.RPotWinList) > 72 {
-			r.RPotWinList = r.RPotWinList[1:]
+		for _, v := range r.PlayerList {
+			//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
+			var taxMoney float64
+			var totalWinMoney float64
+			var totalLoseMoney float64
+
+			totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
+			taxMoney += float64(v.DownBetMoneys.BlackDownBet)
+
+			totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
+			totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
+			totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
+
+			v.BlackWinCount++
+			v.TotalCount++
+
+			if gw.LuckWin == 1 {
+				v.LuckWinCount++
+			}
+
+			v.PotWinList = append(v.PotWinList, gw)
+			v.CardTypeList = append(v.CardTypeList, int32(gw.CardTypes))
+			v.RedBlackList = append(v.RedBlackList, BlackWin)
+
+			if len(v.CardTypeList) > 72 {
+				v.CardTypeList = v.CardTypeList[1:]
+			}
+
+			if v != nil && v.IsAction == true {
+				if v.IsRobot == false {
+					//锁钱
+
+					//c4c.LockSettlement(v, totalLoseMoney)
+
+					if gw.LuckWin == 1 {
+						v.LuckWinCount++
+						if gw.CardTypes == Leopard {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
+						}
+						if gw.CardTypes == Shunjin {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
+						}
+						if gw.CardTypes == Golden {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
+						}
+						if gw.CardTypes == Straight {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
+						}
+						if gw.CardTypes == Pair {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
+						}
+					}
+					//连接中心服金币处理
+					if totalWinMoney+taxMoney > 0 {
+						v.WinResultMoney = taxMoney
+						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
+
+						AllHistoryWin += v.WinResultMoney
+						sur.TotalWinMoney += v.WinResultMoney
+						//将玩家的税收金额添加到盈余池
+						SurplusPool -= v.WinResultMoney * 1.03 //todo
+						timeStr := time.Now().Format("2006-01-02_15:04:05")
+						nowTime := time.Now().Unix()
+						reason := "ResultWinScore"
+
+						//同时同步赢分和输分
+						c4c.UserSyncWinScore(v, nowTime, timeStr, reason)
+					}
+
+					if totalLoseMoney > 0 {
+						if taxMoney > 0 {
+							goto B
+						}
+
+						v.LoseResultMoney -= totalLoseMoney
+						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
+
+						AllHistoryLose += v.LoseResultMoney
+						sur.TotalLoseMoney += v.LoseResultMoney
+						//将玩家输的金额添加到盈余池
+						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
+
+						timeStr := time.Now().Format("2006-01-02_15:04:05")
+						nowTime := time.Now().Unix()
+						reason := "ResultLoseScore"
+
+						//同时同步赢分和输分
+						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
+					}
+				B:
+					tax := taxMoney * taxRate
+					v.ResultMoney = totalWinMoney + taxMoney - tax
+					v.Account += v.ResultMoney
+					v.ResultMoney -= totalLoseMoney
+
+					if v.ResultMoney > 0 {
+						v.WinTotalCount++
+					} else if v.ResultMoney < 0 {
+						if v.WinTotalCount >= 12 {
+							v.WinTotalCount--
+						}
+					}
+					if v.ResultMoney > PaoMaDeng { //跑马灯
+						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
+					}
+					//解锁
+					//c4c.UnlockSettlement(v,totalLoseMoney)
+
+					timeNow := time.Now().Unix()
+					data := &PlayerDownBetRecode{}
+					data.Id = v.Id
+					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
+					data.RoomId = v.room.RoomId
+					data.DownBetInfo = new(DownBetMoney)
+					data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
+					data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
+					data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
+					data.DownBetTime = timeNow
+					data.CardResult = new(CardData)
+					data.CardResult.ReadCard = v.room.Cards.ReadCard
+					data.CardResult.BlackCard = v.room.Cards.BlackCard
+					data.CardResult.RedType = v.room.Cards.RedType
+					data.CardResult.BlackType = v.room.Cards.BlackType
+					data.ResultMoney = v.ResultMoney
+					data.TaxRate = taxRate
+					InsertAccessData(data)
+
+				} else {
+					if gw.LuckWin == 1 {
+						if gw.CardTypes == Leopard {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
+						}
+						if gw.CardTypes == Shunjin {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
+						}
+						if gw.CardTypes == Golden {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
+						}
+						if gw.CardTypes == Straight {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
+						}
+						if gw.CardTypes == Pair {
+							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
+						}
+					}
+					tax := taxMoney * taxRate
+					v.ResultMoney = totalWinMoney + taxMoney - tax
+					v.Account += v.ResultMoney
+					v.ResultMoney -= totalLoseMoney
+					if v.ResultMoney > 0 {
+						v.WinTotalCount++
+					}
+					if v.TotalAmountBet > 18000 {
+						v.TotalAmountBet = 0
+						v.WinTotalCount = 0
+					}
+					if v.WinTotalCount > 12 {
+						v.TotalAmountBet = 0
+						v.WinTotalCount = 0
+					}
+
+					//log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
+				}
+			}
 		}
-		if len(r.CardTypeList) > 72 {
-			r.CardTypeList = r.CardTypeList[1:]
-		}
-		//log.Debug("<-------- 更新盈余池金额为Last: %v --------->", SurplusPool)
 	}
+	sur.HistoryWin = AllHistoryWin
+	sur.HistoryLose = AllHistoryLose
+	sur.PoolMoney = SurplusPool
+	sur.PlayerNum = RecordPlayerCount()
+	if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
+		InsertSurplusPool(sur)
+	}
+
+	//广播开牌结果
+	r.BroadCastMsg(res)
+
+	//大厅用户添加列表数据
+	hallData := &pb_msg.GameHallData_S2C{}
+	for _, v := range mapUserIDPlayer {
+		if v != nil && v.GameState == InGameHall {
+			for _, data := range v.HallRoomData {
+				if data.Rid == r.RoomId {
+					hd := &pb_msg.HallData{}
+					hd.RoomId = data.Rid
+					// 判断该房间大厅数据列表是否已大于指定数据
+					if len(data.HallRedBlackList) == 48 {
+						log.Debug("<---------- 清空大厅列表数据~ ---------->")
+						data.HallCardTypeList = nil
+						data.HallRedBlackList = nil
+					}
+					data.HallCardTypeList = append(data.HallCardTypeList, hallCard)
+					data.HallRedBlackList = append(data.HallRedBlackList, hallRBWin)
+					hd.CardTypeList = data.HallCardTypeList
+					hd.RedBlackList = data.HallRedBlackList
+					hallData.HallData = append(hallData.HallData, hd)
+
+					hallData.Account = v.Account
+					//log.Debug("<====== 玩家金额:%v =====>", v.Account)
+					v.SendMsg(hallData)
+				}
+			}
+		}
+	}
+
+	//追加每局红黑Win、Luck、比牌类型的总集合
+	r.RPotWinList = append(r.RPotWinList, gw)
+	//log.Debug("当前房间数据长度为: %v ~", len(r.RPotWinList))
+
+	if len(r.RPotWinList) > 72 {
+		r.RPotWinList = r.RPotWinList[1:]
+	}
+	if len(r.CardTypeList) > 72 {
+		r.CardTypeList = r.CardTypeList[1:]
+	}
+	//log.Debug("<-------- 更新盈余池金额为Last: %v --------->", SurplusPool)
+}
