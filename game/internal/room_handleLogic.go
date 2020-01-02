@@ -240,7 +240,7 @@ func (r *Room) StartGameRun() {
 	r.RoomStat = RoomStatusRun
 	r.GameStat = DownBet
 
-	go r.PrintPlayerList()
+	 //r.PrintPlayerList()
 
 	//下注阶段定时任务
 	r.DownBetTimerTask()
