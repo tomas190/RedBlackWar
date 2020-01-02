@@ -277,6 +277,14 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			var totalWinMoney float64
 			var totalLoseMoney float64
 
+
+			totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
+			taxMoney += float64(v.DownBetMoneys.RedDownBet)
+
+			totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
+			totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
+			totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
+
 			v.RedWinCount++
 			v.TotalCount++
 
@@ -295,13 +303,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			if v != nil && v.IsAction == true {
 				if v.IsRobot == false {
 					//锁钱
-
-					totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
-					taxMoney += float64(v.DownBetMoneys.RedDownBet)
-
-					totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
-					totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
-					totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
 
 					//c4c.LockSettlement(v, totalLoseMoney)
 
@@ -348,7 +349,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						if taxMoney > totalLoseMoney {
 							v.LoseResultMoney = totalLoseMoney - taxMoney
 						} else {
-							v.LoseResultMoney = taxMoney - totalLoseMoney
+							v.LoseResultMoney = totalLoseMoney - (totalWinMoney + taxMoney)
 						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
@@ -403,12 +404,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					InsertAccessData(data)
 
 				} else {
-					totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
-					taxMoney += float64(v.DownBetMoneys.RedDownBet)
 
-					totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
-					totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
-					totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
 					if gw.LuckWin == 1 {
 						if gw.CardTypes == Leopard {
 							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
@@ -515,6 +511,13 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			var totalWinMoney float64
 			var totalLoseMoney float64
 
+			totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
+			taxMoney += float64(v.DownBetMoneys.BlackDownBet)
+
+			totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
+			totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
+			totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
+
 			v.BlackWinCount++
 			v.TotalCount++
 
@@ -533,13 +536,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			if v != nil && v.IsAction == true {
 				if v.IsRobot == false {
 					//锁钱
-
-					totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
-					taxMoney += float64(v.DownBetMoneys.BlackDownBet)
-
-					totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
-					totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
-					totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
 
 					//c4c.LockSettlement(v, totalLoseMoney)
 
@@ -587,7 +583,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						if taxMoney > totalLoseMoney {
 							v.LoseResultMoney = totalLoseMoney - taxMoney
 						} else {
-							v.LoseResultMoney = taxMoney - totalLoseMoney
+							v.LoseResultMoney = totalLoseMoney - (totalWinMoney + taxMoney)
 						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
@@ -642,12 +638,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					InsertAccessData(data)
 
 				} else {
-					totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
-					taxMoney += float64(v.DownBetMoneys.BlackDownBet)
 
-					totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
-					totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
-					totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
 					if gw.LuckWin == 1 {
 						if gw.CardTypes == Leopard {
 							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)

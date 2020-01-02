@@ -28,7 +28,7 @@ func rpcCloseAgent(args []interface{}) {
 	a := args[0].(gate.Agent)
 	//断开链接，删除用户信息，将用户链接设为空
 	p, ok := a.UserData().(*Player)
-	if ok {
+	if ok && p.ConnAgent == a {
 		log.Debug("Player Close Websocket address ~ : %v ", p.Id)
 
 		p.IsOnline = false
