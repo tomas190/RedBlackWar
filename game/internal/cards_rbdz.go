@@ -433,7 +433,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
 					if v.ResultMoney > 0 {
-						v.WinTotalCount++
+						gameData.ResultCount = 1
+					}else {
+						gameData.ResultCount = 0
 					}
 
 					if v.TotalAmountBet > 18000 {
@@ -668,7 +670,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
 					if v.ResultMoney > 0 {
-						v.WinTotalCount++
+						gameData.ResultCount = 1
+					}else {
+						gameData.ResultCount = 0
 					}
 					if v.TotalAmountBet > 18000 {
 						v.TotalAmountBet = 0
