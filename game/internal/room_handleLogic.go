@@ -128,6 +128,14 @@ func (r *Room) GetGodGableId() {
 		return
 	}
 
+	for i := 0; i < len(GodSlice); i++ {  //todo
+		for j := 1; j < len(GodSlice)-i; j++ {
+			if GodSlice[j].TotalAmountBet > GodSlice[j-1].TotalAmountBet {
+				GodSlice[j], GodSlice[j-1] = GodSlice[j-1], GodSlice[j]
+			}
+		}
+	}
+
 	for i := 0; i < len(GodSlice); i++ {
 		for j := 1; j < len(GodSlice)-i; j++ {
 			if GodSlice[j].WinTotalCount > GodSlice[j-1].WinTotalCount {
@@ -136,6 +144,7 @@ func (r *Room) GetGodGableId() {
 			}
 		}
 	}
+
 	r.GodGambleName = GodSlice[0].Id
 }
 

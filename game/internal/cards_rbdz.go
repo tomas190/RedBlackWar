@@ -436,23 +436,22 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 					//log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
 				}
-			}
-			v.TwentyData = append(v.TwentyData, gameData)
-			var count int32
-			var money float64
-			for _, d := range v.TwentyData {
-				if d != nil {
-					if d.ResultCount == 1 {
-						count += 1
-					}
-					money += d.ResultMoney
+				v.TwentyData = append(v.TwentyData, gameData)
+				if len(v.TwentyData) > 20 {
+					v.TwentyData = append(v.TwentyData[:0], v.TwentyData[1:]...)
 				}
-			}
-			v.TotalAmountBet = int32(money)
-			v.WinTotalCount = count
-
-			if len(v.TwentyData) == 20 {
-				v.TwentyData = append(v.TwentyData[0:], v.TwentyData[0+1:]...)
+				var count int32
+				var money float64
+				for _, d := range v.TwentyData {
+					if d != nil {
+						if d.ResultCount == 1 {
+							count += 1
+						}
+						money += d.ResultMoney
+					}
+				}
+				v.TotalAmountBet = int32(money)
+				v.WinTotalCount = count
 			}
 		}
 	} else if ag.Weight < bg.Weight { //blackWin
@@ -680,23 +679,22 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 					//log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
 				}
-			}
-			v.TwentyData = append(v.TwentyData, gameData)
-			var count int32
-			var money float64
-			for _, d := range v.TwentyData {
-				if d != nil {
-					if d.ResultCount == 1 {
-						count += 1
-					}
-					money += d.ResultMoney
+				v.TwentyData = append(v.TwentyData, gameData)
+				if len(v.TwentyData) > 20 {
+					v.TwentyData = append(v.TwentyData[:0], v.TwentyData[1:]...)
 				}
-			}
-			v.TotalAmountBet = int32(money)
-			v.WinTotalCount = count
-
-			if len(v.TwentyData) == 20 {
-				v.TwentyData = append(v.TwentyData[0:], v.TwentyData[0+1:]...)
+				var count int32
+				var money float64
+				for _, d := range v.TwentyData {
+					if d != nil {
+						if d.ResultCount == 1 {
+							count += 1
+						}
+						money += d.ResultMoney
+					}
+				}
+				v.TotalAmountBet = int32(money)
+				v.WinTotalCount = count
 			}
 		}
 	}
