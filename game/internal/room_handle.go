@@ -157,6 +157,8 @@ func (r *Room) ExitFromRoom(p *Player) {
 		}
 	}
 
+	//更新房间赌神ID
+	r.GetGodGableId()
 	//更新房间列表
 	r.UpdatePlayerList()
 	maintainList := r.PackageRoomPlayerList()

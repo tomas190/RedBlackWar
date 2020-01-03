@@ -53,6 +53,11 @@ type HallDataList struct {
 	HallRedBlackList []int32 //玩家大厅停留列表
 }
 
+type GameDataList struct {
+	ResultCount int32 // 0为Lose，1为Win
+	ResultMoney float64
+}
+
 type Player struct {
 	// 玩家代理链接
 	ConnAgent gate.Agent
@@ -68,34 +73,34 @@ type Player struct {
 	HeadImg  string
 	Account  float64 // 玩家金额
 
-	room           *Room         //玩家房间信息
-	DownBetMoneys  *DownBetMoney //玩家各注池下注的金额
-	TotalAmountBet int32         //玩家房间总下注金额
-	Status         PlayerStatus  //玩家状态
-	IsAction       bool          //玩家是否行动了
-	ContinueVot    *ContinueBet  //续投，记录玩家上局的下注金额。
-	GameState      GameStates    //大厅和房间状态
+	room          *Room         //玩家房间信息
+	DownBetMoneys *DownBetMoney //玩家各注池下注的金额
+	Status        PlayerStatus  //玩家状态
+	IsAction      bool          //玩家是否行动了
+	ContinueVot   *ContinueBet  //续投，记录玩家上局的下注金额。
+	GameState     GameStates    //大厅和房间状态
 
 	TaxPreMoney     float64 //税前Win的总金额
 	ResultMoney     float64 //本局游戏结束的钱,Win and Lose
 	WinResultMoney  float64 //本局Win的Money
 	LoseResultMoney float64 //本局Lose的Money
 
-	WinTotalCount int32          //玩家房间获胜Win总次数
-	PotWinList    []*GameWinList //底池每局Win总列表
-	CardTypeList  []int32        //卡牌类型列表
-	RedBlackList  []int32        //每局红黑Win总顺序列表  红为 1,黑为 2
-	RedWinCount   int32          //Win总列表红Win的局数
-	BlackWinCount int32          //Win总列表黑Win的局数
-	LuckWinCount  int32          //Win总列表幸运的局数
-	TotalCount    int32          //总列表总局数
+	TotalAmountBet int32          //玩家房间总下注金额
+	WinTotalCount  int32          //玩家房间获胜Win总次数
+	PotWinList     []*GameWinList //底池每局Win总列表
+	CardTypeList   []int32        //卡牌类型列表
+	RedBlackList   []int32        //每局红黑Win总顺序列表  红为 1,黑为 2
+	RedWinCount    int32          //Win总列表红Win的局数
+	BlackWinCount  int32          //Win总列表黑Win的局数
+	LuckWinCount   int32          //Win总列表幸运的局数
+	TotalCount     int32          //总列表总局数
 
 	HallRoomData []*HallDataList //玩家大厅房间数据
+	TwentyData   []*GameDataList //20局玩家数据截取
 
 	IsOnline bool //玩家是否在线
 	//SeatNum        int32          //玩家座位号
 
 	// 是否是机器人
-	IsRobot  bool
-
+	IsRobot bool
 }

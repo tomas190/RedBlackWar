@@ -60,6 +60,8 @@ func PlayerLoginAgain(p *Player, a gate.Agent) {
 	}
 	p.SendMsg(enter)
 
+	//更新房间赌神ID
+	p.room.GetGodGableId()
 	//更新房间列表
 	p.room.UpdatePlayerList()
 	maintainList := p.room.PackageRoomPlayerList()
@@ -73,6 +75,8 @@ func (p *Player) PlayerReqExit() {
 		if p.IsRobot == false {
 			if p.IsAction == true {
 
+				//更新房间赌神ID
+				p.room.GetGodGableId()
 				//更新房间列表
 				p.room.UpdatePlayerList()
 				maintainList := p.room.PackageRoomPlayerList()

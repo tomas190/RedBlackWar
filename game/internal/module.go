@@ -19,7 +19,6 @@ type Module struct {
 func (m *Module) OnInit() {
 	m.Skeleton = skeleton
 
-	initMongoDB()
 
 	gameHall.Init()
 	InitMapPlayer()

@@ -105,6 +105,7 @@ func handleLoginInfo(args []interface{}) {
 		}
 		p.SendMsg(enter)
 
+		p.room.GetGodGableId()
 		//更新房间列表
 		p.room.UpdatePlayerList()
 		maintainList := p.room.PackageRoomPlayerList()

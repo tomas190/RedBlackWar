@@ -550,6 +550,7 @@ func (r *Room) KickOutPlayer() {
 			DeletePlayer(v)
 			//用户中心服登出
 			c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
+			//v.ConnAgent.Close()
 			log.Debug("踢出房间断线玩家 : %v", v.Id)
 		}
 	}

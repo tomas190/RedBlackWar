@@ -57,6 +57,7 @@ func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 				pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
 				p.SendMsg(pool)
 
+				p.room.GetGodGableId()
 				//更新列表
 				p.room.UpdatePlayerList()
 				maintainList := p.room.PackageRoomPlayerList()

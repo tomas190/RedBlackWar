@@ -208,6 +208,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	sur.Rid = r.RoomId
 
 	gw := &GameWinList{}
+	gameData := &GameDataList{}
 
 	res.RedCard = r.Cards.ReadCard
 	res.BlackCard = r.Cards.BlackCard
@@ -283,6 +284,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
 			totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
 			totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
+			gameData.ResultMoney = totalLoseMoney
 
 			v.RedWinCount++
 			v.TotalCount++
@@ -302,7 +304,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			if v != nil && v.IsAction == true {
 				if v.IsRobot == false {
 					//锁钱
-
 					//c4c.LockSettlement(v, totalLoseMoney)
 
 					if gw.LuckWin == 1 {
@@ -332,6 +333,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						v.WinResultMoney = taxMoney
 						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
 
+						gameData.ResultCount = 1
 						AllHistoryWin += v.WinResultMoney
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
@@ -348,7 +350,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						if taxMoney > 0 {
 							goto A
 						}
-
+						gameData.ResultCount = 0
 						v.LoseResultMoney -= totalLoseMoney
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
@@ -516,6 +518,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
 			totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
 			totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
+			gameData.ResultMoney = totalLoseMoney
 
 			v.BlackWinCount++
 			v.TotalCount++
@@ -535,7 +538,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			if v != nil && v.IsAction == true {
 				if v.IsRobot == false {
 					//锁钱
-
 					//c4c.LockSettlement(v, totalLoseMoney)
 
 					if gw.LuckWin == 1 {
@@ -566,6 +568,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						v.WinResultMoney = taxMoney
 						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
 
+						gameData.ResultCount = 1
 						AllHistoryWin += v.WinResultMoney
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
@@ -583,6 +586,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							goto B
 						}
 
+						gameData.ResultCount = 0
 						v.LoseResultMoney -= totalLoseMoney
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
@@ -677,6 +681,23 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 					//log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
 				}
+			}
+			var count int32
+			var money float64
+			v.TwentyData = append(v.TwentyData, gameData)
+			for _, d := range v.TwentyData {
+				if d != nil {
+					if d.ResultCount == 1 {
+						count += 1
+					}
+					money += d.ResultMoney
+				}
+			}
+			v.TotalAmountBet = int32(money)
+			v.WinTotalCount = count
+
+			if len(v.TwentyData) == 20 {
+				v.TwentyData = append(v.TwentyData[0:], v.TwentyData[0+1:]...)
 			}
 		}
 	}
