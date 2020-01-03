@@ -124,7 +124,7 @@ func (r *Room) GetGodGableId() {
 		}
 	}
 	if len(WinCount) == 0 {
-		log.Debug("---------- 没有获取到赌神 ~")
+		//log.Debug("---------- 没有获取到赌神 ~")
 		return
 	}
 
