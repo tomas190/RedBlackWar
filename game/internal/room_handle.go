@@ -36,23 +36,8 @@ func (r *Room) JoinGameRoom(p *Player) {
 	}
 
 Next:
-
-	for i, userId := range r.UserLeave {
-		// 把玩家从掉线列表中移除
-		if userId == p.Id {
-			r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
-			log.Debug("AllocateUser 清除玩家记录~")
-			break
-		}
-	}
 	//将用户添加到用户列表
 	r.PlayerList = append(r.PlayerList, p)
-
-	for _, v := range r.PlayerList {
-		if v != nil && v.Id == p.Id {
-			log.Debug("玩家数据:%v", v)
-		}
-	}
 
 	p.room = r
 

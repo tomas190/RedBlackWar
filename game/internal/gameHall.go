@@ -40,10 +40,46 @@ func (gh *GameHall) CreatGameRoom() *Room {
 
 //PlayerJoinRoom 玩家大厅加入房间
 func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
-	roomId := gameHall.UserRoom[p.Id]
-	v, _ := gameHall.RoomRecord.Load(roomId)
-	if v != nil {
-		return
+
+	for i, userId := range p.room.UserLeave {
+		// 把玩家从掉线列表中移除
+		if userId == p.Id {
+			p.room.UserLeave = append(p.room.UserLeave[:i], p.room.UserLeave[i+1:]...)
+			log.Debug("AllocateUser 清除玩家记录~")
+			break
+		}
+	}
+
+	for _, r := range gh.roomList {
+		for _, v := range r.PlayerList {
+			if v != nil && v.Id == p.Id {
+				p.room = r
+				msg := &pb_msg.JoinRoom_S2C{}
+				roomData := p.room.RspRoomData()
+				msg.RoomData = roomData
+				if p.room.GameStat == DownBet {
+					msg.GameTime = DownBetTime - p.room.counter
+				} else {
+					msg.GameTime = SettleTime - p.room.counter
+				}
+				p.SendMsg(msg)
+
+				//玩家各注池下注金额
+				pool := &pb_msg.PlayerPoolMoney_S2C{}
+				pool.DownBetMoney = new(pb_msg.DownBetMoney)
+				pool.DownBetMoney.RedDownBet = p.DownBetMoneys.RedDownBet
+				pool.DownBetMoney.BlackDownBet = p.DownBetMoneys.BlackDownBet
+				pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
+				p.SendMsg(pool)
+
+				p.room.GetGodGableId()
+				//更新列表
+				p.room.UpdatePlayerList()
+				maintainList := p.room.PackageRoomPlayerList()
+				p.room.BroadCastMsg(maintainList)
+				return
+			}
+		}
 	}
 
 	for _, room := range gh.roomList {
