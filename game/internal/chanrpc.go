@@ -41,7 +41,15 @@ func rpcCloseAgent(args []interface{}) {
 			DeletePlayer(p)
 			gameHall.UserRecord.Delete(p.Id)
 		} else {
-			p.room.UserLeave = append(p.room.UserLeave, p.Id)
+			var exist bool
+			for _,v := range p.room.UserLeave{
+				if v == p.Id {
+					exist = true
+				}
+			}
+			if exist == false {
+				p.room.UserLeave = append(p.room.UserLeave, p.Id)
+			}
 		}
 
 		c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord

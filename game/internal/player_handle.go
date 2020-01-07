@@ -72,8 +72,15 @@ func (p *Player) PlayerReqExit() {
 	if p.room != nil {
 		if p.IsRobot == false {
 			if p.IsAction == true {
-
-				p.room.UserLeave = append(p.room.UserLeave, p.Id)
+				var exist bool
+				for _,v := range p.room.UserLeave{
+					if v == p.Id {
+						exist = true
+					}
+				}
+				if exist == false {
+					p.room.UserLeave = append(p.room.UserLeave, p.Id)
+				}
 
 				//更新房间赌神ID
 				p.room.GetGodGableId()
