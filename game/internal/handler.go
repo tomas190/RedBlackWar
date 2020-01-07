@@ -51,14 +51,6 @@ func handleLoginInfo(args []interface{}) {
 			p.ConnAgent = a
 			p.ConnAgent.SetUserData(p)
 
-			//if v, ok := gameHall.UserRecord.Load(userId); ok {
-			//	log.Debug("进来了11")
-			//	user := v.(*Player)
-			//	p.ConnAgent = a
-			//	p.ConnAgent.SetUserData(p)
-			//	user.ConnAgent.SetUserData(v)
-			//}
-
 			v, _ := gameHall.UserRecord.Load(userId)
 			u := v.(*Player)
 
