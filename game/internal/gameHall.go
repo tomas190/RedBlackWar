@@ -44,7 +44,6 @@ func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 		for _, v := range r.PlayerList {
 			if v != nil && v.Id == p.Id {
 				p.room = r
-				p.IsOnline = true
 				msg := &pb_msg.JoinRoom_S2C{}
 				roomData := p.room.RspRoomData()
 				msg.RoomData = roomData

@@ -89,6 +89,7 @@ func handleLoginInfo(args []interface{}) {
 			login.PlayerInfo.Account = u.Account
 			a.WriteMsg(login)
 
+			u.Init()
 			// 重新绑定信息
 			u.ConnAgent = a
 			a.SetUserData(u)
@@ -96,7 +97,6 @@ func handleLoginInfo(args []interface{}) {
 			RegisterPlayer(u)
 			gameHall.UserRecord.Store(u.Id, u)
 
-			u.IsOnline = true
 			// 返回游戏大厅数据
 			RspGameHallData(u)
 

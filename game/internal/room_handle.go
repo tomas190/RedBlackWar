@@ -45,7 +45,6 @@ Next:
 	userRoomMap[p.Id] = r
 
 	p.GameState = InGameRoom
-	p.IsOnline = true
 
 	//进入房间玩家是否大于 50金币，否则处于观战状态
 	p.PlayerMoneyHandler()
