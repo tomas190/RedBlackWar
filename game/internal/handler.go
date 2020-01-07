@@ -72,6 +72,16 @@ func handleLoginInfo(args []interface{}) {
 			if room != nil {
 				// 玩家如果已在游戏中，则返回房间数据
 				r := room.(*Room)
+
+				for i, userId := range r.UserLeave {
+					// 把玩家从掉线列表中移除
+					if userId == p.Id {
+						r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
+						log.Debug("AllocateUser 清除玩家记录~:%v", userId)
+						break
+					}
+				}
+
 				enter := &pb_msg.EnterRoom_S2C{}
 				enter.RoomData = r.RspRoomData()
 				if p.room.GameStat == DownBet {
