@@ -556,7 +556,6 @@ func (r *Room) KickOutPlayer() {
 
 			//玩家断线的话，退出房间信息，也要断开链接
 			v.PlayerReqExit()
-			DeletePlayer(v)
 			//用户中心服登出
 			c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
 			//v.ConnAgent.Close()

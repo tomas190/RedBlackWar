@@ -39,9 +39,9 @@ func rpcCloseAgent(args []interface{}) {
 
 		if p.IsAction == false {
 			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
+			gameHall.UserRecord.Delete(p.Id)
 		}
 		//log.Debug("玩家断开服务器连接,关闭链接~")
-		DeletePlayer(p)
 	}
 	a.SetUserData(nil)
 	a.Close()
