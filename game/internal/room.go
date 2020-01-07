@@ -28,6 +28,7 @@ func (r *Room) RoomInit() {
 	r.clock = time.NewTicker(time.Second)
 
 	r.IsLoadRobots = false
+	r.UserLeave = make([]string, 0)
 }
 
 func (r *Room) GetRoomNumber() string {

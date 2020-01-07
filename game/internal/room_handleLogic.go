@@ -128,7 +128,7 @@ func (r *Room) GetGodGableId() {
 		return
 	}
 
-	for i := 0; i < len(GodSlice); i++ {  //todo
+	for i := 0; i < len(GodSlice); i++ { //todo
 		for j := 1; j < len(GodSlice)-i; j++ {
 			if GodSlice[j].TotalAmountBet > GodSlice[j-1].TotalAmountBet {
 				GodSlice[j], GodSlice[j-1] = GodSlice[j-1], GodSlice[j]
@@ -249,7 +249,7 @@ func (r *Room) StartGameRun() {
 	r.RoomStat = RoomStatusRun
 	r.GameStat = DownBet
 
-	 //r.PrintPlayerList()
+	//r.PrintPlayerList()
 
 	//下注阶段定时任务
 	r.DownBetTimerTask()
@@ -550,16 +550,17 @@ func (r *Room) CompareSettlement() {
 
 //KickOutPlayer 踢出房间断线玩家
 func (r *Room) KickOutPlayer() {
-	for _, v := range r.PlayerList {
-		if v != nil && v.IsOnline == false {
-			log.Debug("玩家ID:%v, 状态:%v, 房间状态:%v", v.Id, v.IsOnline, v.GameState)
-
-			//玩家断线的话，退出房间信息，也要断开链接
-			v.PlayerReqExit()
-			//用户中心服登出
-			c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
-			//v.ConnAgent.Close()
-			log.Debug("踢出房间断线玩家 : %v", v.Id)
+	for _, uid := range r.UserLeave {
+		for _, v := range r.PlayerList {
+			if v != nil && v.Id == uid {
+				log.Debug("玩家ID:%v, 状态:%v, 房间状态:%v", v.Id, v.IsOnline, v.GameState)
+				//玩家断线的话，退出房间信息，也要断开链接
+				v.PlayerReqExit()
+				//用户中心服登出
+				c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
+				v.ConnAgent.Close()
+				log.Debug("踢出房间断线玩家 : %v", v.Id)
+			}
 		}
 	}
 }
@@ -585,22 +586,6 @@ func (r *Room) CleanPlayerData() {
 				//log.Debug("删除机器人！~~~~~~~~~~~~~~~~~~~~~: %v", v.Id)
 				v.room.ExitFromRoom(v)
 
-			}
-		}
-	}
-}
-
-//看数据用,为了打印房间玩家列表
-func (r *Room) PrintPlayerList() {
-	for  {
-		for _, v := range r.PlayerList {
-			if v != nil { // && v.IsRobot == false
-				if v.IsRobot == false && v.IsOnline == false {
-					log.Debug("玩家ID ：%v, 金额：%v, 状态:%v", v.Id, v.Account, v.IsOnline)
-				}
-				//fmt.Println("玩家ID ：", v.Id, "下注金额：", v.DownBetMoneys, "结算：", v.ResultMoney)
-				//fmt.Println("玩家:", v.Id, "行动 红、黑、Luck下注: ", v.DownBetMoneys, "玩家总下注金额: ", v.TotalAmountBet)
-				//fmt.Println("房间池红、黑、Luck总下注: ", v.room.PotMoneyCount, "续投总额:", v.ContinueVot.TotalMoneyBet)
 			}
 		}
 	}

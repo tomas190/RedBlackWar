@@ -75,5 +75,5 @@ type Room struct {
 	//是否加载机器人
 	IsLoadRobots bool
 
-	UserLeave []*Player
+	UserLeave []string // 用户是否在房间
 }
