@@ -81,8 +81,8 @@ type UserInfo struct {
 
 //UserCallback 用户登录回调函数保存
 type UserCallback struct {
-	Data     UserInfo
-	Callback func(data *UserInfo)
+	Data     Player
+	Callback func(data *Player)
 }
 
 type mylog struct {

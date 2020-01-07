@@ -36,8 +36,6 @@ func handleLoginInfo(args []interface{}) {
 
 	log.Debug("handleLoginInfo 用户登录成功~ : %v", m)
 
-	pl := a.UserData().(*Player)
-
 	v, ok := gameHall.UserRecord.Load(m.Id)
 	if ok { // 说明用户已存在
 		p := v.(*Player)
@@ -82,24 +80,25 @@ func handleLoginInfo(args []interface{}) {
 			}
 		}
 	} else if !gameHall.agentExist(a) { // 玩家首次登入
-		c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(data *UserInfo) {
+		c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(u *Player) {
 			login := &pb_msg.LoginInfo_S2C{}
 			login.PlayerInfo = new(pb_msg.PlayerInfo)
-			login.PlayerInfo.Id = pl.Id
-			login.PlayerInfo.NickName = pl.NickName
-			login.PlayerInfo.HeadImg = pl.HeadImg
-			login.PlayerInfo.Account = pl.Account
+			login.PlayerInfo.Id = u.Id
+			login.PlayerInfo.NickName = u.NickName
+			login.PlayerInfo.HeadImg = u.HeadImg
+			login.PlayerInfo.Account = u.Account
 			a.WriteMsg(login)
 
 			// 重新绑定信息
-			pl.ConnAgent = a
-			a.SetUserData(pl)
+			u.ConnAgent = a
+			a.SetUserData(u)
 
-			RegisterPlayer(pl)
-			gameHall.UserRecord.Store(pl.Id, pl)
+			RegisterPlayer(u)
+			gameHall.UserRecord.Store(u.Id, u)
 
+			u.IsOnline = true
 			// 返回游戏大厅数据
-			RspGameHallData(pl)
+			RspGameHallData(u)
 
 		})
 	} // 同一连接上不同用户的情况对第二个用户的请求不做处理

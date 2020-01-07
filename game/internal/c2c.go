@@ -325,7 +325,7 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 				userData, ok = c4c.waitUser[strId]
 				if ok {
 					userData.Data.HeadImg = headImg.(string)
-					userData.Data.Nick = nick.(string)
+					userData.Data.NickName = nick.(string)
 				}
 			}
 			gameAccount, okA := userInfo["game_account"].(map[string]interface{})
@@ -337,7 +337,7 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 					log.Error(err.Error())
 				}
 
-				userData.Data.Score = floatBalance
+				userData.Data.Account = floatBalance
 
 				//调用玩家绑定回调函数
 				if userData.Callback != nil {
@@ -382,7 +382,7 @@ func (c4c *Conn4Center) onUserLogout(msgBody interface{}) {
 				userData, ok = c4c.waitUser[strId]
 				if ok {
 					userData.Data.HeadImg = headImg.(string)
-					userData.Data.Nick = nick.(string)
+					userData.Data.NickName = nick.(string)
 				}
 			}
 		}
@@ -528,7 +528,7 @@ func (c4c *Conn4Center) ServerLoginCenter() {
 }
 
 //UserLoginCenter 用户登录
-func (c4c *Conn4Center) UserLoginCenter(userId string, password string, token string, callback func(data *UserInfo)) {
+func (c4c *Conn4Center) UserLoginCenter(userId string, password string, token string, callback func(data *Player)) {
 	if !c4c.LoginStat {
 		log.Debug("<-------- RedBlack-War not ready~!!! -------->")
 		return
@@ -555,7 +555,7 @@ func (c4c *Conn4Center) UserLoginCenter(userId string, password string, token st
 
 	//加入待处理map，等待处理
 	c4c.waitUser[userId] = &UserCallback{}
-	c4c.waitUser[userId].Data.ID = userId
+	c4c.waitUser[userId].Data.Id = userId
 	c4c.waitUser[userId].Callback = callback
 }
 
