@@ -36,31 +36,35 @@ func handleLoginInfo(args []interface{}) {
 
 	log.Debug("handleLoginInfo 用户登录成功~ : %v", m)
 
-	v, ok := gameHall.UserRecord.Load(m.Id)
+	userId := m.GetId()
+	v, ok := gameHall.UserRecord.Load(userId)
 	if ok { // 说明用户已存在
 		p := v.(*Player)
 		if p.ConnAgent == a { // 用户和链接都相同
 			log.Debug("同一用户相同连接重复登录~")
 			return
 		} else { // 用户相同，链接不相同
-			err := gameHall.ReplacePlayerAgent(p.Id, a)
+			err := gameHall.ReplacePlayerAgent(userId, a)
 			if err != nil {
 				log.Error("用户链接替换错误", err)
 			}
 
+			v, _ := gameHall.UserRecord.Load(userId)
+			u := v.(*Player)
+
 			login := &pb_msg.LoginInfo_S2C{}
 			login.PlayerInfo = new(pb_msg.PlayerInfo)
-			login.PlayerInfo.Id = p.Id
-			login.PlayerInfo.NickName = p.NickName
-			login.PlayerInfo.HeadImg = p.HeadImg
-			login.PlayerInfo.Account = p.Account
+			login.PlayerInfo.Id = u.Id
+			login.PlayerInfo.NickName = u.NickName
+			login.PlayerInfo.HeadImg = u.HeadImg
+			login.PlayerInfo.Account = u.Account
 			a.WriteMsg(login)
 
 			rId := gameHall.UserRoom[p.Id]
-			v, _ := gameHall.RoomRecord.Load(rId)
-			if v != nil {
+			room, _ := gameHall.RoomRecord.Load(rId)
+			if room != nil {
 				// 玩家如果已在游戏中，则返回房间数据
-				r := v.(*Room)
+				r := room.(*Room)
 				enter := &pb_msg.EnterRoom_S2C{}
 				enter.RoomData = r.RspRoomData()
 				if p.room.GameStat == DownBet {
@@ -70,6 +74,10 @@ func handleLoginInfo(args []interface{}) {
 					enter.GameTime = SettleTime - p.room.counter
 					log.Debug("用户重新登陆 SettleTime.GameTime: %v", enter.GameTime)
 				}
+				if rID, ok := gameHall.UserRoom[userId]; ok {
+					enter.RoomData.RoomId = rID // 如果用户之前在房间里后来退出，返回房间号
+				}
+				log.Debug("<----login 登录 resp---->%+v %+v", enter.RoomData.RoomId)
 				a.WriteMsg(enter)
 
 				p.room.GetGodGableId()
@@ -99,7 +107,6 @@ func handleLoginInfo(args []interface{}) {
 
 			// 返回游戏大厅数据
 			RspGameHallData(u)
-
 		})
 	} // 同一连接上不同用户的情况对第二个用户的请求不做处理
 }
@@ -147,13 +154,11 @@ func handleLeaveHall(args []interface{}) {
 	log.Debug("handleLeaveHall 玩家退出大厅~ : %v", p.Id)
 
 	if ok {
-		if p.IsAction == false {
-			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
-			gameHall.UserRecord.Delete(p.Id)
-			DeletePlayer(p)
-			p.ConnAgent.Close()
-		}
+		c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
+		gameHall.UserRecord.Delete(p.Id)
+		DeletePlayer(p)
+		a.Close()
 		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
-		p.SendMsg(leaveHall)
+		a.WriteMsg(leaveHall)
 	}
 }
