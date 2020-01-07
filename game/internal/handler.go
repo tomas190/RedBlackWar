@@ -48,9 +48,12 @@ func handleLoginInfo(args []interface{}) {
 		} else { // 用户相同，链接不相同
 			log.Debug("进来了1")
 
-			err := gameHall.ReplacePlayerAgent(userId, a)
-			if err != nil {
-				log.Error("用户链接替换错误", err)
+			if v, ok := gameHall.UserRecord.Load(userId); ok {
+				log.Debug("进来了11")
+				user := v.(*Player)
+				user.ConnAgent.Destroy()
+				user.ConnAgent = a
+				user.ConnAgent.SetUserData(v)
 			}
 
 			v, _ := gameHall.UserRecord.Load(userId)
