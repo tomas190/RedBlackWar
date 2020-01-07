@@ -48,13 +48,16 @@ func handleLoginInfo(args []interface{}) {
 		} else { // 用户相同，链接不相同
 			log.Debug("进来了1")
 
-			if v, ok := gameHall.UserRecord.Load(userId); ok {
-				log.Debug("进来了11")
-				user := v.(*Player)
-				user.ConnAgent.Destroy()
-				user.ConnAgent = a
-				user.ConnAgent.SetUserData(v)
-			}
+			p.ConnAgent = a
+			p.ConnAgent.SetUserData(p)
+
+			//if v, ok := gameHall.UserRecord.Load(userId); ok {
+			//	log.Debug("进来了11")
+			//	user := v.(*Player)
+			//	p.ConnAgent = a
+			//	p.ConnAgent.SetUserData(p)
+			//	user.ConnAgent.SetUserData(v)
+			//}
 
 			v, _ := gameHall.UserRecord.Load(userId)
 			u := v.(*Player)
@@ -74,12 +77,14 @@ func handleLoginInfo(args []interface{}) {
 				r := room.(*Room)
 
 				for i, userId := range r.UserLeave {
+					log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
 					// 把玩家从掉线列表中移除
 					if userId == p.Id {
 						r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
 						log.Debug("AllocateUser 清除玩家记录~:%v", userId)
 						break
 					}
+					log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
 				}
 
 				enter := &pb_msg.EnterRoom_S2C{}
