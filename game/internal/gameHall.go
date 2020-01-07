@@ -51,7 +51,6 @@ func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 				r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
 				log.Debug("AllocateUser 清除玩家记录~:%v", userId)
 				log.Debug("AllocateUser 清除玩家记录~:%v", len(r.UserLeave))
-				break
 			}
 		}
 	}

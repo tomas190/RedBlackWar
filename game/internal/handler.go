@@ -154,11 +154,15 @@ func handleLeaveHall(args []interface{}) {
 	log.Debug("handleLeaveHall 玩家退出大厅~ : %v", p.Id)
 
 	if ok {
-		c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
-		gameHall.UserRecord.Delete(p.Id)
-		DeletePlayer(p)
-		p.ConnAgent.Close()
+
+		if p.IsAction == false {
+			DeletePlayer(p)
+			gameHall.UserRecord.Delete(p.Id)
+			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
+			p.ConnAgent.Close()
+		}
+
 		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
-		a.WriteMsg(leaveHall)
+		p.SendMsg(leaveHall)
 	}
 }
