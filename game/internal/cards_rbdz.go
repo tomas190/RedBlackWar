@@ -328,8 +328,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
 						}
 					}
-					//锁
-					c4c.LockSettlement(v)
 
 					//连接中心服金币处理
 					if totalWinMoney+taxMoney > 0 {
@@ -374,7 +372,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
 					//锁
-					c4c.UnlockSettlement(v)
 
 					if v.ResultMoney > 0 {
 						gameData.ResultCount = 1
@@ -386,7 +383,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
 					//解锁
-					//c4c.UnlockSettlement(v, totalLoseMoney)
 
 					timeNow := time.Now().Unix()
 					data := &PlayerDownBetRecode{}
@@ -576,7 +572,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
 						}
 					}
-					c4c.LockSettlement(v)
 
 					//连接中心服金币处理
 					if totalWinMoney+taxMoney > 0 {
@@ -631,7 +626,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
 					//解锁
-					c4c.UnlockSettlement(v)
 
 					timeNow := time.Now().Unix()
 					data := &PlayerDownBetRecode{}
