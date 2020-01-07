@@ -2,7 +2,6 @@ package internal
 
 import (
 	pb_msg "RedBlack-War/msg/Protocal"
-	"dezhoupoker/msg"
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"reflect"
@@ -51,8 +50,8 @@ func handleLoginInfo(args []interface{}) {
 				log.Error("用户链接替换错误", err)
 			}
 
-			login := &msg.Login_S2C{}
-			login.PlayerInfo = new(msg.PlayerInfo)
+			login := &pb_msg.LoginInfo_S2C{}
+			login.PlayerInfo = new(pb_msg.PlayerInfo)
 			login.PlayerInfo.Id = p.Id
 			login.PlayerInfo.NickName = p.NickName
 			login.PlayerInfo.HeadImg = p.HeadImg
@@ -84,8 +83,8 @@ func handleLoginInfo(args []interface{}) {
 		}
 	} else if !gameHall.agentExist(a) { // 玩家首次登入
 		c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(data *UserInfo) {
-			login := &msg.Login_S2C{}
-			login.PlayerInfo = new(msg.PlayerInfo)
+			login := &pb_msg.LoginInfo_S2C{}
+			login.PlayerInfo = new(pb_msg.PlayerInfo)
 			login.PlayerInfo.Id = pl.Id
 			login.PlayerInfo.NickName = pl.NickName
 			login.PlayerInfo.HeadImg = pl.HeadImg
