@@ -41,9 +41,13 @@ func handleLoginInfo(args []interface{}) {
 	if ok { // 说明用户已存在
 		p := v.(*Player)
 		if p.ConnAgent == a { // 用户和链接都相同
+			log.Debug("进来了0")
+
 			log.Debug("同一用户相同连接重复登录~")
 			return
 		} else { // 用户相同，链接不相同
+			log.Debug("进来了1")
+
 			err := gameHall.ReplacePlayerAgent(userId, a)
 			if err != nil {
 				log.Error("用户链接替换错误", err)
@@ -88,6 +92,8 @@ func handleLoginInfo(args []interface{}) {
 			}
 		}
 	} else if !gameHall.agentExist(a) { // 玩家首次登入
+		log.Debug("进来了2")
+
 		c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(u *Player) {
 			login := &pb_msg.LoginInfo_S2C{}
 			login.PlayerInfo = new(pb_msg.PlayerInfo)
@@ -154,15 +160,10 @@ func handleLeaveHall(args []interface{}) {
 	log.Debug("handleLeaveHall 玩家退出大厅~ : %v", p.Id)
 
 	if ok {
-
-		if p.IsAction == false {
-			DeletePlayer(p)
-			gameHall.UserRecord.Delete(p.Id)
-			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
-			p.ConnAgent.Close()
-		}
-
+		c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
+		DeletePlayer(p)
+		p.ConnAgent.Close()
 		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
-		p.SendMsg(leaveHall)
+		a.WriteMsg(leaveHall)
 	}
 }
