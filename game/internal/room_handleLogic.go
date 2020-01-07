@@ -558,6 +558,7 @@ func (r *Room) KickOutPlayer() {
 				if v.IsOnline == true {
 					v.PlayerReqExit()
 				}else {
+					v.PlayerReqExit()
 					c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
 					leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 					v.ConnAgent.WriteMsg(leaveHall)
