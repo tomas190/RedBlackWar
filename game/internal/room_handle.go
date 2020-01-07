@@ -47,8 +47,14 @@ Next:
 	}
 	//将用户添加到用户列表
 	r.PlayerList = append(r.PlayerList, p)
-	p.room = r
 
+	for _, v := range r.PlayerList {
+		if v != nil && v.Id == p.Id {
+			log.Debug("玩家数据:%v", v)
+		}
+	}
+
+	p.room = r
 
 	userRoomMap = make(map[string]*Room)
 	userRoomMap[p.Id] = r
