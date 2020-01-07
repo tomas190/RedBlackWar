@@ -41,12 +41,17 @@ func (gh *GameHall) CreatGameRoom() *Room {
 //PlayerJoinRoom 玩家大厅加入房间
 func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 
-	for i, userId := range p.room.UserLeave {
-		// 把玩家从掉线列表中移除
-		if userId == p.Id {
-			p.room.UserLeave = append(p.room.UserLeave[:i], p.room.UserLeave[i+1:]...)
-			log.Debug("AllocateUser 清除玩家记录~")
-			break
+	log.Debug("p.room.UserLeave:%v", len(p.room.UserLeave))
+	v, _ := gameHall.RoomRecord.Load(rid)
+	if v != nil {
+		r := v.(*Room)
+		for i, userId := range r.UserLeave {
+			// 把玩家从掉线列表中移除
+			if userId == p.Id {
+				r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
+				log.Debug("AllocateUser 清除玩家记录~")
+				break
+			}
 		}
 	}
 
