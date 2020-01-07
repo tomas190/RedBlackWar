@@ -47,6 +47,21 @@ func handleLoginInfo(args []interface{}) {
 			return
 		} else { // 用户相同，链接不相同
 			log.Debug("进来了1")
+			rID := gameHall.UserRoom[p.Id]
+			room ,_ := gameHall.RoomRecord.Load(rID)
+			if room != nil {
+				r := room.(*Room)
+				for i, userId := range r.UserLeave {
+					log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
+					// 把玩家从掉线列表中移除
+					if userId == p.Id {
+						r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
+						log.Debug("AllocateUser 清除玩家记录~:%v", userId)
+						break
+					}
+					log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
+				}
+			}
 
 			p.ConnAgent = a
 			p.ConnAgent.SetUserData(p)
@@ -62,22 +77,22 @@ func handleLoginInfo(args []interface{}) {
 			login.PlayerInfo.Account = u.Account
 			a.WriteMsg(login)
 
-			rId := gameHall.UserRoom[p.Id]
-			room, _ := gameHall.RoomRecord.Load(rId)
+			//rId := gameHall.UserRoom[p.Id]
+			//room, _ := gameHall.RoomRecord.Load(rId)
 			if room != nil {
 				// 玩家如果已在游戏中，则返回房间数据
 				r := room.(*Room)
 
-				for i, userId := range r.UserLeave {
-					log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
-					// 把玩家从掉线列表中移除
-					if userId == p.Id {
-						r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
-						log.Debug("AllocateUser 清除玩家记录~:%v", userId)
-						break
-					}
-					log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
-				}
+				//for i, userId := range r.UserLeave {
+				//	log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
+				//	// 把玩家从掉线列表中移除
+				//	if userId == p.Id {
+				//		r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
+				//		log.Debug("AllocateUser 清除玩家记录~:%v", userId)
+				//		break
+				//	}
+				//	log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
+				//}
 
 				enter := &pb_msg.EnterRoom_S2C{}
 				enter.RoomData = r.RspRoomData()
