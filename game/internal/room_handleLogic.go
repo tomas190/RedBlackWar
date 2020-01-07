@@ -552,7 +552,8 @@ func (r *Room) CompareSettlement() {
 func (r *Room) KickOutPlayer() {
 	for _, uid := range r.UserLeave {
 		for _, v := range r.PlayerList {
-			if v != nil && v.Id == uid {
+			v.NotOnline++
+			if v != nil && v.Id == uid && v.NotOnline >= 2 {
 				//玩家断线的话，退出房间信息，也要断开链接
 				v.PlayerReqExit()
 				//用户中心服登出

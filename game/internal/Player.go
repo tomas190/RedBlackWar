@@ -37,6 +37,7 @@ func (p *Player) Init() {
 	p.HallRoomData = nil
 
 	p.IsRobot = false
+	p.NotOnline = 0
 }
 
 // 用户缓存数据

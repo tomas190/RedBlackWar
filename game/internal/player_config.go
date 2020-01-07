@@ -101,6 +101,8 @@ type Player struct {
 	IsOnline bool //玩家是否在线
 	//SeatNum        int32          //玩家座位号
 
+	NotOnline int32
+
 	// 是否是机器人
 	IsRobot bool
 }

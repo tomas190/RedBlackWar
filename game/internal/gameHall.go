@@ -41,7 +41,6 @@ func (gh *GameHall) CreatGameRoom() *Room {
 //PlayerJoinRoom 玩家大厅加入房间
 func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 
-	log.Debug("p.room.UserLeave:%v", len(p.room.UserLeave))
 	v, _ := gameHall.RoomRecord.Load(rid)
 	if v != nil {
 		r := v.(*Room)
