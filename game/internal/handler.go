@@ -150,6 +150,7 @@ func handleLeaveHall(args []interface{}) {
 		if p.IsAction == false {
 			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 			gameHall.UserRecord.Delete(p.Id)
+			DeletePlayer(p)
 			p.ConnAgent.Close()
 		}
 		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
