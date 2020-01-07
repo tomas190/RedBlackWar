@@ -555,11 +555,17 @@ func (r *Room) KickOutPlayer() {
 			//v.NotOnline++
 			if v != nil && v.Id == uid {// && v.NotOnline >= 2
 				//玩家断线的话，退出房间信息，也要断开链接
-				v.PlayerReqExit()
+				if v.IsOnline == true {
+					v.PlayerReqExit()
+				}else {
+					c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
+					leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
+					v.ConnAgent.WriteMsg(leaveHall)
+					v.IsOnline = false
+					v.ConnAgent.Close()
+					log.Debug("踢出房间断线玩家 : %v", v.Id)
+				}
 				//用户中心服登出
-				c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
-				v.ConnAgent.Close()
-				log.Debug("踢出房间断线玩家 : %v", v.Id)
 			}
 		}
 	}

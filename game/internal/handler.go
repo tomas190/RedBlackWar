@@ -62,6 +62,7 @@ func handleLoginInfo(args []interface{}) {
 
 			p.ConnAgent = a
 			p.ConnAgent.SetUserData(p)
+			p.IsOnline = true
 
 			v, _ := gameHall.UserRecord.Load(userId)
 			u := v.(*Player)
@@ -184,6 +185,7 @@ func handleLeaveHall(args []interface{}) {
 	if ok {
 		if p.IsAction == false {
 			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
+			p.IsOnline = false
 			DeletePlayer(p)
 			p.ConnAgent.Close()
 			leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
