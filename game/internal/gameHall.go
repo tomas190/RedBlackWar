@@ -47,8 +47,10 @@ func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 		for i, userId := range r.UserLeave {
 			// 把玩家从掉线列表中移除
 			if userId == p.Id {
+				log.Debug("AllocateUser 清除玩家记录~:%v", len(r.UserLeave))
 				r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
-				log.Debug("AllocateUser 清除玩家记录~")
+				log.Debug("AllocateUser 清除玩家记录~:%v", userId)
+				log.Debug("AllocateUser 清除玩家记录~:%v", len(r.UserLeave))
 				break
 			}
 		}
