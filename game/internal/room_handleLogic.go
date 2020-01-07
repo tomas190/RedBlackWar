@@ -553,6 +553,7 @@ func (r *Room) KickOutPlayer() {
 	for _, uid := range r.UserLeave {
 		for _, v := range r.PlayerList {
 			if v != nil && v.Id == uid {
+				log.Debug("玩家ID:%v, 状态:%v, 房间状态:%v", v.Id, v.IsOnline, v.GameState)
 				//玩家断线的话，退出房间信息，也要断开链接
 				v.PlayerReqExit()
 				//用户中心服登出

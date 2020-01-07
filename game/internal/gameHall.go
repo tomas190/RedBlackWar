@@ -40,6 +40,11 @@ func (gh *GameHall) CreatGameRoom() *Room {
 
 //PlayerJoinRoom 玩家大厅加入房间
 func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
+	roomId := gameHall.UserRoom[p.Id]
+	v, _ := gameHall.RoomRecord.Load(roomId)
+	if v != nil {
+		return
+	}
 
 	for _, room := range gh.roomList {
 		if room != nil && room.RoomId == rid { // 这里要不要遍历房间，查看用户id是否存在
