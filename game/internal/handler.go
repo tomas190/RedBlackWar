@@ -46,10 +46,18 @@ func handleLoginInfo(args []interface{}) {
 			log.Debug("同一用户相同连接重复登录~")
 			return
 		} else { // 用户相同，链接不相同
-			log.Debug("进来了1")
-			rID := gameHall.UserRoom[p.Id]
-			log.Debug("rid:%v", rID)
-			log.Debug("rid:%v", p.room)
+			if p.room != nil {
+				for i, userId := range  p.room.UserLeave {
+					log.Debug("AllocateUser 长度~:%v", len( p.room.UserLeave))
+					// 把玩家从掉线列表中移除
+					if userId == p.Id {
+						p.room.UserLeave = append( p.room.UserLeave[:i],  p.room.UserLeave[i+1:]...)
+						log.Debug("AllocateUser 清除玩家记录~:%v", userId)
+						break
+					}
+					log.Debug("AllocateUser 长度~:%v", len( p.room.UserLeave))
+				}
+			}
 
 
 			p.ConnAgent = a
