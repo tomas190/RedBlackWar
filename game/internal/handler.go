@@ -43,12 +43,64 @@ func handleLoginInfo(args []interface{}) {
 		if p.ConnAgent == a { // 用户和链接都相同
 			log.Debug("进来了0")
 			log.Debug("同一用户相同连接重复登录~")
-			// 用户处理
 			return
 		} else { // 用户相同，链接不相同
-		log.Debug("进来了1")
-		// 用户处理
-		p.PlayerLoginHandle(userId,a)
+			log.Debug("进来了1")
+			// 用户处理
+			if p.room != nil {
+				for i, userId := range p.room.UserLeave {
+					log.Debug("AllocateUser 长度~:%v", len(p.room.UserLeave))
+					// 把玩家从掉线列表中移除
+					if userId == p.Id {
+						p.room.UserLeave = append(p.room.UserLeave[:i], p.room.UserLeave[i+1:]...)
+						log.Debug("AllocateUser 清除玩家记录~:%v", userId)
+						break
+					}
+					log.Debug("AllocateUser 长度~:%v", len(p.room.UserLeave))
+				}
+			}
+			
+			p.ConnAgent.Close()
+			p.ConnAgent = a
+			p.ConnAgent.SetUserData(p)
+			p.IsOnline = true
+
+			c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(u *Player) {
+				login := &pb_msg.LoginInfo_S2C{}
+				login.PlayerInfo = new(pb_msg.PlayerInfo)
+				login.PlayerInfo.Id = u.Id
+				login.PlayerInfo.NickName = u.NickName
+				login.PlayerInfo.HeadImg = u.HeadImg
+				login.PlayerInfo.Account = u.Account
+				a.WriteMsg(login)
+
+				// 返回游戏大厅数据
+				RspGameHallData(u)
+			})
+
+			rId := gameHall.UserRoom[p.Id]
+			room, _ := gameHall.RoomRecord.Load(rId)
+			if room != nil {
+				// 玩家如果已在游戏中，则返回房间数据
+				r := room.(*Room)
+
+				for i, userId := range r.UserLeave {
+					log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
+					// 把玩家从掉线列表中移除
+					if userId == p.Id {
+						r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
+						log.Debug("AllocateUser 清除玩家记录~:%v", userId)
+						break
+					}
+					log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
+				}
+
+				p.room.GetGodGableId()
+				//更新房间列表
+				p.room.UpdatePlayerList()
+				maintainList := p.room.PackageRoomPlayerList()
+				p.room.BroadCastExcept(maintainList, p)
+			}
 		}
 	} else if !gameHall.agentExist(a) { // 玩家首次登入
 		log.Debug("进来了2")
