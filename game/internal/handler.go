@@ -59,13 +59,12 @@ func handleLoginInfo(args []interface{}) {
 					log.Debug("AllocateUser 长度~:%v", len(p.room.UserLeave))
 				}
 			}
-			
-			p.ConnAgent.Close()
-			p.ConnAgent = a
-			p.ConnAgent.SetUserData(p)
-			p.IsOnline = true
 
-			c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(u *Player) {
+			rId := gameHall.UserRoom[p.Id]
+			user, _ := gameHall.UserRecord.Load(p.Id)
+			if user != nil {
+				log.Debug("进来了4")
+				u := user.(*Player)
 				login := &pb_msg.LoginInfo_S2C{}
 				login.PlayerInfo = new(pb_msg.PlayerInfo)
 				login.PlayerInfo.Id = u.Id
@@ -74,11 +73,15 @@ func handleLoginInfo(args []interface{}) {
 				login.PlayerInfo.Account = u.Account
 				a.WriteMsg(login)
 
+				p.ConnAgent.Destroy()
+				p.ConnAgent = a
+				p.ConnAgent.SetUserData(p)
+				p.IsOnline = true
+
 				// 返回游戏大厅数据
 				RspGameHallData(u)
-			})
+			}
 
-			rId := gameHall.UserRoom[p.Id]
 			room, _ := gameHall.RoomRecord.Load(rId)
 			if room != nil {
 				// 玩家如果已在游戏中，则返回房间数据
@@ -181,7 +184,7 @@ func handleLeaveHall(args []interface{}) {
 			gameHall.UserRecord.Delete(p.Id)
 			leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 			a.WriteMsg(leaveHall)
-			a.Close()
+			p.ConnAgent.Close()
 		} else {
 			var exist bool
 			for _, v := range p.room.UserLeave {
