@@ -19,7 +19,9 @@ func (r *Room) JoinGameRoom(p *Player) {
 			}
 		}
 		AllPlayerCount = append(AllPlayerCount, p.Id)
-		SurplusPool -= 6 //
+
+		// 盈余池 =((玩家总输 - (玩家总赢 * 100%) - (玩家数量 * 0)) * 50%
+		SurplusPool -= 1 // 玩家数量
 
 		sur := &SurplusPoolDB{}
 		sur.TimeNow = time.Now().Format("2006-01-02 15:04:05")
