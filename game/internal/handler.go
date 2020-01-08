@@ -47,18 +47,17 @@ func handleLoginInfo(args []interface{}) {
 			return
 		} else { // 用户相同，链接不相同
 			if p.room != nil {
-				for i, userId := range  p.room.UserLeave {
-					log.Debug("AllocateUser 长度~:%v", len( p.room.UserLeave))
+				for i, userId := range p.room.UserLeave {
+					log.Debug("AllocateUser 长度~:%v", len(p.room.UserLeave))
 					// 把玩家从掉线列表中移除
 					if userId == p.Id {
-						p.room.UserLeave = append( p.room.UserLeave[:i],  p.room.UserLeave[i+1:]...)
+						p.room.UserLeave = append(p.room.UserLeave[:i], p.room.UserLeave[i+1:]...)
 						log.Debug("AllocateUser 清除玩家记录~:%v", userId)
 						break
 					}
-					log.Debug("AllocateUser 长度~:%v", len( p.room.UserLeave))
+					log.Debug("AllocateUser 长度~:%v", len(p.room.UserLeave))
 				}
 			}
-
 
 			p.ConnAgent = a
 			p.ConnAgent.SetUserData(p)
@@ -200,6 +199,7 @@ func handleLeaveHall(args []interface{}) {
 			if exist == false {
 				p.room.UserLeave = append(p.room.UserLeave, p.Id)
 			}
+			p.IsOnline = false
 			leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 			a.WriteMsg(leaveHall)
 		}
