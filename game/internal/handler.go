@@ -67,6 +67,9 @@ func handleLoginInfo(args []interface{}) {
 			u.ConnAgent = a
 			a.SetUserData(u)
 
+			u.PassWord = m.GetPassWord()
+			u.Token = m.GetToken()
+
 			RegisterPlayer(u)
 			gameHall.UserRecord.Store(u.Id, u)
 
