@@ -47,6 +47,7 @@ func handleLoginInfo(args []interface{}) {
 			p.PlayerLoginHandle(userId,a)
 			return
 		} else { // 用户相同，链接不相同
+		log.Debug("进来了1")
 		// 用户处理
 		p.PlayerLoginHandle(userId,a)
 		}
