@@ -535,6 +535,7 @@ func (r *Room) CompareSettlement() {
 		if r.counter == SettleTime {
 			//踢出房间断线玩家
 			r.KickOutPlayer()
+			r.UserLeave = []string{}
 			//清空桌面注池
 			r.PotMoneyCount = new(PotRoomCount)
 			//计时数又重置为0,开始新的下注阶段时间倒计时
