@@ -2,6 +2,7 @@ package internal
 
 import (
 	pb_msg "RedBlack-War/msg/Protocal"
+	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"time"
 )
@@ -144,4 +145,73 @@ func (p *Player) SyncScoreChangeToCenter(reason string) {
 	//跨模块调用到login，然后由login调用到Center
 	//login.ChanRPC.Go("SyncCenterScoreChange", p.ID, p.fWinScore, p.fLoseScore)
 	c4c.UserSyncScoreChange(p, reason)
+}
+
+func (p *Player) PlayerLoginHandle(userId string, a gate.Agent) {
+	if p.room != nil {
+		for i, userId := range p.room.UserLeave {
+			log.Debug("AllocateUser 长度~:%v", len(p.room.UserLeave))
+			// 把玩家从掉线列表中移除
+			if userId == p.Id {
+				p.room.UserLeave = append(p.room.UserLeave[:i], p.room.UserLeave[i+1:]...)
+				log.Debug("AllocateUser 清除玩家记录~:%v", userId)
+				break
+			}
+			log.Debug("AllocateUser 长度~:%v", len(p.room.UserLeave))
+		}
+	}
+
+	p.ConnAgent = a
+	p.ConnAgent.SetUserData(p)
+	p.IsOnline = true
+
+	v, _ := gameHall.UserRecord.Load(userId)
+	u := v.(*Player)
+
+	login := &pb_msg.LoginInfo_S2C{}
+	login.PlayerInfo = new(pb_msg.PlayerInfo)
+	login.PlayerInfo.Id = u.Id
+	login.PlayerInfo.NickName = u.NickName
+	login.PlayerInfo.HeadImg = u.HeadImg
+	login.PlayerInfo.Account = u.Account
+	a.WriteMsg(login)
+
+	rId := gameHall.UserRoom[p.Id]
+	room, _ := gameHall.RoomRecord.Load(rId)
+	if room != nil {
+		// 玩家如果已在游戏中，则返回房间数据
+		r := room.(*Room)
+
+		for i, userId := range r.UserLeave {
+			log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
+			// 把玩家从掉线列表中移除
+			if userId == p.Id {
+				r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
+				log.Debug("AllocateUser 清除玩家记录~:%v", userId)
+				break
+			}
+			log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
+		}
+
+		enter := &pb_msg.EnterRoom_S2C{}
+		enter.RoomData = r.RspRoomData()
+		if p.room.GameStat == DownBet {
+			enter.GameTime = DownBetTime - p.room.counter
+			log.Debug("用户重新登陆 DownBetTime.GameTime: %v", enter.GameTime)
+		} else {
+			enter.GameTime = SettleTime - p.room.counter
+			log.Debug("用户重新登陆 SettleTime.GameTime: %v", enter.GameTime)
+		}
+		if rID, ok := gameHall.UserRoom[userId]; ok {
+			enter.RoomData.RoomId = rID // 如果用户之前在房间里后来退出，返回房间号
+		}
+		log.Debug("<----login 登录 resp---->%+v %+v", enter.RoomData.RoomId)
+		a.WriteMsg(enter)
+
+		p.room.GetGodGableId()
+		//更新房间列表
+		p.room.UpdatePlayerList()
+		maintainList := p.room.PackageRoomPlayerList()
+		p.room.BroadCastExcept(maintainList, p)
+	}
 }

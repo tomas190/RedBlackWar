@@ -560,6 +560,7 @@ func (r *Room) KickOutPlayer() {
 					v.PlayerReqExit()
 				}else {
 					v.PlayerReqExit()
+					gameHall.UserRecord.Delete(v.Id)
 					c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
 					leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 					v.ConnAgent.WriteMsg(leaveHall)
