@@ -147,7 +147,7 @@ func (p *Player) SyncScoreChangeToCenter(reason string) {
 	c4c.UserSyncScoreChange(p, reason)
 }
 
-func (p *Player) PlayerLoginHandle(userId string, a gate.Agent) {
+func (p *Player) PlayerLoginHandle(userId string, a gate.Agent, m *pb_msg.LoginInfo_C2S) {
 	if p.room != nil {
 		for i, userId := range p.room.UserLeave {
 			log.Debug("AllocateUser 长度~:%v", len(p.room.UserLeave))
@@ -161,8 +161,10 @@ func (p *Player) PlayerLoginHandle(userId string, a gate.Agent) {
 		}
 	}
 
+	p.ConnAgent.Destroy()
 	p.ConnAgent = a
 	p.ConnAgent.SetUserData(p)
+	c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(u *Player){})
 	p.IsOnline = true
 
 	v, _ := gameHall.UserRecord.Load(userId)
@@ -175,6 +177,9 @@ func (p *Player) PlayerLoginHandle(userId string, a gate.Agent) {
 	login.PlayerInfo.HeadImg = u.HeadImg
 	login.PlayerInfo.Account = u.Account
 	a.WriteMsg(login)
+
+	// 返回游戏大厅数据
+	RspGameHallData(u)
 
 	rId := gameHall.UserRoom[p.Id]
 	room, _ := gameHall.RoomRecord.Load(rId)

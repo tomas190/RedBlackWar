@@ -44,12 +44,11 @@ func handleLoginInfo(args []interface{}) {
 			log.Debug("进来了0")
 			log.Debug("同一用户相同连接重复登录~")
 			// 用户处理
-			p.PlayerLoginHandle(userId,a)
 			return
 		} else { // 用户相同，链接不相同
 		log.Debug("进来了1")
 		// 用户处理
-		p.PlayerLoginHandle(userId,a)
+		p.PlayerLoginHandle(userId,a,m)
 		}
 	} else if !gameHall.agentExist(a) { // 玩家首次登入
 		log.Debug("进来了2")
