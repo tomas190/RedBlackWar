@@ -353,6 +353,7 @@ func (c4c *Conn4Center) onUserLogout(msgBody interface{}) {
 	if !ok {
 		log.Debug("onUserLogout Error")
 	}
+	log.Debug("data:%v , ok:%v", data, ok)
 
 	code, err := data["code"].(json.Number).Int64()
 	if err != nil {
