@@ -48,7 +48,7 @@ func handleLoginInfo(args []interface{}) {
 		} else { // 用户相同，链接不相同
 		log.Debug("进来了1")
 		// 用户处理
-		p.PlayerLoginHandle(userId,a,m)
+		p.PlayerLoginHandle(userId,a)
 		}
 	} else if !gameHall.agentExist(a) { // 玩家首次登入
 		log.Debug("进来了2")
@@ -124,9 +124,9 @@ func handleLeaveHall(args []interface{}) {
 			p.IsOnline = false
 			DeletePlayer(p)
 			gameHall.UserRecord.Delete(p.Id)
-			p.ConnAgent.Close()
 			leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 			a.WriteMsg(leaveHall)
+			a.Close()
 		} else {
 			var exist bool
 			for _, v := range p.room.UserLeave {
