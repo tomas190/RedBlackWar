@@ -73,7 +73,7 @@ func (p *Player) PlayerReqExit() {
 		if p.IsRobot == false {
 			if p.IsAction == true {
 				var exist bool
-				for _,v := range p.room.UserLeave{
+				for _, v := range p.room.UserLeave {
 					if v == p.Id {
 						exist = true
 					}
@@ -125,6 +125,7 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 
 	//判断玩家金额是否足够下注的金额(这里其实金额不足玩家是不能在进行点击事件的。双重安全!)
 	if p.Account < float64(m.DownBet) {
+		log.Debug("<<=== 玩家下注失败 ===>>:%v,%v", p.Account, float64(m.DownBet))
 		msg := &pb_msg.MsgInfo_S2C{}
 		msg.Error = recodeText[RECODE_NOTDOWNMONEY]
 		p.SendMsg(msg)
