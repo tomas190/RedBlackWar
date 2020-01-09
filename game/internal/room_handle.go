@@ -32,7 +32,7 @@ func (r *Room) JoinGameRoom(p *Player) {
 		sur.HistoryLose = AllHistoryLose
 		sur.PoolMoney = SurplusPool
 		sur.PlayerNum = RecordPlayerCount()
-		InsertSurplusPool(sur)
+		InsertSurplusPool(sur,1)
 
 		log.Debug("<<===== 新用户进入房间, 更新盈余池: %v =====>>", SurplusPool)
 	}
