@@ -21,9 +21,6 @@ func (r *Room) JoinGameRoom(p *Player) {
 		AllPlayerCount = append(AllPlayerCount, p.Id)
 
 		// 盈余池 =((玩家总输 - (玩家总赢 * 100%) - (玩家数量 * 0)) * 50%
-		SurplusPool -= 1 // 玩家数量
-
-		log.Debug("<<===== 新用户进入房间, 更新盈余池: %v =====>>", SurplusPool)
 	}
 
 Next:

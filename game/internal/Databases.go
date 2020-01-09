@@ -71,7 +71,6 @@ func FindPlayerID(ID string) {
 			log.Error("<----- 数据库用户ID数据失败 ~ ----->:%v", err)
 			return
 		}
-		SurplusPool -= 6
 		log.Debug("<----- 数据库用户ID数据成功 ~ ----->")
 	}
 }
