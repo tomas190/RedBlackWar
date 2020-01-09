@@ -104,16 +104,13 @@ func InsertLoseMoney(base interface{}) {
 }
 
 //InsertSurplusPool 插入盈余池数据
-func InsertSurplusPool(sur *SurplusPoolDB,user float64) {
+func InsertSurplusPool(sur *SurplusPoolDB) {
 	s, c := connect(dbName, surPlusDB)
 	defer s.Close()
 
-	if user == 0 {
-		sur.PoolMoney = (sur.HistoryLose - (sur.HistoryWin * 1) - float64(sur.PlayerNum)) * 0.5
-		log.Debug("sur.PoolMoney:%v", sur.HistoryLose-(sur.HistoryWin*1)-float64(sur.PlayerNum))
-		log.Debug("sur.PoolMoney:%v", sur.PoolMoney)
-		SurplusPool = sur.PoolMoney
-	}
+	sur.PoolMoney = (sur.HistoryLose - (sur.HistoryWin * 1)) * 0.5
+	log.Debug("sur.PoolMoney:%v", sur.HistoryLose-(sur.HistoryWin*1))
+	log.Debug("sur.PoolMoney:%v", sur.PoolMoney)
 	SurplusPool = sur.PoolMoney
 
 	log.Debug("surplusPoolDB 数据: %v", sur.PoolMoney)

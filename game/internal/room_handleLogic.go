@@ -461,8 +461,8 @@ func (r *Room) GameCheckout() bool {
 
 	//playerNum := r.PlayerLength()
 	//if settle > ((SurplusPool * SurplusTax) * float64(playerNum*6)) {}
-	log.Debug("settle > (SurplusPool * SurplusTax) :%v",settle)
-	log.Debug("settle > (SurplusPool * SurplusTax) :%v",SurplusPool * SurplusTax)
+	log.Debug("settle :%v",settle)
+	log.Debug("(SurplusPool * SurplusTax) :%v",SurplusPool * SurplusTax)
 	if settle > (SurplusPool * SurplusTax) {
 		if settle <= 0 {
 			aCard = a
