@@ -354,8 +354,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
-						AllHistoryLose += v.LoseResultMoney
-						sur.TotalLoseMoney += v.LoseResultMoney
+						AllHistoryLose -= v.LoseResultMoney
+						sur.TotalLoseMoney -= v.LoseResultMoney
 						//将玩家输的金额添加到盈余池
 						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
 
@@ -598,8 +598,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
-						AllHistoryLose += v.LoseResultMoney
-						sur.TotalLoseMoney += v.LoseResultMoney
+						AllHistoryLose -= v.LoseResultMoney
+						sur.TotalLoseMoney -= v.LoseResultMoney
 						//将玩家输的金额添加到盈余池
 						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
 
@@ -702,7 +702,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	}
 	sur.HistoryWin = AllHistoryWin
 	sur.HistoryLose = AllHistoryLose
-	sur.PoolMoney = SurplusPool
 	sur.PlayerNum = RecordPlayerCount()
 	if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
 		InsertSurplusPool(sur,0)
