@@ -705,7 +705,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	sur.PoolMoney = SurplusPool
 	sur.PlayerNum = RecordPlayerCount()
 	if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
-		InsertSurplusPool(sur)
+		InsertSurplusPool(sur,0)
 	}
 
 	//广播开牌结果
