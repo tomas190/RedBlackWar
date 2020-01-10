@@ -30,6 +30,7 @@ func (p *Player) Init() {
 	p.PotWinList = nil
 	p.CardTypeList = nil
 	p.RedBlackList = nil
+	p.TwentyData = nil
 	p.RedWinCount = 0
 	p.BlackWinCount = 0
 	p.LuckWinCount = 0

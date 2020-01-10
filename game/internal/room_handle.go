@@ -118,6 +118,7 @@ func (r *Room) ExitFromRoom(p *Player) {
 	p.BlackWinCount = 0
 	p.LuckWinCount = 0
 	p.NotOnline = 0
+	p.TwentyData = nil
 
 	//从房间列表删除玩家信息,更新房间列表
 	for k, v := range r.PlayerList {
