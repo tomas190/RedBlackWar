@@ -811,6 +811,7 @@ func GetRandNumber() ([]uint8, error) {
 	defer res.Body.Close()
 	if err != nil {
 		log.Error("解析随机数值失败: %v", err)
+		return nil, err
 	}
 
 	//fmt.Printf("读取的奖源池数据: %s", result)
@@ -818,7 +819,8 @@ func GetRandNumber() ([]uint8, error) {
 	var users interface{}
 	err2 := json.Unmarshal(result, &users)
 	if err2 != nil {
-		panic(err2)
+		log.Error("解码随机数值失败: %v", err)
+		return nil, err
 	}
 
 	var RandNum []uint8
