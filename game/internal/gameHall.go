@@ -88,12 +88,12 @@ func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 		}
 	}
 
-	for _, room := range gh.roomList {
-		if room != nil && room.RoomId == rid { // 这里要不要遍历房间，查看用户id是否存在
-			room.JoinGameRoom(p)
-			return
-		}
+	r, _ := gh.RoomRecord.Load(rid)
+	if r != nil {
+		room := r.(*Room)
+		room.JoinGameRoom(p)
 	}
+
 	msg := &pb_msg.MsgInfo_S2C{}
 	msg.Error = recodeText[RECODE_JOINROOMIDERR]
 	p.SendMsg(msg)

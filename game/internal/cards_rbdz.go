@@ -200,9 +200,11 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	sur.Rid = r.RoomId
 
 	gw := &GameWinList{}
-
 	res.RedCard = r.Cards.ReadCard
 	res.BlackCard = r.Cards.BlackCard
+
+	surPool := FindSurplusPool()
+	log.Debug("盈余池 %v",surPool)
 
 	//获取Pot池Win
 	if ag.Weight > bg.Weight { //redWin
