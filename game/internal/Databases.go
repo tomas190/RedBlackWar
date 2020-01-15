@@ -75,6 +75,18 @@ func FindPlayerID(ID string) {
 	}
 }
 
+func FindIdCount() int32{
+	s, c := connect(dbName, playerID)
+	defer s.Close()
+
+	n, err := c.Find(nil).Count()
+	if err != nil {
+		log.Debug("not Found Player ID")
+	}
+	log.Debug("当前人数为：%v",n)
+	return int32(n)
+}
+
 //InsertWinMoney 插入房间数据
 func InsertWinMoney(base interface{}) {
 	s, c := connect(dbName, settleWinMoney)
@@ -102,12 +114,13 @@ func InsertLoseMoney(base interface{}) {
 	log.Debug("<----- 输钱结算数据插入成功 ~ ----->")
 }
 
-func FindSurplusPool() *SurplusPoolDB{
+//FindSurplusPool
+func FindSurplusPool() *SurplusPoolDB {
 	s, c := connect(dbName, surPlusDB)
 	defer s.Close()
 
 	sur := &SurplusPoolDB{}
-	err := c.Find(nil).Sort("-TimeNow").One(sur)
+	err := c.Find(nil).Sort("-updatetime").One(sur)
 	if err != nil {
 		log.Error("<----- 查找SurplusPool数据失败 ~ ----->:%v", err)
 		return nil

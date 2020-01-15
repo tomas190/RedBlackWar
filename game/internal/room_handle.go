@@ -12,18 +12,7 @@ func (r *Room) JoinGameRoom(p *Player) {
 	//p.SeatNum = r.FindUsableSeat()
 	//r.PlayerList[p.SeatNum] = p
 
-	if p.IsRobot == false {
-		for _, v := range AllPlayerCount {
-			if v == p.Id {
-				goto Next
-			}
-		}
-		AllPlayerCount = append(AllPlayerCount, p.Id)
-
-		// 盈余池 =((玩家总输 - (玩家总赢 * 100%) - (玩家数量 * 0)) * 50%
-	}
-
-Next:
+	FindPlayerID(p.Id)
 	//将用户添加到用户列表
 	r.PlayerList = append(r.PlayerList, p)
 

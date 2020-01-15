@@ -199,6 +199,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	sur.UpdateTime = time.Now()
 	sur.TimeNow = time.Now().Format("2006-01-02 15:04:05")
 	sur.Rid = r.RoomId
+	sur.PlayerNum = FindIdCount()
 
 	gw := &GameWinList{}
 	res.RedCard = r.Cards.ReadCard
@@ -680,7 +681,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	}
 	sur.HistoryWin = AllHistoryWin
 	sur.HistoryLose = AllHistoryLose
-	sur.PlayerNum = RecordPlayerCount()
 	if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
 		InsertSurplusPool(sur)
 	}
