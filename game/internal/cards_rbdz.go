@@ -205,12 +205,13 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	res.BlackCard = r.Cards.BlackCard
 
 	surPool := FindSurplusPool()
-	AllHistoryWin = surPool.HistoryWin
-	AllHistoryLose = surPool.HistoryLose
-	sur.PlayerNum = surPool.PlayerNum
+	if surPool != nil {
+		AllHistoryWin = surPool.HistoryWin
+		AllHistoryLose = surPool.HistoryLose
+		sur.PlayerNum = surPool.PlayerNum
 
-	log.Debug("盈余池 %v", surPool)
-
+		log.Debug("盈余池 %v", surPool)
+	}
 	//获取Pot池Win
 	if ag.Weight > bg.Weight { //redWin
 		//log.Debug("Red Win ~")
