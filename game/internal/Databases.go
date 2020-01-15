@@ -63,7 +63,8 @@ func FindPlayerID(p *Player) {
 	s, c := connect(dbName, playerID)
 	defer s.Close()
 
-	err := c.Find(bson.M{"id": p.Id})
+	pl := &Player{}
+	err := c.Find(bson.M{"id": p.Id}).One(pl)
 	if err != nil {
 		log.Debug("not Found Player ID")
 		err2 := InsertPlayerID(p)
