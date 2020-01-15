@@ -3,6 +3,7 @@ package internal
 import (
 	"C"
 	"RedBlack-War/conf"
+	pb_msg "RedBlack-War/msg/Protocal"
 	"github.com/name5566/leaf/log"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -51,7 +52,7 @@ func connect(dbName, cName string) (*mgo.Session, *mgo.Collection) {
 	return s, c
 }
 
-func InsertPlayerID(p *Player) error {
+func InsertPlayerID(p *pb_msg.PlayerInfo) error {
 	s, c := connect(dbName, playerID)
 	defer s.Close()
 
@@ -63,11 +64,16 @@ func FindPlayerID(p *Player) {
 	s, c := connect(dbName, playerID)
 	defer s.Close()
 
-	pl := &Player{}
-	err := c.Find(bson.M{"id": p.Id}).One(pl)
+	player := &pb_msg.PlayerInfo{}
+	player.Id = p.Id
+	player.NickName = p.NickName
+	player.HeadImg = p.HeadImg
+	player.Account = p.Account
+
+	err := c.Find(bson.M{"id": player.Id}).One(player)
 	if err != nil {
 		log.Debug("not Found Player ID")
-		err2 := InsertPlayerID(p)
+		err2 := InsertPlayerID(player)
 		if err2 != nil {
 			log.Error("<----- 数据库用户ID数据失败 ~ ----->:%v", err)
 			return
@@ -76,7 +82,7 @@ func FindPlayerID(p *Player) {
 	}
 }
 
-func FindIdCount() int32{
+func FindIdCount() int32 {
 	s, c := connect(dbName, playerID)
 	defer s.Close()
 
