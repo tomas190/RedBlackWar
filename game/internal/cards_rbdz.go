@@ -205,7 +205,11 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	res.BlackCard = r.Cards.BlackCard
 
 	surPool := FindSurplusPool()
-	log.Debug("盈余池 %v",surPool)
+	AllHistoryWin = surPool.HistoryWin
+	AllHistoryLose = surPool.HistoryLose
+	sur.PlayerNum = surPool.PlayerNum
+
+	log.Debug("盈余池 %v", surPool)
 
 	//获取Pot池Win
 	if ag.Weight > bg.Weight { //redWin
@@ -675,7 +679,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	}
 	sur.HistoryWin = AllHistoryWin
 	sur.HistoryLose = AllHistoryLose
-	sur.PlayerNum = RecordPlayerCount()
 	if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
 		InsertSurplusPool(sur)
 	}
