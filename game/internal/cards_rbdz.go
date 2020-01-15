@@ -196,6 +196,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	//log.Debug("<-------- 更新盈余池金额为Pre: %v --------->", SurplusPool)
 
 	sur := &SurplusPoolDB{}
+	sur.UpdateTime = time.Now()
 	sur.TimeNow = time.Now().Format("2006-01-02 15:04:05")
 	sur.Rid = r.RoomId
 

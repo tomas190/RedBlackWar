@@ -107,9 +107,9 @@ func FindSurplusPool() *SurplusPoolDB{
 	defer s.Close()
 
 	sur := &SurplusPoolDB{}
-	err := c.Find(sur)
+	err := c.Find(nil).Sort("UpdateTime").One(sur)
 	if err != nil {
-		log.Error("<----- 数据库插入SurplusPool数据失败 ~ ----->:%v", err)
+		log.Error("<----- 查找SurplusPool数据失败 ~ ----->:%v", err)
 		return nil
 	}
 

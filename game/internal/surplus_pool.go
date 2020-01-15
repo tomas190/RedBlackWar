@@ -1,7 +1,10 @@
 package internal
 
+import "time"
+
 //盈余池数据存入数据库
 type SurplusPoolDB struct {
+	UpdateTime     time.Time
 	TimeNow        string  //记录时间（分为时间戳/字符串显示）
 	Rid            string  //房间ID
 	TotalWinMoney  float64 //玩家当局总赢
