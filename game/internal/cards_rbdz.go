@@ -210,7 +210,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		AllHistoryWin = surPool.HistoryWin
 		AllHistoryLose = surPool.HistoryLose
 	}
-	
+
 	//获取Pot池Win
 	if ag.Weight > bg.Weight { //redWin
 		//log.Debug("Red Win ~")
