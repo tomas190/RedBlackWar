@@ -680,6 +680,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	}
 	sur.HistoryWin = AllHistoryWin
 	sur.HistoryLose = AllHistoryLose
+	sur.PlayerNum = RecordPlayerCount()
 	if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
 		InsertSurplusPool(sur)
 	}
