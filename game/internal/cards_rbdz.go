@@ -273,6 +273,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		for _, v := range r.PlayerList {
 			//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
 			var taxMoney float64
+			//var totalTaxMoney float64
 			var totalWinMoney float64
 			var totalLoseMoney float64
 			gameData := &GameDataList{}
@@ -307,23 +308,18 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						v.LuckWinCount++
 						if gw.CardTypes == Leopard {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Shunjin {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Golden {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Straight {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Pair {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 					}
 
