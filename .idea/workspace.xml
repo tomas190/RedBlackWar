@@ -41,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game/internal/cards_rbdz.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="282" lean-forward="true" selection-start-line="282" selection-end-line="282" />
+            <state relative-caret-position="255">
+              <caret line="333" column="51" lean-forward="true" selection-start-line="333" selection-start-column="51" selection-end-line="333" selection-end-column="51" />
               <folding>
                 <element signature="e#18#115#0" expanded="true" />
               </folding>
@@ -255,7 +255,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-11" />
     <option name="y" value="-11" />
     <option name="width" value="1943" />
@@ -947,8 +947,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/cards_rbdz.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="282" lean-forward="true" selection-start-line="282" selection-end-line="282" />
+        <state relative-caret-position="255">
+          <caret line="333" column="51" lean-forward="true" selection-start-line="333" selection-start-column="51" selection-end-line="333" selection-end-column="51" />
           <folding>
             <element signature="e#18#115#0" expanded="true" />
           </folding>

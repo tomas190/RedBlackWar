@@ -213,7 +213,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 	//获取Pot池Win
 	if ag.Weight > bg.Weight { //redWin
-		//log.Debug("Red Win ~")
+		log.Debug("Red Win ~")
 		gw.RedWin = 1
 		hallRBWin = int32(RedWin)
 		res.PotWinTypes.RedDownPot = true
@@ -278,8 +278,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			var totalLoseMoney float64
 			gameData := &GameDataList{}
 
-			totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
-			taxMoney += float64(v.DownBetMoneys.BlackDownBet)
+			totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
+			taxMoney += float64(v.DownBetMoneys.RedDownBet)
 
 			totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
 			totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
