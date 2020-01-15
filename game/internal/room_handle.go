@@ -13,7 +13,7 @@ func (r *Room) JoinGameRoom(p *Player) {
 	//r.PlayerList[p.SeatNum] = p
 
 	if p.IsRobot == false {
-		FindPlayerID(p.Id)
+		FindPlayerID(p)
 	}
 	//将用户添加到用户列表
 	r.PlayerList = append(r.PlayerList, p)

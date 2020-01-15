@@ -51,22 +51,22 @@ func connect(dbName, cName string) (*mgo.Session, *mgo.Collection) {
 	return s, c
 }
 
-func InsertPlayerID(ID string) error {
+func InsertPlayerID(p *Player) error {
 	s, c := connect(dbName, playerID)
 	defer s.Close()
 
-	err := c.Insert(ID)
+	err := c.Insert(p)
 	return err
 }
 
-func FindPlayerID(ID string) {
+func FindPlayerID(p *Player) {
 	s, c := connect(dbName, playerID)
 	defer s.Close()
 
-	err := c.Find(bson.M{"id": ID})
+	err := c.Find(bson.M{"id": p.Id})
 	if err != nil {
 		log.Debug("not Found Player ID")
-		err2 := InsertPlayerID(ID)
+		err2 := InsertPlayerID(p)
 		if err2 != nil {
 			log.Error("<----- 数据库用户ID数据失败 ~ ----->:%v", err)
 			return
