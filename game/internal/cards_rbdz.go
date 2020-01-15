@@ -83,8 +83,8 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 
 //获取牌型并比牌
 func (r *Room) RBdzPk(a []byte, b []byte) {
-	a = []byte{14, 46, 6}
-	//b = []byte{4,6,10}
+	//a = []byte{7,8,9}  //A  豹子
+	//b = []byte{4,6,10}  //Q  豹子
 
 	// 14,46,62  |   12,28,44  //豹子
 	// 7,8,9     |   3,4,5     //顺金
@@ -273,7 +273,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		for _, v := range r.PlayerList {
 			//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
 			var taxMoney float64
-			var totalTaxMoney float64
 			var totalWinMoney float64
 			var totalLoseMoney float64
 			gameData := &GameDataList{}
@@ -305,31 +304,25 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 				if v.IsRobot == false {
 
 					if gw.LuckWin == 1 {
-						v.LuckWinCount++
 						if gw.CardTypes == Leopard {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
-							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
+							totalWinMoney +=float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Shunjin {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
-							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
+							totalWinMoney +=float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Golden {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
-							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
+							totalWinMoney +=float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Straight {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
-							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
+							totalWinMoney +=float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Pair {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
-							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
+							totalWinMoney +=float64(v.DownBetMoneys.LuckDownBet)
 						}
 					}
 
@@ -371,7 +364,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
 					}
 
-					tax := (taxMoney - totalTaxMoney) * taxRate
+					tax := taxMoney * taxRate
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
@@ -409,26 +402,20 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 				} else {
 
 					if gw.LuckWin == 1 {
-						v.LuckWinCount++
 						if gw.CardTypes == Leopard {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Shunjin {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Golden {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Straight {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Pair {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 					}
 					tax := taxMoney * taxRate
@@ -521,20 +508,19 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		for _, v := range r.PlayerList {
 			//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
 			var taxMoney float64
-			var totalTaxMoney float64
 			var totalWinMoney float64
 			var totalLoseMoney float64
 			gameData := &GameDataList{}
 
-			totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
-			taxMoney += float64(v.DownBetMoneys.RedDownBet)
+			totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
+			taxMoney += float64(v.DownBetMoneys.BlackDownBet)
 
 			totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
 			totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
 			totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
 			gameData.ResultMoney += totalLoseMoney
 
-			v.RedWinCount++
+			v.BlackWinCount++
 			v.TotalCount++
 
 			if gw.LuckWin == 1 {
@@ -543,7 +529,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 			v.PotWinList = append(v.PotWinList, gw)
 			v.CardTypeList = append(v.CardTypeList, int32(gw.CardTypes))
-			v.RedBlackList = append(v.RedBlackList, RedWin)
+			v.RedBlackList = append(v.RedBlackList, BlackWin)
 
 			if len(v.CardTypeList) > 72 {
 				v.CardTypeList = v.CardTypeList[1:]
@@ -551,38 +537,34 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 			if v != nil && v.IsAction == true {
 				if v.IsRobot == false {
+					//锁钱
+					//c4c.LockSettlement(v, totalLoseMoney)
 
 					if gw.LuckWin == 1 {
-						v.LuckWinCount++
 						if gw.CardTypes == Leopard {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
-							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
+							totalWinMoney +=float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Shunjin {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
-							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
+							totalWinMoney +=float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Golden {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
-							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
+							totalWinMoney +=float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Straight {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
-							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
+							totalWinMoney +=float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Pair {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
-							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
+							totalWinMoney +=float64(v.DownBetMoneys.LuckDownBet)
 						}
 					}
 
 					//连接中心服金币处理
-					if totalWinMoney+taxMoney > 0 {
+					if taxMoney > 0 {
 						v.WinResultMoney = taxMoney
 						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
 
@@ -619,7 +601,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
 					}
 
-					tax := (taxMoney - totalTaxMoney) * taxRate
+					tax := taxMoney * taxRate
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
@@ -656,26 +638,20 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 				} else {
 					if gw.LuckWin == 1 {
-						v.LuckWinCount++
 						if gw.CardTypes == Leopard {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Shunjin {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Golden {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Straight {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Pair {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
-							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 					}
 					tax := taxMoney * taxRate
