@@ -308,29 +308,34 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						v.LuckWinCount++
 						if gw.CardTypes == Leopard {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Shunjin {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Golden {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Straight {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Pair {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 					}
 
 					//连接中心服金币处理
-					if totalWinMoney+taxMoney+totalTaxMoney > 0 {
-						v.WinResultMoney = taxMoney + totalTaxMoney
+					if totalWinMoney+taxMoney > 0 {
+						v.WinResultMoney = taxMoney
 						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
 
 						AllHistoryWin += v.WinResultMoney
@@ -346,10 +351,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 
 					if totalLoseMoney > 0 {
-						if (taxMoney + totalTaxMoney) > totalLoseMoney {
-							v.LoseResultMoney = totalLoseMoney -(taxMoney + totalTaxMoney)
+						if taxMoney > totalLoseMoney {
+							v.LoseResultMoney = totalLoseMoney - taxMoney
 						} else {
-							v.LoseResultMoney = (taxMoney + totalTaxMoney) - totalLoseMoney
+							v.LoseResultMoney = taxMoney - totalLoseMoney
 						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
@@ -366,8 +371,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
 					}
 
-					tax := taxMoney * taxRate
-					v.ResultMoney = totalWinMoney + taxMoney + totalTaxMoney - tax
+					tax := (taxMoney - totalTaxMoney) * taxRate
+					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
 
@@ -521,15 +526,15 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			var totalLoseMoney float64
 			gameData := &GameDataList{}
 
-			totalWinMoney += float64(v.DownBetMoneys.BlackDownBet)
-			taxMoney += float64(v.DownBetMoneys.BlackDownBet)
+			totalWinMoney += float64(v.DownBetMoneys.RedDownBet)
+			taxMoney += float64(v.DownBetMoneys.RedDownBet)
 
 			totalLoseMoney += float64(v.DownBetMoneys.RedDownBet)
 			totalLoseMoney += float64(v.DownBetMoneys.BlackDownBet)
 			totalLoseMoney += float64(v.DownBetMoneys.LuckDownBet)
 			gameData.ResultMoney += totalLoseMoney
 
-			v.BlackWinCount++
+			v.RedWinCount++
 			v.TotalCount++
 
 			if gw.LuckWin == 1 {
@@ -538,7 +543,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 			v.PotWinList = append(v.PotWinList, gw)
 			v.CardTypeList = append(v.CardTypeList, int32(gw.CardTypes))
-			v.RedBlackList = append(v.RedBlackList, BlackWin)
+			v.RedBlackList = append(v.RedBlackList, RedWin)
 
 			if len(v.CardTypeList) > 72 {
 				v.CardTypeList = v.CardTypeList[1:]
@@ -546,36 +551,39 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 			if v != nil && v.IsAction == true {
 				if v.IsRobot == false {
-					//锁钱
-					//c4c.LockSettlement(v, totalLoseMoney)
 
 					if gw.LuckWin == 1 {
 						v.LuckWinCount++
 						if gw.CardTypes == Leopard {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Shunjin {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinShunjin)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Golden {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinGolden)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Straight {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinStraight)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 						if gw.CardTypes == Pair {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
+							taxMoney += float64(v.DownBetMoneys.LuckDownBet)
 							totalTaxMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 					}
 
 					//连接中心服金币处理
-					if totalWinMoney+taxMoney+totalTaxMoney > 0 {
-						v.WinResultMoney = taxMoney + totalTaxMoney
+					if totalWinMoney+taxMoney > 0 {
+						v.WinResultMoney = taxMoney
 						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
 
 						AllHistoryWin += v.WinResultMoney
@@ -591,10 +599,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 
 					if totalLoseMoney > 0 {
-						if (taxMoney + totalTaxMoney) > totalLoseMoney {
-							v.LoseResultMoney = totalLoseMoney -(taxMoney + totalTaxMoney)
+						if taxMoney > totalLoseMoney {
+							v.LoseResultMoney = totalLoseMoney - taxMoney
 						} else {
-							v.LoseResultMoney = (taxMoney + totalTaxMoney) - totalLoseMoney
+							v.LoseResultMoney = taxMoney - totalLoseMoney
 						}
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
@@ -611,8 +619,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
 					}
 
-					tax := taxMoney * taxRate
-					v.ResultMoney = totalWinMoney + taxMoney + totalTaxMoney - tax
+					tax := (taxMoney - totalTaxMoney) * taxRate
+					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
 
@@ -622,7 +630,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						gameData.ResultCount = 0
 					}
 
-					if v.ResultMoney > PaoMaDeng {
+					if v.ResultMoney > PaoMaDeng { //跑马灯
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
 					//解锁
