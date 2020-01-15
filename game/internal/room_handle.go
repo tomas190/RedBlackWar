@@ -20,9 +20,6 @@ func (r *Room) JoinGameRoom(p *Player) {
 
 	p.room = r
 
-	userRoomMap = make(map[string]*Room)
-	userRoomMap[p.Id] = r
-
 	p.GameState = InGameRoom
 
 	//进入房间玩家是否大于 50金币，否则处于观战状态
@@ -117,14 +114,11 @@ func (r *Room) ExitFromRoom(p *Player) {
 			if v.IsRobot == false {
 				p.room = nil
 				//userRoomMap = make(map[string]*Room)
-				//userRoomMap[p.Id] = nil
-				delete(userRoomMap, p.Id)
 				log.Debug("p.id:%v k:%v", p.Id, k)
 				r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...) //这里两个同样的用户名退出，会报错
 				log.Debug("%v 玩家从房间列表删除成功 ~", v.Id)
 			} else {
 				p.room = nil
-				delete(userRoomMap, p.Id)
 				r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...)
 
 				//创建机器人

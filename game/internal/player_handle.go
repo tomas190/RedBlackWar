@@ -35,7 +35,6 @@ func (p *Player) GetUserRoomInfo() *Player {
 //PlayerLoginAgain 用户重新登陆
 func PlayerLoginAgain(p *Player, a gate.Agent) {
 	log.Debug("<------- 用户重新登陆: %v ------->", p.Id)
-	p.room = userRoomMap[p.Id]
 	for _, v := range p.room.PlayerList {
 		if v.Id == p.Id {
 			p = v
