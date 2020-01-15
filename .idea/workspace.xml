@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3c9afdff-253a-49cb-a98b-ad8c890a28f5" name="默认更改列表" comment="">
       <change beforePath="$PROJECT_DIR$/game/internal/Databases.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/Databases.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room_handle.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/room_handle.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/cards_rbdz.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/cards_rbdz.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game/internal/cards_rbdz.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="207" column="25" selection-start-line="207" selection-start-column="25" selection-end-line="207" selection-end-column="25" />
+            <state relative-caret-position="256">
+              <caret line="212" column="4" selection-start-line="212" selection-start-column="4" selection-end-line="212" selection-end-column="4" />
               <folding>
                 <element signature="e#18#115#0" expanded="true" />
               </folding>
@@ -51,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game/internal/Databases.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="71" column="18" lean-forward="true" selection-start-line="71" selection-start-column="18" selection-end-line="71" selection-end-column="18" />
+            <state relative-caret-position="171">
+              <caret line="116" column="12" lean-forward="true" selection-start-line="116" selection-start-column="12" selection-end-line="116" selection-end-column="12" />
               <folding>
                 <element signature="e#18#137#0" expanded="true" />
               </folding>
@@ -144,7 +144,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>exit</find>
       <find>invalid character</find>
       <find>dial tcp</find>
       <find>172.16.1.41</find>
@@ -174,6 +173,7 @@
       <find>1.03</find>
       <find>PlayerPoolMoney_S2C</find>
       <find>settle</find>
+      <find>当前</find>
     </findStrings>
     <replaceStrings>
       <replace>MsgInfo_S2C</replace>
@@ -247,9 +247,9 @@
         <option value="$PROJECT_DIR$/game/internal/room_handleLogic.go" />
         <option value="$PROJECT_DIR$/game/internal/gameHall.go" />
         <option value="$PROJECT_DIR$/game/internal/surplus_pool.go" />
-        <option value="$PROJECT_DIR$/game/internal/cards_rbdz.go" />
         <option value="$PROJECT_DIR$/game/internal/room_handle.go" />
         <option value="$PROJECT_DIR$/game/internal/Databases.go" />
+        <option value="$PROJECT_DIR$/game/internal/cards_rbdz.go" />
       </list>
     </option>
   </component>
@@ -923,16 +923,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/internal/cards_rbdz.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="207" column="25" selection-start-line="207" selection-start-column="25" selection-end-line="207" selection-end-column="25" />
-          <folding>
-            <element signature="e#18#115#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/room_handle.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -945,10 +935,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/Databases.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="71" column="18" lean-forward="true" selection-start-line="71" selection-start-column="18" selection-end-line="71" selection-end-column="18" />
+        <state relative-caret-position="171">
+          <caret line="116" column="12" lean-forward="true" selection-start-line="116" selection-start-column="12" selection-end-line="116" selection-end-column="12" />
           <folding>
             <element signature="e#18#137#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/internal/cards_rbdz.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="212" column="4" selection-start-line="212" selection-start-column="4" selection-end-line="212" selection-end-column="4" />
+          <folding>
+            <element signature="e#18#115#0" expanded="true" />
           </folding>
         </state>
       </provider>

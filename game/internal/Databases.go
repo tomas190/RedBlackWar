@@ -83,7 +83,6 @@ func FindIdCount() int32{
 	if err != nil {
 		log.Debug("not Found Player ID")
 	}
-	log.Debug("当前人数为：%v",n)
 	return int32(n)
 }
 
