@@ -213,7 +213,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 	//获取Pot池Win
 	if ag.Weight > bg.Weight { //redWin
-		log.Debug("Red Win ~")
+		//log.Debug("Red Win ~")
 		gw.RedWin = 1
 		hallRBWin = int32(RedWin)
 		res.PotWinTypes.RedDownPot = true
@@ -295,7 +295,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 			v.PotWinList = append(v.PotWinList, gw)
 			v.CardTypeList = append(v.CardTypeList, int32(gw.CardTypes))
-			v.RedBlackList = append(v.RedBlackList, BlackWin)
+			v.RedBlackList = append(v.RedBlackList, RedWin)
 
 			if len(v.CardTypeList) > 72 {
 				v.CardTypeList = v.CardTypeList[1:]

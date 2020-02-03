@@ -26,7 +26,7 @@ const (
 
 const (
 	RoomCordCount  = 40 //玩家进入房间获取房间的战绩数量。
-	RoomLimitMoney = 50 //房间限定金额50,否则处于观战状态
+	RoomLimitMoney = 10 //房间限定金额10,否则处于观战状态
 )
 
 //游戏状态channel
