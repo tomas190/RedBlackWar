@@ -18,7 +18,8 @@ func (r *Room) BroadCastExcept(msg interface{}, p *Player) {
 //BroadCastMsg 进行广播消息
 func (r *Room) BroadCastMsg(msg interface{}) {
 	for _, v := range r.PlayerList {
-		if v != nil {
+		if v != nil && v.IsRobot == false{
+			log.Debug("玩家ID为：%v, connect:%v",v.Id,v.ConnAgent)
 			v.SendMsg(msg)
 		}
 	}
