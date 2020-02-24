@@ -75,7 +75,7 @@ func handleLoginInfo(args []interface{}) {
 
 				p.ConnAgent.Destroy()
 				p.ConnAgent = a
-				p.ConnAgent.SetUserData(p)
+				p.ConnAgent.SetUserData(user) //p
 				p.IsOnline = true
 
 				// 返回游戏大厅数据
