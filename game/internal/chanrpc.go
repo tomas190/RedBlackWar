@@ -38,7 +38,7 @@ func rpcCloseAgent(args []interface{}) {
 		p.IsOnline = false
 
 		if p.IsAction == false {
-			DeletePlayer(p)
+			//DeletePlayer(p)
 			gameHall.UserRecord.Delete(p.Id)
 		} else {
 			var exist bool

@@ -73,7 +73,7 @@ func handleLoginInfo(args []interface{}) {
 				login.PlayerInfo.Account = u.Account
 				a.WriteMsg(login)
 
-				p.ConnAgent.Destroy()
+				//p.ConnAgent.Destroy()
 				p.ConnAgent = a
 				p.ConnAgent.SetUserData(user) //p
 				p.IsOnline = true
@@ -119,8 +119,8 @@ func handleLoginInfo(args []interface{}) {
 
 			u.Init()
 			// 重新绑定信息
-			u.ConnAgent = a
 			a.SetUserData(u)
+			u.ConnAgent = a
 
 			u.PassWord = m.GetPassWord()
 			u.Token = m.GetToken()
