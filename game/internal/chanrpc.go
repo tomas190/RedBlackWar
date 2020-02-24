@@ -40,6 +40,7 @@ func rpcCloseAgent(args []interface{}) {
 		if p.IsAction == false {
 			//DeletePlayer(p)
 			gameHall.UserRecord.Delete(p.Id)
+			p.PlayerReqExit()
 		} else {
 			var exist bool
 			for _,v := range p.room.UserLeave{
