@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/name5566/leaf/log"
+	"gopkg.in/mgo.v2/bson"
 	"io/ioutil"
 	"net/http"
 	"reflect"
@@ -601,7 +602,7 @@ func (c4c *Conn4Center) SendMsg2Center(data interface{}) {
 
 //UserSyncWinScore 同步赢分
 func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, reason string) {
-	winOrder := p.Id + "_" + timeStr + "_win"
+	winOrder := bson.NewObjectId().String()
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserWinScore
 	userWin := &UserChangeScore{}
@@ -622,7 +623,7 @@ func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, rea
 
 //UserSyncWinScore 同步输分
 func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, timeStr, reason string) {
-	loseOrder := p.Id + "_" + timeStr + "_lose"
+	loseOrder := bson.NewObjectId().String()
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserLoseScore
 	userLose := &UserChangeScore{}

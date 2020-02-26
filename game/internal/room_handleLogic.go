@@ -567,7 +567,7 @@ func (r *Room) KickOutPlayer() {
 					leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 					v.ConnAgent.WriteMsg(leaveHall)
 					v.IsOnline = false
-					//v.ConnAgent.Close() 
+					//v.ConnAgent.Close()
 					log.Debug("踢出房间断线玩家 : %v", v.Id)
 				}
 				//用户中心服登出
