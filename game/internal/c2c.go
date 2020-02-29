@@ -602,7 +602,7 @@ func (c4c *Conn4Center) SendMsg2Center(data interface{}) {
 
 //UserSyncWinScore 同步赢分
 func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, reason string) {
-	winOrder := bson.NewObjectId().String()
+	winOrder := bson.NewObjectId().Hex()
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserWinScore
 	userWin := &UserChangeScore{}
@@ -623,7 +623,7 @@ func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, rea
 
 //UserSyncWinScore 同步输分
 func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, timeStr, reason string) {
-	loseOrder := bson.NewObjectId().String()
+	loseOrder := bson.NewObjectId().Hex()
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserLoseScore
 	userLose := &UserChangeScore{}
