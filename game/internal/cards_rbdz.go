@@ -329,24 +329,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						}
 					}
 
-					//连接中心服金币处理
-					if taxMoney > 0 {
-						v.WinResultMoney = taxMoney
-						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
-
-						AllHistoryWin += v.WinResultMoney
-						sur.TotalWinMoney += v.WinResultMoney
-						//将玩家的税收金额添加到盈余池
-						SurplusPool -= v.WinResultMoney
-						timeStr := time.Now().Format("2006-01-02_15:04:05")
-						nowTime := time.Now().Unix()
-						reason := "ResultWinScore"
-
-						//同时同步赢分和输分
-						c4c.UserSyncWinScore(v, nowTime, timeStr, reason)
-					}
-
-
 					if totalLoseMoney > 0 {
 
 						v.LoseResultMoney = -totalLoseMoney + totalWinMoney
@@ -364,6 +346,23 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						//同时同步赢分和输分
 						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
+					}
+
+					//连接中心服金币处理
+					if taxMoney > 0 {
+						v.WinResultMoney = taxMoney
+						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
+
+						AllHistoryWin += v.WinResultMoney
+						sur.TotalWinMoney += v.WinResultMoney
+						//将玩家的税收金额添加到盈余池
+						SurplusPool -= v.WinResultMoney
+						timeStr := time.Now().Format("2006-01-02_15:04:05")
+						nowTime := time.Now().Unix()
+						reason := "ResultWinScore"
+
+						//同时同步赢分和输分
+						c4c.UserSyncWinScore(v, nowTime, timeStr, reason)
 					}
 
 					tax := taxMoney * taxRate
@@ -565,24 +564,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						}
 					}
 
-					//连接中心服金币处理
-					if taxMoney > 0 {
-						v.WinResultMoney = taxMoney
-						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
-
-						AllHistoryWin += v.WinResultMoney
-						sur.TotalWinMoney += v.WinResultMoney
-						//将玩家的税收金额添加到盈余池
-						SurplusPool -= v.WinResultMoney
-						timeStr := time.Now().Format("2006-01-02_15:04:05")
-						nowTime := time.Now().Unix()
-						reason := "ResultWinScore"
-
-						//同时同步赢分和输分
-						c4c.UserSyncWinScore(v, nowTime, timeStr, reason)
-					}
-
-
 					if totalLoseMoney > 0 {
 
 						v.LoseResultMoney = -totalLoseMoney + totalWinMoney
@@ -600,6 +581,23 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						//同时同步赢分和输分
 						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
+					}
+
+					//连接中心服金币处理
+					if taxMoney > 0 {
+						v.WinResultMoney = taxMoney
+						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
+
+						AllHistoryWin += v.WinResultMoney
+						sur.TotalWinMoney += v.WinResultMoney
+						//将玩家的税收金额添加到盈余池
+						SurplusPool -= v.WinResultMoney
+						timeStr := time.Now().Format("2006-01-02_15:04:05")
+						nowTime := time.Now().Unix()
+						reason := "ResultWinScore"
+
+						//同时同步赢分和输分
+						c4c.UserSyncWinScore(v, nowTime, timeStr, reason)
 					}
 
 					tax := taxMoney * taxRate
