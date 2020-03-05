@@ -329,25 +329,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						}
 					}
 
-					if totalLoseMoney > 0 {
-
-						v.LoseResultMoney = -totalLoseMoney + totalWinMoney
-
-						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
-
-						AllHistoryLose -= v.LoseResultMoney
-						sur.TotalLoseMoney -= v.LoseResultMoney
-						//将玩家输的金额添加到盈余池
-						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
-
-						timeStr := time.Now().Format("2006-01-02_15:04:05")
-						nowTime := time.Now().Unix()
-						reason := "ResultLoseScore"
-
-						//同时同步赢分和输分
-						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
-					}
-
 					//连接中心服金币处理
 					if taxMoney > 0 {
 						v.WinResultMoney = taxMoney
@@ -363,6 +344,36 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						//同时同步赢分和输分
 						c4c.UserSyncWinScore(v, nowTime, timeStr, reason)
+						select {
+						case t := <-winChan:
+							if t == true {
+								break
+							}
+						}
+					}
+
+					if totalLoseMoney > 0 {
+						v.LoseResultMoney = -totalLoseMoney + totalWinMoney
+
+						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
+
+						AllHistoryLose -= v.LoseResultMoney
+						sur.TotalLoseMoney -= v.LoseResultMoney
+						//将玩家输的金额添加到盈余池
+						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
+
+						timeStr := time.Now().Format("2006-01-02_15:04:05")
+						nowTime := time.Now().Unix()
+						reason := "ResultLoseScore"
+
+						//同时同步赢分和输分
+						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
+						select {
+						case t := <-loseChan:
+							if t == true {
+								break
+							}
+						}
 					}
 
 					tax := taxMoney * taxRate
@@ -563,26 +574,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 					}
-
-					if totalLoseMoney > 0 {
-
-						v.LoseResultMoney = -totalLoseMoney + totalWinMoney
-
-						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
-
-						AllHistoryLose -= v.LoseResultMoney
-						sur.TotalLoseMoney -= v.LoseResultMoney
-						//将玩家输的金额添加到盈余池
-						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
-
-						timeStr := time.Now().Format("2006-01-02_15:04:05")
-						nowTime := time.Now().Unix()
-						reason := "ResultLoseScore"
-
-						//同时同步赢分和输分
-						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
-					}
-
 					//连接中心服金币处理
 					if taxMoney > 0 {
 						v.WinResultMoney = taxMoney
@@ -598,6 +589,36 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						//同时同步赢分和输分
 						c4c.UserSyncWinScore(v, nowTime, timeStr, reason)
+						select {
+						case t := <-winChan:
+							if t == true {
+								break
+							}
+						}
+					}
+
+					if totalLoseMoney > 0 {
+						v.LoseResultMoney = -totalLoseMoney + totalWinMoney
+
+						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
+
+						AllHistoryLose -= v.LoseResultMoney
+						sur.TotalLoseMoney -= v.LoseResultMoney
+						//将玩家输的金额添加到盈余池
+						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
+
+						timeStr := time.Now().Format("2006-01-02_15:04:05")
+						nowTime := time.Now().Unix()
+						reason := "ResultLoseScore"
+
+						//同时同步赢分和输分
+						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
+						select {
+						case t := <-loseChan:
+							if t == true {
+								break
+							}
+						}
 					}
 
 					tax := taxMoney * taxRate

@@ -47,6 +47,9 @@ type Conn4Center struct {
 	waitUser map[string]*UserCallback
 }
 
+var winChan chan bool
+var loseChan chan bool
+
 //Init 初始化
 func (c4c *Conn4Center) Init() {
 	c4c.GameId = conf.Server.GameID
@@ -411,6 +414,8 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 		log.Debug("<-------- UserWinScore SUCCESS~ -------->")
 		log.Debug("data:%v,ok:%v", data, ok)
 
+		winChan <- true
+
 		//将Win数据插入数据
 		InsertWinMoney(msgBody)
 
@@ -434,6 +439,8 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 	if !ok {
 		log.Debug("onUserLoseScore Error")
 	}
+
+	loseChan <- true
 
 	code, err := data["code"].(json.Number).Int64()
 	if err != nil {
@@ -602,7 +609,6 @@ func (c4c *Conn4Center) SendMsg2Center(data interface{}) {
 
 //UserSyncWinScore 同步赢分
 func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, reason string) {
-	winOrder := bson.NewObjectId().Hex()
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserWinScore
 	userWin := &UserChangeScore{}
@@ -613,7 +619,8 @@ func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, rea
 	userWin.Info.ID = p.Id
 	userWin.Info.LockMoney = 0
 	userWin.Info.Money = p.WinResultMoney
-	userWin.Info.Order = winOrder
+	userWin.Info.Order = bson.NewObjectId().Hex()
+
 	userWin.Info.PayReason = reason
 	userWin.Info.PreMoney = 0
 	userWin.Info.RoundId = p.room.RoomId
@@ -623,7 +630,6 @@ func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, rea
 
 //UserSyncWinScore 同步输分
 func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, timeStr, reason string) {
-	loseOrder := bson.NewObjectId().Hex()
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserLoseScore
 	userLose := &UserChangeScore{}
@@ -634,7 +640,7 @@ func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, timeStr, re
 	userLose.Info.ID = p.Id
 	userLose.Info.LockMoney = 0
 	userLose.Info.Money = p.LoseResultMoney
-	userLose.Info.Order = loseOrder
+	userLose.Info.Order = bson.NewObjectId().Hex()
 	userLose.Info.PayReason = reason
 	userLose.Info.PreMoney = 0
 	userLose.Info.RoundId = p.room.RoomId
