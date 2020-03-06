@@ -199,6 +199,5 @@ func handleLeaveHall(args []interface{}) {
 			leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 			a.WriteMsg(leaveHall)
 		}
-
 	}
 }

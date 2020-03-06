@@ -15,6 +15,7 @@ type SurplusPoolDB struct {
 	PlayerNum      int32   //历史玩家人数
 }
 
+
 const (
 	taxRate    float64 = 0.05 //税率
 	SurplusTax float64 = 0.2  //指定盈余池的百分随机数

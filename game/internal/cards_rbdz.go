@@ -708,9 +708,12 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	}
 	sur.HistoryWin = AllHistoryWin
 	sur.HistoryLose = AllHistoryLose
+
 	if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
 		InsertSurplusPool(sur)
 	}
+
+
 
 	//广播开牌结果
 	r.BroadCastMsg(res)

@@ -21,6 +21,7 @@ const (
 	settleLoseMoney = "settleLoseMoney"
 	surPlusDB       = "surplusPool"
 	accessDB        = "accessData"
+	surPool         = "surplus-pool"
 )
 
 // 连接数据库集合的函数 传入集合 默认连接IM数据库
@@ -142,8 +143,17 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 
 	sur.PoolMoney = (sur.HistoryLose - (sur.HistoryWin * 1)) * 0.5
 	SurplusPool = sur.PoolMoney
-
 	log.Debug("surplusPoolDB 数据: %v", sur.PoolMoney)
+
+	SurPool := &SurPool{}
+	SurPool.player_total_lose = sur.HistoryLose
+	SurPool.player_total_win = sur.HistoryWin
+	SurPool.total_player = sur.PlayerNum
+	SurPool.final_percentage = sur.PoolMoney
+	SurPool.percentage_to_total_win = sur.HistoryWin * 1
+	SurPool.coefficient_to_total_player = sur.PlayerNum * 0
+	SurPool.player_lose_rate_after_surplus_pool = 0.7
+	InsertSurPool(SurPool)
 
 	err := c.Insert(sur)
 	if err != nil {
@@ -151,6 +161,31 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 		return
 	}
 	log.Debug("<----- 数据库插入SurplusPool数据成功 ~ ----->")
+}
+
+type SurPool struct {
+	player_total_lose                   float64
+	player_total_win                    float64
+	percentage_to_total_win             float64
+	total_player                        int32
+	coefficient_to_total_player         int32
+	final_percentage                    float64
+	player_lose_rate_after_surplus_pool float64
+}
+
+//插入盈余池统一字段
+func InsertSurPool(sur *SurPool) {
+	s, c := connect(dbName, surPool)
+	defer s.Close()
+
+	log.Debug("SurPool 数据: %v", sur)
+
+	err := c.Insert(sur)
+	if err != nil {
+		log.Error("<----- 数据库插入SurPool数据失败 ~ ----->:%v", err)
+		return
+	}
+	log.Debug("<----- 数据库插入SurPool数据成功 ~ ----->")
 }
 
 // 玩家的记录
