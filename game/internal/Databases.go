@@ -146,6 +146,8 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	log.Debug("surplusPoolDB 数据: %v", sur.PoolMoney)
 
 	SurPool := &SurPool{}
+	SurPool.surplus_pool=sur.PoolMoney
+	SurPool.player_total_lose_win= sur.HistoryLose- sur.HistoryWin
 	SurPool.player_total_lose = sur.HistoryLose
 	SurPool.player_total_win = sur.HistoryWin
 	SurPool.total_player = sur.PlayerNum
@@ -164,6 +166,8 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 }
 
 type SurPool struct {
+	surplus_pool float64
+	player_total_lose_win float64
 	player_total_lose                   float64
 	player_total_win                    float64
 	percentage_to_total_win             float64
