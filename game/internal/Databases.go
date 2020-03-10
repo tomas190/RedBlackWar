@@ -141,6 +141,9 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	s, c := connect(dbName, surPlusDB)
 	defer s.Close()
 
+	c.RemoveAll(bson.M{"surplus_pool": 0})
+
+
 	sur.PoolMoney = (sur.HistoryLose - (sur.HistoryWin * 1)) * 0.5
 	SurplusPool = sur.PoolMoney
 	log.Debug("surplusPoolDB 数据: %v", sur.PoolMoney)
@@ -156,6 +159,7 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	SurPool.coefficient_to_total_player = sur.PlayerNum * 0
 	SurPool.player_lose_rate_after_surplus_pool = 0.7
 	InsertSurPool(SurPool)
+
 
 	err := c.Insert(sur)
 	if err != nil {
