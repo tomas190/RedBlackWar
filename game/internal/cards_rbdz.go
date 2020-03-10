@@ -713,8 +713,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		InsertSurplusPool(sur)
 	}
 
-
-
 	//广播开牌结果
 	r.BroadCastMsg(res)
 
@@ -728,7 +726,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					hd.RoomId = data.Rid
 					// 判断该房间大厅数据列表是否已大于指定数据
 					if len(data.HallRedBlackList) == 48 {
-						log.Debug("<---------- 清空大厅列表数据~ ---------->")
+						//log.Debug("<---------- 清空大厅列表数据~ ---------->")
 						data.HallCardTypeList = nil
 						data.HallRedBlackList = nil
 					}
