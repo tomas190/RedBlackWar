@@ -141,22 +141,18 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	s, c := connect(dbName, surPlusDB)
 	defer s.Close()
 
-	//c.RemoveAll(bson.M{"surplus_pool": 0})
-
 	sur.PoolMoney = (sur.HistoryLose - (sur.HistoryWin * 1)) * 0.5
 	SurplusPool = sur.PoolMoney
 	log.Debug("surplusPoolDB 数据: %v", sur.PoolMoney)
 
 	SurPool := &SurPool{}
-	SurPool.Surplus_Pool = sur.PoolMoney
-	SurPool.Player_TotalLoseWin = sur.HistoryLose - sur.HistoryWin
-	SurPool.Player_TotalLose = sur.HistoryLose
-	SurPool.Player_TotalWin = sur.HistoryWin
-	SurPool.Total_Player = sur.PlayerNum
-	SurPool.Final_Percentage = sur.PoolMoney
-	SurPool.Percentage_ToTotalWin = sur.HistoryWin * 1
-	SurPool.Coefficient_ToTotalPlayer = sur.PlayerNum * 0
-	SurPool.Player_LoseRateAfterSurplusPool = 0.7
+	SurPool.player_total_lose = sur.HistoryLose
+	SurPool.player_total_win = sur.HistoryWin
+	SurPool.total_player = sur.PlayerNum
+	SurPool.final_percentage = sur.PoolMoney
+	SurPool.percentage_to_total_win = sur.HistoryWin * 1
+	SurPool.coefficient_to_total_player = sur.PlayerNum * 0
+	SurPool.player_lose_rate_after_surplus_pool = 0.7
 	InsertSurPool(SurPool)
 
 	err := c.Insert(sur)
@@ -168,28 +164,14 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 }
 
 type SurPool struct {
-	Player_TotalLose                float64
-	Player_TotalWin                 float64
-	Percentage_ToTotalWin           float64
-	Total_Player                    int32
-	Coefficient_ToTotalPlayer       int32
-	Final_Percentage                float64
-	Player_TotalLoseWin             float64
-	Surplus_Pool                    float64
-	Player_LoseRateAfterSurplusPool float64
+	player_total_lose                   float64
+	player_total_win                    float64
+	percentage_to_total_win             float64
+	total_player                        int32
+	coefficient_to_total_player         int32
+	final_percentage                    float64
+	player_lose_rate_after_surplus_pool float64
 }
-
-//type SurPool struct {
-//	PlayerTotalLose                float64 `json:"player_total_lose" bson:"player_total_lose"`
-//	PlayerTotalWin                 float64 `json:"player_total_win" bson:"player_total_win"`
-//	PercentageToTotalWin           float64 `json:"percentage_to_total_win" bson:"percentage_to_total_win"`
-//	TotalPlayer                    int32   `json:"total_player" bson:"total_player"`
-//	CoefficientToTotalPlayer       int32   `json:"coefficient_to_total_player"`
-//	FinalPercentage                float64 `json:"final_percentage" bson:"final_percentage"`
-//	PlayerTotalLoseWin             float64 `json:"player_total_lose_win" bson:"player_total_lose_win" `
-//	SurplusPool                    float64 `json:"surplus_pool" bson:"surplus_pool"`
-//	PlayerLoseRateAfterSurplusPool float64 `json:"player_lose_rate_after_surplus_pool" bson:"player_lose_rate_after_surplus_pool"`
-//}
 
 //插入盈余池统一字段
 func InsertSurPool(sur *SurPool) {
