@@ -141,7 +141,7 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	s, c := connect(dbName, surPlusDB)
 	defer s.Close()
 
-	c.RemoveAll(bson.M{"surplus_pool": 0})
+	c.Remove(bson.M{"surplus_pool": 0})
 
 
 	sur.PoolMoney = (sur.HistoryLose - (sur.HistoryWin * 1)) * 0.5
