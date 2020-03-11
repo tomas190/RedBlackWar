@@ -184,7 +184,7 @@ func InsertSurPool(sur *SurPool) {
 
 	log.Debug("SurPool 数据: %v", sur)
 
-	err := c.Insert(sur)
+	err := c.Update(&SurPool{}, sur)
 	if err != nil {
 		log.Error("<----- 数据库插入SurPool数据失败 ~ ----->:%v", err)
 		return
