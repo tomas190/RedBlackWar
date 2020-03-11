@@ -162,8 +162,7 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	SurPool.PercentageToTotalWin = 1
 	SurPool.CoefficientToTotalPlayer = sur.PlayerNum * 0
 	SurPool.PlayerLoseRateAfterSurplusPool = 0.7
-	UpdateSurPool(SurPool)
-
+	FindSurPool(SurPool)
 }
 
 type SurPool struct {
@@ -176,6 +175,18 @@ type SurPool struct {
 	PlayerTotalLoseWin             float64 `json:"player_total_lose_win" bson:"player_total_lose_win" `
 	SurplusPool                    float64 `json:"surplus_pool" bson:"surplus_pool"`
 	PlayerLoseRateAfterSurplusPool float64 `json:"player_lose_rate_after_surplus_pool" bson:"player_lose_rate_after_surplus_pool"`
+}
+
+func FindSurPool(sur *SurPool) {
+	s, c := connect(dbName, surPool)
+	defer s.Close()
+
+	n,_ :=c.Find(nil).Count()
+	if n == 0 {
+		InsertSurPool(sur)
+	}else{
+		UpdateSurPool(sur)
+	}
 }
 
 //插入盈余池统一字段

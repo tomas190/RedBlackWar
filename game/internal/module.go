@@ -36,9 +36,6 @@ func (m *Module) OnInit() {
 	//中心服日志初始化
 	cc.Init()
 
-	//
-	InsertSurPool(&SurPool{})
-
 	go StartHttpServer()
 }
 
