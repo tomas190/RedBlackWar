@@ -32,8 +32,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game/internal/Databases.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="143" selection-start-line="143" selection-end-line="144" />
+            <state relative-caret-position="-33">
+              <caret line="154" column="36" selection-start-line="154" selection-start-column="36" selection-end-line="154" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -957,8 +957,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/game/internal/Databases.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="143" selection-start-line="143" selection-end-line="144" />
+        <state relative-caret-position="-33">
+          <caret line="154" column="36" selection-start-line="154" selection-start-column="36" selection-end-line="154" selection-end-column="36" />
         </state>
       </provider>
     </entry>
