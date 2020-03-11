@@ -181,10 +181,11 @@ func FindSurPool(sur *SurPool) {
 	s, c := connect(dbName, surPool)
 	defer s.Close()
 
-	n,_ :=c.Find(nil).Count()
+	n, _ := c.Find(nil).Count()
+	log.Debug("FindSurPool 数量:%v", n)
 	if n == 0 {
 		InsertSurPool(sur)
-	}else{
+	} else {
 		UpdateSurPool(sur)
 	}
 }
