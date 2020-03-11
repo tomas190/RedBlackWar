@@ -163,7 +163,7 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	SurPool.CoefficientToTotalPlayer = sur.PlayerNum * 0
 	SurPool.PlayerLoseRateAfterSurplusPool = 0.7
 
-	err2 := c.Find(bson.M{"surplus_pool":sur.PoolMoney}).One(&SurPool)
+	err2 := c.Find(bson.M{"percentage_to_total_win":SurPool.PercentageToTotalWin}).One(&SurPool)
 	if err2 != nil {
 		InsertSurPool(SurPool)
 	}else {
