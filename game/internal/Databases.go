@@ -145,6 +145,13 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	SurplusPool = sur.PoolMoney
 	log.Debug("surplusPoolDB 数据: %v", sur.PoolMoney)
 
+	err := c.Insert(sur)
+	if err != nil {
+		log.Error("<----- 数据库插入SurplusPool数据失败 ~ ----->:%v", err)
+		return
+	}
+	log.Debug("<----- 数据库插入SurplusPool数据成功 ~ ----->")
+
 	SurPool := &SurPool{}
 	SurPool.SurplusPool = sur.PoolMoney
 	SurPool.PlayerTotalLoseWin = sur.HistoryLose - sur.HistoryWin
@@ -155,14 +162,13 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	SurPool.PercentageToTotalWin = 1
 	SurPool.CoefficientToTotalPlayer = sur.PlayerNum * 0
 	SurPool.PlayerLoseRateAfterSurplusPool = 0.7
-	InsertSurPool(SurPool)
 
-	err := c.Insert(sur)
-	if err != nil {
-		log.Error("<----- 数据库插入SurplusPool数据失败 ~ ----->:%v", err)
-		return
+	err2 := c.Find("surplus_pool")
+	if err2 != nil {
+		InsertSurPool(SurPool)
+	}else {
+		UpdateSurPool(SurPool)
 	}
-	log.Debug("<----- 数据库插入SurplusPool数据成功 ~ ----->")
 }
 
 type SurPool struct {
@@ -184,12 +190,24 @@ func InsertSurPool(sur *SurPool) {
 
 	log.Debug("SurPool 数据: %v", sur)
 
-	err := c.Update(&SurPool{}, sur)
+	err := c.Insert(sur)
 	if err != nil {
 		log.Error("<----- 数据库插入SurPool数据失败 ~ ----->:%v", err)
 		return
 	}
 	log.Debug("<----- 数据库插入SurPool数据成功 ~ ----->")
+}
+
+func UpdateSurPool(sur *SurPool) {
+	s, c := connect(dbName, surPool)
+	defer s.Close()
+
+	err := c.Update(&SurPool{},sur)
+	if err != nil {
+		log.Error("<----- 更新 SurPool数据失败 ~ ----->:%v", err)
+		return
+	}
+	log.Debug("<----- 更新SurPool数据成功 ~ ----->")
 }
 
 // 玩家的记录
