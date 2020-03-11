@@ -162,13 +162,8 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	SurPool.PercentageToTotalWin = 1
 	SurPool.CoefficientToTotalPlayer = sur.PlayerNum * 0
 	SurPool.PlayerLoseRateAfterSurplusPool = 0.7
+	UpdateSurPool(SurPool)
 
-	n, _ := c.Find(nil).Count()
-	if n == 0 {
-		InsertSurPool(SurPool)
-	} else {
-		UpdateSurPool(SurPool)
-	}
 }
 
 type SurPool struct {
