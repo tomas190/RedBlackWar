@@ -181,6 +181,8 @@ func FindSurPool(sur *SurPool) {
 	s, c := connect(dbName, surPool)
 	defer s.Close()
 
+	c.RemoveAll(nil)
+
 	n, _ := c.Find(nil).Count()
 	log.Debug("FindSurPool 数量:%v", n)
 	if n == 0 {
@@ -209,7 +211,7 @@ func UpdateSurPool(sur *SurPool) {
 	s, c := connect(dbName, surPool)
 	defer s.Close()
 
-	err := c.Update(bson.M{},sur)
+	err := c.Update(bson.M{}, sur)
 	if err != nil {
 		log.Error("<----- 更新 SurPool数据失败 ~ ----->:%v", err)
 		return
