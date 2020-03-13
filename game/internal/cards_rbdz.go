@@ -210,7 +210,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		sur.HistoryWin = surPool.HistoryWin
 		sur.HistoryLose = surPool.HistoryLose
 	}
-	log.Debug("sur.HistoryWin:%v , sur.HistoryLose:%v ", sur.HistoryWin, sur.HistoryLose)
 
 	//获取Pot池Win
 	if ag.Weight > bg.Weight { //redWin
@@ -337,7 +336,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						//AllHistoryWin += v.WinResultMoney
 						sur.HistoryWin += v.WinResultMoney
-						log.Debug("red sur.HistoryWin:%v ", sur.HistoryWin)
 
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
@@ -363,7 +361,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						//AllHistoryLose -= v.LoseResultMoney
 						sur.HistoryLose -= v.LoseResultMoney
-						log.Debug("red sur.HistoryLose:%v ", sur.HistoryLose)
 
 						sur.TotalLoseMoney -= v.LoseResultMoney
 						//将玩家输的金额添加到盈余池
@@ -588,7 +585,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						//AllHistoryWin += v.WinResultMoney
 						sur.HistoryWin += v.WinResultMoney
-						log.Debug("black sur.HistoryWin:%v ", sur.HistoryWin)
 
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
@@ -614,7 +610,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						//AllHistoryLose -= v.LoseResultMoney
 						sur.HistoryLose -= v.LoseResultMoney
-						log.Debug("black sur.HistoryLose:%v ", sur.HistoryLose)
 
 						sur.TotalLoseMoney -= v.LoseResultMoney
 						//将玩家输的金额添加到盈余池
