@@ -27,10 +27,10 @@ var SurplusPool float64 = 0
 //记录进入大厅玩家的数量,为了统计 盈余池 - 6
 var AllPlayerCount []string
 
-var (
-	AllHistoryWin  float64 = 0
-	AllHistoryLose float64 = 0
-)
+//var (
+//	AllHistoryWin  float64 = 0
+//	AllHistoryLose float64 = 0
+//)
 
 //返回记录的玩家总数量
 func RecordPlayerCount() int32 {

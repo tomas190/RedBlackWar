@@ -207,10 +207,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 	surPool := FindSurplusPool()
 	if surPool != nil {
-		AllHistoryWin = surPool.HistoryWin
-		AllHistoryLose = surPool.HistoryLose
+		sur.HistoryWin = surPool.HistoryWin
+		sur.HistoryLose = surPool.HistoryLose
 	}
-	log.Debug("111 AllHistoryWin:%v AllHistoryLose:%v", AllHistoryWin, AllHistoryLose)
+	log.Debug("sur.HistoryWin:%v , sur.HistoryLose:%v ", sur.HistoryWin, sur.HistoryLose)
 
 	//获取Pot池Win
 	if ag.Weight > bg.Weight { //redWin
@@ -335,7 +335,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						v.WinResultMoney = taxMoney
 						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
 
-						AllHistoryWin += v.WinResultMoney
+						//AllHistoryWin += v.WinResultMoney
+						sur.HistoryWin += v.WinResultMoney
+						log.Debug("red sur.HistoryWin:%v ", sur.HistoryWin)
+
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
 						SurplusPool -= v.WinResultMoney
@@ -358,7 +361,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
-						AllHistoryLose -= v.LoseResultMoney
+						//AllHistoryLose -= v.LoseResultMoney
+						sur.HistoryLose -= v.LoseResultMoney
+						log.Debug("red sur.HistoryLose:%v ", sur.HistoryLose)
+
 						sur.TotalLoseMoney -= v.LoseResultMoney
 						//将玩家输的金额添加到盈余池
 						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
@@ -376,7 +382,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							}
 						}
 					}
-					log.Debug("222 AllHistoryWin:%v AllHistoryLose:%v", AllHistoryWin, AllHistoryLose)
 
 					tax := taxMoney * taxRate
 					v.ResultMoney = totalWinMoney + taxMoney - tax
@@ -581,7 +586,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						v.WinResultMoney = taxMoney
 						log.Debug("玩家金额: %v, 进来了Win: %v", v.Account, v.WinResultMoney)
 
-						AllHistoryWin += v.WinResultMoney
+						//AllHistoryWin += v.WinResultMoney
+						sur.HistoryWin += v.WinResultMoney
+						log.Debug("black sur.HistoryWin:%v ", sur.HistoryWin)
+
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
 						SurplusPool -= v.WinResultMoney
@@ -604,7 +612,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						log.Debug("玩家金额: %v, 进来了Lose: %v", v.Account, v.LoseResultMoney)
 
-						AllHistoryLose -= v.LoseResultMoney
+						//AllHistoryLose -= v.LoseResultMoney
+						sur.HistoryLose -= v.LoseResultMoney
+						log.Debug("black sur.HistoryLose:%v ", sur.HistoryLose)
+
 						sur.TotalLoseMoney -= v.LoseResultMoney
 						//将玩家输的金额添加到盈余池
 						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
@@ -622,7 +633,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							}
 						}
 					}
-					log.Debug("333 AllHistoryWin:%v AllHistoryLose:%v", AllHistoryWin, AllHistoryLose)
 
 					tax := taxMoney * taxRate
 					v.ResultMoney = totalWinMoney + taxMoney - tax
@@ -709,8 +719,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			}
 		}
 	}
-	sur.HistoryWin = AllHistoryWin
-	sur.HistoryLose = AllHistoryLose
 
 	if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
 		InsertSurplusPool(sur)
