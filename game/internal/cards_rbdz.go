@@ -210,6 +210,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		AllHistoryWin = surPool.HistoryWin
 		AllHistoryLose = surPool.HistoryLose
 	}
+	log.Debug("111 AllHistoryWin:%v AllHistoryLose:%v", AllHistoryWin, AllHistoryLose)
 
 	//获取Pot池Win
 	if ag.Weight > bg.Weight { //redWin
@@ -375,6 +376,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							}
 						}
 					}
+					log.Debug("222 AllHistoryWin:%v AllHistoryLose:%v", AllHistoryWin, AllHistoryLose)
 
 					tax := taxMoney * taxRate
 					v.ResultMoney = totalWinMoney + taxMoney - tax
@@ -620,6 +622,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							}
 						}
 					}
+					log.Debug("333 AllHistoryWin:%v AllHistoryLose:%v", AllHistoryWin, AllHistoryLose)
 
 					tax := taxMoney * taxRate
 					v.ResultMoney = totalWinMoney + taxMoney - tax

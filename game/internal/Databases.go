@@ -209,7 +209,7 @@ func UpdateSurPool(sur *SurPool) {
 	s, c := connect(dbName, surPool)
 	defer s.Close()
 
-	err := c.Update(&SurPool{}, sur)
+	err := c.Update(bson.M{},sur)
 	if err != nil {
 		log.Error("<----- 更新 SurPool数据失败 ~ ----->:%v", err)
 		return
