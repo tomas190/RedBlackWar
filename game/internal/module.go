@@ -37,6 +37,8 @@ func (m *Module) OnInit() {
 	cc.Init()
 
 	go StartHttpServer()
+	go GetGameData()
+
 }
 
 func (m *Module) OnDestroy() {
