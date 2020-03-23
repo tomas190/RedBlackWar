@@ -156,7 +156,7 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	result.Total = count
 	result.List = gameData
 
-	fmt.Fprint(w, ApiResp{Code: SuccCode, Msg: "Success", Data: result})
+	fmt.Fprintf(w, "%+v", ApiResp{Code: SuccCode, Msg: "Success", Data: result})
 }
 
 func FormatTime(timeUnix int64, layout string) string {
