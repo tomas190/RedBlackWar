@@ -1,8 +1,8 @@
 package internal
 
 import (
-	"fmt"
 	"RedBlack-War/conf"
+	"fmt"
 	"github.com/name5566/leaf/log"
 	"gopkg.in/mgo.v2/bson"
 	"net/http"
@@ -56,7 +56,7 @@ const (
 func StartHttpServer() {
 	http.HandleFunc("/api/accessData", getAccessData)
 
-	err := http.ListenAndServe(":"+ conf.Server.HTTPPort, nil)
+	err := http.ListenAndServe(":"+conf.Server.HTTPPort, nil)
 	if err != nil {
 		log.Error("Http server启动异常:", err.Error())
 		panic(err)
@@ -67,7 +67,7 @@ func StartHttpServer() {
 func GetGameData() {
 	http.HandleFunc("/api/getGameData", getAccessData)
 
-	err := http.ListenAndServe(":"+ gameDataPort, nil)
+	err := http.ListenAndServe(":"+gameDataPort, nil)
 	if err != nil {
 		log.Error("Http server启动异常:", err.Error())
 		panic(err)
@@ -156,7 +156,7 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	result.Total = count
 	result.List = gameData
 
-	fmt.Fprint(w, NewResp(SuccCode, "Success", result))
+	fmt.Fprint(w, ApiResp{Code: SuccCode, Msg: "Success", Data: result})
 }
 
 func FormatTime(timeUnix int64, layout string) string {
