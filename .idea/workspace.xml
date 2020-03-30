@@ -4,7 +4,9 @@
     <list default="true" id="3c9afdff-253a-49cb-a98b-ad8c890a28f5" name="默认更改列表" comment="">
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/accessData.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/accessData.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/websocket.go" beforeDir="false" afterPath="$PROJECT_DIR$/websocket.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common/hall.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common/hall/animation.meta" beforeDir="false" />
@@ -3149,57 +3151,6 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>seed</find>
-      <find>LogPath</find>
-      <find>找不到用户回调</find>
-      <find>盈余池</find>
-      <find>随机数</find>
-      <find>踢出</find>
-      <find>返回用户</find>
-      <find>Delete</find>
-      <find>gameUser</find>
-      <find>赌神</find>
-      <find>&amp;pb_msg.GameHallData_S2C{}</find>
-      <find>DeletePlayer</find>
-      <find>RspGameHallData</find>
-      <find>房间状态</find>
-      <find>进来了</find>
-      <find>p.id</find>
-      <find>1.03</find>
-      <find>PlayerPoolMoney_S2C</find>
-      <find>settle</find>
-      <find>当前</find>
-      <find>请求</find>
-      <find>50</find>
-      <find>close</find>
-      <find>use of closed network connection</find>
-      <find>进来了4</find>
-      <find>read message</find>
-      <find>bson.NewObjectId().String()</find>
-      <find>bson.NewObjectId().Hex()</find>
-      <find>大厅</find>
-      <find>count</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>MsgInfo_S2C</replace>
-      <replace>Red</replace>
-      <replace>p.SendMsg</replace>
-      <replace />
-      <replace>totalWinMoney</replace>
-      <replace>pool</replace>
-      <replace>pool.</replace>
-      <replace>bson.NewObjectId().Hex()</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>C:\Users\tomas\go\src\server\game\internal</dir>
-      <dir>C:\Users\tomas\go\src\server</dir>
-      <dir>C:\Users\tomas\go\src\cow-cow-game\src\client\test</dir>
-      <dir>C:\Users\tomas\go\src</dir>
-      <dir>C:\Users\tomas\Desktop\RedBlack-War</dir>
-    </dirStrings>
-  </component>
   <component name="GOROOT" path="C:\Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -3226,7 +3177,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../proj_bcbm" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -3373,10 +3324,14 @@
     <proxy>direct</proxy>
   </component>
   <component name="WindowStateProjectService">
-    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1584937385521">
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1585452743069">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1584937385521" />
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1585452743069" />
+    <state x="254" y="40" width="773" height="600" key="find.popup" timestamp="1584955409930">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="254" y="40" width="773" height="600" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1584955409930" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
