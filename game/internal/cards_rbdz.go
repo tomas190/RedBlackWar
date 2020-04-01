@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"RedBlack-War/conf"
 	pb_msg "RedBlack-War/msg/Protocal"
 	"github.com/name5566/leaf/log"
 	"strconv"
@@ -399,6 +400,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					timeNow := time.Now().Unix()
 					data := &PlayerDownBetRecode{}
 					data.Id = v.Id
+					data.GameId = conf.Server.GameID
 					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
 					data.RoomId = v.room.RoomId
 					data.DownBetInfo = new(DownBetMoney)
@@ -648,6 +650,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					timeNow := time.Now().Unix()
 					data := &PlayerDownBetRecode{}
 					data.Id = v.Id
+					data.GameId = conf.Server.GameID
 					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
 					data.RoomId = v.room.RoomId
 					data.DownBetInfo = new(DownBetMoney)

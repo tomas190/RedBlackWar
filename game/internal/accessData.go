@@ -67,7 +67,6 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 
 	req.Id = r.FormValue("id")
 	req.GameId = r.FormValue("game_id")
-	log.Debug("req.GameId :%v", req.GameId)
 	req.RoundId = r.FormValue("round_id")
 	startTime := r.FormValue("start_time")
 	endTime := r.FormValue("end_time")
@@ -83,10 +82,12 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	if req.GameId != "" {
 		selector["game_id"] = req.GameId
 	}
+	log.Debug("game_id :%v", req.GameId)
 
 	if req.RoundId != "" {
 		selector["round_id"] = req.RoundId
 	}
+	log.Debug("round_id :%v", req.RoundId)
 
 	sTime, _ := strconv.Atoi(startTime)
 
