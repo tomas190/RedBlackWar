@@ -48,23 +48,12 @@ const (
 	ErrCode  = -1
 )
 
-const (
-	gameDataPort = "3214"
-)
 
-// 运营后台数据接口
+// HTTP端口监听
 func StartHttpServer() {
+	// 运营后台数据接口
 	http.HandleFunc("/api/accessData", getAccessData)
-
-	err := http.ListenAndServe(":"+conf.Server.HTTPPort, nil)
-	if err != nil {
-		log.Error("Http server启动异常:", err.Error())
-		panic(err)
-	}
-}
-
-// 获取游戏数据接口
-func GetGameData() {
+	// 获取游戏数据接口
 	http.HandleFunc("/api/getGameData", getAccessData)
 
 	err := http.ListenAndServe(":"+conf.Server.HTTPPort, nil)
@@ -73,6 +62,8 @@ func GetGameData() {
 		panic(err)
 	}
 }
+
+
 
 func getAccessData(w http.ResponseWriter, r *http.Request) {
 	var req GameDataReq
@@ -156,7 +147,7 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	result.Total = count
 	result.List = gameData
 
-	fmt.Fprintf(w, "%+v", ApiResp{Code: SuccCode, Msg: "Success", Data: result})
+	fmt.Fprintf(w, "%+v", ApiResp{Code: SuccCode, Msg: "", Data: result})
 }
 
 func FormatTime(timeUnix int64, layout string) string {
