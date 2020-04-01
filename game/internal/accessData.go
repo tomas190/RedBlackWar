@@ -48,7 +48,6 @@ const (
 	ErrCode  = -1
 )
 
-
 // HTTP端口监听
 func StartHttpServer() {
 	// 运营后台数据接口
@@ -63,24 +62,17 @@ func StartHttpServer() {
 	}
 }
 
-
-
 func getAccessData(w http.ResponseWriter, r *http.Request) {
 	var req GameDataReq
 
 	req.Id = r.FormValue("id")
 	req.GameId = r.FormValue("game_id")
+	log.Debug("req.GameId :%v", req.GameId)
 	req.RoundId = r.FormValue("round_id")
 	startTime := r.FormValue("start_time")
 	endTime := r.FormValue("end_time")
 	skip := r.FormValue("skip")
 	limit := r.FormValue("limit")
-
-	//if req.Id == "" || req.GameId == "" || req.RoundId == "" || startTime == "" ||
-	//	endTime == "" || skip == "" || limit == "" {
-	//	fmt.Fprint(w, NewResp(ErrCode, "", nil))
-	//	return
-	//}
 
 	selector := bson.M{}
 
@@ -93,7 +85,7 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if req.RoundId != "" {
-		selector["rand_id"] = req.RoundId
+		selector["round_id"] = req.RoundId
 	}
 
 	sTime, _ := strconv.Atoi(startTime)
