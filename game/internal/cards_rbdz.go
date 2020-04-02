@@ -401,7 +401,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					data := &PlayerDownBetRecode{}
 					data.Id = v.Id
 					data.GameId = conf.Server.GameID
-					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
+					data.RoundId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
 					data.RoomId = v.room.RoomId
 					data.DownBetInfo = new(DownBetMoney)
 					data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
@@ -651,7 +651,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					data := &PlayerDownBetRecode{}
 					data.Id = v.Id
 					data.GameId = conf.Server.GameID
-					data.RandId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
+					data.RoundId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
 					data.RoomId = v.room.RoomId
 					data.DownBetInfo = new(DownBetMoney)
 					data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet

@@ -223,7 +223,7 @@ func UpdateSurPool(sur *SurPool) {
 type PlayerDownBetRecode struct {
 	Id          string        `json:"id" bson:"id"`                       // 玩家Id
 	GameId      string        `json:"game_id" bson:"game_id"`             // gameId
-	RandId      string        `json:"rand_id" bson:"rand_id"`             // 随机Id
+	RoundId     string        `json:"round_id" bson:"round_id"`           // 随机Id
 	RoomId      string        `json:"room_id" bson:"room_id"`             // 所在房间
 	DownBetInfo *DownBetMoney `json:"down_bet_info" bson:"down_bet_info"` // 玩家各注池下注的金额
 	DownBetTime int64         `json:"down_bet_time" bson:"down_bet_time"` // 下注时间

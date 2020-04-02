@@ -2,6 +2,7 @@ package internal
 
 import (
 	"RedBlack-War/conf"
+	"encoding/json"
 	"fmt"
 	"github.com/name5566/leaf/log"
 	"gopkg.in/mgo.v2/bson"
@@ -128,7 +129,7 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 		gd.TimeFmt = FormatTime(pr.DownBetTime, "2006-01-02 15:04:05")
 		gd.PlayerId = pr.Id
 		gd.RoomId = pr.RoomId
-		gd.RoundId = pr.RandId
+		gd.RoundId = pr.RoundId
 		gd.BetInfo = *pr.DownBetInfo
 		gd.Card = *pr.CardResult
 		gd.Settlement = pr.ResultMoney
@@ -140,7 +141,14 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	result.Total = count
 	result.List = gameData
 
-	fmt.Fprintf(w, "%+v", ApiResp{Code: SuccCode, Msg: "", Data: result})
+	//fmt.Fprintf(w, "%+v", ApiResp{Code: SuccCode, Msg: "", Data: result})
+	js, err := json.Marshal(NewResp(SuccCode, "", result))
+	if err != nil {
+		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 }
 
 func FormatTime(timeUnix int64, layout string) string {
