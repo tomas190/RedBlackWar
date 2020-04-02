@@ -334,6 +334,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						}
 					}
 
+					nowTime := time.Now().Unix()
 					//连接中心服金币处理
 					if taxMoney > 0 {
 						v.WinResultMoney = taxMoney
@@ -345,7 +346,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
 						SurplusPool -= v.WinResultMoney
-						nowTime := time.Now().Unix()
 						reason := "ResultWinScore"
 
 						//同时同步赢分和输分
@@ -370,7 +370,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//将玩家输的金额添加到盈余池
 						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
 
-						nowTime := time.Now().Unix()
 						reason := "ResultLoseScore"
 
 						//同时同步赢分和输分
@@ -399,7 +398,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 					//解锁
 					if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
-						timeNow := time.Now().Unix()
 						data := &PlayerDownBetRecode{}
 						data.Id = v.Id
 						data.GameId = conf.Server.GameID
@@ -409,7 +407,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
 						data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
 						data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
-						data.DownBetTime = timeNow
+						data.DownBetTime = nowTime
 						data.CardResult = new(CardData)
 						data.CardResult.ReadCard = v.room.Cards.ReadCard
 						data.CardResult.BlackCard = v.room.Cards.BlackCard
@@ -585,6 +583,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							totalWinMoney += float64(v.DownBetMoneys.LuckDownBet)
 						}
 					}
+
+					nowTime := time.Now().Unix()
+
 					//连接中心服金币处理
 					if taxMoney > 0 {
 						v.WinResultMoney = taxMoney
@@ -596,7 +597,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
 						SurplusPool -= v.WinResultMoney
-						nowTime := time.Now().Unix()
 						reason := "ResultWinScore"
 
 						//同时同步赢分和输分
@@ -621,7 +621,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//将玩家输的金额添加到盈余池
 						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
 
-						nowTime := time.Now().Unix()
 						reason := "ResultLoseScore"
 
 						//同时同步赢分和输分
@@ -650,7 +649,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 					//解锁
 					if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
-						timeNow := time.Now().Unix()
 						data := &PlayerDownBetRecode{}
 						data.Id = v.Id
 						data.GameId = conf.Server.GameID
@@ -660,7 +658,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
 						data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
 						data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
-						data.DownBetTime = timeNow
+						data.DownBetTime = nowTime
 						data.CardResult = new(CardData)
 						data.CardResult.ReadCard = v.room.Cards.ReadCard
 						data.CardResult.BlackCard = v.room.Cards.BlackCard
