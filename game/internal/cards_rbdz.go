@@ -3,8 +3,8 @@ package internal
 import (
 	"RedBlack-War/conf"
 	pb_msg "RedBlack-War/msg/Protocal"
+	"fmt"
 	"github.com/name5566/leaf/log"
-	"strconv"
 	"time"
 )
 
@@ -117,6 +117,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 	res := &pb_msg.OpenCardResult_S2C{}
 	res.PotWinTypes = new(pb_msg.DownPotType)
+
 
 	//获取牌型处理
 	if ag.IsThreeKind() {
@@ -274,6 +275,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		for _, v := range r.PlayerList {
 			//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
 			//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
+
+			v.RoundId = fmt.Sprintf("%+v-%+v", time.Now().Unix(), r.RoomId)
+
 			var taxMoney float64
 			var totalWinMoney float64
 			var totalLoseMoney float64
@@ -341,12 +345,11 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
 						SurplusPool -= v.WinResultMoney
-						timeStr := time.Now().Format("2006-01-02_15:04:05")
 						nowTime := time.Now().Unix()
 						reason := "ResultWinScore"
 
 						//同时同步赢分和输分
-						c4c.UserSyncWinScore(v, nowTime, timeStr, reason)
+						c4c.UserSyncWinScore(v, nowTime, v.RoundId, reason)
 						select {
 						case t := <-winChan:
 							if t == true {
@@ -367,12 +370,11 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//将玩家输的金额添加到盈余池
 						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
 
-						timeStr := time.Now().Format("2006-01-02_15:04:05")
 						nowTime := time.Now().Unix()
 						reason := "ResultLoseScore"
 
 						//同时同步赢分和输分
-						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
+						c4c.UserSyncLoseScore(v, nowTime, v.RoundId, reason)
 						select {
 						case t := <-loseChan:
 							if t == true {
@@ -401,7 +403,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data := &PlayerDownBetRecode{}
 						data.Id = v.Id
 						data.GameId = conf.Server.GameID
-						data.RoundId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
+						data.RoundId = v.RoundId
 						data.RoomId = v.room.RoomId
 						data.DownBetInfo = new(DownBetMoney)
 						data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
@@ -525,6 +527,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 		for _, v := range r.PlayerList {
 			//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
+
+			v.RoundId = fmt.Sprintf("%+v-%+v", time.Now().Unix(), r.RoomId)
+
 			var taxMoney float64
 			var totalWinMoney float64
 			var totalLoseMoney float64
@@ -591,12 +596,11 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						sur.TotalWinMoney += v.WinResultMoney
 						//将玩家的税收金额添加到盈余池
 						SurplusPool -= v.WinResultMoney
-						timeStr := time.Now().Format("2006-01-02_15:04:05")
 						nowTime := time.Now().Unix()
 						reason := "ResultWinScore"
 
 						//同时同步赢分和输分
-						c4c.UserSyncWinScore(v, nowTime, timeStr, reason)
+						c4c.UserSyncWinScore(v, nowTime, v.RoundId, reason)
 						select {
 						case t := <-winChan:
 							if t == true {
@@ -617,12 +621,11 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//将玩家输的金额添加到盈余池
 						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
 
-						timeStr := time.Now().Format("2006-01-02_15:04:05")
 						nowTime := time.Now().Unix()
 						reason := "ResultLoseScore"
 
 						//同时同步赢分和输分
-						c4c.UserSyncLoseScore(v, nowTime, timeStr, reason)
+						c4c.UserSyncLoseScore(v, nowTime, v.RoundId, reason)
 						select {
 						case t := <-loseChan:
 							if t == true {
@@ -651,7 +654,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data := &PlayerDownBetRecode{}
 						data.Id = v.Id
 						data.GameId = conf.Server.GameID
-						data.RoundId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
+						data.RoundId = v.RoundId
 						data.RoomId = v.room.RoomId
 						data.DownBetInfo = new(DownBetMoney)
 						data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet

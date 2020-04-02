@@ -608,7 +608,7 @@ func (c4c *Conn4Center) SendMsg2Center(data interface{}) {
 }
 
 //UserSyncWinScore 同步赢分
-func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, reason string) {
+func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, roundId, reason string) {
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserWinScore
 	userWin := &UserChangeScore{}
@@ -623,13 +623,13 @@ func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, timeStr, rea
 
 	userWin.Info.PayReason = reason
 	userWin.Info.PreMoney = 0
-	userWin.Info.RoundId = p.room.RoomId
+	userWin.Info.RoundId = roundId
 	baseData.Data = userWin
 	c4c.SendMsg2Center(baseData)
 }
 
 //UserSyncWinScore 同步输分
-func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, timeStr, reason string) {
+func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, roundId, reason string) {
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserLoseScore
 	userLose := &UserChangeScore{}
@@ -643,7 +643,7 @@ func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, timeStr, re
 	userLose.Info.Order = bson.NewObjectId().Hex()
 	userLose.Info.PayReason = reason
 	userLose.Info.PreMoney = 0
-	userLose.Info.RoundId = p.room.RoomId
+	userLose.Info.RoundId = roundId
 	baseData.Data = userLose
 	c4c.SendMsg2Center(baseData)
 }

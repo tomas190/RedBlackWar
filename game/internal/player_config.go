@@ -67,6 +67,7 @@ type Player struct {
 	Index uint32 // 下一版这里改动一些，将Player的map[Index]去掉
 
 	Id       string
+	RoundId  string
 	PassWord string
 	Token    string
 	NickName string
