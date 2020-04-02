@@ -396,27 +396,27 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
 					//解锁
-
-					timeNow := time.Now().Unix()
-					data := &PlayerDownBetRecode{}
-					data.Id = v.Id
-					data.GameId = conf.Server.GameID
-					data.RoundId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
-					data.RoomId = v.room.RoomId
-					data.DownBetInfo = new(DownBetMoney)
-					data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
-					data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
-					data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
-					data.DownBetTime = timeNow
-					data.CardResult = new(CardData)
-					data.CardResult.ReadCard = v.room.Cards.ReadCard
-					data.CardResult.BlackCard = v.room.Cards.BlackCard
-					data.CardResult.RedType = v.room.Cards.RedType
-					data.CardResult.BlackType = v.room.Cards.BlackType
-					data.ResultMoney = v.ResultMoney
-					data.TaxRate = taxRate
-					InsertAccessData(data)
-
+					if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
+						timeNow := time.Now().Unix()
+						data := &PlayerDownBetRecode{}
+						data.Id = v.Id
+						data.GameId = conf.Server.GameID
+						data.RoundId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
+						data.RoomId = v.room.RoomId
+						data.DownBetInfo = new(DownBetMoney)
+						data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
+						data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
+						data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
+						data.DownBetTime = timeNow
+						data.CardResult = new(CardData)
+						data.CardResult.ReadCard = v.room.Cards.ReadCard
+						data.CardResult.BlackCard = v.room.Cards.BlackCard
+						data.CardResult.RedType = v.room.Cards.RedType
+						data.CardResult.BlackType = v.room.Cards.BlackType
+						data.ResultMoney = v.ResultMoney
+						data.TaxRate = taxRate
+						InsertAccessData(data)
+					}
 				} else {
 
 					if gw.LuckWin == 1 {
@@ -646,27 +646,27 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						c4c.NoticeWinMoreThan(v.Id, v.NickName, v.ResultMoney)
 					}
 					//解锁
-
-					timeNow := time.Now().Unix()
-					data := &PlayerDownBetRecode{}
-					data.Id = v.Id
-					data.GameId = conf.Server.GameID
-					data.RoundId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
-					data.RoomId = v.room.RoomId
-					data.DownBetInfo = new(DownBetMoney)
-					data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
-					data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
-					data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
-					data.DownBetTime = timeNow
-					data.CardResult = new(CardData)
-					data.CardResult.ReadCard = v.room.Cards.ReadCard
-					data.CardResult.BlackCard = v.room.Cards.BlackCard
-					data.CardResult.RedType = v.room.Cards.RedType
-					data.CardResult.BlackType = v.room.Cards.BlackType
-					data.ResultMoney = v.ResultMoney
-					data.TaxRate = taxRate
-					InsertAccessData(data)
-
+					if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
+						timeNow := time.Now().Unix()
+						data := &PlayerDownBetRecode{}
+						data.Id = v.Id
+						data.GameId = conf.Server.GameID
+						data.RoundId = v.room.RoomId + "-" + strconv.FormatInt(timeNow, 10)
+						data.RoomId = v.room.RoomId
+						data.DownBetInfo = new(DownBetMoney)
+						data.DownBetInfo.RedDownBet = v.DownBetMoneys.RedDownBet
+						data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
+						data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
+						data.DownBetTime = timeNow
+						data.CardResult = new(CardData)
+						data.CardResult.ReadCard = v.room.Cards.ReadCard
+						data.CardResult.BlackCard = v.room.Cards.BlackCard
+						data.CardResult.RedType = v.room.Cards.RedType
+						data.CardResult.BlackType = v.room.Cards.BlackType
+						data.ResultMoney = v.ResultMoney
+						data.TaxRate = taxRate
+						InsertAccessData(data)
+					}
 				} else {
 					if gw.LuckWin == 1 {
 						if gw.CardTypes == Leopard {
