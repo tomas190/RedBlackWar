@@ -416,14 +416,17 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 
 		winChan <- true
 
-		//将Win数据插入数据
-		InsertWinMoney(msgBody)
+
 
 		userInfo, ok := data["msg"].(map[string]interface{})
 		if ok {
 			jsonScore := userInfo["final_pay"]
 			score, err := jsonScore.(json.Number).Float64()
 
+			if score != 0 {
+				//将Win数据插入数据
+				InsertWinMoney(msgBody)
+			}
 			cc.log("同步中心服赢钱成功", score)
 
 			if err != nil {
@@ -456,13 +459,16 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 		log.Debug("data:%v,ok:%v", data, ok)
 
 		//将Lose数据插入数据
-		InsertLoseMoney(msgBody)
+
 
 		userInfo, ok := data["msg"].(map[string]interface{})
 		if ok {
 			jsonScore := userInfo["final_pay"]
 			score, err := jsonScore.(json.Number).Float64()
 
+			if score != 0 {
+				InsertLoseMoney(msgBody)
+			}
 			cc.log("同步中心服输钱成功", score)
 
 			if err != nil {
