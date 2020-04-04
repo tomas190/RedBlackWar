@@ -141,7 +141,8 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	s, c := connect(dbName, surPlusDB)
 	defer s.Close()
 
-	sur.PoolMoney = (sur.HistoryLose - (sur.HistoryWin * 1)) * 0.5
+	//sur.PoolMoney = (sur.HistoryLose - (sur.HistoryWin * 1)) * 0.5
+	sur.PoolMoney = 10000  // todo
 	SurplusPool = sur.PoolMoney
 	log.Debug("surplusPoolDB 数据: %v", sur.PoolMoney)
 
