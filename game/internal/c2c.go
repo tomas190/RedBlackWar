@@ -440,7 +440,6 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 		log.Debug("onUserLoseScore Error")
 	}
 
-	loseChan <- true
 
 	code, err := data["code"].(json.Number).Int64()
 	if err != nil {
@@ -454,6 +453,8 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 	if data["status"] == "SUCCESS" && code == 200 {
 		log.Debug("<-------- UserLoseScore SUCCESS~ -------->")
 		log.Debug("data:%v,ok:%v", data, ok)
+
+		loseChan <- true
 
 		//将Lose数据插入数据
 		InsertLoseMoney(msgBody)
