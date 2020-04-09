@@ -375,12 +375,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//同时同步赢分和输分
 						if v.LoseResultMoney != 0 {
 							c4c.UserSyncLoseScore(v, nowTime, v.RoundId, reason)
-							select {
-							case t := <-loseChan:
-								if t == true {
-									break
-								}
-							}
 						}
 					}
 
@@ -603,6 +597,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						//同时同步赢分和输分
 						c4c.UserSyncWinScore(v, nowTime, v.RoundId, reason)
+						// todo 后面是用go程处理
 						select {
 						case t := <-winChan:
 							if t == true {
@@ -628,12 +623,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//同时同步赢分和输分
 						if v.LoseResultMoney != 0 {
 							c4c.UserSyncLoseScore(v, nowTime, v.RoundId, reason)
-							select {
-							case t := <-loseChan:
-								if t == true {
-									break
-								}
-							}
 						}
 					}
 
