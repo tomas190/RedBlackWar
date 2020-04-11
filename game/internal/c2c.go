@@ -454,8 +454,6 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 		log.Debug("<-------- UserLoseScore SUCCESS~ -------->")
 		log.Debug("data:%v,ok:%v", data, ok)
 
-		loseChan <- true
-
 		//将Lose数据插入数据
 		InsertLoseMoney(msgBody)
 
