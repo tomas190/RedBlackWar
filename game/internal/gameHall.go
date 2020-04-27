@@ -98,7 +98,6 @@ func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 	msg.Error = recodeText[RECODE_JOINROOMIDERR]
 	p.SendMsg(msg)
 
-	log.Debug("请求加入的房间号不正确~")
 }
 
 //LoadHallRobots 为每个房间装载机器人
