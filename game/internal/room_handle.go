@@ -82,7 +82,7 @@ func (r *Room) JoinGameRoom(p *Player) {
 			msg.Msg = recodeText[RECODE_SELLTENOTDOWNBET]
 			p.SendMsg(msg)
 
-			//log.Debug("当前结算阶段, 不能进行操作 ~")
+			log.Debug("当前结算阶段, 不能进行操作 ~")
 		}
 	}
 }

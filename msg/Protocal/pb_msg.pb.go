@@ -2077,7 +2077,9 @@ func init() {
 	proto.RegisterType((*PlayerLeaveHall_S2C)(nil), "pb_msg.PlayerLeaveHall_S2C")
 }
 
-func init() { proto.RegisterFile("pb_msg.proto", fileDescriptor_bd13c7201b21be60) }
+func init() {
+	proto.RegisterFile("pb_msg.proto", fileDescriptor_bd13c7201b21be60)
+}
 
 var fileDescriptor_bd13c7201b21be60 = []byte{
 	// 1576 bytes of a gzipped FileDescriptorProto
