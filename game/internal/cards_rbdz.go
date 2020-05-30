@@ -118,7 +118,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	res := &pb_msg.OpenCardResult_S2C{}
 	res.PotWinTypes = new(pb_msg.DownPotType)
 
-
 	//获取牌型处理
 	if ag.IsThreeKind() {
 		r.Cards.RedType = CardsType(Leopard)
@@ -404,6 +403,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
 						data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
 						data.DownBetTime = nowTime
+						data.StartTime = nowTime - 15
+						data.EndTime = nowTime + 10
 						data.CardResult = new(CardData)
 						data.CardResult.ReadCard = v.room.Cards.ReadCard
 						data.CardResult.BlackCard = v.room.Cards.BlackCard
@@ -652,6 +653,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data.DownBetInfo.BlackDownBet = v.DownBetMoneys.BlackDownBet
 						data.DownBetInfo.LuckDownBet = v.DownBetMoneys.LuckDownBet
 						data.DownBetTime = nowTime
+						data.StartTime = nowTime - 15
+						data.EndTime = nowTime + 10
 						data.CardResult = new(CardData)
 						data.CardResult.ReadCard = v.room.Cards.ReadCard
 						data.CardResult.BlackCard = v.room.Cards.BlackCard
