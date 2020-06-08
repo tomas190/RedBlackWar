@@ -2,6 +2,7 @@ package internal
 
 import (
 	"RedBlack-War/conf"
+	pb_msg "RedBlack-War/msg/Protocal"
 	"encoding/json"
 	"fmt"
 	"github.com/name5566/leaf/log"
@@ -169,11 +170,16 @@ func NewResp(code int, msg string, data interface{}) ApiResp {
 
 func reqPlayerLeave(w http.ResponseWriter, r *http.Request) {
 	Id := r.FormValue("id")
-	log.Debug("玩家id为:%v", Id)
 	user, _ := gameHall.UserRecord.Load(Id)
 	if user != nil {
 		u := user.(*Player)
 		log.Debug("玩家信息:%v", u)
 		u.PlayerReqExit()
+		gameHall.UserRecord.Delete(u.Id)
+		c4c.UserLogoutCenter(u.Id, u.PassWord, u.Token) //, p.PassWord
+		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
+		u.ConnAgent.WriteMsg(leaveHall)
+		u.IsOnline = false
+		log.Debug("强制请求踢出该玩家:%v", u.Id)
 	}
 }
