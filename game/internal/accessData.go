@@ -15,8 +15,8 @@ type GameDataReq struct {
 	Id        string `form:"id" json:"id"`
 	GameId    string `form:"game_id" json:"game_id"`
 	RoundId   string `form:"round_id" json:"round_id"`
-	StartTime string  `form:"start_time" json:"start_time"`
-	EndTime   string  `form:"end_time" json:"end_time"`
+	StartTime string `form:"start_time" json:"start_time"`
+	EndTime   string `form:"end_time" json:"end_time"`
 	Skip      int    `form:"skip" json:"skip"`
 	Limit     int    `form:"limit" json:"limit"`
 }
@@ -57,6 +57,8 @@ func StartHttpServer() {
 	http.HandleFunc("/api/accessData", getAccessData)
 	// 获取游戏数据接口
 	http.HandleFunc("/api/getGameData", getAccessData)
+	// 获取游戏数据接口
+	http.HandleFunc("/api/reqPlayerLeave", reqPlayerLeave)
 
 	err := http.ListenAndServe(":"+conf.Server.HTTPPort, nil)
 	if err != nil {
@@ -163,4 +165,15 @@ func FormatTime(timeUnix int64, layout string) string {
 
 func NewResp(code int, msg string, data interface{}) ApiResp {
 	return ApiResp{Code: code, Msg: msg, Data: data}
+}
+
+func reqPlayerLeave(w http.ResponseWriter, r *http.Request) {
+	Id := r.FormValue("id")
+	log.Debug("玩家id为:%v", Id)
+	user, _ := gameHall.UserRecord.Load(Id)
+	if user != nil {
+		u := user.(*Player)
+		log.Debug("玩家信息:%v", u)
+		u.PlayerReqExit()
+	}
 }
