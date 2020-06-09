@@ -58,7 +58,7 @@ func StartHttpServer() {
 	http.HandleFunc("/api/accessData", getAccessData)
 	// 获取游戏数据接口
 	http.HandleFunc("/api/getGameData", getAccessData)
-	// 获取游戏数据接口
+	// 请求玩家退出
 	http.HandleFunc("/api/reqPlayerLeave", reqPlayerLeave)
 
 	err := http.ListenAndServe(":"+conf.Server.HTTPPort, nil)
@@ -174,12 +174,19 @@ func reqPlayerLeave(w http.ResponseWriter, r *http.Request) {
 	if user != nil {
 		u := user.(*Player)
 		log.Debug("玩家信息:%v", u)
-		u.PlayerReqExit()
+		u.room.ExitFromRoom(u)
 		gameHall.UserRecord.Delete(u.Id)
 		c4c.UserLogoutCenter(u.Id, u.PassWord, u.Token) //, p.PassWord
 		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 		u.ConnAgent.WriteMsg(leaveHall)
 		u.IsOnline = false
 		log.Debug("强制请求踢出该玩家:%v", u.Id)
+
+		js, err := json.Marshal(NewResp(SuccCode, "", "已成功T出房间!"))
+		if err != nil {
+			fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
+			return
+		}
+		w.Write(js)
 	}
 }
