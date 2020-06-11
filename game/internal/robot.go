@@ -75,7 +75,7 @@ func (r *Room) RobotsDownBet() {
 				//fmt.Println("你好 我是机器人----------------------", v.Id, v.DownBetMoneys)
 				pot1 := RobotRandPot(v, r.GodGambleName)
 				if pot1 == 3 {
-					slice := []int32{1, 10, 50, 100}
+					slice := []int32{1, 10, 50}
 					rand.Seed(int64(time.Now().UnixNano()))
 					num := rand.Intn(len(slice))
 					bet1 = slice[num]
@@ -184,7 +184,7 @@ func RobotRandPot(p *Player, rGod string) int32 {
 		n2 := rand.Intn(len(randSlice))
 		return slice[n2]
 	}
-	slice2 := []int32{1, 2, 3, 2, 1, 2, 3, 1, 2, 1}
+	slice2 := []int32{1, 2, 1, 2, 1, 2, 3, 1, 2, 1, 2}
 	rand.Seed(int64(time.Now().UnixNano()))
 	n3 := rand.Intn(3)
 	return slice2[n3]
