@@ -186,7 +186,7 @@ func RobotRandPot(p *Player, rGod string) int32 {
 	}
 	slice2 := []int32{1, 2, 1, 2, 3, 1, 2, 3, 1, 2, 1, 2}
 	rand.Seed(int64(time.Now().UnixNano()))
-	n3 := rand.Intn(3)
+	n3 := rand.Intn(len(slice2))
 	return slice2[n3]
 }
 
