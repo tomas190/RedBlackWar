@@ -115,7 +115,6 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	}
 
 	limits, _ := strconv.Atoi(req.Limit)
-	log.Debug("limits:%v", limits)
 	if limits != 0 {
 		selector["limit"] = limits
 	}
