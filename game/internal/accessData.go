@@ -180,6 +180,7 @@ func reqPlayerLeave(w http.ResponseWriter, r *http.Request) {
 		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 		u.ConnAgent.WriteMsg(leaveHall)
 		u.IsOnline = false
+		u.ConnAgent.Close()
 		log.Debug("强制请求踢出该玩家:%v", u.Id)
 
 		js, err := json.Marshal(NewResp(SuccCode, "", "已成功T出房间!"))
