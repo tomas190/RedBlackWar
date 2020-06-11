@@ -18,8 +18,8 @@ type GameDataReq struct {
 	RoundId   string `form:"round_id" json:"round_id"`
 	StartTime string `form:"start_time" json:"start_time"`
 	EndTime   string `form:"end_time" json:"end_time"`
-	Skip      string    `form:"skip" json:"skip"`
-	Limit     string    `form:"limit" json:"limit"`
+	Skip      string `form:"skip" json:"skip"`
+	Limit     string `form:"limit" json:"limit"`
 }
 
 type ApiResp struct {
@@ -115,6 +115,7 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	}
 
 	limits, _ := strconv.Atoi(req.Limit)
+	log.Debug("limits:%v", limits)
 	if limits != 0 {
 		selector["limit"] = limits
 	}
