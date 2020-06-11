@@ -81,6 +81,13 @@ func (r *Room) RobotsDownBet() {
 					n3 := rand.Intn(len(slice))
 					pot1 = slice[n3]
 				}
+				if r.PotMoneyCount.LuckMoneyCount > r.PotMoneyCount.RedMoneyCount ||
+					r.PotMoneyCount.LuckMoneyCount > r.PotMoneyCount.BlackMoneyCount {
+					slice := []int32{1, 2}
+					rand.Seed(time.Now().UnixNano())
+					n3 := rand.Intn(len(slice))
+					pot1 = slice[n3]
+				}
 				if pot1 == 3 {
 					slice := []int32{1, 10, 50}
 					rand.Seed(time.Now().UnixNano())
