@@ -61,7 +61,7 @@ func (r *Room) RobotsDownBet() {
 		time.Sleep(time.Second)
 		for i := 0; i < 50; i++ {
 
-			rand.Seed(int64(time.Now().UnixNano()))
+			rand.Seed(time.Now().UnixNano())
 			num1 := rand.Intn(len(robotSlice))
 			v := robotSlice[num1]
 
@@ -72,7 +72,6 @@ func (r *Room) RobotsDownBet() {
 
 			var bet1 int32
 			if r.GameStat == DownBet {
-				//fmt.Println("你好 我是机器人----------------------", v.Id, v.DownBetMoneys)
 				pot1 := RobotRandPot(v, r)
 				total := r.PotMoneyCount.RedMoneyCount + r.PotMoneyCount.BlackMoneyCount
 				if r.PotMoneyCount.LuckMoneyCount >= (total / 10) {
