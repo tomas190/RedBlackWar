@@ -73,7 +73,7 @@ func (r *Room) RobotsDownBet() {
 			var bet1 int32
 			if r.GameStat == DownBet {
 				//fmt.Println("你好 我是机器人----------------------", v.Id, v.DownBetMoneys)
-				pot1 := RobotRandPot(v, r.GodGambleName)
+				pot1 := RobotRandPot(v, r)
 				total := r.PotMoneyCount.RedMoneyCount + r.PotMoneyCount.BlackMoneyCount
 				if r.PotMoneyCount.LuckMoneyCount >= (total / 10) {
 					slice := []int32{1, 2}
@@ -87,6 +87,23 @@ func (r *Room) RobotsDownBet() {
 					rand.Seed(time.Now().UnixNano())
 					n3 := rand.Intn(len(slice))
 					pot1 = slice[n3]
+				}
+				if v.Id == r.GodGambleName {
+					if pot1 != 3 {
+						slice := make([]int32, 0)
+						if v.DownBetMoneys.RedDownBet != 0 {
+							slice = append(slice, 1)
+							rand.Seed(time.Now().UnixNano())
+							n := rand.Intn(len(slice))
+							pot1 = slice[n]
+						}
+						if v.DownBetMoneys.BlackDownBet != 0 {
+							slice = append(slice, 2)
+							rand.Seed(time.Now().UnixNano())
+							n := rand.Intn(len(slice))
+							pot1 = slice[n]
+						}
+					}
 				}
 				if pot1 == 3 {
 					slice := []int32{1, 10, 50}
@@ -176,30 +193,30 @@ func RobotRandBet() int32 {
 }
 
 //RandNumber 随机机器下注金额
-func RobotRandPot(p *Player, rGod string) int32 {
+func RobotRandPot(p *Player, r *Room) int32 {
 	//设置赌神随机只能下 红、Luck 或者 黑、Luck池
-	if p.Id == rGod {
+	if p.Id == r.GodGambleName {
 		slice := make([]int32, 0)
 		if p.DownBetMoneys.RedDownBet != 0 {
 			slice = append(slice, 1)
-			rand.Seed(int64(time.Now().UnixNano()))
+			rand.Seed(time.Now().UnixNano())
 			n := rand.Intn(len(slice))
 			return slice[n]
 		}
 		if p.DownBetMoneys.BlackDownBet != 0 {
 			slice = append(slice, 2)
-			rand.Seed(int64(time.Now().UnixNano()))
+			rand.Seed(time.Now().UnixNano())
 			n := rand.Intn(len(slice))
 			return slice[n]
 		}
 		randSlice := []int32{1, 2, 3}
 		slice = append(slice, randSlice...)
-		rand.Seed(int64(time.Now().UnixNano()))
+		rand.Seed(time.Now().UnixNano())
 		n2 := rand.Intn(len(randSlice))
 		return slice[n2]
 	}
 	slice2 := []int32{1, 2, 3} //1, 2, 1, 2, 1, 2, 3, 1, 2, 1, 2
-	rand.Seed(int64(time.Now().UnixNano()))
+	rand.Seed(time.Now().UnixNano())
 	n3 := rand.Intn(len(slice2))
 	return slice2[n3]
 }

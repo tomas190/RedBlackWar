@@ -261,8 +261,7 @@ func GetDownRecodeList(skip, limit int, selector bson.M, sortBy string) ([]Playe
 		return nil, 0, err
 	}
 	log.Debug("获取 %v 条数据,limit:%v", n, limit)
-	//err = c.Find(selector).Sort(sortBy).Skip(skip).Limit(limit).All(&wts)
-	err = c.Find(selector).Limit(limit).All(&wts)
+	err = c.Find(selector).Sort(sortBy).Skip(skip).Limit(limit).All(&wts)
 	if err != nil {
 		return nil, 0, err
 	}
