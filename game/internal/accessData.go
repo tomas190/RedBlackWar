@@ -246,7 +246,7 @@ func getSurplusOne(w http.ResponseWriter, r *http.Request) {
 		selector["limit"] = limits
 	}
 
-	recodes, count, err := GetSurPoolData(skips, limits, selector, "down_bet_time")
+	recodes, count, err := GetSurPoolData(selector)
 	if err != nil {
 		return
 	}
