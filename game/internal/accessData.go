@@ -201,10 +201,6 @@ func getSurplusOne(w http.ResponseWriter, r *http.Request) {
 	req.Id = r.FormValue("id")
 	req.GameId = r.FormValue("game_id")
 	req.RoundId = r.FormValue("round_id")
-	req.StartTime = r.FormValue("start_time")
-	req.EndTime = r.FormValue("end_time")
-	req.Skip = r.FormValue("skip")
-	req.Limit = r.FormValue("limit")
 
 	selector := bson.M{}
 
@@ -220,40 +216,10 @@ func getSurplusOne(w http.ResponseWriter, r *http.Request) {
 		selector["round_id"] = req.RoundId
 	}
 
-	sTime, _ := strconv.Atoi(req.StartTime)
-
-	eTime, _ := strconv.Atoi(req.EndTime)
-
-	if sTime != 0 && eTime != 0 {
-		selector["down_bet_time"] = bson.M{"$gte": sTime, "$lte": eTime}
-	}
-
-	if sTime != 0 && eTime == 0 {
-		selector["start_time"] = bson.M{"$gte": sTime}
-	}
-
-	if eTime != 0 && sTime == 0 {
-		selector["end_time"] = bson.M{"$lte": eTime}
-	}
-
-	skips, _ := strconv.Atoi(req.Skip)
-	if skips != 0 {
-		selector["skip"] = skips
-	}
-
-	limits, _ := strconv.Atoi(req.Limit)
-	if limits != 0 {
-		selector["limit"] = limits
-	}
-
-	recodes, count, err := GetSurPoolData(selector)
+	result, err := GetSurPoolData(selector)
 	if err != nil {
 		return
 	}
-
-	var result pageData
-	result.Total = count
-	result.List = recodes
 
 	js, err := json.Marshal(NewResp(SuccCode, "", result))
 	if err != nil {

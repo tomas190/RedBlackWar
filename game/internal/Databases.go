@@ -269,20 +269,15 @@ func GetDownRecodeList(skip, limit int, selector bson.M, sortBy string) ([]Playe
 }
 
 //GetDownRecodeList 获取盈余池数据
-func GetSurPoolData(selector bson.M) ([]SurPool, int, error) {
+func GetSurPoolData(selector bson.M) (SurPool, error) {
 	s, c := connect(dbName, accessDB)
 	defer s.Close()
 
-	var wts []SurPool
+	var wts SurPool
 
-	n, err := c.Find(selector).Count()
+	err := c.Find(selector).All(&wts)
 	if err != nil {
-		return nil, 0, err
+		return wts, err
 	}
-
-	err = c.Find(selector).All(&wts)
-	if err != nil {
-		return nil, 0, err
-	}
-	return wts, n, nil
+	return wts, nil
 }
