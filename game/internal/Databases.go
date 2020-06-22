@@ -267,3 +267,22 @@ func GetDownRecodeList(skip, limit int, selector bson.M, sortBy string) ([]Playe
 	}
 	return wts, n, nil
 }
+
+//GetDownRecodeList 获取盈余池数据
+func GetSurPoolData(skip, limit int, selector bson.M, sortBy string) (SurPool, int, error) {
+	s, c := connect(dbName, accessDB)
+	defer s.Close()
+
+	var wts SurPool
+
+	n, err := c.Find(selector).Count()
+	if err != nil {
+		return wts, 0, err
+	}
+
+	err = c.Find(selector).Sort(sortBy).Skip(skip).Limit(limit).All(&wts)
+	if err != nil {
+		return wts, 0, err
+	}
+	return wts, n, nil
+}
