@@ -177,18 +177,20 @@ type SurPool struct {
 	PlayerLoseRateAfterSurplusPool float64 `json:"player_lose_rate_after_surplus_pool" bson:"player_lose_rate_after_surplus_pool"`
 }
 
-func FindSurPool(sur *SurPool) {
+func FindSurPool(SurP *SurPool) {
 	s, c := connect(dbName, surPool)
 	defer s.Close()
 
-	//c.RemoveAll(nil)
-
-	n, _ := c.Find(nil).Count()
-	log.Debug("FindSurPool 数量:%v", n)
-	if n != 0 {
-		UpdateSurPool(sur)
+	sur := &SurPool{}
+	err := c.Find(nil).One(sur)
+	if err != nil {
+		InsertSurPool(SurP)
 	} else {
-		InsertSurPool(sur)
+		SurP.FinalPercentage = sur.FinalPercentage
+		SurP.PercentageToTotalWin = sur.PercentageToTotalWin
+		SurP.CoefficientToTotalPlayer = sur.CoefficientToTotalPlayer
+		SurP.PlayerLoseRateAfterSurplusPool = sur.PlayerLoseRateAfterSurplusPool
+		UpdateSurPool(SurP)
 	}
 }
 

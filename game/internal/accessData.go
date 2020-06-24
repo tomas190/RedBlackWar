@@ -47,6 +47,14 @@ type pageData struct {
 	List  interface{} `json:"list"`
 }
 
+type UpSurPool struct {
+	GameId                         string  `json:"game_id" bson:"game_id"`
+	PlayerLoseRateAfterSurplusPool float64 `json:"player_lose_rate_after_surplus_pool" bson:"player_lose_rate_after_surplus_pool"`
+	PercentageToTotalWin           float64 `json:"percentage_to_total_win" bson:"percentage_to_total_win"`
+	CoefficientToTotalPlayer       int32   `json:"coefficient_to_total_player" bson:"coefficient_to_total_player"`
+	FinalPercentage                float64 `json:"final_percentage" bson:"final_percentage"`
+}
+
 const (
 	SuccCode = 0
 	ErrCode  = -1
@@ -62,6 +70,8 @@ func StartHttpServer() {
 	http.HandleFunc("/api/reqPlayerLeave", reqPlayerLeave)
 	// 查询子游戏盈余池数据
 	http.HandleFunc("/api/getSurplusOne", getSurplusOne)
+	// 修改盈余池数据
+	http.HandleFunc("/api/uptSurplusConf", uptSurplusOne)
 
 	err := http.ListenAndServe(":"+conf.Server.HTTPPort, nil)
 	if err != nil {
@@ -222,6 +232,49 @@ func getSurplusOne(w http.ResponseWriter, r *http.Request) {
 	}
 
 	js, err := json.Marshal(NewResp(SuccCode, "", result))
+	if err != nil {
+		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+}
+
+func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
+
+	gameId := r.PostFormValue("game_id")
+	rateSur := r.PostFormValue("player_lose_rate_after_surplus_pool")
+	percentage := r.PostFormValue("percentage_to_total_win")
+	coefficient := r.PostFormValue("coefficient_to_total_player")
+	final := r.PostFormValue("final_percentage")
+
+	s, c := connect(dbName, surPool)
+	defer s.Close()
+
+	var upt UpSurPool
+
+	if gameId != "" {
+		upt.GameId = gameId
+	}
+	if rateSur != "" {
+		upt.PlayerLoseRateAfterSurplusPool, _ = strconv.ParseFloat(rateSur, 64)
+		_ = c.Update(bson.M{}, bson.M{"player_lose_rate_after_surplus_pool": upt.PlayerLoseRateAfterSurplusPool})
+	}
+	if percentage != "" {
+		upt.PercentageToTotalWin, _ = strconv.ParseFloat(percentage, 64)
+		_ = c.Update(bson.M{}, bson.M{"percentage_to_total_win": upt.PercentageToTotalWin})
+	}
+	if coefficient != "" {
+		data, _ := strconv.ParseInt(coefficient, 10, 32)
+		upt.CoefficientToTotalPlayer = int32(data)
+		_ = c.Update(bson.M{}, bson.M{"coefficient_to_total_player": upt.CoefficientToTotalPlayer})
+	}
+	if final != "" {
+		upt.FinalPercentage, _ = strconv.ParseFloat(final, 64)
+		_ = c.Update(bson.M{}, bson.M{"final_percentage": upt.FinalPercentage})
+	}
+
+	js, err := json.Marshal(NewResp(SuccCode, "", upt))
 	if err != nil {
 		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
 		return
