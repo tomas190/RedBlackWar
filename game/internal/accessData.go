@@ -206,24 +206,14 @@ func reqPlayerLeave(w http.ResponseWriter, r *http.Request) {
 // 查询子游戏盈余池数据
 func getSurplusOne(w http.ResponseWriter, r *http.Request) {
 	var req GameDataReq
-
-	req.Id = r.FormValue("id")
 	req.GameId = r.FormValue("game_id")
-	req.RoundId = r.FormValue("round_id")
+	log.Debug("game_id :%v",req.GameId)
 
 	selector := bson.M{}
-
-	if req.Id != "" {
-		selector["id"] = req.Id
-	}
-
 	if req.GameId != "" {
 		selector["game_id"] = req.GameId
 	}
 
-	if req.RoundId != "" {
-		selector["round_id"] = req.RoundId
-	}
 
 	result, err := GetSurPoolData(selector)
 	if err != nil {
@@ -261,33 +251,24 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 
 	if rateSur != "" {
 		upt.PlayerLoseRateAfterSurplusPool, _ = strconv.ParseFloat(rateSur, 64)
-		err = c.Update(bson.M{}, bson.M{"player_lose_rate_after_surplus_pool": upt.PlayerLoseRateAfterSurplusPool})
-		if err != nil {
-			log.Debug("更新uptSurplusOne失败~")
-		}
+		sur.PlayerLoseRateAfterSurplusPool = upt.PlayerLoseRateAfterSurplusPool
 	}
 	if percentage != "" {
 		upt.PercentageToTotalWin, _ = strconv.ParseFloat(percentage, 64)
-		err = c.Update(bson.M{}, bson.M{"percentage_to_total_win": upt.PercentageToTotalWin})
-		if err != nil {
-			log.Debug("更新uptSurplusOne失败~")
-		}
+		sur.PercentageToTotalWin = upt.PercentageToTotalWin
 	}
 	if coefficient != "" {
 		data, _ := strconv.ParseInt(coefficient, 10, 32)
 		upt.CoefficientToTotalPlayer = int32(data)
-		err = c.Update(bson.M{}, bson.M{"coefficient_to_total_player": upt.CoefficientToTotalPlayer})
-		if err != nil {
-			log.Debug("更新uptSurplusOne失败~")
-		}
+		sur.CoefficientToTotalPlayer = upt.CoefficientToTotalPlayer
 	}
 	if final != "" {
 		upt.FinalPercentage, _ = strconv.ParseFloat(final, 64)
-		err = c.Update(bson.M{}, bson.M{"final_percentage": upt.FinalPercentage})
-		if err != nil {
-			log.Debug("更新uptSurplusOne失败~")
-		}
+		sur.FinalPercentage = upt.FinalPercentage
 	}
+
+	// 更新盈余池数据
+	UpdateSurPool(sur)
 
 	js, err := json.Marshal(NewResp(SuccCode, "", upt))
 	if err != nil {

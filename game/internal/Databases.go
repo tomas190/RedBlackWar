@@ -153,6 +153,7 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	log.Debug("<----- 数据库插入SurplusPool数据成功 ~ ----->")
 
 	SurPool := &SurPool{}
+	SurPool.GameId = conf.Server.GameID
 	SurPool.SurplusPool = sur.PoolMoney
 	SurPool.PlayerTotalLoseWin = sur.HistoryLose - sur.HistoryWin
 	SurPool.PlayerTotalLose = sur.HistoryLose
@@ -166,6 +167,7 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 }
 
 type SurPool struct {
+	GameId                         string  `json:"game_id" bson:"game_id"`
 	PlayerTotalLose                float64 `json:"player_total_lose" bson:"player_total_lose"`
 	PlayerTotalWin                 float64 `json:"player_total_win" bson:"player_total_win"`
 	PercentageToTotalWin           float64 `json:"percentage_to_total_win" bson:"percentage_to_total_win"`
