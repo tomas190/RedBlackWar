@@ -250,8 +250,15 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 
 	s, c := connect(dbName, surPool)
 	defer s.Close()
+	sur := &SurPool{}
+	err := c.Find(nil).One(sur)
 
 	var upt UpSurPool
+	upt.GameId = conf.Server.GameID
+	upt.PlayerLoseRateAfterSurplusPool = sur.PlayerLoseRateAfterSurplusPool
+	upt.PercentageToTotalWin = sur.PercentageToTotalWin
+	upt.CoefficientToTotalPlayer = sur.CoefficientToTotalPlayer
+	upt.FinalPercentage = sur.FinalPercentage
 
 	if gameId != "" {
 		upt.GameId = gameId
