@@ -47,6 +47,18 @@ type pageData struct {
 	List  interface{} `json:"list"`
 }
 
+type GetSurPool struct {
+	PlayerTotalLose                float64 `json:"player_total_lose" bson:"player_total_lose"`
+	PlayerTotalWin                 float64 `json:"player_total_win" bson:"player_total_win"`
+	PercentageToTotalWin           float64 `json:"percentage_to_total_win" bson:"percentage_to_total_win"`
+	TotalPlayer                    int32   `json:"total_player" bson:"total_player"`
+	CoefficientToTotalPlayer       int32   `json:"coefficient_to_total_player" bson:"coefficient_to_total_player"`
+	FinalPercentage                float64 `json:"final_percentage" bson:"final_percentage"`
+	PlayerTotalLoseWin             float64 `json:"player_total_lose_win" bson:"player_total_lose_win" `
+	SurplusPool                    float64 `json:"surplus_pool" bson:"surplus_pool"`
+	PlayerLoseRateAfterSurplusPool float64 `json:"player_lose_rate_after_surplus_pool" bson:"player_lose_rate_after_surplus_pool"`
+}
+
 type UpSurPool struct {
 	PlayerLoseRateAfterSurplusPool float64 `json:"player_lose_rate_after_surplus_pool" bson:"player_lose_rate_after_surplus_pool"`
 	PercentageToTotalWin           float64 `json:"percentage_to_total_win" bson:"percentage_to_total_win"`
@@ -207,20 +219,30 @@ func reqPlayerLeave(w http.ResponseWriter, r *http.Request) {
 func getSurplusOne(w http.ResponseWriter, r *http.Request) {
 	var req GameDataReq
 	req.GameId = r.FormValue("game_id")
-	log.Debug("game_id :%v",req.GameId)
+	log.Debug("game_id :%v", req.GameId)
 
 	selector := bson.M{}
 	if req.GameId != "" {
 		selector["game_id"] = req.GameId
 	}
 
-
 	result, err := GetSurPoolData(selector)
 	if err != nil {
 		return
 	}
 
-	js, err := json.Marshal(NewResp(SuccCode, "", result))
+	var getSur GetSurPool
+	getSur.PlayerTotalLose = result.PlayerTotalLose
+	getSur.PlayerTotalWin = result.PlayerTotalWin
+	getSur.PercentageToTotalWin = result.PercentageToTotalWin
+	getSur.TotalPlayer = result.TotalPlayer
+	getSur.CoefficientToTotalPlayer = result.CoefficientToTotalPlayer
+	getSur.FinalPercentage = result.FinalPercentage
+	getSur.PlayerTotalLoseWin = result.PlayerTotalLoseWin
+	getSur.SurplusPool = result.SurplusPool
+	getSur.PlayerLoseRateAfterSurplusPool = result.PlayerLoseRateAfterSurplusPool
+
+	js, err := json.Marshal(NewResp(SuccCode, "", getSur))
 	if err != nil {
 		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
 		return
@@ -235,13 +257,15 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 	percentage := r.PostFormValue("percentage_to_total_win")
 	coefficient := r.PostFormValue("coefficient_to_total_player")
 	final := r.PostFormValue("final_percentage")
-	log.Debug("uptSurplusOne~ :%v", final)
 
 	s, c := connect(dbName, surPool)
 	defer s.Close()
 
 	sur := &SurPool{}
 	err := c.Find(nil).One(sur)
+	if err != nil {
+		log.Debug("uptSurplusOne 盈余池赋值失败~")
+	}
 
 	var upt UpSurPool
 	upt.PlayerLoseRateAfterSurplusPool = sur.PlayerLoseRateAfterSurplusPool
@@ -267,6 +291,7 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 		sur.FinalPercentage = upt.FinalPercentage
 	}
 
+	sur.SurplusPool = (sur.PlayerTotalLose - (sur.PlayerTotalWin * sur.PercentageToTotalWin)) * sur.FinalPercentage
 	// 更新盈余池数据
 	UpdateSurPool(sur)
 
