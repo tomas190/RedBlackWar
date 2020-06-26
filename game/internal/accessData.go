@@ -291,7 +291,7 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 		sur.FinalPercentage = upt.FinalPercentage
 	}
 
-	sur.SurplusPool = (sur.PlayerTotalLose - (sur.PlayerTotalWin * sur.PercentageToTotalWin)) * sur.FinalPercentage
+	sur.SurplusPool = (sur.PlayerTotalLose - (sur.PlayerTotalWin * sur.PercentageToTotalWin) - float64(sur.TotalPlayer * sur.CoefficientToTotalPlayer)) * sur.FinalPercentage
 	// 更新盈余池数据
 	UpdateSurPool(sur)
 
