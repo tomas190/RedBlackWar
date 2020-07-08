@@ -195,8 +195,10 @@ func reqPlayerLeave(w http.ResponseWriter, r *http.Request) {
 	user, _ := gameHall.UserRecord.Load(Id)
 	if user != nil {
 		u := user.(*Player)
-		u.room.ExitFromRoom(u)
-		gameHall.UserRecord.Delete(u.Id)
+		u.IsAction = false
+		u.PlayerReqExit()
+		//u.room.ExitFromRoom(u)
+		//gameHall.UserRecord.Delete(u.Id)
 
 		//c4c.UserLogoutCenter(u.Id, u.PassWord, u.Token) //, p.PassWord
 		//leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
@@ -289,7 +291,7 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 		sur.FinalPercentage = upt.FinalPercentage
 	}
 
-	sur.SurplusPool = (sur.PlayerTotalLose - (sur.PlayerTotalWin * sur.PercentageToTotalWin) - float64(sur.TotalPlayer * sur.CoefficientToTotalPlayer)) * sur.FinalPercentage
+	sur.SurplusPool = (sur.PlayerTotalLose - (sur.PlayerTotalWin * sur.PercentageToTotalWin) - float64(sur.TotalPlayer*sur.CoefficientToTotalPlayer)) * sur.FinalPercentage
 	// 更新盈余池数据
 	UpdateSurPool(sur)
 
