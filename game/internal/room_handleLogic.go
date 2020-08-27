@@ -3,6 +3,8 @@ package internal
 import (
 	pb_msg "RedBlack-War/msg/Protocal"
 	"github.com/name5566/leaf/log"
+	"math"
+	"math/rand"
 	"time"
 )
 
@@ -537,6 +539,8 @@ func (r *Room) CompareSettlement() {
 		if r.counter == SettleTime {
 			//踢出房间断线玩家
 			r.KickOutPlayer()
+			//根据时间来控制机器人数量
+			r.HandleRobot()
 			r.UserLeave = []string{}
 			//清空桌面注池
 			r.PotMoneyCount = new(PotRoomCount)
@@ -556,11 +560,11 @@ func (r *Room) KickOutPlayer() {
 	for _, uid := range r.UserLeave {
 		for _, v := range r.PlayerList {
 			//v.NotOnline++
-			if v != nil && v.Id == uid {// && v.NotOnline >= 2
+			if v != nil && v.Id == uid { // && v.NotOnline >= 2
 				//玩家断线的话，退出房间信息，也要断开链接
 				if v.IsOnline == true {
 					v.PlayerReqExit()
-				}else {
+				} else {
 					v.PlayerReqExit()
 					gameHall.UserRecord.Delete(v.Id)
 					c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
@@ -592,7 +596,7 @@ func (r *Room) CleanPlayerData() {
 	}
 	for _, v := range r.PlayerList {
 		if v != nil && v.IsRobot == true {
-			if v.Account < RoomLimitMoney || v.Account > 2000 {
+			if v.Account < RoomLimitMoney || v.Account > 10000 { // v.Account > 2000
 				//退出一个机器人就在创建一个机器人
 				//log.Debug("删除机器人！~~~~~~~~~~~~~~~~~~~~~: %v", v.Id)
 				v.room.ExitFromRoom(v)
@@ -600,4 +604,132 @@ func (r *Room) CleanPlayerData() {
 			}
 		}
 	}
+}
+
+func (r *Room) HandleRobot() {
+	robotNum := r.RobotLength()
+	timeNow := time.Now().Hour()
+	var handleNum int
+	switch timeNow {
+	case 1:
+		handleNum = 75
+		break
+	case 2:
+		handleNum = 68
+		break
+	case 3:
+		handleNum = 60
+		break
+	case 4:
+		handleNum = 51
+		break
+	case 5:
+		handleNum = 41
+		break
+	case 6:
+		handleNum = 30
+		break
+	case 7:
+		handleNum = 17
+		break
+	case 8:
+		handleNum = 15
+		break
+	case 9:
+		handleNum = 17
+		break
+	case 10:
+		handleNum = 30
+		break
+	case 11:
+		handleNum = 41
+		break
+	case 12:
+		handleNum = 51
+		break
+	case 13:
+		handleNum = 60
+		break
+	case 14:
+		handleNum = 68
+		break
+	case 15:
+		handleNum = 75
+		break
+	case 16:
+		handleNum = 80
+		break
+	case 17:
+		handleNum = 84
+		break
+	case 18:
+		handleNum = 87
+		break
+	case 19:
+		handleNum = 89
+		break
+	case 20:
+		handleNum = 90
+		break
+	case 21:
+		handleNum = 89
+		break
+	case 22:
+		handleNum = 87
+		break
+	case 23:
+		handleNum = 84
+		break
+	case 24:
+		handleNum = 80
+		break
+	}
+	slice := []int32{1, 2} // 1为-,2为+
+	rand.Seed(time.Now().UnixNano())
+	num := rand.Intn(len(slice))
+	if slice[num] == 1 {
+		getNum := handleNum / 10
+		maNum := math.Floor(float64(getNum))
+		handleNum -= int(maNum)
+	} else if slice[num] == 2 {
+		getNum := handleNum / 10
+		maNum := math.Floor(float64(getNum))
+		handleNum += int(maNum)
+	}
+
+	if robotNum > handleNum { // 减
+		for {
+			robot := gRobotCenter.CreateRobot()
+			r.JoinGameRoom(robot)
+			time.Sleep(time.Millisecond)
+			robotNum = r.RobotLength()
+			if robotNum == handleNum {
+				return
+			}
+		}
+	}
+	if robotNum < handleNum { // 加
+		for {
+			for _, v := range r.PlayerList {
+				if v != nil && v.IsRobot == true {
+					v.PlayerReqExit()
+					time.Sleep(time.Millisecond)
+					robotNum = r.RobotLength()
+					if robotNum == handleNum {
+						return
+					}
+				}
+			}
+		}
+	}
+}
+
+func (r *Room) RobotLength() int {
+	var num int
+	for _, v := range r.PlayerList {
+		if v != nil && v.IsRobot == true {
+			num++
+		}
+	}
+	return num
 }

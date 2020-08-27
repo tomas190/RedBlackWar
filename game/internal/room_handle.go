@@ -121,11 +121,10 @@ func (r *Room) ExitFromRoom(p *Player) {
 				p.room = nil
 				r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...)
 
-				//创建机器人
-				robot := gRobotCenter.CreateRobot()
-				r.JoinGameRoom(robot)
+				//创建机器人 todo
+				//robot := gRobotCenter.CreateRobot()
+				//r.JoinGameRoom(robot)
 			}
-
 		}
 	}
 

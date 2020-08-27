@@ -38,7 +38,7 @@ func (rc *RobotsCenter) CreateRobot() *Player {
 	//生成机器人金币随机数
 	rand.Intn(int(time.Now().Unix()))
 	//money := rand.Intn(6000) + 1000
-	money := rand.Intn(1182) + 523
+	money := rand.Intn(200) + 4800
 	r.Account = float64(money)
 
 	r.Index = RobotIndex
@@ -73,20 +73,20 @@ func (r *Room) RobotsDownBet() {
 			var bet1 int32
 			if r.GameStat == DownBet {
 				pot1 := RobotRandPot(v, r)
-				total := r.PotMoneyCount.RedMoneyCount + r.PotMoneyCount.BlackMoneyCount
-				if r.PotMoneyCount.LuckMoneyCount >= (total / 10) {
-					slice := []int32{1, 2}
-					rand.Seed(time.Now().UnixNano())
-					n3 := rand.Intn(len(slice))
-					pot1 = slice[n3]
-				}
-				if r.PotMoneyCount.LuckMoneyCount > r.PotMoneyCount.RedMoneyCount ||
-					r.PotMoneyCount.LuckMoneyCount > r.PotMoneyCount.BlackMoneyCount {
-					slice := []int32{1, 2}
-					rand.Seed(time.Now().UnixNano())
-					n3 := rand.Intn(len(slice))
-					pot1 = slice[n3]
-				}
+				//total := r.PotMoneyCount.RedMoneyCount + r.PotMoneyCount.BlackMoneyCount
+				//if r.PotMoneyCount.LuckMoneyCount >= (total / 10) {
+				//	slice := []int32{1, 2}
+				//	rand.Seed(time.Now().UnixNano())
+				//	n3 := rand.Intn(len(slice))
+				//	pot1 = slice[n3]
+				//}
+				//if r.PotMoneyCount.LuckMoneyCount > r.PotMoneyCount.RedMoneyCount ||
+				//	r.PotMoneyCount.LuckMoneyCount > r.PotMoneyCount.BlackMoneyCount {
+				//	slice := []int32{1, 2}
+				//	rand.Seed(time.Now().UnixNano())
+				//	n3 := rand.Intn(len(slice))
+				//	pot1 = slice[n3]
+				//}
 				if v.Id == r.GodGambleName {
 					if pot1 != 3 {
 						slice := make([]int32, 0)
@@ -104,14 +104,19 @@ func (r *Room) RobotsDownBet() {
 						}
 					}
 				}
-				if pot1 == 3 {
-					slice := []int32{1, 10, 50}
-					rand.Seed(time.Now().UnixNano())
-					num := rand.Intn(len(slice))
-					bet1 = slice[num]
-				} else {
-					bet1 = RobotRandBet()
+				//if pot1 == 3 {
+				//	slice := []int32{1, 10, 50}
+				//	rand.Seed(time.Now().UnixNano())
+				//	num := rand.Intn(len(slice))
+				//	bet1 = slice[num]
+				//} else {
+				//	bet1 = RobotRandBet()
+				//}
+				var bigMoney bool
+				if v.TotalAmountBet >= 100 {
+					bigMoney = true
 				}
+				bet1 = RobotRandBet(bigMoney)
 
 				v.IsAction = true
 
@@ -184,10 +189,37 @@ func (r *Room) RobotsDownBet() {
 }
 
 //RandNumber 随机机器下注金额
-func RobotRandBet() int32 {
-	slice := []int32{1, 10, 50, 100}
-	rand.Seed(int64(time.Now().UnixNano()))
-	num := rand.Intn(4)
+func RobotRandBet(bigMoney bool) int32 {
+	//slice := []int32{1, 10, 50, 100}
+	var slice []int32
+	if bigMoney == true {
+		slice = []int32{1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 50, 50, 50, 50, 50, 50, 50,
+			50, 50,
+		}
+	} else {
+		slice = []int32{1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 1, 1, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 50, 50, 50, 50, 50, 50, 50,
+			50, 50, 100, 100, 100, 100, 100, 100, 1000, 1000,
+		}
+	}
+
+	rand.Seed(time.Now().UnixNano())
+	num := rand.Intn(len(slice))
 	return slice[num]
 }
 
@@ -214,7 +246,7 @@ func RobotRandPot(p *Player, r *Room) int32 {
 		n2 := rand.Intn(len(randSlice))
 		return slice[n2]
 	}
-	slice2 := []int32{1, 2, 3} //1, 2, 1, 2, 1, 2, 3, 1, 2, 1, 2
+	slice2 := []int32{1, 1, 1, 1, 2, 2, 2, 2, 3, 3} //1, 2, 1, 2, 1, 2, 3, 1, 2, 1, 2
 	rand.Seed(time.Now().UnixNano())
 	n3 := rand.Intn(len(slice2))
 	return slice2[n3]
@@ -223,7 +255,7 @@ func RobotRandPot(p *Player, r *Room) int32 {
 //Start 机器人开工~！
 func (rc *RobotsCenter) Start() {
 	rand.Seed(int64(time.Now().UnixNano()))
-	num := rand.Intn(5) + 8
+	num := rand.Intn(15) + 10
 	gameHall.LoadHallRobots(num)
 }
 
