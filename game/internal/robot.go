@@ -36,10 +36,7 @@ func (rc *RobotsCenter) CreateRobot() *Player {
 	//生成随机机器人NickName
 	r.NickName = RandomName()
 	//生成机器人金币随机数
-	rand.Intn(int(time.Now().Unix()))
-	//money := rand.Intn(6000) + 1000
-	money := rand.Intn(200) + 4800
-	r.Account = float64(money)
+	r.Account = RandomAccount()
 
 	r.Index = RobotIndex
 	//fmt.Println("robot Index :", r.Index)
@@ -275,6 +272,12 @@ func RandomIMG() string {
 	num := rand.Intn(len(slice))
 
 	return slice[num]
+}
+
+func RandomAccount() float64 {
+	rand.Intn(int(time.Now().Unix()))
+	money := rand.Intn(200) + 4800
+	return float64(money)
 }
 
 //生成随机机器人NickName

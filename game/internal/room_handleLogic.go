@@ -684,6 +684,7 @@ func (r *Room) HandleRobot() {
 		handleNum = 80
 		break
 	}
+	var randNum int
 	slice := []int32{1, 2, 1, 2} // 1为-,2为+
 	rand.Seed(time.Now().UnixNano())
 	num := rand.Intn(len(slice))
@@ -691,16 +692,19 @@ func (r *Room) HandleRobot() {
 		getNum := handleNum / 10
 		maNum := math.Floor(float64(getNum))
 		handleNum -= int(maNum)
+		randNum = int(maNum)
 	} else if slice[num] == 2 {
 		getNum := handleNum / 10
 		maNum := math.Floor(float64(getNum))
+		RNum := float64(handleNum) * 0.25
+		RNNum := math.Floor(RNum)
 		handleNum += int(maNum)
+		randNum = int(RNNum)
 	}
 
 	robotNum = r.RobotLength()
 	if robotNum < handleNum { // 加
 		for {
-			//log.Debug("机器人数量1:%v,%v,%v", handleNum, robotNum, r.RobotLength())
 			robot := gRobotCenter.CreateRobot()
 			r.JoinGameRoom(robot)
 			time.Sleep(time.Millisecond)
@@ -718,10 +722,21 @@ func (r *Room) HandleRobot() {
 				v.room.ExitFromRoom(v)
 				time.Sleep(time.Millisecond)
 				robotNum = r.RobotLength()
-				//log.Debug("机器人数量2:%v,%v", robotNum, handleNum)
 				if robotNum <= handleNum {
 					return
 				}
+			}
+		}
+	}
+
+	var num2 int
+	for _, v := range r.PlayerList {
+		if v != nil && v.IsRobot == true {
+			v.Id = RandomID()
+			v.Account = RandomAccount()
+			num2++
+			if num2 >= randNum {
+				return
 			}
 		}
 	}
