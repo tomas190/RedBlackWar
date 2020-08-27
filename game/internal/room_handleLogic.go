@@ -715,7 +715,7 @@ func (r *Room) HandleRobot() {
 	if robotNum > handleNum { // 减
 		for _, v := range r.PlayerList {
 			if v != nil && v.IsRobot == true {
-				v.PlayerReqExit()
+				v.room.ExitFromRoom(v)
 				time.Sleep(time.Millisecond)
 				robotNum = r.RobotLength()
 				log.Debug("机器人数量2:%v,%v", robotNum, handleNum)

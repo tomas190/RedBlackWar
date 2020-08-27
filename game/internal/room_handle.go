@@ -120,7 +120,7 @@ func (r *Room) ExitFromRoom(p *Player) {
 			} else {
 				p.room = nil
 				r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...)
-
+				log.Debug("%v 机器从房间列表删除成功 ~", v.Id)
 				//创建机器人 todo
 				//robot := gRobotCenter.CreateRobot()
 				//r.JoinGameRoom(robot)
