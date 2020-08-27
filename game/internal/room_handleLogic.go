@@ -697,27 +697,30 @@ func (r *Room) HandleRobot() {
 		handleNum += int(maNum)
 	}
 
-	if handleNum > robotNum { // 减
+	robotNum = r.RobotLength()
+	if robotNum < handleNum { // 加
 		for {
-			log.Debug("机器人数量:%v,%v,%v", handleNum, robotNum, r.RobotLength())
+			log.Debug("机器人数量1:%v,%v,%v", handleNum, robotNum, r.RobotLength())
 			robot := gRobotCenter.CreateRobot()
 			r.JoinGameRoom(robot)
 			time.Sleep(time.Millisecond)
 			robotNum = r.RobotLength()
-			if robotNum == handleNum {
+			if robotNum >= handleNum {
 				return
 			}
 		}
 	}
-	if handleNum < robotNum { // 加
+
+	robotNum = r.RobotLength()
+	if robotNum > handleNum { // 减
 		for {
-			log.Debug("机器人数量:%v,%v,%v", handleNum, robotNum, r.RobotLength())
+			log.Debug("机器人数量2:%v,%v,%v", handleNum, robotNum, r.RobotLength())
 			for _, v := range r.PlayerList {
 				if v != nil && v.IsRobot == true {
 					v.PlayerReqExit()
 					time.Sleep(time.Millisecond)
 					robotNum = r.RobotLength()
-					if robotNum == handleNum {
+					if robotNum <= handleNum {
 						return
 					}
 				}
