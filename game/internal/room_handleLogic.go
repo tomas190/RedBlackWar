@@ -713,20 +713,15 @@ func (r *Room) HandleRobot() {
 
 	robotNum = r.RobotLength()
 	if robotNum > handleNum { // 减
-		for {
-			log.Debug("机器人数量2:%v,%v,%v", robotNum, handleNum, r.RobotLength())
-			for _, v := range r.PlayerList {
-				if v != nil && v.IsRobot == true {
-					v.PlayerReqExit()
-					time.Sleep(time.Millisecond)
-					robotNum = r.RobotLength()
-					if robotNum <= handleNum {
-						return
-					}
+		for _, v := range r.PlayerList {
+			if v != nil && v.IsRobot == true {
+				v.PlayerReqExit()
+				time.Sleep(time.Millisecond)
+				robotNum = r.RobotLength()
+				log.Debug("机器人数量2:%v,%v", robotNum, handleNum)
+				if robotNum <= handleNum {
+					return
 				}
-			}
-			if robotNum <= handleNum {
-				return
 			}
 		}
 	}
