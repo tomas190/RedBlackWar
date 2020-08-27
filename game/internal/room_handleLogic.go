@@ -714,7 +714,7 @@ func (r *Room) HandleRobot() {
 	robotNum = r.RobotLength()
 	if robotNum > handleNum { // 减
 		for {
-			log.Debug("机器人数量2:%v,%v,%v", handleNum, robotNum, r.RobotLength())
+			log.Debug("机器人数量2:%v,%v,%v", robotNum, handleNum, r.RobotLength())
 			for _, v := range r.PlayerList {
 				if v != nil && v.IsRobot == true {
 					v.PlayerReqExit()
@@ -724,6 +724,9 @@ func (r *Room) HandleRobot() {
 						return
 					}
 				}
+			}
+			if robotNum <= handleNum {
+				return
 			}
 		}
 	}
