@@ -703,20 +703,22 @@ func (r *Room) HandleRobot() {
 	}
 	handleNum += RandInRange(1, 4)
 	log.Debug("打印handleNum人数:%v", handleNum)
-	log.Debug("打印randNum更换人数:%v", randNum)
-	//var num2 int
-	//for _, v := range r.PlayerList {
-	//	if v != nil && v.IsRobot == true {
-	//		v.Id = RandomID()
-	//		v.Account = RandomAccount()
-	//		v.NickName = RandomName()
-	//		v.HeadImg = RandomIMG()
-	//		num2++
-	//		if num2 >= randNum {
-	//			break
-	//		}
-	//	}
-	//}
+
+	if robotNum == handleNum {
+		var num2 int
+		for _, v := range r.PlayerList {
+			if v != nil && v.IsRobot == true {
+				v.Id = RandomID()
+				v.Account = RandomAccount()
+				v.NickName = RandomName()
+				v.HeadImg = RandomIMG()
+				num2++
+				if num2 >= randNum {
+					break
+				}
+			}
+		}
+	}
 
 	robotNum = r.RobotLength()
 	if robotNum < handleNum { // 加
