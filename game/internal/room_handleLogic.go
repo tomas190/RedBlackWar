@@ -704,6 +704,8 @@ func (r *Room) HandleRobot() {
 		randNum = int(RNNum)
 	}
 
+	handleNum += RandInRange(1, 5)
+
 	var num2 int
 	for _, v := range r.PlayerList {
 		if v != nil && v.IsRobot == true {
