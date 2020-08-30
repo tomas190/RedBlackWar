@@ -4,7 +4,6 @@ import (
 	pb_msg "RedBlack-War/msg/Protocal"
 	"github.com/name5566/leaf/log"
 	"math"
-	"math/rand"
 	"time"
 )
 
@@ -685,17 +684,16 @@ func (r *Room) HandleRobot() {
 		break
 	}
 	var randNum int
-	slice := []int32{1, 2, 1, 2, 1, 2, 1, 2} // 1为-,2为+
-	rand.Seed(time.Now().UnixNano())
-	num := rand.Intn(len(slice))
-	if slice[num] == 1 {
+
+	num := RandInRange(1, 100)
+	if num > 1 && num <= 50 {
 		getNum := handleNum / 20
 		maNum := math.Floor(float64(getNum))
 		RNum := float64(handleNum) * 0.1
 		RNNum := math.Floor(RNum)
 		handleNum -= int(maNum)
 		randNum = int(RNNum)
-	} else if slice[num] == 2 {
+	} else if num > 50 && num < 100 {
 		getNum := handleNum / 20
 		maNum := math.Floor(float64(getNum))
 		RNum := float64(handleNum) * 0.25
@@ -703,7 +701,7 @@ func (r *Room) HandleRobot() {
 		handleNum += int(maNum)
 		randNum = int(RNNum)
 	}
-
+	log.Debug("打印handleNum人数:%v", handleNum)
 	handleNum += RandInRange(1, 5)
 
 	var num2 int
