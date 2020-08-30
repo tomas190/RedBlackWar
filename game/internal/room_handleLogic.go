@@ -703,6 +703,16 @@ func (r *Room) HandleRobot() {
 				v.Account = RandomAccount()
 				v.NickName = RandomName()
 				v.HeadImg = RandomIMG()
+				v.TotalAmountBet = 0
+				v.DownBetMoneys = new(DownBetMoney)
+				v.TotalAmountBet = 0
+				v.IsAction = false
+				v.ContinueVot = new(ContinueBet)
+				v.ContinueVot.DownBetMoneys = new(DownBetMoney)
+				v.WinTotalCount = 0
+				v.RedWinCount = 0
+				v.BlackWinCount = 0
+				v.LuckWinCount = 0
 				num2++
 				if num2 >= randNum {
 					break
