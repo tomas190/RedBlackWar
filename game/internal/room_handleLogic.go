@@ -704,6 +704,20 @@ func (r *Room) HandleRobot() {
 		randNum = int(RNNum)
 	}
 
+	var num2 int
+	for _, v := range r.PlayerList {
+		if v != nil && v.IsRobot == true {
+			v.Id = RandomID()
+			v.Account = RandomAccount()
+			v.NickName = RandomName()
+			v.HeadImg = RandomIMG()
+			num2++
+			if num2 >= randNum {
+				break
+			}
+		}
+	}
+
 	robotNum = r.RobotLength()
 	if robotNum < handleNum { // 加
 		for {
@@ -712,7 +726,7 @@ func (r *Room) HandleRobot() {
 			time.Sleep(time.Millisecond)
 			robotNum = r.RobotLength()
 			if robotNum >= handleNum {
-				break
+				return
 			}
 		}
 	}
@@ -725,22 +739,8 @@ func (r *Room) HandleRobot() {
 				time.Sleep(time.Millisecond)
 				robotNum = r.RobotLength()
 				if robotNum <= handleNum {
-					break
+					return
 				}
-			}
-		}
-	}
-
-	var num2 int
-	for _, v := range r.PlayerList {
-		if v != nil && v.IsRobot == true {
-			v.Id = RandomID()
-			v.Account = RandomAccount()
-			v.NickName = RandomName()
-			v.HeadImg = RandomIMG()
-			num2++
-			if num2 >= randNum {
-				return
 			}
 		}
 	}
