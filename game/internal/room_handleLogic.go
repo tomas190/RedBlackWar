@@ -730,6 +730,7 @@ func (r *Room) HandleRobot() {
 			}
 		}
 	}
+	log.Debug("房间:%v,机器人数量:%v", r.RoomId, r.RobotLength())
 
 	robotNum = r.RobotLength()
 	if robotNum > handleNum { // 减
@@ -744,6 +745,7 @@ func (r *Room) HandleRobot() {
 			}
 		}
 	}
+	log.Debug("房间:%v,机器人数量:%v", r.RoomId, r.RobotLength())
 }
 
 func (r *Room) RobotLength() int {
