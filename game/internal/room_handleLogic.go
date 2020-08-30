@@ -701,8 +701,9 @@ func (r *Room) HandleRobot() {
 		handleNum += int(maNum)
 		randNum = int(RNNum)
 	}
-	log.Debug("打印handleNum人数:%v", handleNum)
+	log.Debug("打印handleNum人数1:%v", handleNum)
 	handleNum += RandInRange(1, 5)
+	log.Debug("打印handleNum人数2:%v", handleNum)
 
 	var num2 int
 	for _, v := range r.PlayerList {
