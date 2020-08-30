@@ -687,23 +687,23 @@ func (r *Room) HandleRobot() {
 
 	num := RandInRange(1, 100)
 	if num > 1 && num <= 50 {
-		getNum := handleNum / 20
-		maNum := math.Floor(float64(getNum))
+		getNum := float64(handleNum) * 0.2
+		maNum := math.Floor(getNum)
 		RNum := float64(handleNum) * 0.1
 		RNNum := math.Floor(RNum)
 		handleNum -= int(maNum)
+		log.Debug("打印handleNum人数:%v", handleNum)
 		randNum = int(RNNum)
 	} else if num > 50 && num < 100 {
-		getNum := handleNum / 20
-		maNum := math.Floor(float64(getNum))
+		getNum := float64(handleNum) * 0.2
+		maNum := math.Floor(getNum)
 		RNum := float64(handleNum) * 0.25
 		RNNum := math.Floor(RNum)
 		handleNum += int(maNum)
+		log.Debug("打印handleNum人数:%v", handleNum)
 		randNum = int(RNNum)
 	}
-	log.Debug("打印handleNum人数1:%v", handleNum)
-	handleNum += RandInRange(1, 5)
-	log.Debug("打印handleNum人数2:%v", handleNum)
+	//handleNum += RandInRange(1, 4)
 
 	var num2 int
 	for _, v := range r.PlayerList {
