@@ -672,6 +672,9 @@ func (r *Room) HandleRobot() {
 	case 24:
 		handleNum = 80
 		break
+	case 0:
+		handleNum = 80
+		break
 	}
 	var randNum int
 
@@ -703,7 +706,6 @@ func (r *Room) HandleRobot() {
 				v.Account = RandomAccount()
 				v.NickName = RandomName()
 				v.HeadImg = RandomIMG()
-				v.TotalAmountBet = 0
 				v.DownBetMoneys = new(DownBetMoney)
 				v.TotalAmountBet = 0
 				v.IsAction = false
