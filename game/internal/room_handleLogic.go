@@ -685,7 +685,7 @@ func (r *Room) HandleRobot() {
 		break
 	}
 	var randNum int
-	slice := []int32{1, 2, 1, 2} // 1为-,2为+
+	slice := []int32{1, 2, 1, 2, 1, 2, 1, 2} // 1为-,2为+
 	rand.Seed(time.Now().UnixNano())
 	num := rand.Intn(len(slice))
 	if slice[num] == 1 {
