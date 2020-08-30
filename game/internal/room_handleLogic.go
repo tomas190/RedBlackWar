@@ -689,12 +689,14 @@ func (r *Room) HandleRobot() {
 	rand.Seed(time.Now().UnixNano())
 	num := rand.Intn(len(slice))
 	if slice[num] == 1 {
-		getNum := handleNum / 10
+		getNum := handleNum / 20
 		maNum := math.Floor(float64(getNum))
+		RNum := float64(handleNum) * 0.1
+		RNNum := math.Floor(RNum)
 		handleNum -= int(maNum)
-		randNum = int(maNum)
+		randNum = int(RNNum)
 	} else if slice[num] == 2 {
-		getNum := handleNum / 10
+		getNum := handleNum / 20
 		maNum := math.Floor(float64(getNum))
 		RNum := float64(handleNum) * 0.25
 		RNNum := math.Floor(RNum)
@@ -710,7 +712,7 @@ func (r *Room) HandleRobot() {
 			time.Sleep(time.Millisecond)
 			robotNum = r.RobotLength()
 			if robotNum >= handleNum {
-				return
+				break
 			}
 		}
 	}
@@ -723,7 +725,7 @@ func (r *Room) HandleRobot() {
 				time.Sleep(time.Millisecond)
 				robotNum = r.RobotLength()
 				if robotNum <= handleNum {
-					return
+					break
 				}
 			}
 		}
@@ -734,6 +736,8 @@ func (r *Room) HandleRobot() {
 		if v != nil && v.IsRobot == true {
 			v.Id = RandomID()
 			v.Account = RandomAccount()
+			v.NickName = RandomName()
+			v.HeadImg = RandomIMG()
 			num2++
 			if num2 >= randNum {
 				return

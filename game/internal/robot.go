@@ -251,8 +251,8 @@ func RobotRandPot(p *Player, r *Room) int32 {
 
 //Start 机器人开工~！
 func (rc *RobotsCenter) Start() {
-	rand.Seed(int64(time.Now().UnixNano()))
-	num := rand.Intn(15) + 10
+	rand.Seed(time.Now().UnixNano())
+	num := RandInRange(15, 25)
 	gameHall.LoadHallRobots(num)
 }
 
@@ -276,7 +276,7 @@ func RandomIMG() string {
 
 func RandomAccount() float64 {
 	rand.Intn(int(time.Now().Unix()))
-	money := rand.Intn(200) + 4800
+	money := RandInRange(200, 5000)
 	return float64(money)
 }
 
@@ -285,4 +285,10 @@ func RandomName() string {
 	randNum := fmt.Sprintf("%06v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(1000000000))
 	RobotName := randNum
 	return RobotName
+}
+
+func RandInRange(min int, max int) int {
+	rand.Seed(time.Now().UnixNano())
+	time.Sleep(1 * time.Nanosecond)
+	return rand.Intn(max-min) + min
 }
