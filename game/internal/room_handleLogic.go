@@ -252,15 +252,6 @@ func (r *Room) StartGameRun() {
 	r.GameStat = DownBet
 
 	//r.PrintPlayerList()
-	
-	//更新房间赌神ID
-	r.GetGodGableId()
-
-	//更新房间列表
-	r.UpdatePlayerList()
-	maintainList := r.PackageRoomPlayerList()
-	//log.Debug("玩家列表信息数据: %v", maintainList)
-	r.BroadCastMsg(maintainList)
 
 	//下注阶段定时任务
 	r.DownBetTimerTask()
@@ -521,14 +512,14 @@ func (r *Room) CompareSettlement() {
 	//r.PrintPlayerList()
 	//log.Debug("玩家列表 r.PlayerList :%v", r.PlayerList)
 
-	////更新房间赌神ID
-	//r.GetGodGableId()
-	//
-	////更新房间列表
-	//r.UpdatePlayerList()
-	//maintainList := r.PackageRoomPlayerList()
-	////log.Debug("玩家列表信息数据: %v", maintainList)
-	//r.BroadCastMsg(maintainList)
+	//更新房间赌神ID
+	r.GetGodGableId()
+
+	//更新房间列表
+	r.UpdatePlayerList()
+	maintainList := r.PackageRoomPlayerList()
+	//log.Debug("玩家列表信息数据: %v", maintainList)
+	r.BroadCastMsg(maintainList)
 
 	//这里会发送前端房间数据，前端做处理
 	data := &pb_msg.RoomSettleData_S2C{}
@@ -541,6 +532,9 @@ func (r *Room) CompareSettlement() {
 	//清空玩家数据,开始下一句游戏
 	r.CleanPlayerData()
 
+	//根据时间来控制机器人数量
+	r.HandleRobot()
+
 	for range t.C {
 		r.counter++
 		//log.Debug("settle clock : %v ", r.counter)
@@ -548,8 +542,6 @@ func (r *Room) CompareSettlement() {
 		if r.counter == SettleTime {
 			//踢出房间断线玩家
 			r.KickOutPlayer()
-			//根据时间来控制机器人数量
-			r.HandleRobot()
 			r.UserLeave = []string{}
 			//清空桌面注池
 			r.PotMoneyCount = new(PotRoomCount)
