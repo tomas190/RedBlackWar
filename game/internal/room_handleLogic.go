@@ -4,6 +4,7 @@ import (
 	pb_msg "RedBlack-War/msg/Protocal"
 	"github.com/name5566/leaf/log"
 	"math"
+	"math/rand"
 	"time"
 )
 
@@ -690,26 +691,25 @@ func (r *Room) HandleRobot() {
 
 	num := RandInRange(1, 100)
 	if num > 1 && num <= 50 {
-		getNum := float64(handleNum) * 0.2
+		slice := []float64{0.16, 0.17, 0.18, 0.19, 0.20}
+		rand.Seed(time.Now().UnixNano())
+		num := rand.Intn(len(slice))
+		getNum := float64(handleNum) * slice[num]
 		maNum := math.Floor(getNum)
 		RNum := float64(handleNum) * 0.1
 		RNNum := math.Floor(RNum)
 		handleNum -= int(maNum)
 		randNum = int(RNNum)
 	} else if num > 50 && num < 100 {
-		getNum := float64(handleNum) * 0.2
+		slice := []float64{0.16, 0.17, 0.18, 0.19, 0.20}
+		rand.Seed(time.Now().UnixNano())
+		num := rand.Intn(len(slice))
+		getNum := float64(handleNum) * slice[num]
 		maNum := math.Floor(getNum)
 		RNum := float64(handleNum) * 0.25
 		RNNum := math.Floor(RNum)
 		handleNum += int(maNum)
 		randNum = int(RNNum)
-	}
-
-	num2 := RandInRange(0, 10)
-	if num2 >= 0 && num2 < 5 {
-		handleNum += RandInRange(1, 4)
-	} else if num2 >= 5 && num2 < 10 {
-		handleNum -= RandInRange(1, 4)
 	}
 
 	robotNum := r.RobotLength()
