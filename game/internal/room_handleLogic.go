@@ -689,32 +689,80 @@ func (r *Room) HandleRobot() {
 	}
 	var randNum int
 
-	num := RandInRange(1, 100)
-	if num > 1 && num <= 50 {
-		slice := []float64{0.16, 0.17, 0.18, 0.19, 0.20}
-		rand.Seed(time.Now().UnixNano())
-		num := rand.Intn(len(slice))
-		getNum := float64(handleNum) * slice[num]
-		maNum := math.Floor(getNum)
-		RNum := float64(handleNum) * 0.1
-		RNNum := math.Floor(RNum)
-		handleNum -= int(maNum)
-		randNum = int(RNNum)
-	} else if num > 50 && num < 100 {
-		slice := []float64{0.16, 0.17, 0.18, 0.19, 0.20}
-		rand.Seed(time.Now().UnixNano())
-		num := rand.Intn(len(slice))
-		getNum := float64(handleNum) * slice[num]
-		maNum := math.Floor(getNum)
-		RNum := float64(handleNum) * 0.25
-		RNNum := math.Floor(RNum)
-		handleNum += int(maNum)
-		randNum = int(RNNum)
+	var minP int
+	var maxP int
+	getNum := float64(handleNum) * 0.2
+	maNum := math.Floor(getNum)
+	minP = handleNum - int(maNum)
+	maxP = handleNum + int(maNum)
+
+	RNum := []float64{0.1, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.20, 0.21, 0.22, 0.23, 0.24, 0.25,}
+	rand.Seed(time.Now().UnixNano())
+	rn := rand.Intn(len(RNum))
+	rNNum := float64(handleNum) * RNum[rn]
+	RNNNum := math.Floor(rNNum)
+	randNum = int(RNNNum)
+
+	num := RandInRange(0, 100)
+	num2 := RandInRange(3, 8)
+	if num >= 0 && num < 50 {
+		var n int
+		for {
+			robot := gRobotCenter.CreateRobot()
+			r.JoinGameRoom(robot)
+			time.Sleep(time.Millisecond)
+			n++
+			if n == num2 {
+				break
+			}
+		}
+
+	} else if num >= 50 && num < 100 {
+		var n int
+		for _, v := range r.PlayerList {
+			if v != nil && v.IsRobot == true {
+				v.room.ExitFromRoom(v)
+				time.Sleep(time.Millisecond)
+				n++
+				if n == num2 {
+					break
+				}
+			}
+		}
 	}
 
 	robotNum := r.RobotLength()
 	log.Debug("打印handleNum人数:%v,%v", robotNum, handleNum)
 
+	if robotNum >= minP && robotNum <= maxP {
+		num3 := randNum - num2
+		if num3 > 0 {
+			for _, v := range r.PlayerList {
+				if v != nil && v.IsRobot == true {
+					v.Id = RandomID()
+					v.Account = RandomAccount()
+					v.NickName = RandomName()
+					v.HeadImg = RandomIMG()
+					v.DownBetMoneys = new(DownBetMoney)
+					v.TotalAmountBet = 0
+					v.IsAction = false
+					v.ContinueVot = new(ContinueBet)
+					v.ContinueVot.DownBetMoneys = new(DownBetMoney)
+					v.WinTotalCount = 0
+					v.RedWinCount = 0
+					v.BlackWinCount = 0
+					v.LuckWinCount = 0
+					num3--
+					if num3 == 0 {
+						break
+					}
+				}
+			}
+		}
+		return
+	}
+
+	robotNum = r.RobotLength()
 	if robotNum < handleNum { // 加
 		for {
 			robot := gRobotCenter.CreateRobot()

@@ -63,7 +63,7 @@ func (r *Room) RobotsDownBet() {
 			v := robotSlice[num1]
 
 			timerSlice := []int32{50, 150, 20, 300, 800, 30, 500}
-			rand.Seed(int64(time.Now().UnixNano()))
+			rand.Seed(time.Now().UnixNano())
 			num2 := rand.Intn(len(timerSlice))
 			time.Sleep(time.Millisecond * time.Duration(timerSlice[num2]))
 
