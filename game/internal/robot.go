@@ -56,13 +56,13 @@ func (r *Room) RobotsDownBet() {
 	// 线程下注
 	go func() {
 		time.Sleep(time.Second)
-		for i := 0; i < 110; i++ {
+		for i := 0; i < 200; i++ {
 
 			rand.Seed(time.Now().UnixNano())
 			num1 := rand.Intn(len(robotSlice))
 			v := robotSlice[num1]
 
-			timerSlice := []int32{50, 150, 20, 300, 800, 30, 500}
+			timerSlice := []int32{50, 150, 20, 300, 30, 500}
 			//timerSlice := []int32{50, 150, 20, 300}
 			rand.Seed(time.Now().UnixNano())
 			num2 := rand.Intn(len(timerSlice))
@@ -212,13 +212,13 @@ func RobotRandPot(p *Player, r *Room) int32 {
 	if p.Id == r.GodGambleName {
 		slice := make([]int32, 0)
 		if p.DownBetMoneys.RedDownBet != 0 {
-			slice = append(slice, 1)
+			slice = []int32{1, 3}
 			rand.Seed(time.Now().UnixNano())
 			n := rand.Intn(len(slice))
 			return slice[n]
 		}
 		if p.DownBetMoneys.BlackDownBet != 0 {
-			slice = append(slice, 2)
+			slice = []int32{2, 3}
 			rand.Seed(time.Now().UnixNano())
 			n := rand.Intn(len(slice))
 			return slice[n]
