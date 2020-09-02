@@ -535,7 +535,6 @@ func (r *Room) CompareSettlement() {
 
 			//更新房间赌神ID
 			r.GetGodGableId()
-
 			//更新房间列表
 			r.UpdatePlayerList()
 			maintainList := r.PackageRoomPlayerList()
@@ -707,8 +706,20 @@ func (r *Room) HandleRobot() {
 	var tn int
 	for _, v := range r.PlayerList {
 		if v != nil && v.IsRobot == true {
-			v.room.ExitFromRoom(v)
-			time.Sleep(time.Millisecond * 100)
+			v.Id = RandomID()
+			v.Account = RandomAccount()
+			v.NickName = RandomName()
+			v.HeadImg = RandomIMG()
+			v.DownBetMoneys = new(DownBetMoney)
+			v.TotalAmountBet = 0
+			v.IsAction = false
+			v.ContinueVot = new(ContinueBet)
+			v.ContinueVot.DownBetMoneys = new(DownBetMoney)
+			v.WinTotalCount = 0
+			v.RedWinCount = 0
+			v.BlackWinCount = 0
+			v.LuckWinCount = 0
+			time.Sleep(time.Millisecond)
 			tn++
 			if tn == randNum {
 				break
@@ -723,7 +734,7 @@ func (r *Room) HandleRobot() {
 		for {
 			robot := gRobotCenter.CreateRobot()
 			r.JoinGameRoom(robot)
-			time.Sleep(time.Millisecond * 100)
+			time.Sleep(time.Millisecond)
 			n++
 			if n == num2 {
 				break
@@ -735,7 +746,7 @@ func (r *Room) HandleRobot() {
 		for _, v := range r.PlayerList {
 			if v != nil && v.IsRobot == true {
 				v.room.ExitFromRoom(v)
-				time.Sleep(time.Millisecond * 100)
+				time.Sleep(time.Millisecond)
 				n++
 				if n == num2 {
 					break
