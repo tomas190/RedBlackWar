@@ -709,7 +709,7 @@ func (r *Room) HandleRobot() {
 		if v != nil && v.IsRobot == true {
 			v.room.ExitFromRoom(v)
 			time.Sleep(time.Millisecond)
-			tn ++
+			tn++
 			if tn == randNum {
 				break
 			}
