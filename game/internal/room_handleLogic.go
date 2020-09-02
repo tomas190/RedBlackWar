@@ -517,15 +517,6 @@ func (r *Room) CompareSettlement() {
 	data.RoomData = r.RspRoomData()
 	r.BroadCastMsg(data)
 
-	//更新房间赌神ID
-	r.GetGodGableId()
-
-	//更新房间列表
-	r.UpdatePlayerList()
-	maintainList := r.PackageRoomPlayerList()
-	//log.Debug("玩家列表信息数据: %v", maintainList)
-	r.BroadCastMsg(maintainList)
-
 	//处理清空玩家局数 和 玩家金额
 	r.UpdateGamesNum()
 
@@ -541,6 +532,16 @@ func (r *Room) CompareSettlement() {
 			r.KickOutPlayer()
 			//根据时间来控制机器人数量
 			r.HandleRobot()
+
+			//更新房间赌神ID
+			r.GetGodGableId()
+
+			//更新房间列表
+			r.UpdatePlayerList()
+			maintainList := r.PackageRoomPlayerList()
+			//log.Debug("玩家列表信息数据: %v", maintainList)
+			r.BroadCastMsg(maintainList)
+
 			r.UserLeave = []string{}
 			//清空桌面注池
 			r.PotMoneyCount = new(PotRoomCount)
