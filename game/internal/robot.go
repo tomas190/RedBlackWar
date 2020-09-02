@@ -212,13 +212,13 @@ func RobotRandPot(p *Player, r *Room) int32 {
 	if p.Id == r.GodGambleName {
 		slice := make([]int32, 0)
 		if p.DownBetMoneys.RedDownBet != 0 {
-			slice = append(slice, 1)
+			slice = []int32{1, 2}
 			rand.Seed(time.Now().UnixNano())
 			n := rand.Intn(len(slice))
 			return slice[n]
 		}
 		if p.DownBetMoneys.BlackDownBet != 0 {
-			slice = append(slice, 2)
+			slice = []int32{1, 2}
 			rand.Seed(time.Now().UnixNano())
 			n := rand.Intn(len(slice))
 			return slice[n]

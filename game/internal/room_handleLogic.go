@@ -696,7 +696,7 @@ func (r *Room) HandleRobot() {
 	minP = handleNum - int(maNum)
 	maxP = handleNum + int(maNum)
 
-	RNum := []float64{0.1, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.20, 0.21, 0.22, 0.23, 0.24, 0.25,}
+	RNum := []float64{0.1, 0.11, 0.12, 0.13, 0.14, 0.15}
 	rand.Seed(time.Now().UnixNano())
 	rn := rand.Intn(len(RNum))
 	rNNum := float64(handleNum) * RNum[rn]
@@ -704,27 +704,28 @@ func (r *Room) HandleRobot() {
 	randNum = int(RNNNum)
 
 	var tn int
-	for _, v := range r.PlayerList {
-		if v != nil && v.IsRobot == true {
-			v.Id = RandomID()
-			v.Account = RandomAccount()
-			v.NickName = RandomName()
-			v.HeadImg = RandomIMG()
-			v.DownBetMoneys = new(DownBetMoney)
-			v.TotalAmountBet = 0
-			v.IsAction = false
-			v.ContinueVot = new(ContinueBet)
-			v.ContinueVot.DownBetMoneys = new(DownBetMoney)
-			v.WinTotalCount = 0
-			v.RedWinCount = 0
-			v.BlackWinCount = 0
-			v.LuckWinCount = 0
-			time.Sleep(time.Millisecond)
-			tn++
-			if tn == randNum {
-				log.Debug("修改%v:个机器人", randNum)
-				break
-			}
+	for {
+		n := RandInRange(0, len(r.PlayerList))
+		if r.PlayerList[n] != nil && r.PlayerList[n].IsRobot == true {
+			r.PlayerList[n].Id = RandomID()
+			r.PlayerList[n].Account = RandomAccount()
+			r.PlayerList[n].NickName = RandomName()
+			r.PlayerList[n].HeadImg = RandomIMG()
+			r.PlayerList[n].DownBetMoneys = new(DownBetMoney)
+			r.PlayerList[n].TotalAmountBet = 0
+			r.PlayerList[n].IsAction = false
+			r.PlayerList[n].ContinueVot = new(ContinueBet)
+			r.PlayerList[n].ContinueVot.DownBetMoneys = new(DownBetMoney)
+			r.PlayerList[n].WinTotalCount = 0
+			r.PlayerList[n].RedWinCount = 0
+			r.PlayerList[n].BlackWinCount = 0
+			r.PlayerList[n].LuckWinCount = 0
+		}
+		time.Sleep(time.Millisecond)
+		tn++
+		if tn == randNum {
+			log.Debug("修改%v:个机器人", randNum)
+			break
 		}
 	}
 
@@ -759,6 +760,7 @@ func (r *Room) HandleRobot() {
 	}
 
 	robotNum := r.RobotLength()
+	log.Debug("机器人当前数量:%v,最小范围:%v.最大范围:%v", robotNum, minP, maxP)
 
 	if robotNum < minP { // 加
 		for {
