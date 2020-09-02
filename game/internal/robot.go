@@ -56,14 +56,14 @@ func (r *Room) RobotsDownBet() {
 	// 线程下注
 	go func() {
 		time.Sleep(time.Second)
-		for i := 0; i < 50; i++ {
+		for i := 0; i < 110; i++ {
 
 			rand.Seed(time.Now().UnixNano())
 			num1 := rand.Intn(len(robotSlice))
 			v := robotSlice[num1]
 
-			//timerSlice := []int32{50, 150, 20, 300, 800, 30, 500}
-			timerSlice := []int32{50, 150, 20, 300}
+			timerSlice := []int32{50, 150, 20, 300, 800, 30, 500}
+			//timerSlice := []int32{50, 150, 20, 300}
 			rand.Seed(time.Now().UnixNano())
 			num2 := rand.Intn(len(timerSlice))
 			time.Sleep(time.Millisecond * time.Duration(timerSlice[num2]))

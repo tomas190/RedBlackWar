@@ -722,6 +722,7 @@ func (r *Room) HandleRobot() {
 			time.Sleep(time.Millisecond)
 			tn++
 			if tn == randNum {
+				log.Debug("修改%v:个机器人", randNum)
 				break
 			}
 		}
@@ -737,6 +738,7 @@ func (r *Room) HandleRobot() {
 			time.Sleep(time.Millisecond)
 			n++
 			if n == num2 {
+				log.Debug("添加%v:个机器人", num2)
 				break
 			}
 		}
@@ -749,6 +751,7 @@ func (r *Room) HandleRobot() {
 				time.Sleep(time.Millisecond)
 				n++
 				if n == num2 {
+					log.Debug("减去%v:个机器人", num2)
 					break
 				}
 			}
@@ -756,7 +759,6 @@ func (r *Room) HandleRobot() {
 	}
 
 	robotNum := r.RobotLength()
-	log.Debug("打印handleNum人数:%v,%v", robotNum, handleNum)
 
 	if robotNum < minP { // 加
 		for {
@@ -765,7 +767,7 @@ func (r *Room) HandleRobot() {
 			time.Sleep(time.Millisecond)
 			robotNum = r.RobotLength()
 			if robotNum == minP {
-				log.Debug("房间:%v,机器人数量:%v", r.RoomId, r.RobotLength())
+				log.Debug("房间:%v,加机器人数量:%v", r.RoomId, r.RobotLength())
 				break
 			}
 		}
@@ -776,7 +778,7 @@ func (r *Room) HandleRobot() {
 				time.Sleep(time.Millisecond)
 				robotNum = r.RobotLength()
 				if robotNum == maxP {
-					log.Debug("房间:%v,机器人数量:%v", r.RoomId, r.RobotLength())
+					log.Debug("房间:%v,减机器人数量:%v", r.RoomId, r.RobotLength())
 					break
 				}
 			}
