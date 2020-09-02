@@ -704,6 +704,18 @@ func (r *Room) HandleRobot() {
 	RNNNum := math.Floor(rNNum)
 	randNum = int(RNNNum)
 
+	var tn int
+	for _, v := range r.PlayerList {
+		if v != nil && v.IsRobot == true {
+			v.room.ExitFromRoom(v)
+			time.Sleep(time.Millisecond)
+			tn ++
+			if tn == randNum {
+				break
+			}
+		}
+	}
+
 	num := RandInRange(0, 100)
 	num2 := RandInRange(3, 8)
 	if num >= 0 && num < 50 {
@@ -735,105 +747,26 @@ func (r *Room) HandleRobot() {
 	robotNum := r.RobotLength()
 	log.Debug("打印handleNum人数:%v,%v", robotNum, handleNum)
 
-	if robotNum >= minP && robotNum <= maxP {
-		num3 := randNum - num2
-		if num3 > 0 {
-			for _, v := range r.PlayerList {
-				if v != nil && v.IsRobot == true {
-					v.Id = RandomID()
-					v.Account = RandomAccount()
-					v.NickName = RandomName()
-					v.HeadImg = RandomIMG()
-					v.DownBetMoneys = new(DownBetMoney)
-					v.TotalAmountBet = 0
-					v.IsAction = false
-					v.ContinueVot = new(ContinueBet)
-					v.ContinueVot.DownBetMoneys = new(DownBetMoney)
-					v.WinTotalCount = 0
-					v.RedWinCount = 0
-					v.BlackWinCount = 0
-					v.LuckWinCount = 0
-					num3--
-					if num3 == 0 {
-						break
-					}
-				}
-			}
-		}
-		return
-	}
-
-	robotNum = r.RobotLength()
-	if robotNum < handleNum { // 加
+	if robotNum < minP { // 加
 		for {
 			robot := gRobotCenter.CreateRobot()
 			r.JoinGameRoom(robot)
 			time.Sleep(time.Millisecond)
 			robotNum = r.RobotLength()
-			if robotNum >= handleNum {
+			if robotNum == minP {
 				log.Debug("房间:%v,机器人数量:%v", r.RoomId, r.RobotLength())
 				break
 			}
 		}
-		num := handleNum - robotNum
-		if num < randNum {
-			var num2 int
-			for _, v := range r.PlayerList {
-				if v != nil && v.IsRobot == true {
-					v.Id = RandomID()
-					v.Account = RandomAccount()
-					v.NickName = RandomName()
-					v.HeadImg = RandomIMG()
-					v.DownBetMoneys = new(DownBetMoney)
-					v.TotalAmountBet = 0
-					v.IsAction = false
-					v.ContinueVot = new(ContinueBet)
-					v.ContinueVot.DownBetMoneys = new(DownBetMoney)
-					v.WinTotalCount = 0
-					v.RedWinCount = 0
-					v.BlackWinCount = 0
-					v.LuckWinCount = 0
-					num2++
-					if num2 >= (randNum - num) {
-						break
-					}
-				}
-			}
-		}
-	} else if robotNum > handleNum { // 减
+	} else if robotNum > maxP { // 减
 		for _, v := range r.PlayerList {
 			if v != nil && v.IsRobot == true {
 				v.room.ExitFromRoom(v)
 				time.Sleep(time.Millisecond)
 				robotNum = r.RobotLength()
-				if robotNum <= handleNum {
+				if robotNum == maxP {
 					log.Debug("房间:%v,机器人数量:%v", r.RoomId, r.RobotLength())
 					break
-				}
-			}
-		}
-		num := robotNum - handleNum
-		if num < randNum {
-			var num2 int
-			for _, v := range r.PlayerList {
-				if v != nil && v.IsRobot == true {
-					v.Id = RandomID()
-					v.Account = RandomAccount()
-					v.NickName = RandomName()
-					v.HeadImg = RandomIMG()
-					v.DownBetMoneys = new(DownBetMoney)
-					v.TotalAmountBet = 0
-					v.IsAction = false
-					v.ContinueVot = new(ContinueBet)
-					v.ContinueVot.DownBetMoneys = new(DownBetMoney)
-					v.WinTotalCount = 0
-					v.RedWinCount = 0
-					v.BlackWinCount = 0
-					v.LuckWinCount = 0
-					num2++
-					if num2 >= (randNum - num) {
-						break
-					}
 				}
 			}
 		}

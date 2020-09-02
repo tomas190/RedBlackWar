@@ -62,7 +62,8 @@ func (r *Room) RobotsDownBet() {
 			num1 := rand.Intn(len(robotSlice))
 			v := robotSlice[num1]
 
-			timerSlice := []int32{50, 150, 20, 300, 800, 30, 500}
+			//timerSlice := []int32{50, 150, 20, 300, 800, 30, 500}
+			timerSlice := []int32{50, 150, 20, 300}
 			rand.Seed(time.Now().UnixNano())
 			num2 := rand.Intn(len(timerSlice))
 			time.Sleep(time.Millisecond * time.Duration(timerSlice[num2]))
@@ -109,11 +110,10 @@ func (r *Room) RobotsDownBet() {
 				//} else {
 				//	bet1 = RobotRandBet()
 				//}
-				var bigMoney bool
-				if v.TotalAmountBet >= 100 {
-					bigMoney = true
+				if v.TotalAmountBet >= 1000 {
+					continue
 				}
-				bet1 = RobotRandBet(bigMoney)
+				bet1 = RobotRandBet()
 
 				v.IsAction = true
 
@@ -186,33 +186,19 @@ func (r *Room) RobotsDownBet() {
 }
 
 //RandNumber 随机机器下注金额
-func RobotRandBet(bigMoney bool) int32 {
+func RobotRandBet() int32 {
 	//slice := []int32{1, 10, 50, 100}
 	var slice []int32
-	if bigMoney == true {
-		slice = []int32{1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 10, 10, 10, 10, 10, 10, 10,
-			10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-			10, 10, 10, 50, 50, 50, 50, 50, 50, 50,
-			50, 50,
-		}
-	} else {
-		slice = []int32{1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 10, 10, 10, 10, 10, 10, 10,
-			10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-			10, 10, 10, 50, 50, 50, 50, 50, 50, 50,
-			50, 50, 100, 100, 100, 100, 100, 100, 1000, 1000,
-		}
+	slice = []int32{1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 10, 10, 10, 10, 10, 10, 10,
+		10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+		10, 10, 10, 50, 50, 50, 50, 50, 50, 50,
+		50, 50, 100, 100, 100, 100, 100, 100, 1000, 1000,
 	}
 
 	rand.Seed(time.Now().UnixNano())
