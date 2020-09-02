@@ -512,6 +512,11 @@ func (r *Room) CompareSettlement() {
 	//r.PrintPlayerList()
 	//log.Debug("玩家列表 r.PlayerList :%v", r.PlayerList)
 
+	//这里会发送前端房间数据，前端做处理
+	data := &pb_msg.RoomSettleData_S2C{}
+	data.RoomData = r.RspRoomData()
+	r.BroadCastMsg(data)
+
 	//更新房间赌神ID
 	r.GetGodGableId()
 
@@ -521,19 +526,11 @@ func (r *Room) CompareSettlement() {
 	//log.Debug("玩家列表信息数据: %v", maintainList)
 	r.BroadCastMsg(maintainList)
 
-	//这里会发送前端房间数据，前端做处理
-	data := &pb_msg.RoomSettleData_S2C{}
-	data.RoomData = r.RspRoomData()
-	r.BroadCastMsg(data)
-
 	//处理清空玩家局数 和 玩家金额
 	r.UpdateGamesNum()
 
 	//清空玩家数据,开始下一句游戏
 	r.CleanPlayerData()
-
-	//根据时间来控制机器人数量
-	r.HandleRobot()
 
 	for range t.C {
 		r.counter++
@@ -542,6 +539,8 @@ func (r *Room) CompareSettlement() {
 		if r.counter == SettleTime {
 			//踢出房间断线玩家
 			r.KickOutPlayer()
+			//根据时间来控制机器人数量
+			r.HandleRobot()
 			r.UserLeave = []string{}
 			//清空桌面注池
 			r.PotMoneyCount = new(PotRoomCount)
