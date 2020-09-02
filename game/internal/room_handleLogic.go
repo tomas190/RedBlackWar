@@ -708,7 +708,7 @@ func (r *Room) HandleRobot() {
 	for _, v := range r.PlayerList {
 		if v != nil && v.IsRobot == true {
 			v.room.ExitFromRoom(v)
-			time.Sleep(time.Millisecond)
+			time.Sleep(time.Millisecond * 100)
 			tn++
 			if tn == randNum {
 				break
@@ -723,7 +723,7 @@ func (r *Room) HandleRobot() {
 		for {
 			robot := gRobotCenter.CreateRobot()
 			r.JoinGameRoom(robot)
-			time.Sleep(time.Millisecond)
+			time.Sleep(time.Millisecond * 100)
 			n++
 			if n == num2 {
 				break
@@ -735,7 +735,7 @@ func (r *Room) HandleRobot() {
 		for _, v := range r.PlayerList {
 			if v != nil && v.IsRobot == true {
 				v.room.ExitFromRoom(v)
-				time.Sleep(time.Millisecond)
+				time.Sleep(time.Millisecond * 100)
 				n++
 				if n == num2 {
 					break
