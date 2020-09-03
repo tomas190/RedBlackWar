@@ -244,7 +244,7 @@ func (rc *RobotsCenter) Start() {
 
 //生成随机机器人ID
 func RandomID() string {
-	RobotId := fmt.Sprintf("%06v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(100000000))
+	RobotId := fmt.Sprintf("%09v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(100000000))
 	return RobotId
 }
 
@@ -268,7 +268,7 @@ func RandomAccount() float64 {
 
 //生成随机机器人NickName
 func RandomName() string {
-	randNum := fmt.Sprintf("%06v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(1000000000))
+	randNum := fmt.Sprintf("%09v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(1000000000))
 	RobotName := randNum
 	return RobotName
 }
