@@ -14,23 +14,6 @@ import (
 //3、机器人选择注池的输赢,都要进行计算，只是不和盈余池牵扯，主要是前端做展示
 //4、如果机器人金额如果小于50或不能参加游戏,则踢出房间删除机器人，在生成新的机器人加入该房间。
 
-type ChipDownBet struct {
-	Chip1    int32
-	Chip10   int32
-	Chip50   int32
-	Chip100  int32
-	Chip1000 int32
-}
-
-type RobotDATA struct {
-	RoomId   string
-	RoomTime int64
-	RobotNum int
-	RedPot   *ChipDownBet
-	BlackPot *ChipDownBet
-	LuckPot  *ChipDownBet
-}
-
 //机器人下标
 var RobotIndex uint32
 

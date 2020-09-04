@@ -288,6 +288,23 @@ func GetSurPoolData(selector bson.M) (SurPool, error) {
 	return wts, nil
 }
 
+type ChipDownBet struct {
+	Chip1    int32
+	Chip10   int32
+	Chip50   int32
+	Chip100  int32
+	Chip1000 int32
+}
+
+type RobotDATA struct {
+	RoomId   string       `json:"room_id" bson:"room_id"`
+	RoomTime int64        `json:"room_time" bson:"room_time"`
+	RobotNum int          `json:"robot_num" bson:"robot_num"`
+	RedPot   *ChipDownBet `json:"red_pot" bson:"red_pot"`
+	BlackPot *ChipDownBet `json:"black_pot" bson:"black_pot"`
+	LuckPot  *ChipDownBet `json:"luck_pot" bson:"luck_pot"`
+}
+
 func InsertRobotData(p *RobotDATA) error {
 	s, c := connect(dbName, robotData)
 	defer s.Close()
