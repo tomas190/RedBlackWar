@@ -77,6 +77,9 @@ func (r *Room) RobotsDownBet() {
 		rData.RoomId = r.RoomId
 		rData.RoomTime = time.Now().Unix()
 		rData.RobotNum = r.RobotLength()
+		rData.RedPot = new(ChipDownBet)
+		rData.BlackPot = new(ChipDownBet)
+		rData.BlackPot = new(ChipDownBet)
 		for i := 0; i < 150; i++ {
 
 			rand.Seed(time.Now().UnixNano())
