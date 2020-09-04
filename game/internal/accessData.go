@@ -320,6 +320,7 @@ func getRobotData(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
+	log.Debug("获取数据:%v", recodes)
 
 	//var rData []GRobotData
 	//for i := 0; i < len(recodes); i++ {
