@@ -321,23 +321,20 @@ func getRobotData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var rData []GRobotData
-	for i := 0; i < len(recodes); i++ {
-		var rd GRobotData
-		pr := recodes[i]
-		rd.RoomId = pr.RoomId
-		rd.RoomTime = pr.RoomTime
-		rd.RobotNum = pr.RobotNum
-		rd.RedPot = *pr.RedPot
-		rd.BlackPot = *pr.BlackPot
-		rd.RedPot = *pr.LuckPot
-		rData = append(rData, rd)
-	}
+	//var rData []GRobotData
+	//for i := 0; i < len(recodes); i++ {
+	//	var rd GRobotData
+	//	pr := recodes[i]
+	//	rd.RoomId = pr.RoomId
+	//	rd.RoomTime = pr.RoomTime
+	//	rd.RobotNum = pr.RobotNum
+	//	rd.RedPot = *pr.RedPot
+	//	rd.BlackPot = *pr.BlackPot
+	//	rd.RedPot = *pr.LuckPot
+	//	rData = append(rData, rd)
+	//}
 
-	var result pageData
-	result.List = rData
-
-	js, err := json.Marshal(NewResp(SuccCode, "", rData))
+	js, err := json.Marshal(NewResp(SuccCode, "", recodes))
 	if err != nil {
 		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
 		return
