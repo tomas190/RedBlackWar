@@ -307,7 +307,7 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 }
 
 func getRobotData(w http.ResponseWriter, r *http.Request) {
-	recodes,err := GetRobotData()
+	recodes, err := GetRobotData()
 	if err != nil {
 		return
 	}
