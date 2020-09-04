@@ -322,7 +322,7 @@ func RandomAccount() float64 {
 //生成随机机器人NickName
 func RandomName() string {
 	for {
-		randNum := fmt.Sprintf("%09v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(8000000000))
+		randNum := fmt.Sprintf("%09v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(800000000))
 		if randNum[0:1] != "0" {
 			return randNum
 		}
