@@ -334,6 +334,9 @@ func getRobotData(w http.ResponseWriter, r *http.Request) {
 		rData = append(rData, rd)
 	}
 
+	var result pageData
+	result.List = rData
+
 	js, err := json.Marshal(NewResp(SuccCode, "", rData))
 	if err != nil {
 		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
