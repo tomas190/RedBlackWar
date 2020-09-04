@@ -14,6 +14,23 @@ import (
 //3、机器人选择注池的输赢,都要进行计算，只是不和盈余池牵扯，主要是前端做展示
 //4、如果机器人金额如果小于50或不能参加游戏,则踢出房间删除机器人，在生成新的机器人加入该房间。
 
+type ChipDownBet struct {
+	Chip1    int32
+	Chip10   int32
+	Chip50   int32
+	Chip100  int32
+	Chip1000 int32
+}
+
+type RobotDATA struct {
+	RoomId   string
+	RoomTime int64
+	RobotNum int
+	RedPot   *ChipDownBet
+	BlackPot *ChipDownBet
+	LuckPot  *ChipDownBet
+}
+
 //机器人下标
 var RobotIndex uint32
 
@@ -56,6 +73,10 @@ func (r *Room) RobotsDownBet() {
 	// 线程下注
 	go func() {
 		time.Sleep(time.Second)
+		rData := &RobotDATA{}
+		rData.RoomId = r.RoomId
+		rData.RoomTime = time.Now().Unix()
+		rData.RobotNum = r.RobotLength()
 		for i := 0; i < 150; i++ {
 
 			rand.Seed(time.Now().UnixNano())
@@ -63,7 +84,6 @@ func (r *Room) RobotsDownBet() {
 			v := robotSlice[num1]
 
 			timerSlice := []int32{50, 150, 20, 300, 800, 30, 500}
-			//timerSlice := []int32{50, 150, 20, 300}
 			rand.Seed(time.Now().UnixNano())
 			num2 := rand.Intn(len(timerSlice))
 			time.Sleep(time.Millisecond * time.Duration(timerSlice[num2]))
@@ -102,14 +122,7 @@ func (r *Room) RobotsDownBet() {
 						}
 					}
 				}
-				//if pot1 == 3 {
-				//	slice := []int32{1, 10, 50}
-				//	rand.Seed(time.Now().UnixNano())
-				//	num := rand.Intn(len(slice))
-				//	bet1 = slice[num]
-				//} else {
-				//	bet1 = RobotRandBet()
-				//}
+
 				if v.TotalAmountBet >= 1000 {
 					continue
 				}
@@ -148,19 +161,51 @@ func (r *Room) RobotsDownBet() {
 					v.DownBetMoneys.RedDownBet += bet1
 					v.TotalAmountBet += bet1
 					r.PotMoneyCount.RedMoneyCount += bet1
+					if bet1 == 1 {
+						rData.RedPot.Chip1 += 1
+					} else if bet1 == 10 {
+						rData.RedPot.Chip10 += 1
+					} else if bet1 == 50 {
+						rData.RedPot.Chip50 += 1
+					} else if bet1 == 100 {
+						rData.RedPot.Chip100 += 1
+					} else if bet1 == 1000 {
+						rData.RedPot.Chip1000 += 1
+					}
 				}
 				if pb_msg.PotType(pot1) == pb_msg.PotType_BlackPot {
 					v.Account -= float64(bet1)
 					v.DownBetMoneys.BlackDownBet += bet1
 					v.TotalAmountBet += bet1
 					r.PotMoneyCount.BlackMoneyCount += bet1
-
+					if bet1 == 1 {
+						rData.BlackPot.Chip1 += 1
+					} else if bet1 == 10 {
+						rData.BlackPot.Chip10 += 1
+					} else if bet1 == 50 {
+						rData.BlackPot.Chip50 += 1
+					} else if bet1 == 100 {
+						rData.BlackPot.Chip100 += 1
+					} else if bet1 == 1000 {
+						rData.BlackPot.Chip1000 += 1
+					}
 				}
 				if pb_msg.PotType(pot1) == pb_msg.PotType_LuckPot {
 					v.Account -= float64(bet1)
 					v.DownBetMoneys.LuckDownBet += bet1
 					v.TotalAmountBet += bet1
 					r.PotMoneyCount.LuckMoneyCount += bet1
+					if bet1 == 1 {
+						rData.LuckPot.Chip1 += 1
+					} else if bet1 == 10 {
+						rData.LuckPot.Chip10 += 1
+					} else if bet1 == 50 {
+						rData.LuckPot.Chip50 += 1
+					} else if bet1 == 100 {
+						rData.LuckPot.Chip100 += 1
+					} else if bet1 == 1000 {
+						rData.LuckPot.Chip1000 += 1
+					}
 				}
 				//返回前端玩家行动,更新玩家最新金额
 				action := &pb_msg.PlayerAction_S2C{}
@@ -181,6 +226,10 @@ func (r *Room) RobotsDownBet() {
 
 				//fmt.Println("玩家:", v.Id, "行动 红、黑、Luck下注: ", v.DownBetMoneys, "玩家总下注金额: ", v.TotalAmountBet)
 			}
+		}
+		err := InsertRobotData(rData)
+		if err != nil {
+			log.Debug("插入机器人数据失败:%v", err)
 		}
 	}()
 }
@@ -244,8 +293,12 @@ func (rc *RobotsCenter) Start() {
 
 //生成随机机器人ID
 func RandomID() string {
-	RobotId := fmt.Sprintf("%09v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(100000000))
-	return RobotId
+	for {
+		RobotId := fmt.Sprintf("%09v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(800000000))
+		if RobotId[0:1] != "0" {
+			return RobotId
+		}
+	}
 }
 
 //生成随机机器人头像IMG
@@ -268,9 +321,12 @@ func RandomAccount() float64 {
 
 //生成随机机器人NickName
 func RandomName() string {
-	randNum := fmt.Sprintf("%09v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(1000000000))
-	RobotName := randNum
-	return RobotName
+	for {
+		randNum := fmt.Sprintf("%09v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(8000000000))
+		if randNum[0:1] != "0" {
+			return randNum
+		}
+	}
 }
 
 func RandInRange(min int, max int) int {

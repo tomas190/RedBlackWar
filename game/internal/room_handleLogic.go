@@ -4,7 +4,6 @@ import (
 	pb_msg "RedBlack-War/msg/Protocal"
 	"github.com/name5566/leaf/log"
 	"math"
-	"math/rand"
 	"time"
 )
 
@@ -687,7 +686,6 @@ func (r *Room) HandleRobot() {
 		handleNum = 80
 		break
 	}
-	var randNum int
 
 	var minP int
 	var maxP int
@@ -697,99 +695,48 @@ func (r *Room) HandleRobot() {
 	maxP = handleNum + int(maNum)
 
 	num := RandInRange(0, 100)
-	num2 := RandInRange(3, 8)
 	if num >= 0 && num < 50 {
-		var n int
-		for {
-			robot := gRobotCenter.CreateRobot()
-			r.JoinGameRoom(robot)
-			time.Sleep(time.Millisecond)
-			n++
-			if n == num2 {
-				log.Debug("添加%v:个机器人", num2)
-				break
-			}
-		}
-
+		num2 := handleNum - minP
+		num3 := RandInRange(0, num2)
+		handleNum += num3
 	} else if num >= 50 && num < 100 {
-		var n int
-		for _, v := range r.PlayerList {
-			if v != nil && v.IsRobot == true {
+		num2 := maxP - handleNum
+		num3 := RandInRange(0, num2)
+		handleNum -= num3
+	}
+
+	for _, v := range r.PlayerList {
+		if v != nil && v.IsRobot == true {
+			rNum := 1 / ((v.WinTotalCount + 1) * 2)
+			rNum2 := int(rNum * 1000)
+			rNum3 := RandInRange(0, 1000)
+			if rNum3 <= rNum2 {
 				v.room.ExitFromRoom(v)
 				time.Sleep(time.Millisecond)
-				n++
-				if n == num2 {
-					log.Debug("减去%v:个机器人", num2)
-					break
-				}
 			}
 		}
 	}
-
-	RNum := []float64{0.1, 0.11, 0.12, 0.13, 0.14, 0.15}
-	rand.Seed(time.Now().UnixNano())
-	rn := rand.Intn(len(RNum))
-	rNNum := float64(handleNum) * RNum[rn]
-	RNNNum := math.Floor(rNNum)
-	randNum = int(RNNNum)
 
 	robotNum := r.RobotLength()
-	var rb int
-	if robotNum < minP {
-		rb = minP - robotNum
-	} else if robotNum > maxP {
-		rb = robotNum - maxP
-	}
-
-	if rb-randNum < 0 {
-		var tn int
-		for {
-			n := RandInRange(0, len(r.PlayerList))
-			if r.PlayerList[n] != nil && r.PlayerList[n].IsRobot == true {
-				r.PlayerList[n].Id = RandomID()
-				r.PlayerList[n].Account = RandomAccount()
-				r.PlayerList[n].NickName = RandomName()
-				r.PlayerList[n].HeadImg = RandomIMG()
-				r.PlayerList[n].DownBetMoneys = new(DownBetMoney)
-				r.PlayerList[n].TotalAmountBet = 0
-				r.PlayerList[n].IsAction = false
-				r.PlayerList[n].ContinueVot = new(ContinueBet)
-				r.PlayerList[n].ContinueVot.DownBetMoneys = new(DownBetMoney)
-				r.PlayerList[n].WinTotalCount = 0
-				r.PlayerList[n].RedWinCount = 0
-				r.PlayerList[n].BlackWinCount = 0
-				r.PlayerList[n].LuckWinCount = 0
-			}
-			time.Sleep(time.Millisecond)
-			tn++
-			if tn == randNum-rb {
-				log.Debug("修改%v:个机器人", randNum)
-				break
-			}
-		}
-	}
-
-	robotNum = r.RobotLength()
-	log.Debug("机器人当前数量:%v,最小范围:%v.最大范围:%v", robotNum, minP, maxP)
-
-	if robotNum < minP { // 加
+	log.Debug("机器人当前数量:%v,handleNum当局指定人数:%v", robotNum, handleNum)
+	if robotNum < handleNum { // 加
 		for {
 			robot := gRobotCenter.CreateRobot()
 			r.JoinGameRoom(robot)
 			time.Sleep(time.Millisecond)
 			robotNum = r.RobotLength()
-			if robotNum == minP {
+			if robotNum == handleNum {
 				log.Debug("房间:%v,加机器人数量:%v", r.RoomId, r.RobotLength())
 				break
 			}
 		}
-	} else if robotNum > maxP { // 减
+	} else if robotNum > handleNum { // 减
 		for _, v := range r.PlayerList {
 			if v != nil && v.IsRobot == true {
 				v.room.ExitFromRoom(v)
 				time.Sleep(time.Millisecond)
 				robotNum = r.RobotLength()
-				if robotNum == maxP {
+				if robotNum == handleNum {
 					log.Debug("房间:%v,减机器人数量:%v", r.RoomId, r.RobotLength())
 					break
 				}

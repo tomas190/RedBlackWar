@@ -76,4 +76,6 @@ type Room struct {
 	IsLoadRobots bool
 
 	UserLeave []string // 用户是否在房间
+
+
 }

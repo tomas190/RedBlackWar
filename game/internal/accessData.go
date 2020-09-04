@@ -82,6 +82,8 @@ func StartHttpServer() {
 	http.HandleFunc("/api/getSurplusOne", getSurplusOne)
 	// 修改盈余池数据
 	http.HandleFunc("/api/uptSurplusConf", uptSurplusOne)
+	// 获取机器人数据
+	http.HandleFunc("/api/getRobotData", getRobotData)
 
 	err := http.ListenAndServe(":"+conf.Server.HTTPPort, nil)
 	if err != nil {
@@ -296,6 +298,21 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 	UpdateSurPool(sur)
 
 	js, err := json.Marshal(NewResp(SuccCode, "", upt))
+	if err != nil {
+		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+}
+
+func getRobotData(w http.ResponseWriter, r *http.Request) {
+	recodes,err := GetRobotData()
+	if err != nil {
+		return
+	}
+
+	js, err := json.Marshal(NewResp(SuccCode, "", recodes))
 	if err != nil {
 		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
 		return

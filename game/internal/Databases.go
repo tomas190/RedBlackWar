@@ -22,6 +22,7 @@ const (
 	surPlusDB       = "surplusPool"
 	accessDB        = "accessData"
 	surPool         = "surplus-pool"
+	robotData       = "robotData"
 )
 
 // 连接数据库集合的函数 传入集合 默认连接IM数据库
@@ -94,7 +95,7 @@ func FindIdCount() int32 {
 	return int32(n)
 }
 
-//InsertWinMoney 插入房间数据
+//InsertWinMoney 插入赢钱数据
 func InsertWinMoney(base interface{}) {
 	s, c := connect(dbName, settleWinMoney)
 	defer s.Close()
@@ -108,7 +109,7 @@ func InsertWinMoney(base interface{}) {
 
 }
 
-//InsertLoseMoney 插入房间数据
+//InsertLoseMoney 插入输钱数据
 func InsertLoseMoney(base interface{}) {
 	s, c := connect(dbName, settleLoseMoney)
 	defer s.Close()
@@ -188,7 +189,7 @@ func FindSurPool(SurP *SurPool) {
 	if err != nil {
 		InsertSurPool(SurP)
 	} else {
-		SurP.SurplusPool = (SurP.PlayerTotalLose - (SurP.PlayerTotalWin * sur.PercentageToTotalWin) - float64(SurP.TotalPlayer * sur.CoefficientToTotalPlayer)) * sur.FinalPercentage
+		SurP.SurplusPool = (SurP.PlayerTotalLose - (SurP.PlayerTotalWin * sur.PercentageToTotalWin) - float64(SurP.TotalPlayer*sur.CoefficientToTotalPlayer)) * sur.FinalPercentage
 		SurP.FinalPercentage = sur.FinalPercentage
 		SurP.PercentageToTotalWin = sur.PercentageToTotalWin
 		SurP.CoefficientToTotalPlayer = sur.CoefficientToTotalPlayer
@@ -285,4 +286,26 @@ func GetSurPoolData(selector bson.M) (SurPool, error) {
 		return wts, err
 	}
 	return wts, nil
+}
+
+func InsertRobotData(p *RobotDATA) error {
+	s, c := connect(dbName, robotData)
+	defer s.Close()
+
+	err := c.Insert(p)
+	return err
+}
+
+//GetDownRecodeList 获取盈余池数据
+func GetRobotData() ([]RobotDATA, error) {
+	s, c := connect(dbName, surPool)
+	defer s.Close()
+
+	var rd []RobotDATA
+
+	err := c.Find(nil).All(&rd)
+	if err != nil {
+		return rd, err
+	}
+	return rd, nil
 }
