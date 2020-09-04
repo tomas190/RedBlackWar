@@ -65,6 +65,15 @@ type UpSurPool struct {
 	FinalPercentage                float64 `json:"final_percentage" bson:"final_percentage"`
 }
 
+type GRobotData struct {
+	RoomId   string      `json:"room_id" bson:"room_id"`
+	RoomTime int64       `json:"room_time" bson:"room_time"`
+	RobotNum int         `json:"robot_num" bson:"robot_num"`
+	RedPot   interface{} `json:"red_pot" bson:"red_pot"`
+	BlackPot interface{} `json:"black_pot" bson:"black_pot"`
+	LuckPot  interface{} `json:"luck_pot" bson:"luck_pot"`
+}
+
 const (
 	SuccCode = 0
 	ErrCode  = -1
@@ -312,7 +321,20 @@ func getRobotData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	js, err := json.Marshal(NewResp(SuccCode, "", recodes))
+	var rData []GRobotData
+	for i := 0; i < len(recodes); i++ {
+		var rd GRobotData
+		pr := recodes[i]
+		rd.RoomId = pr.RoomId
+		rd.RoomTime = pr.RoomTime
+		rd.RobotNum = pr.RobotNum
+		rd.RedPot = *pr.RedPot
+		rd.BlackPot = *pr.BlackPot
+		rd.RedPot = *pr.LuckPot
+		rData = append(rData, rd)
+	}
+
+	js, err := json.Marshal(NewResp(SuccCode, "", rData))
 	if err != nil {
 		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
 		return
