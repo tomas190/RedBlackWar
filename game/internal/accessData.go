@@ -322,18 +322,19 @@ func getRobotData(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Debug("获取数据:%v", recodes)
 
-	//var rData []GRobotData
-	//for i := 0; i < len(recodes); i++ {
-	//	var rd GRobotData
-	//	pr := recodes[i]
-	//	rd.RoomId = pr.RoomId
-	//	rd.RoomTime = pr.RoomTime
-	//	rd.RobotNum = pr.RobotNum
-	//	rd.RedPot = *pr.RedPot
-	//	rd.BlackPot = *pr.BlackPot
-	//	rd.RedPot = *pr.LuckPot
-	//	rData = append(rData, rd)
-	//}
+	var rData []GRobotData
+	for i := 0; i < len(recodes); i++ {
+		var rd GRobotData
+		pr := recodes[i]
+		log.Debug("获取机器数据:%v", pr)
+		rd.RoomId = pr.RoomId
+		rd.RoomTime = pr.RoomTime
+		rd.RobotNum = pr.RobotNum
+		rd.RedPot = *pr.RedPot
+		rd.BlackPot = *pr.BlackPot
+		rd.RedPot = *pr.LuckPot
+		rData = append(rData, rd)
+	}
 
 	js, err := json.Marshal(NewResp(SuccCode, "", recodes))
 	if err != nil {

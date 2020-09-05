@@ -309,7 +309,6 @@ func InsertRobotData(rb *RobotDATA) {
 	s, c := connect(dbName, robotData)
 	defer s.Close()
 
-	log.Debug("机器人数据:%v", rb)
 	err := c.Insert(rb)
 	if err != nil {
 		log.Debug("插入机器人数据失败:%v", err)
