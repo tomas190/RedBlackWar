@@ -326,7 +326,9 @@ func GetRobotData() ([]*RobotDATA, error) {
 
 	err := c.Find(nil).All(&rd)
 	if err != nil {
-		return rd, err
+		log.Debug("获取机器人数据失败:%v", err)
+		return nil, err
 	}
+	log.Debug("获取机器人数据成功:%v,长度为:%v", rd, len(rd))
 	return rd, nil
 }

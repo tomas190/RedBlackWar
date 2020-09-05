@@ -66,13 +66,21 @@ type UpSurPool struct {
 }
 
 type GRobotData struct {
-	RoomId   string      `json:"room_id" bson:"room_id"`
-	RoomTime int64       `json:"room_time" bson:"room_time"`
-	RobotNum int         `json:"robot_num" bson:"robot_num"`
-	RedPot   interface{} `json:"red_pot" bson:"red_pot"`
-	BlackPot interface{} `json:"black_pot" bson:"black_pot"`
-	LuckPot  interface{} `json:"luck_pot" bson:"luck_pot"`
+	RoomId   string       `json:"room_id" bson:"room_id"`
+	RoomTime int64        `json:"room_time" bson:"room_time"`
+	RobotNum int          `json:"robot_num" bson:"robot_num"`
+	RedPot   *ChipDownBet `json:"red_pot" bson:"red_pot"`
+	BlackPot *ChipDownBet `json:"black_pot" bson:"black_pot"`
+	LuckPot  *ChipDownBet `json:"luck_pot" bson:"luck_pot"`
 }
+
+//type GRobotChip struct {
+//	Chip1    int32 `json:"chip_1" bson:"chip_1"`
+//	Chip10   int32 `json:"chip_10" bson:"chip_10"`
+//	Chip50   int32 `json:"chip_50" bson:"chip_50"`
+//	Chip100  int32 `json:"chip_100" bson:"chip_100"`
+//	Chip1000 int32 `json:"chip_1000" bson:"chip_1000"`
+//}
 
 const (
 	SuccCode = 0
@@ -320,23 +328,37 @@ func getRobotData(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	log.Debug("获取数据:%v", recodes)
 
 	var rData []GRobotData
 	for i := 0; i < len(recodes); i++ {
 		var rd GRobotData
+		rd.RedPot = new(ChipDownBet)
+		rd.BlackPot = new(ChipDownBet)
+		rd.LuckPot = new(ChipDownBet)
 		pr := recodes[i]
 		log.Debug("获取机器数据:%v", pr)
 		rd.RoomId = pr.RoomId
 		rd.RoomTime = pr.RoomTime
 		rd.RobotNum = pr.RobotNum
-		rd.RedPot = *pr.RedPot
-		rd.BlackPot = *pr.BlackPot
-		rd.RedPot = *pr.LuckPot
+		rd.RedPot.Chip1 = pr.RedPot.Chip1
+		rd.RedPot.Chip10 = pr.RedPot.Chip10
+		rd.RedPot.Chip50 = pr.RedPot.Chip50
+		rd.RedPot.Chip100 = pr.RedPot.Chip100
+		rd.RedPot.Chip1000 = pr.RedPot.Chip1000
+		rd.BlackPot.Chip1 = pr.BlackPot.Chip1
+		rd.BlackPot.Chip10 = pr.BlackPot.Chip10
+		rd.BlackPot.Chip50 = pr.BlackPot.Chip50
+		rd.BlackPot.Chip100 = pr.BlackPot.Chip100
+		rd.BlackPot.Chip1000 = pr.BlackPot.Chip1000
+		rd.LuckPot.Chip1 = pr.LuckPot.Chip1
+		rd.LuckPot.Chip10 = pr.LuckPot.Chip10
+		rd.LuckPot.Chip50 = pr.LuckPot.Chip50
+		rd.LuckPot.Chip100 = pr.LuckPot.Chip100
+		rd.LuckPot.Chip1000 = pr.LuckPot.Chip1000
 		rData = append(rData, rd)
 	}
 
-	js, err := json.Marshal(NewResp(SuccCode, "", recodes))
+	js, err := json.Marshal(NewResp(SuccCode, "", rData))
 	if err != nil {
 		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
 		return
