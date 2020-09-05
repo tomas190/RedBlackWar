@@ -6,8 +6,6 @@
       <change afterPath="$PROJECT_DIR$/../临时文件夹/.idea/临时文件夹.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/Databases.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/Databases.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/accessData.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/accessData.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common/hall.meta" beforeDir="false" />
@@ -3361,6 +3359,11 @@
           <url>file://$PROJECT_DIR$/game/internal/player_config.go</url>
           <line>66</line>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/game/internal/accessData.go</url>
+          <line>74</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

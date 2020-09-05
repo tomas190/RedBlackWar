@@ -340,21 +340,9 @@ func getRobotData(w http.ResponseWriter, r *http.Request) {
 		rd.RoomId = pr.RoomId
 		rd.RoomTime = pr.RoomTime
 		rd.RobotNum = pr.RobotNum
-		rd.RedPot.Chip1 = pr.RedPot.Chip1
-		rd.RedPot.Chip10 = pr.RedPot.Chip10
-		rd.RedPot.Chip50 = pr.RedPot.Chip50
-		rd.RedPot.Chip100 = pr.RedPot.Chip100
-		rd.RedPot.Chip1000 = pr.RedPot.Chip1000
-		rd.BlackPot.Chip1 = pr.BlackPot.Chip1
-		rd.BlackPot.Chip10 = pr.BlackPot.Chip10
-		rd.BlackPot.Chip50 = pr.BlackPot.Chip50
-		rd.BlackPot.Chip100 = pr.BlackPot.Chip100
-		rd.BlackPot.Chip1000 = pr.BlackPot.Chip1000
-		rd.LuckPot.Chip1 = pr.LuckPot.Chip1
-		rd.LuckPot.Chip10 = pr.LuckPot.Chip10
-		rd.LuckPot.Chip50 = pr.LuckPot.Chip50
-		rd.LuckPot.Chip100 = pr.LuckPot.Chip100
-		rd.LuckPot.Chip1000 = pr.LuckPot.Chip1000
+		rd.RedPot = pr.RedPot
+		rd.BlackPot = pr.BlackPot
+		rd.LuckPot = pr.LuckPot
 		rData = append(rData, rd)
 	}
 
