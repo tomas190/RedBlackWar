@@ -319,7 +319,7 @@ func InsertRobotData(rb *RobotDATA) {
 
 //GetDownRecodeList 获取盈余池数据
 func GetRobotData() ([]RobotDATA, error) {
-	s, c := connect(dbName, surPool)
+	s, c := connect(dbName, robotData)
 	defer s.Close()
 
 	var rd []RobotDATA
