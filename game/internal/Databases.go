@@ -305,20 +305,25 @@ type RobotDATA struct {
 	LuckPot  *ChipDownBet `json:"luck_pot" bson:"luck_pot"`
 }
 
-func InsertRobotData(p *RobotDATA) error {
+func InsertRobotData(rb *RobotDATA) {
 	s, c := connect(dbName, robotData)
 	defer s.Close()
 
-	err := c.Insert(p)
-	return err
+	log.Debug("机器人数据:%v", rb)
+	err := c.Insert(rb)
+	if err != nil {
+		log.Debug("插入机器人数据失败:%v", err)
+		return
+	}
+	log.Debug("插入机器人数据成功~")
 }
 
 //GetDownRecodeList 获取盈余池数据
-func GetRobotData() ([]RobotDATA, error) {
+func GetRobotData() ([]*RobotDATA, error) {
 	s, c := connect(dbName, surPool)
 	defer s.Close()
 
-	var rd []RobotDATA
+	var rd []*RobotDATA
 
 	err := c.Find(nil).All(&rd)
 	if err != nil {

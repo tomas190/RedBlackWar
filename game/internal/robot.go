@@ -109,7 +109,7 @@ func (r *Room) RobotsDownBet() {
 					}
 				}
 
-				if v.TotalAmountBet >= 1000 {
+				if v.TotalAmountBet >= 100 {
 					continue
 				}
 				bet1 = RobotRandBet()
@@ -213,10 +213,7 @@ func (r *Room) RobotsDownBet() {
 				//fmt.Println("玩家:", v.Id, "行动 红、黑、Luck下注: ", v.DownBetMoneys, "玩家总下注金额: ", v.TotalAmountBet)
 			}
 		}
-		err := InsertRobotData(rData)
-		if err != nil {
-			log.Debug("插入机器人数据失败:%v", err)
-		}
+		InsertRobotData(rData)
 	}()
 }
 
