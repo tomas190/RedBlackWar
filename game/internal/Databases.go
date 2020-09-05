@@ -318,11 +318,11 @@ func InsertRobotData(rb *RobotDATA) {
 }
 
 //GetDownRecodeList 获取盈余池数据
-func GetRobotData() ([]*RobotDATA, error) {
+func GetRobotData() ([]RobotDATA, error) {
 	s, c := connect(dbName, surPool)
 	defer s.Close()
 
-	var rd []*RobotDATA
+	var rd []RobotDATA
 
 	err := c.Find(nil).All(&rd)
 	if err != nil {
