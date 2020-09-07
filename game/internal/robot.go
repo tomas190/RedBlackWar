@@ -77,20 +77,6 @@ func (r *Room) RobotsDownBet() {
 			var bet1 int32
 			if r.GameStat == DownBet {
 				pot1 := RobotRandPot(v, r)
-				//total := r.PotMoneyCount.RedMoneyCount + r.PotMoneyCount.BlackMoneyCount
-				//if r.PotMoneyCount.LuckMoneyCount >= (total / 10) {
-				//	slice := []int32{1, 2}
-				//	rand.Seed(time.Now().UnixNano())
-				//	n3 := rand.Intn(len(slice))
-				//	pot1 = slice[n3]
-				//}
-				//if r.PotMoneyCount.LuckMoneyCount > r.PotMoneyCount.RedMoneyCount ||
-				//	r.PotMoneyCount.LuckMoneyCount > r.PotMoneyCount.BlackMoneyCount {
-				//	slice := []int32{1, 2}
-				//	rand.Seed(time.Now().UnixNano())
-				//	n3 := rand.Intn(len(slice))
-				//	pot1 = slice[n3]
-				//}
 				if v.Id == r.GodGambleName {
 					if pot1 != 3 {
 						slice := make([]int32, 0)
