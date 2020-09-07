@@ -109,7 +109,7 @@ func (r *Room) RobotsDownBet() {
 					}
 				}
 
-				if v.TotalAmountBet >= 100 {
+				if v.TotalAmountBet >= 1000 {
 					continue
 				}
 				bet1 = RobotRandBet()
