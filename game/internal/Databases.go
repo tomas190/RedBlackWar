@@ -330,7 +330,7 @@ func GetRobotData() ([]RobotDATA, error) {
 
 	selector := bson.M{}
 	selector["room_time"] = bson.M{"$gte": startTime, "$lte": endTime}
-	
+
 	err := c.Find(selector).All(&rd)
 
 	if err != nil {
