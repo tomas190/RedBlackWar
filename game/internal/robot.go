@@ -66,9 +66,6 @@ func (r *Room) RobotsDownBet() {
 		for {
 			for _, v := range r.PlayerList {
 				if v != nil && v.IsRobot == true {
-					//rand.Seed(time.Now().UnixNano())
-					//num1 := rand.Intn(len(robotSlice))
-					//v := robotSlice[num1]
 
 					timerSlice := []int32{50, 150, 20, 300, 30, 500}
 					rand.Seed(time.Now().UnixNano())
@@ -103,100 +100,198 @@ func (r *Room) RobotsDownBet() {
 
 						v.IsAction = true
 
-						if v.Account < float64(bet1) {
-							//log.Debug("机器人:%v 下注金额小于身上筹码,下注失败~", v.Id)
-							continue
-						}
+						if bet1 < 1000 {
+							randNum := RandInRange(1, 10)
+							for i := 0; i < randNum; i++ {
+								if v.Account < float64(bet1) {
+									//log.Debug("机器人:%v 下注金额小于身上筹码,下注失败~", v.Id)
+									continue
+								}
 
-						//判断玩家下注金额是否限红1-20000
-						if pot1 == int32(pb_msg.PotType_RedPot) {
-							if (r.PotMoneyCount.RedMoneyCount+bet1)+(r.PotMoneyCount.LuckMoneyCount*10)-r.PotMoneyCount.BlackMoneyCount > 20000 {
+								//判断玩家下注金额是否限红1-20000
+								if pot1 == int32(pb_msg.PotType_RedPot) {
+									if (r.PotMoneyCount.RedMoneyCount+bet1)+(r.PotMoneyCount.LuckMoneyCount*10)-r.PotMoneyCount.BlackMoneyCount > 20000 {
+										continue
+									}
+								}
+								if pot1 == int32(pb_msg.PotType_BlackPot) {
+									if (r.PotMoneyCount.BlackMoneyCount+bet1)+(r.PotMoneyCount.LuckMoneyCount*10)-r.PotMoneyCount.RedMoneyCount > 20000 {
+										continue
+									}
+								}
+								if pot1 == int32(pb_msg.PotType_LuckPot) {
+									if r.PotMoneyCount.RedMoneyCount+((r.PotMoneyCount.LuckMoneyCount+bet1)*10)-r.PotMoneyCount.BlackMoneyCount > 20000 {
+										continue
+									}
+									if r.PotMoneyCount.BlackMoneyCount+((r.PotMoneyCount.LuckMoneyCount+bet1)*10)-r.PotMoneyCount.RedMoneyCount > 20000 {
+										continue
+									}
+								}
+
+								//记录玩家在该房间总下注 和 房间注池的总金额
+								if pb_msg.PotType(pot1) == pb_msg.PotType_RedPot {
+									v.Account -= float64(bet1)
+									v.DownBetMoneys.RedDownBet += bet1
+									v.TotalAmountBet += bet1
+									r.PotMoneyCount.RedMoneyCount += bet1
+									if bet1 == 1 {
+										rData.RedPot.Chip1 += 1
+									} else if bet1 == 10 {
+										rData.RedPot.Chip10 += 1
+									} else if bet1 == 50 {
+										rData.RedPot.Chip50 += 1
+									} else if bet1 == 100 {
+										rData.RedPot.Chip100 += 1
+									} else if bet1 == 1000 {
+										rData.RedPot.Chip1000 += 1
+									}
+								}
+								if pb_msg.PotType(pot1) == pb_msg.PotType_BlackPot {
+									v.Account -= float64(bet1)
+									v.DownBetMoneys.BlackDownBet += bet1
+									v.TotalAmountBet += bet1
+									r.PotMoneyCount.BlackMoneyCount += bet1
+									if bet1 == 1 {
+										rData.BlackPot.Chip1 += 1
+									} else if bet1 == 10 {
+										rData.BlackPot.Chip10 += 1
+									} else if bet1 == 50 {
+										rData.BlackPot.Chip50 += 1
+									} else if bet1 == 100 {
+										rData.BlackPot.Chip100 += 1
+									} else if bet1 == 1000 {
+										rData.BlackPot.Chip1000 += 1
+									}
+								}
+								if pb_msg.PotType(pot1) == pb_msg.PotType_LuckPot {
+									v.Account -= float64(bet1)
+									v.DownBetMoneys.LuckDownBet += bet1
+									v.TotalAmountBet += bet1
+									r.PotMoneyCount.LuckMoneyCount += bet1
+									if bet1 == 1 {
+										rData.LuckPot.Chip1 += 1
+									} else if bet1 == 10 {
+										rData.LuckPot.Chip10 += 1
+									} else if bet1 == 50 {
+										rData.LuckPot.Chip50 += 1
+									} else if bet1 == 100 {
+										rData.LuckPot.Chip100 += 1
+									} else if bet1 == 1000 {
+										rData.LuckPot.Chip1000 += 1
+									}
+								}
+								//返回前端玩家行动,更新玩家最新金额
+								action := &pb_msg.PlayerAction_S2C{}
+								action.Id = v.Id
+								action.DownBet = bet1
+								action.DownPot = pb_msg.PotType(pot1)
+								action.IsAction = v.IsAction
+								action.Account = v.Account
+								r.BroadCastMsg(action)
+
+								//广播玩家注池金额
+								pot := &pb_msg.PotTotalMoney_S2C{}
+								pot.PotMoneyCount = new(pb_msg.PotMoneyCount)
+								pot.PotMoneyCount.RedMoneyCount = r.PotMoneyCount.RedMoneyCount
+								pot.PotMoneyCount.BlackMoneyCount = r.PotMoneyCount.BlackMoneyCount
+								pot.PotMoneyCount.LuckMoneyCount = r.PotMoneyCount.LuckMoneyCount
+								r.BroadCastMsg(pot)
+							}
+						} else {
+							if v.Account < float64(bet1) {
+								//log.Debug("机器人:%v 下注金额小于身上筹码,下注失败~", v.Id)
 								continue
 							}
-						}
-						if pot1 == int32(pb_msg.PotType_BlackPot) {
-							if (r.PotMoneyCount.BlackMoneyCount+bet1)+(r.PotMoneyCount.LuckMoneyCount*10)-r.PotMoneyCount.RedMoneyCount > 20000 {
-								continue
-							}
-						}
-						if pot1 == int32(pb_msg.PotType_LuckPot) {
-							if r.PotMoneyCount.RedMoneyCount+((r.PotMoneyCount.LuckMoneyCount+bet1)*10)-r.PotMoneyCount.BlackMoneyCount > 20000 {
-								continue
-							}
-							if r.PotMoneyCount.BlackMoneyCount+((r.PotMoneyCount.LuckMoneyCount+bet1)*10)-r.PotMoneyCount.RedMoneyCount > 20000 {
-								continue
-							}
-						}
 
-						//记录玩家在该房间总下注 和 房间注池的总金额
-						if pb_msg.PotType(pot1) == pb_msg.PotType_RedPot {
-							v.Account -= float64(bet1)
-							v.DownBetMoneys.RedDownBet += bet1
-							v.TotalAmountBet += bet1
-							r.PotMoneyCount.RedMoneyCount += bet1
-							if bet1 == 1 {
-								rData.RedPot.Chip1 += 1
-							} else if bet1 == 10 {
-								rData.RedPot.Chip10 += 1
-							} else if bet1 == 50 {
-								rData.RedPot.Chip50 += 1
-							} else if bet1 == 100 {
-								rData.RedPot.Chip100 += 1
-							} else if bet1 == 1000 {
-								rData.RedPot.Chip1000 += 1
+							//判断玩家下注金额是否限红1-20000
+							if pot1 == int32(pb_msg.PotType_RedPot) {
+								if (r.PotMoneyCount.RedMoneyCount+bet1)+(r.PotMoneyCount.LuckMoneyCount*10)-r.PotMoneyCount.BlackMoneyCount > 20000 {
+									continue
+								}
 							}
-						}
-						if pb_msg.PotType(pot1) == pb_msg.PotType_BlackPot {
-							v.Account -= float64(bet1)
-							v.DownBetMoneys.BlackDownBet += bet1
-							v.TotalAmountBet += bet1
-							r.PotMoneyCount.BlackMoneyCount += bet1
-							if bet1 == 1 {
-								rData.BlackPot.Chip1 += 1
-							} else if bet1 == 10 {
-								rData.BlackPot.Chip10 += 1
-							} else if bet1 == 50 {
-								rData.BlackPot.Chip50 += 1
-							} else if bet1 == 100 {
-								rData.BlackPot.Chip100 += 1
-							} else if bet1 == 1000 {
-								rData.BlackPot.Chip1000 += 1
+							if pot1 == int32(pb_msg.PotType_BlackPot) {
+								if (r.PotMoneyCount.BlackMoneyCount+bet1)+(r.PotMoneyCount.LuckMoneyCount*10)-r.PotMoneyCount.RedMoneyCount > 20000 {
+									continue
+								}
 							}
-						}
-						if pb_msg.PotType(pot1) == pb_msg.PotType_LuckPot {
-							v.Account -= float64(bet1)
-							v.DownBetMoneys.LuckDownBet += bet1
-							v.TotalAmountBet += bet1
-							r.PotMoneyCount.LuckMoneyCount += bet1
-							if bet1 == 1 {
-								rData.LuckPot.Chip1 += 1
-							} else if bet1 == 10 {
-								rData.LuckPot.Chip10 += 1
-							} else if bet1 == 50 {
-								rData.LuckPot.Chip50 += 1
-							} else if bet1 == 100 {
-								rData.LuckPot.Chip100 += 1
-							} else if bet1 == 1000 {
-								rData.LuckPot.Chip1000 += 1
+							if pot1 == int32(pb_msg.PotType_LuckPot) {
+								if r.PotMoneyCount.RedMoneyCount+((r.PotMoneyCount.LuckMoneyCount+bet1)*10)-r.PotMoneyCount.BlackMoneyCount > 20000 {
+									continue
+								}
+								if r.PotMoneyCount.BlackMoneyCount+((r.PotMoneyCount.LuckMoneyCount+bet1)*10)-r.PotMoneyCount.RedMoneyCount > 20000 {
+									continue
+								}
 							}
-						}
-						//返回前端玩家行动,更新玩家最新金额
-						action := &pb_msg.PlayerAction_S2C{}
-						action.Id = v.Id
-						action.DownBet = bet1
-						action.DownPot = pb_msg.PotType(pot1)
-						action.IsAction = v.IsAction
-						action.Account = v.Account
-						r.BroadCastMsg(action)
 
-						//广播玩家注池金额
-						pot := &pb_msg.PotTotalMoney_S2C{}
-						pot.PotMoneyCount = new(pb_msg.PotMoneyCount)
-						pot.PotMoneyCount.RedMoneyCount = r.PotMoneyCount.RedMoneyCount
-						pot.PotMoneyCount.BlackMoneyCount = r.PotMoneyCount.BlackMoneyCount
-						pot.PotMoneyCount.LuckMoneyCount = r.PotMoneyCount.LuckMoneyCount
-						r.BroadCastMsg(pot)
+							//记录玩家在该房间总下注 和 房间注池的总金额
+							if pb_msg.PotType(pot1) == pb_msg.PotType_RedPot {
+								v.Account -= float64(bet1)
+								v.DownBetMoneys.RedDownBet += bet1
+								v.TotalAmountBet += bet1
+								r.PotMoneyCount.RedMoneyCount += bet1
+								if bet1 == 1 {
+									rData.RedPot.Chip1 += 1
+								} else if bet1 == 10 {
+									rData.RedPot.Chip10 += 1
+								} else if bet1 == 50 {
+									rData.RedPot.Chip50 += 1
+								} else if bet1 == 100 {
+									rData.RedPot.Chip100 += 1
+								} else if bet1 == 1000 {
+									rData.RedPot.Chip1000 += 1
+								}
+							}
+							if pb_msg.PotType(pot1) == pb_msg.PotType_BlackPot {
+								v.Account -= float64(bet1)
+								v.DownBetMoneys.BlackDownBet += bet1
+								v.TotalAmountBet += bet1
+								r.PotMoneyCount.BlackMoneyCount += bet1
+								if bet1 == 1 {
+									rData.BlackPot.Chip1 += 1
+								} else if bet1 == 10 {
+									rData.BlackPot.Chip10 += 1
+								} else if bet1 == 50 {
+									rData.BlackPot.Chip50 += 1
+								} else if bet1 == 100 {
+									rData.BlackPot.Chip100 += 1
+								} else if bet1 == 1000 {
+									rData.BlackPot.Chip1000 += 1
+								}
+							}
+							if pb_msg.PotType(pot1) == pb_msg.PotType_LuckPot {
+								v.Account -= float64(bet1)
+								v.DownBetMoneys.LuckDownBet += bet1
+								v.TotalAmountBet += bet1
+								r.PotMoneyCount.LuckMoneyCount += bet1
+								if bet1 == 1 {
+									rData.LuckPot.Chip1 += 1
+								} else if bet1 == 10 {
+									rData.LuckPot.Chip10 += 1
+								} else if bet1 == 50 {
+									rData.LuckPot.Chip50 += 1
+								} else if bet1 == 100 {
+									rData.LuckPot.Chip100 += 1
+								} else if bet1 == 1000 {
+									rData.LuckPot.Chip1000 += 1
+								}
+							}
+							//返回前端玩家行动,更新玩家最新金额
+							action := &pb_msg.PlayerAction_S2C{}
+							action.Id = v.Id
+							action.DownBet = bet1
+							action.DownPot = pb_msg.PotType(pot1)
+							action.IsAction = v.IsAction
+							action.Account = v.Account
+							r.BroadCastMsg(action)
 
+							//广播玩家注池金额
+							pot := &pb_msg.PotTotalMoney_S2C{}
+							pot.PotMoneyCount = new(pb_msg.PotMoneyCount)
+							pot.PotMoneyCount.RedMoneyCount = r.PotMoneyCount.RedMoneyCount
+							pot.PotMoneyCount.BlackMoneyCount = r.PotMoneyCount.BlackMoneyCount
+							pot.PotMoneyCount.LuckMoneyCount = r.PotMoneyCount.LuckMoneyCount
+							r.BroadCastMsg(pot)
+						}
 						//fmt.Println("玩家:", v.Id, "行动 红、黑、Luck下注: ", v.DownBetMoneys, "玩家总下注金额: ", v.TotalAmountBet)
 					} else {
 						InsertRobotData(rData)
