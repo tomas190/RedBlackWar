@@ -324,7 +324,15 @@ func GetRobotData() ([]RobotDATA, error) {
 
 	var rd []RobotDATA
 
-	err := c.Find(nil).All(&rd)
+	currentTime := time.Now()
+	startTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 0, 0, 0, 0, currentTime.Location()).Unix()
+	endTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 23, 59, 59, 0, currentTime.Location()).Unix()
+
+	selector := bson.M{}
+	selector["room_time"] = bson.M{"$gte": startTime, "$lte": endTime}
+	
+	err := c.Find(selector).All(&rd)
+
 	if err != nil {
 		log.Debug("获取机器人数据失败:%v", err)
 		return nil, err

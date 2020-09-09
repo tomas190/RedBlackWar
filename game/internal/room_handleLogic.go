@@ -2,8 +2,10 @@ package internal
 
 import (
 	pb_msg "RedBlack-War/msg/Protocal"
+	"fmt"
 	"github.com/name5566/leaf/log"
 	"math"
+	"strconv"
 	"time"
 )
 
@@ -609,82 +611,119 @@ func (r *Room) CleanPlayerData() {
 func (r *Room) HandleRobot() {
 	timeNow := time.Now().Hour()
 	var handleNum int
+	var nextNum int
 	switch timeNow {
 	case 1:
 		handleNum = 75
+		nextNum = 68
 		break
 	case 2:
 		handleNum = 68
+		nextNum = 60
 		break
 	case 3:
 		handleNum = 60
+		nextNum = 51
 		break
 	case 4:
 		handleNum = 51
+		nextNum = 41
 		break
 	case 5:
 		handleNum = 41
+		nextNum = 30
 		break
 	case 6:
 		handleNum = 30
+		nextNum = 17
 		break
 	case 7:
 		handleNum = 17
+		nextNum = 15
 		break
 	case 8:
 		handleNum = 15
+		nextNum = 17
 		break
 	case 9:
 		handleNum = 17
+		nextNum = 30
 		break
 	case 10:
 		handleNum = 30
+		nextNum = 41
 		break
 	case 11:
 		handleNum = 41
+		nextNum = 51
 		break
 	case 12:
 		handleNum = 51
+		nextNum = 60
 		break
 	case 13:
 		handleNum = 60
+		nextNum = 68
 		break
 	case 14:
 		handleNum = 68
+		nextNum = 75
 		break
 	case 15:
 		handleNum = 75
+		nextNum = 80
 		break
 	case 16:
 		handleNum = 80
+		nextNum = 84
 		break
 	case 17:
 		handleNum = 84
+		nextNum = 87
 		break
 	case 18:
 		handleNum = 87
+		nextNum = 89
 		break
 	case 19:
 		handleNum = 89
+		nextNum = 90
 		break
 	case 20:
 		handleNum = 90
+		nextNum = 89
 		break
 	case 21:
 		handleNum = 89
+		nextNum = 87
 		break
 	case 22:
 		handleNum = 87
+		nextNum = 84
 		break
 	case 23:
 		handleNum = 84
-		break
-	case 24:
-		handleNum = 80
+		nextNum = 80
 		break
 	case 0:
 		handleNum = 80
+		nextNum = 75
 		break
+	}
+
+	t2 := time.Now().Minute()
+	m1 := float64(t2) / 60
+	m2, _ := strconv.ParseFloat(fmt.Sprintf("%.2f", m1), 64)
+	if handleNum > nextNum { // -
+		m3 := handleNum - nextNum
+		m4 := m2 * float64(m3)
+		m5 := math.Floor(m4)
+		handleNum -= int(m5)
+	} else if handleNum < nextNum { // +
+		m3 := nextNum - handleNum
+		m4 := m2 * float64(m3)
+		m5 := math.Floor(m4)
+		handleNum += int(m5)
 	}
 
 	var minP int
