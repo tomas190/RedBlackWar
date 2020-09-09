@@ -103,6 +103,7 @@ func (r *Room) RobotsDownBet() {
 						if bet1 < 1000 {
 							randNum := RandInRange(1, 10)
 							for i := 0; i < randNum; i++ {
+								time.Sleep(time.Millisecond)
 								if v.Account < float64(bet1) {
 									//log.Debug("机器人:%v 下注金额小于身上筹码,下注失败~", v.Id)
 									continue
