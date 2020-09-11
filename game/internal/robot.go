@@ -67,7 +67,7 @@ func (r *Room) RobotsDownBet() {
 			for _, v := range r.PlayerList {
 				if v != nil && v.IsRobot == true {
 
-					timerSlice := []int32{50, 150, 20, 300, 30, 500}
+					timerSlice := []int32{50, 150, 20, 300, 30}
 					rand.Seed(time.Now().UnixNano())
 					num2 := rand.Intn(len(timerSlice))
 					time.Sleep(time.Millisecond * time.Duration(timerSlice[num2]))
@@ -103,7 +103,7 @@ func (r *Room) RobotsDownBet() {
 						if bet1 < 1000 {
 							randNum := RandInRange(1, 5)
 							for i := 0; i < randNum; i++ {
-								time.Sleep(time.Millisecond * 15)
+								time.Sleep(time.Millisecond * 20)
 								if v.Account < float64(bet1) {
 									//log.Debug("机器人:%v 下注金额小于身上筹码,下注失败~", v.Id)
 									continue
