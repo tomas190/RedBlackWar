@@ -101,7 +101,7 @@ func (r *Room) RobotsDownBet() {
 						v.IsAction = true
 
 						if bet1 < 1000 {
-							randNum := RandInRange(1, 10)
+							randNum := RandInRange(1, 5)
 							for i := 0; i < randNum; i++ {
 								time.Sleep(time.Millisecond * 15)
 								if v.Account < float64(bet1) {
