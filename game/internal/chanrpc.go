@@ -41,6 +41,10 @@ func rpcCloseAgent(args []interface{}) {
 			//DeletePlayer(p)
 			gameHall.UserRecord.Delete(p.Id)
 			p.PlayerReqExit()
+			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
+			leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
+			a.WriteMsg(leaveHall)
+			a.Close()
 		} else {
 			var exist bool
 			for _,v := range p.room.UserLeave{
@@ -52,10 +56,5 @@ func rpcCloseAgent(args []interface{}) {
 				p.room.UserLeave = append(p.room.UserLeave, p.Id)
 			}
 		}
-
-		c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
-		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
-		a.WriteMsg(leaveHall)
-		a.Close()
 	}
 }
