@@ -230,18 +230,18 @@ func UpdateSurPool(sur *SurPool) {
 
 // 玩家的记录
 type PlayerDownBetRecode struct {
-	Id          string        `json:"id" bson:"id"`                       // 玩家Id
-	GameId      string        `json:"game_id" bson:"game_id"`             // gameId
-	RoundId     string        `json:"round_id" bson:"round_id"`           // 随机Id
-	RoomId      string        `json:"room_id" bson:"room_id"`             // 所在房间
-	DownBetInfo *DownBetMoney `json:"down_bet_info" bson:"down_bet_info"` // 玩家各注池下注的金额
-	DownBetTime int64         `json:"down_bet_time" bson:"down_bet_time"` // 下注时间
-	StartTime   int64         `json:"start_time" bson:"start_time"`       // 开始时间
-	EndTime     int64         `json:"end_time" bson:"end_time"`           // 结束时间
-	CardResult  *CardData     `json:"card_result" bson:"card_result"`     // 当局开牌结果
-	ResultMoney float64       `json:"result_money" bson:"result_money"`   // 当局输赢结果(税后)
-	TaxRate     float64       `json:"tax_rate" bson:"tax_rate"`           // 税率
-	//ViewInfo    *ViewInfo     `json:"view_info" bson:"view_info"`         // 返回給前端的显示信息
+	Id              string        `json:"id" bson:"id"`                             // 玩家Id
+	GameId          string        `json:"game_id" bson:"game_id"`                   // gameId
+	RoundId         string        `json:"round_id" bson:"round_id"`                 // 随机Id
+	RoomId          string        `json:"room_id" bson:"room_id"`                   // 所在房间
+	DownBetInfo     *DownBetMoney `json:"down_bet_info" bson:"down_bet_info"`       // 玩家各注池下注的金额
+	DownBetTime     int64         `json:"down_bet_time" bson:"down_bet_time"`       // 下注时间
+	StartTime       int64         `json:"start_time" bson:"start_time"`             // 开始时间
+	EndTime         int64         `json:"end_time" bson:"end_time"`                 // 结束时间
+	CardResult      *CardData     `json:"card_result" bson:"card_result"`           // 当局开牌结果
+	SettlementFunds float64       `json:"settlement_funds" bson:"settlement_funds"` // 当局输赢结果(税后)
+	SpareCash       float64       `json:"spare_cash" bson:"spare_cash"`             // 剩余金额
+	TaxRate         float64       `json:"tax_rate" bson:"tax_rate"`                 // 税率
 }
 
 //InsertAccessData 插入运营数据接入

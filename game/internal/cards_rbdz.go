@@ -410,7 +410,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data.CardResult.BlackCard = v.room.Cards.BlackCard
 						data.CardResult.RedType = v.room.Cards.RedType
 						data.CardResult.BlackType = v.room.Cards.BlackType
-						data.ResultMoney = v.ResultMoney
+						data.SettlementFunds = v.ResultMoney
+						data.SpareCash = v.Account
 						data.TaxRate = taxRate
 						InsertAccessData(data)
 					}
@@ -660,7 +661,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data.CardResult.BlackCard = v.room.Cards.BlackCard
 						data.CardResult.RedType = v.room.Cards.RedType
 						data.CardResult.BlackType = v.room.Cards.BlackType
-						data.ResultMoney = v.ResultMoney
+						data.SettlementFunds = v.ResultMoney
+						data.SpareCash = v.Account
 						data.TaxRate = taxRate
 						InsertAccessData(data)
 					}
