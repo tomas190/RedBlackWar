@@ -164,7 +164,7 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	//	selector["limit"] = limits
 	//}
 
-	recodes, count, err := GetDownRecodeList(skips, limits, selector, "down_bet_time")
+	recodes, count, err := GetDownRecodeList(skips, limits, selector, "-down_bet_time")
 	if err != nil {
 		return
 	}
