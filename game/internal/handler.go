@@ -141,6 +141,11 @@ func handleJoinRoom(args []interface{}) {
 	p, ok := a.UserData().(*Player)
 	log.Debug("handleJoinRoom 玩家加入房间~ : %v", p.Id)
 
+	if p.Id == "" {
+		log.Debug("玩家的数据为空,进入不了房间~")
+		return
+	}
+
 	if ok {
 		gameHall.PlayerJoinRoom(m.RoomId, p)
 	}
