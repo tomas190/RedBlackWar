@@ -60,6 +60,7 @@ type GetSurPool struct {
 	SurplusPool                    float64 `json:"surplus_pool" bson:"surplus_pool"`
 	PlayerLoseRateAfterSurplusPool float64 `json:"player_lose_rate_after_surplus_pool" bson:"player_lose_rate_after_surplus_pool"`
 	DataCorrection                 float64 `json:"data_correction" bson:"data_correction"`
+	PlayerWinRate                  float64 `json:"player_win_rate" bson:"player_win_rate"`
 }
 
 type UpSurPool struct {
@@ -68,6 +69,7 @@ type UpSurPool struct {
 	CoefficientToTotalPlayer       int32   `json:"coefficient_to_total_player" bson:"coefficient_to_total_player"`
 	FinalPercentage                float64 `json:"final_percentage" bson:"final_percentage"`
 	DataCorrection                 float64 `json:"data_correction" bson:"data_correction"`
+	PlayerWinRate                  float64 `json:"player_win_rate" bson:"player_win_rate"`
 }
 
 type GRobotData struct {
@@ -273,6 +275,7 @@ func getSurplusOne(w http.ResponseWriter, r *http.Request) {
 	getSur.SurplusPool = result.SurplusPool
 	getSur.PlayerLoseRateAfterSurplusPool = result.PlayerLoseRateAfterSurplusPool
 	getSur.DataCorrection = result.DataCorrection
+	getSur.PlayerWinRate = result.PlayerWinRate
 
 	js, err := json.Marshal(NewResp(SuccCode, "", getSur))
 	if err != nil {
@@ -290,6 +293,7 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 	coefficient := r.PostFormValue("coefficient_to_total_player")
 	final := r.PostFormValue("final_percentage")
 	correction := r.PostFormValue("data_correction")
+	winRate := r.PostFormValue("player_win_rate")
 
 	s, c := connect(dbName, surPool)
 	defer s.Close()
@@ -306,6 +310,7 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 	upt.CoefficientToTotalPlayer = sur.CoefficientToTotalPlayer
 	upt.FinalPercentage = sur.FinalPercentage
 	upt.DataCorrection = sur.DataCorrection
+	upt.PlayerWinRate = sur.PlayerWinRate
 
 	if rateSur != "" {
 		upt.PlayerLoseRateAfterSurplusPool, _ = strconv.ParseFloat(rateSur, 64)
@@ -327,6 +332,10 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 	if correction != "" {
 		upt.DataCorrection, _ = strconv.ParseFloat(correction, 64)
 		sur.DataCorrection = upt.DataCorrection
+	}
+	if winRate != "" {
+		upt.PlayerWinRate, _ = strconv.ParseFloat(winRate, 64)
+		sur.PlayerWinRate = upt.PlayerWinRate
 	}
 
 	sur.SurplusPool = (sur.PlayerTotalLose - (sur.PlayerTotalWin * sur.PercentageToTotalWin) - float64(sur.TotalPlayer*sur.CoefficientToTotalPlayer) + sur.DataCorrection) * sur.FinalPercentage

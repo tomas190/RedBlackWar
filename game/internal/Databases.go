@@ -165,6 +165,7 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	SurPool.CoefficientToTotalPlayer = sur.PlayerNum * 0
 	SurPool.PlayerLoseRateAfterSurplusPool = 0.7
 	SurPool.DataCorrection = 0
+	SurPool.PlayerWinRate = 0.6
 	FindSurPool(SurPool)
 }
 
@@ -180,6 +181,7 @@ type SurPool struct {
 	SurplusPool                    float64 `json:"surplus_pool" bson:"surplus_pool"`
 	PlayerLoseRateAfterSurplusPool float64 `json:"player_lose_rate_after_surplus_pool" bson:"player_lose_rate_after_surplus_pool"`
 	DataCorrection                 float64 `json:"data_correction" bson:"data_correction"`
+	PlayerWinRate                  float64 `json:"player_win_rate" bson:"player_win_rate"`
 }
 
 func FindSurPool(SurP *SurPool) {
@@ -197,8 +199,22 @@ func FindSurPool(SurP *SurPool) {
 		SurP.CoefficientToTotalPlayer = sur.CoefficientToTotalPlayer
 		SurP.PlayerLoseRateAfterSurplusPool = sur.PlayerLoseRateAfterSurplusPool
 		SurP.DataCorrection = sur.DataCorrection
+		SurP.PlayerWinRate = sur.PlayerWinRate
 		UpdateSurPool(SurP)
 	}
+}
+
+func GetFindSurPool() *SurPool {
+	s, c := connect(dbName, surPool)
+	defer s.Close()
+
+	sur := &SurPool{}
+	err := c.Find(nil).One(sur)
+	if err != nil {
+		log.Debug("获取GetFindSurPool数据错误:%v", err)
+		return nil
+	}
+	return sur
 }
 
 //插入盈余池统一字段

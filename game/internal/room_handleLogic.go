@@ -457,15 +457,21 @@ func (r *Room) GameCheckout() bool {
 			}
 		}
 	}
-	settle := (totalWinMoney + taxWinMoney) - totalLoseMoney
-	//log.Debug("<-------- SurplusPool盈余池: %v --------->", SurplusPool)
-	//log.Debug("<-------- settle  结 算 金 额: %v --------->", settle)
-	//log.Debug("<-------- SurplusPool可输金额: %v --------->", SurplusPool*SurplusTax)
 
-	//playerNum := r.PlayerLength()
-	//if settle > ((SurplusPool * SurplusTax) * float64(playerNum*6)) {}
-	//log.Debug("settle :%v",settle)
-	//log.Debug("(SurplusPool * SurplusTax) :%v",SurplusPool * SurplusTax)
+	settle := (totalWinMoney + taxWinMoney) - totalLoseMoney
+
+	sur := GetFindSurPool()
+	randNum := sur.PlayerWinRate * 10
+	num := RandInRange(1, 11)
+	if num > int(randNum) {
+		if settle <= 0 {
+			aCard = a
+			bCard = b
+			return true
+		}
+		return false
+	}
+
 	if settle > (SurplusPool * SurplusTax) {
 		if settle <= 0 {
 			aCard = a
