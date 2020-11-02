@@ -506,7 +506,7 @@ func (r *Room) CompareSettlement() {
 	//3、机器人不计算在盈余池之类，但是也要根据比牌结果来对金额进行加减
 
 	//开始计算牌型盈余池,如果亏损就换牌
-	for i := 0; i < 100; i++ {
+	for {
 		b := r.GameCheckout()
 		if b == true {
 			break
