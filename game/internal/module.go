@@ -43,4 +43,3 @@ func (m *Module) OnInit() {
 func (m *Module) OnDestroy() {
 	c4c.onDestroy()
 }
-

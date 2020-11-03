@@ -309,7 +309,7 @@ func (r *Room) SettlerTimerTask() {
 }
 
 //PlayerAction 玩家游戏结算
-func (r *Room) GameCheckout() bool {
+func (r *Room) GameCheckout(randNum int) bool {
 
 	rb := &RBdzDealer{}
 	a, b := rb.Deal()
@@ -461,9 +461,9 @@ func (r *Room) GameCheckout() bool {
 	settle := (totalWinMoney + taxWinMoney) - totalLoseMoney
 
 	sur := GetFindSurPool()
-	randNum := sur.PlayerWinRate * 10
-	num := RandInRange(1, 11)
-	if num > int(randNum) {
+	winRate := sur.PlayerWinRate * 10
+	rateAfter := sur.PlayerLoseRateAfterSurplusPool * 10
+	if randNum > int(winRate) {
 		if settle <= 0 {
 			aCard = a
 			bCard = b
@@ -472,14 +472,30 @@ func (r *Room) GameCheckout() bool {
 		return false
 	}
 
-	if settle > (SurplusPool * SurplusTax) {
-		if settle <= 0 {
+	if SurplusPool > 0 {
+		if settle > 0 {
 			aCard = a
 			bCard = b
 			return true
 		}
-		//log.Debug("<<============== 盈余池金额不足,换牌 ==============>>")
 		return false
+	} else {
+		rateNum := RandInRange(1, 11)
+		if rateNum > int(rateAfter) {
+			if settle <= 0 {
+				aCard = a
+				bCard = b
+				return true
+			}
+			return false
+		} else {
+			if settle > 0 {
+				aCard = a
+				bCard = b
+				return true
+			}
+			return false
+		}
 	}
 	aCard = a
 	bCard = b
@@ -506,8 +522,9 @@ func (r *Room) CompareSettlement() {
 	//3、机器人不计算在盈余池之类，但是也要根据比牌结果来对金额进行加减
 
 	//开始计算牌型盈余池,如果亏损就换牌
+	randNum := RandInRange(1, 11)
 	for {
-		b := r.GameCheckout()
+		b := r.GameCheckout(randNum)
 		if b == true {
 			break
 		}

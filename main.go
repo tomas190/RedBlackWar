@@ -23,4 +23,6 @@ func main() {
 		gate.Module,
 		// login.Module,  //login模块直接在game模块里面处理
 	)
+
+
 }

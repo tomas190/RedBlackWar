@@ -7,6 +7,9 @@
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/module.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/module.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/room_handleLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/room_handleLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common/hall.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common/hall/animation.meta" beforeDir="false" />
@@ -3203,13 +3206,13 @@
       <recent name="C:\Users\tomas\go\src\server\game\test" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.Test_AnalyseCards in RedBlack-War/game/internal">
-    <configuration name="go build handler.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Build.go build RedBlack-War">
+    <configuration name="go build RedBlack-War" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="server" />
-      <working_directory value="$PROJECT_DIR$/" />
-      <kind value="FILE" />
-      <filePath value="$USER_HOME$/go/src/server/main.go" />
-      <package value="server" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <package value="RedBlack-War" />
       <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
@@ -3222,6 +3225,17 @@
       <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
+    <configuration name="TestClient in RedBlack-War/game/internal" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <working_directory value="$PROJECT_DIR$/game/internal" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="RedBlack-War/game/internal" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestClient$" />
+      <method v="2" />
+    </configuration>
     <configuration name="Test_AnalyseCards in RedBlack-War/game/internal" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <working_directory value="$PROJECT_DIR$/game/internal" />
@@ -3231,17 +3245,6 @@
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
       <pattern value="^Test_AnalyseCards$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Test_Dealer in server/game/card" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <working_directory value="$PROJECT_DIR$/game/card" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="server/game/card" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^Test_Dealer$" />
       <method v="2" />
     </configuration>
     <configuration name="Test_Dealer in server/game/internal" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -3256,19 +3259,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Go Build.go build handler.go (1)" />
       <item itemvalue="Go Build.go build player_handle.go" />
-      <item itemvalue="Go Test.Test_Dealer in server/game/card" />
       <item itemvalue="Go Test.Test_Dealer in server/game/internal" />
       <item itemvalue="Go Test.Test_AnalyseCards in RedBlack-War/game/internal" />
+      <item itemvalue="Go Test.TestClient in RedBlack-War/game/internal" />
+      <item itemvalue="Go Build.go build RedBlack-War" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build RedBlack-War" />
+        <item itemvalue="Go Test.TestClient in RedBlack-War/game/internal" />
         <item itemvalue="Go Test.Test_AnalyseCards in RedBlack-War/game/internal" />
         <item itemvalue="Go Build.go build player_handle.go" />
         <item itemvalue="Go Test.Test_Dealer in server/game/internal" />
-        <item itemvalue="Go Test.Test_Dealer in server/game/card" />
-        <item itemvalue="Go Build.go build handler.go (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -3296,26 +3299,26 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1602735717429" />
-    <state width="1237" height="330" key="GridCell.Tab.0.bottom" timestamp="1604128229058">
+    <state width="1237" height="200" key="GridCell.Tab.0.bottom" timestamp="1604395803356">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="330" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604128229058" />
-    <state width="1237" height="330" key="GridCell.Tab.0.center" timestamp="1604128229058">
+    <state width="1237" height="200" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604395803356" />
+    <state width="1237" height="200" key="GridCell.Tab.0.center" timestamp="1604395803356">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="330" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604128229058" />
-    <state width="1237" height="330" key="GridCell.Tab.0.left" timestamp="1604128229058">
+    <state width="1237" height="200" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604395803356" />
+    <state width="1237" height="200" key="GridCell.Tab.0.left" timestamp="1604395803355">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="330" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604128229058" />
-    <state width="1237" height="330" key="GridCell.Tab.0.right" timestamp="1604128229058">
+    <state width="1237" height="200" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604395803355" />
+    <state width="1237" height="200" key="GridCell.Tab.0.right" timestamp="1604395803356">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="330" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604128229058" />
-    <state x="254" y="40" width="773" height="600" key="find.popup" timestamp="1598858854813">
+    <state width="1237" height="200" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604395803356" />
+    <state x="254" y="40" width="773" height="600" key="find.popup" timestamp="1604322245183">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="254" y="40" width="773" height="600" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1598858854813" />
+    <state x="254" y="40" width="773" height="600" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1604322245183" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1599051157221">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
