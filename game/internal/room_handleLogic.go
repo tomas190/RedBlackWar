@@ -523,7 +523,7 @@ func (r *Room) CompareSettlement() {
 
 	//开始计算牌型盈余池,如果亏损就换牌
 	randNum := RandInRange(1, 11)
-	for {
+	for i := 0; i < 100; i++ {
 		b := r.GameCheckout(randNum)
 		if b == true {
 			break
