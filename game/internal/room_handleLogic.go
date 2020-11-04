@@ -473,7 +473,7 @@ func (r *Room) GameCheckout(randNum, rateNum int) bool {
 		return false
 	}
 
-	if settle > SurplusPool {
+	if SurplusPool < 0 {
 		if rateNum > int(rateAfter) {
 			if settle < 0 {
 				log.Debug("判断进来2")
