@@ -309,7 +309,7 @@ func (r *Room) SettlerTimerTask() {
 }
 
 //PlayerAction 玩家游戏结算
-func (r *Room) GameCheckout(randNum int) bool {
+func (r *Room) GameCheckout(randNum, rateNum int) bool {
 
 	rb := &RBdzDealer{}
 	a, b := rb.Deal()
@@ -473,8 +473,8 @@ func (r *Room) GameCheckout(randNum int) bool {
 	}
 
 	if settle > SurplusPool {
-		rateNum := RandInRange(1, 101)
 		if rateNum > int(rateAfter) {
+			log.Debug("判断进来 settle > 0")
 			if settle > 0 {
 				aCard = a
 				bCard = b
@@ -482,6 +482,7 @@ func (r *Room) GameCheckout(randNum int) bool {
 			}
 			return false
 		} else {
+			log.Debug("判断进来 settle <= 0")
 			if settle <= 0 {
 				aCard = a
 				bCard = b
@@ -520,8 +521,9 @@ func (r *Room) CompareSettlement() {
 
 	//开始计算牌型盈余池,如果亏损就换牌
 	randNum := RandInRange(1, 101)
+	rateNum := RandInRange(1, 101)
 	for {
-		b := r.GameCheckout(randNum)
+		b := r.GameCheckout(randNum, rateNum)
 		if b == true {
 			break
 		}
