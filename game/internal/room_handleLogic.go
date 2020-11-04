@@ -464,6 +464,7 @@ func (r *Room) GameCheckout(randNum, rateNum int) bool {
 	winRate := sur.PlayerWinRate * 100
 	rateAfter := sur.PlayerLoseRateAfterSurplusPool * 100
 	if randNum > int(winRate) {
+		log.Debug("判断进来1")
 		if settle <= 0 {
 			aCard = a
 			bCard = b
@@ -474,15 +475,15 @@ func (r *Room) GameCheckout(randNum, rateNum int) bool {
 
 	if settle > SurplusPool {
 		if rateNum > int(rateAfter) {
-			log.Debug("判断进来 settle > 0")
-			if settle >= 0 {
-				aCard = a
-				bCard = b
-				return true
+			if settle < 0 {
+				log.Debug("判断进来2")
+				return false
 			}
-			return false
+			aCard = a
+			bCard = b
+			return true
 		} else {
-			log.Debug("判断进来 settle <= 0")
+			log.Debug("判断进来3")
 			if settle <= 0 {
 				aCard = a
 				bCard = b
@@ -491,12 +492,13 @@ func (r *Room) GameCheckout(randNum, rateNum int) bool {
 			return false
 		}
 	} else {
-		if settle >= 0 {
-			aCard = a
-			bCard = b
-			return true
+		if settle < 0 {
+			log.Debug("判断进来4")
+			return false
 		}
-		return false
+		aCard = a
+		bCard = b
+		return true
 	}
 }
 
