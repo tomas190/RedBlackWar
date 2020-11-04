@@ -461,8 +461,8 @@ func (r *Room) GameCheckout(randNum int) bool {
 	settle := (totalWinMoney + taxWinMoney) - totalLoseMoney
 
 	sur := GetFindSurPool()
-	winRate := sur.PlayerWinRate * 10
-	rateAfter := sur.PlayerLoseRateAfterSurplusPool * 10
+	winRate := sur.PlayerWinRate * 100
+	rateAfter := sur.PlayerLoseRateAfterSurplusPool * 100
 	if randNum > int(winRate) {
 		if settle <= 0 {
 			aCard = a
@@ -472,34 +472,31 @@ func (r *Room) GameCheckout(randNum int) bool {
 		return false
 	}
 
-	if SurplusPool > 0 {
-		if settle > 0 {
-			aCard = a
-			bCard = b
-			return true
-		}
-		return false
-	} else {
-		rateNum := RandInRange(1, 11)
+	if settle > SurplusPool {
+		rateNum := RandInRange(1, 101)
 		if rateNum > int(rateAfter) {
-			if settle <= 0 {
-				aCard = a
-				bCard = b
-				return true
-			}
-			return false
-		} else {
 			if settle > 0 {
 				aCard = a
 				bCard = b
 				return true
 			}
 			return false
+		} else {
+			if settle <= 0 {
+				aCard = a
+				bCard = b
+				return true
+			}
+			return false
 		}
+	} else {
+		if settle > 0 {
+			aCard = a
+			bCard = b
+			return true
+		}
+		return false
 	}
-	aCard = a
-	bCard = b
-	return true
 }
 
 //CompareSettlement 开始比牌结算
@@ -522,8 +519,8 @@ func (r *Room) CompareSettlement() {
 	//3、机器人不计算在盈余池之类，但是也要根据比牌结果来对金额进行加减
 
 	//开始计算牌型盈余池,如果亏损就换牌
-	randNum := RandInRange(1, 11)
-	for i := 0; i < 100; i++ {
+	randNum := RandInRange(1, 101)
+	for {
 		b := r.GameCheckout(randNum)
 		if b == true {
 			break

@@ -59,7 +59,6 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 	// 检查剩余牌数量
 	offset := 0
 	if len(this.Poker) < 6 {
-
 		RandNum, err := GetRandNumber()
 		if err == nil {
 			this.Poker = RandNum
