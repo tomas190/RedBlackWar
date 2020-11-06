@@ -142,7 +142,6 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	s, c := connect(dbName, surPlusDB)
 	defer s.Close()
 
-	sur.PoolMoney = (sur.HistoryLose - (sur.HistoryWin * 1)) * 0.5
 	SurplusPool = sur.PoolMoney
 	log.Debug("surplusPoolDB 数据: %v", sur.PoolMoney)
 
@@ -166,6 +165,10 @@ func InsertSurplusPool(sur *SurplusPoolDB) {
 	SurPool.PlayerLoseRateAfterSurplusPool = 0.7
 	SurPool.DataCorrection = 0
 	SurPool.PlayerWinRate = 0.6
+	SurPool.RandomCountAfterWin = 0
+	SurPool.RandomCountAfterLose = 0
+	SurPool.RandomPercentageAfterWin = 0.6
+	SurPool.RandomPercentageAfterLose = 0.6
 	FindSurPool(SurPool)
 }
 
@@ -182,6 +185,10 @@ type SurPool struct {
 	PlayerLoseRateAfterSurplusPool float64 `json:"player_lose_rate_after_surplus_pool" bson:"player_lose_rate_after_surplus_pool"`
 	DataCorrection                 float64 `json:"data_correction" bson:"data_correction"`
 	PlayerWinRate                  float64 `json:"player_win_rate" bson:"player_win_rate"`
+	RandomCountAfterWin            float64 `json:"random_count_after_win" bson:"random_count_after_win"`
+	RandomCountAfterLose           float64 `json:"random_count_after_lose" bson:"random_count_after_lose"`
+	RandomPercentageAfterWin       float64 `json:"random_percentage_after_win" bson:"random_percentage_after_win"`
+	RandomPercentageAfterLose      float64 `json:"random_percentage_after_lose" bson:"random_percentage_after_lose"`
 }
 
 func FindSurPool(SurP *SurPool) {
@@ -200,6 +207,10 @@ func FindSurPool(SurP *SurPool) {
 		SurP.PlayerLoseRateAfterSurplusPool = sur.PlayerLoseRateAfterSurplusPool
 		SurP.DataCorrection = sur.DataCorrection
 		SurP.PlayerWinRate = sur.PlayerWinRate
+		SurP.RandomCountAfterWin = sur.RandomCountAfterWin
+		SurP.RandomCountAfterLose = sur.RandomCountAfterLose
+		SurP.RandomPercentageAfterWin = sur.RandomPercentageAfterWin
+		SurP.RandomPercentageAfterLose = sur.RandomPercentageAfterLose
 		UpdateSurPool(SurP)
 	}
 }

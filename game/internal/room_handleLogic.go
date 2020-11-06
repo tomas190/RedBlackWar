@@ -308,9 +308,7 @@ func (r *Room) SettlerTimerTask() {
 	}()
 }
 
-//PlayerAction 玩家游戏结算
-func (r *Room) GameCheckout(randNum, rateNum int) bool {
-
+func (r *Room) GetCardSettle() float64 {
 	rb := &RBdzDealer{}
 	a, b := rb.Deal()
 
@@ -458,44 +456,106 @@ func (r *Room) GameCheckout(randNum, rateNum int) bool {
 		}
 	}
 
+	aCard = a
+	bCard = b
+
 	settle := (totalWinMoney + taxWinMoney) - totalLoseMoney
+	return settle
+}
+
+//PlayerAction 玩家游戏结算
+func (r *Room) GameCheckout() {
 
 	sur := GetFindSurPool()
-	winRate := sur.PlayerWinRate * 100
-	rateAfter := sur.PlayerLoseRateAfterSurplusPool * 100
+	loseRate := sur.PlayerLoseRateAfterSurplusPool * 100
+	percentageWin := sur.RandomPercentageAfterWin * 100
+	percentageLose := sur.RandomPercentageAfterLose * 100
+	countWin := sur.RandomCountAfterWin
+	countLose := sur.RandomCountAfterLose
+	surplusPool := sur.SurplusPool
 
-	if randNum > int(winRate) {
-		if settle <= 0 {
-			aCard = a
-			bCard = b
-			return true
-		}
-		return false
-	}
-
-	if SurplusPool < 0 {
-		if rateNum > int(rateAfter) {
-			if settle < 0 {
-				return false
+	settle := r.GetCardSettle()
+	if settle >= 0 { // 玩家赢钱
+		for {
+			loseRateNum := RandInRange(1, 101)
+			percentageWinNum := RandInRange(1, 101)
+			settle = r.GetCardSettle()
+			if countWin > 0 {
+				if int(percentageWin) > percentageWinNum { // 盈余池判定
+					if surplusPool > settle { // 盈余池足够
+						break
+					} else {                             // 盈余池不足
+						if loseRateNum > int(loseRate) { // 30%玩家赢钱
+							break
+						} else { // 70%玩家输钱
+							for {
+								settle := r.GetCardSettle()
+								if settle <= 0 {
+									return
+								}
+							}
+						}
+					}
+				} else { // 又随机生成牌型
+					settle := r.GetCardSettle()
+					if settle > 0 { // 玩家赢
+						countWin--
+					} else {
+						break
+					}
+				}
+			} else {
+				// 盈余池判定
+				if surplusPool > settle { // 盈余池足够
+					break
+				} else {                             // 盈余池不足
+					if loseRateNum > int(loseRate) { // 30%玩家赢钱
+						break
+					} else { // 70%玩家输钱
+						for {
+							settle := r.GetCardSettle()
+							if settle <= 0 {
+								return
+							}
+						}
+					}
+				}
 			}
-			aCard = a
-			bCard = b
-			return true
-		} else {
-			if settle <= 0 {
-				aCard = a
-				bCard = b
-				return true
+		}
+	} else { // 玩家输钱
+		for {
+			loseRateNum := RandInRange(1, 101)
+			percentageLoseNum := RandInRange(1, 101)
+			settle = r.GetCardSettle()
+			if countLose > 0 {
+				if int(percentageLose) > percentageLoseNum {
+					break
+				} else { // 又随机生成牌型
+					settle := r.GetCardSettle()
+					if settle > 0 { // 玩家赢
+						// 盈余池判定
+						if surplusPool > settle { // 盈余池足够
+							break
+						} else {                             // 盈余池不足
+							if loseRateNum > int(loseRate) { // 30%玩家赢钱
+								for {
+									settle := r.GetCardSettle()
+									if settle >= 0 {
+										return
+									}
+								}
+							} else { // 70%玩家输钱
+								break
+							}
+						}
+					} else {
+						countLose--
+					}
+				}
+			} else { // 玩家输钱
+				break
 			}
-			return false
 		}
-	} else {
-		if settle < 0 {
-			return false
-		}
-		aCard = a
-		bCard = b
-		return true
 	}
 }
 
@@ -519,14 +579,8 @@ func (r *Room) CompareSettlement() {
 	//3、机器人不计算在盈余池之类，但是也要根据比牌结果来对金额进行加减
 
 	//开始计算牌型盈余池,如果亏损就换牌
-	randNum := RandInRange(1, 101)
-	rateNum := RandInRange(1, 101)
-	for {
-		b := r.GameCheckout(randNum, rateNum)
-		if b == true {
-			break
-		}
-	}
+	r.GameCheckout()
+
 	//开始摊牌和结算玩家金额
 	r.RBdzPk(aCard, bCard)
 

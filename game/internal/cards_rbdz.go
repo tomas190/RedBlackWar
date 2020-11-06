@@ -70,6 +70,8 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 
 	}
 
+	//this.Poker = nil
+
 	if this.Poker == nil {
 		log.Debug("this.Poker牌值为空~")
 		this.Poker = NewPoker(1, false, true)
