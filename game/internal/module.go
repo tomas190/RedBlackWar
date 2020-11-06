@@ -2,11 +2,7 @@ package internal
 
 import (
 	"RedBlack-War/base"
-	"fmt"
-	"github.com/name5566/leaf/log"
 	"github.com/name5566/leaf/module"
-	"math/rand"
-	"time"
 )
 
 var (
