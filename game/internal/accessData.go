@@ -299,7 +299,6 @@ func getSurplusOne(w http.ResponseWriter, r *http.Request) {
 }
 
 func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
-
 	rateSur := r.PostFormValue("player_lose_rate_after_surplus_pool")
 	percentage := r.PostFormValue("percentage_to_total_win")
 	coefficient := r.PostFormValue("coefficient_to_total_player")
@@ -358,22 +357,21 @@ func uptSurplusOne(w http.ResponseWriter, r *http.Request) {
 		sur.PlayerWinRate = upt.PlayerWinRate
 	}
 	if countWin != "" {
-		upt.RandomCountAfterWin, _ = strconv.ParseFloat(winRate, 64)
+		upt.RandomCountAfterWin, _ = strconv.ParseFloat(countWin, 64)
 		sur.RandomCountAfterWin = upt.RandomCountAfterWin
 	}
 	if countLose != "" {
-		upt.RandomCountAfterLose, _ = strconv.ParseFloat(winRate, 64)
+		upt.RandomCountAfterLose, _ = strconv.ParseFloat(countLose, 64)
 		sur.RandomCountAfterLose = upt.RandomCountAfterLose
 	}
 	if percentageWin != "" {
-		upt.RandomPercentageAfterWin, _ = strconv.ParseFloat(winRate, 64)
+		upt.RandomPercentageAfterWin, _ = strconv.ParseFloat(percentageWin, 64)
 		sur.RandomPercentageAfterWin = upt.RandomPercentageAfterWin
 	}
 	if percentageLose != "" {
-		upt.RandomPercentageAfterLose, _ = strconv.ParseFloat(winRate, 64)
+		upt.RandomPercentageAfterLose, _ = strconv.ParseFloat(percentageLose, 64)
 		sur.RandomPercentageAfterLose = upt.RandomPercentageAfterLose
 	}
-
 
 	sur.SurplusPool = (sur.PlayerTotalLose - (sur.PlayerTotalWin * sur.PercentageToTotalWin) - float64(sur.TotalPlayer*sur.CoefficientToTotalPlayer) + sur.DataCorrection) * sur.FinalPercentage
 	// 更新盈余池数据
