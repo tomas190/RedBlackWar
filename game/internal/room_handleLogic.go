@@ -481,7 +481,7 @@ func (r *Room) GameCheckout() {
 			percentageWinNum := RandInRange(1, 101)
 			settle = r.GetCardSettle()
 			if countWin > 0 {
-				if int(percentageWin) > percentageWinNum { // 盈余池判定
+				if percentageWinNum > int(percentageWin) { // 盈余池判定
 					if surplusPool > settle { // 盈余池足够
 						break
 					} else {                             // 盈余池不足
@@ -528,7 +528,7 @@ func (r *Room) GameCheckout() {
 			percentageLoseNum := RandInRange(1, 101)
 			settle = r.GetCardSettle()
 			if countLose > 0 {
-				if int(percentageLose) > percentageLoseNum {
+				if percentageLoseNum > int(percentageLose) {
 					break
 				} else { // 又随机生成牌型
 					settle := r.GetCardSettle()
