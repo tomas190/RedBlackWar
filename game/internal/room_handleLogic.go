@@ -479,7 +479,6 @@ func (r *Room) GameCheckout() {
 		for {
 			loseRateNum := RandInRange(1, 101)
 			percentageWinNum := RandInRange(1, 101)
-			settle = r.GetCardSettle()
 			if countWin > 0 {
 				if percentageWinNum > int(percentageWin) { // 盈余池判定
 					if surplusPool > settle { // 盈余池足够
@@ -526,7 +525,6 @@ func (r *Room) GameCheckout() {
 		for {
 			loseRateNum := RandInRange(1, 101)
 			percentageLoseNum := RandInRange(1, 101)
-			settle = r.GetCardSettle()
 			if countLose > 0 {
 				if percentageLoseNum > int(percentageLose) {
 					break
@@ -545,7 +543,12 @@ func (r *Room) GameCheckout() {
 									}
 								}
 							} else { // 70%玩家输钱
-								break
+								for {
+									settle := r.GetCardSettle()
+									if settle <= 0 {
+										return
+									}
+								}
 							}
 						}
 					} else {
@@ -553,7 +556,12 @@ func (r *Room) GameCheckout() {
 					}
 				}
 			} else { // 玩家输钱
-				break
+				for {
+					settle := r.GetCardSettle()
+					if settle <= 0 {
+						return
+					}
+				}
 			}
 		}
 	}

@@ -58,19 +58,19 @@ var (
 func (this *RBdzDealer) Deal() ([]byte, []byte) {
 	// 检查剩余牌数量
 	offset := 0
-	if len(this.Poker) < 6 {
-		RandNum, err := GetRandNumber()
-		if err == nil {
-			this.Poker = RandNum
-			//log.Debug("<<====== RandNum随机数值 ======>>")
-		} else {
-			this.Poker = NewPoker(1, false, true)
-			//log.Debug("<<====== NewPoker随机数值 ======>>")
-		}
+	//if len(this.Poker) < 6 {
+	//	RandNum, err := GetRandNumber()
+	//	if err == nil {
+	//		this.Poker = RandNum
+	//		//log.Debug("<<====== RandNum随机数值 ======>>")
+	//	} else {
+	//		this.Poker = NewPoker(1, false, true)
+	//		//log.Debug("<<====== NewPoker随机数值 ======>>")
+	//	}
+	//
+	//}
 
-	}
-
-	//this.Poker = nil
+	this.Poker = nil
 
 	if this.Poker == nil {
 		log.Debug("this.Poker牌值为空~")

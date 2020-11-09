@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c9afdff-253a-49cb-a98b-ad8c890a28f5" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/../.~lock.TOMAS技术测试模块 (3).xlsx#" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.~lock.TOMAS技术测试模块 (4).xlsx#" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TOMAS技术测试模块 (3).xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TOMAS技术测试模块 (4).xlsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../doudizhu-cocos/.idea/doudizhu-cocos.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../多语言资源.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../测试.txt" afterDir="false" />
@@ -3302,22 +3303,22 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1602735717429" />
-    <state width="1237" height="247" key="GridCell.Tab.0.bottom" timestamp="1604815084360">
+    <state width="1237" height="247" key="GridCell.Tab.0.bottom" timestamp="1604907250745">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="247" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604815084360" />
-    <state width="1237" height="247" key="GridCell.Tab.0.center" timestamp="1604815084359">
+    <state width="1237" height="247" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604907250745" />
+    <state width="1237" height="247" key="GridCell.Tab.0.center" timestamp="1604907250745">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="247" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604815084359" />
-    <state width="1237" height="247" key="GridCell.Tab.0.left" timestamp="1604815084359">
+    <state width="1237" height="247" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604907250745" />
+    <state width="1237" height="247" key="GridCell.Tab.0.left" timestamp="1604907250745">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="247" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604815084359" />
-    <state width="1237" height="247" key="GridCell.Tab.0.right" timestamp="1604815084359">
+    <state width="1237" height="247" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604907250745" />
+    <state width="1237" height="247" key="GridCell.Tab.0.right" timestamp="1604907250745">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="247" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604815084359" />
+    <state width="1237" height="247" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604907250745" />
     <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1604722590650">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -3373,7 +3374,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/game/internal/module.go</url>
-          <line>20</line>
+          <line>22</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
