@@ -18,7 +18,7 @@ type GameDataReq struct {
 	RoundId   string `form:"round_id" json:"round_id"`
 	StartTime string `form:"start_time" json:"start_time"`
 	EndTime   string `form:"end_time" json:"end_time"`
-	Skip      string `form:"skip" json:"skip"`
+	Page      string `form:"page" json:"page"`
 	Limit     string `form:"limit" json:"limit"`
 }
 
@@ -133,7 +133,7 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	req.RoundId = r.FormValue("round_id")
 	req.StartTime = r.FormValue("start_time")
 	req.EndTime = r.FormValue("end_time")
-	req.Skip = r.FormValue("skip")
+	req.Page = r.FormValue("page")
 	req.Limit = r.FormValue("limit")
 
 	selector := bson.M{}
@@ -170,9 +170,9 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 		selector["end_time"] = bson.M{"$lte": eTime}
 	}
 
-	skips, _ := strconv.Atoi(req.Skip)
-	if skips != 0 {
-		selector["skip"] = skips
+	page, _ := strconv.Atoi(req.Page)
+	if page != 0 {
+		selector["page"] = page
 	}
 
 	limits, _ := strconv.Atoi(req.Limit)
@@ -180,7 +180,7 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	//	selector["limit"] = limits
 	//}
 
-	recodes, count, err := GetDownRecodeList(skips, limits, selector, "-down_bet_time")
+	recodes, count, err := GetDownRecodeList(page, limits, selector, "-down_bet_time")
 	if err != nil {
 		return
 	}

@@ -747,9 +747,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 					hallData.Account = v.Account
 					//log.Debug("<====== 玩家金额:%v =====>", v.Account)
-					v.SendMsg(hallData)
 				}
 			}
+			v.SendMsg(hallData)
 		}
 	}
 

@@ -2,14 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c9afdff-253a-49cb-a98b-ad8c890a28f5" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/../.~lock.TOMAS技术测试模块 (4).xlsx#" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../TOMAS技术测试模块 (3).xlsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TOMAS技术测试模块 (4).xlsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../doudizhu-cocos/.idea/doudizhu-cocos.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../多语言资源.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../测试.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/Databases.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/Databases.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/accessData.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/accessData.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/cards_rbdz.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/cards_rbdz.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common/hall.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common/hall/animation.meta" beforeDir="false" />
@@ -3260,10 +3260,10 @@
     </configuration>
     <list>
       <item itemvalue="Go Build.go build player_handle.go" />
+      <item itemvalue="Go Build.go build RedBlack-War" />
       <item itemvalue="Go Test.Test_Dealer in server/game/internal" />
       <item itemvalue="Go Test.Test_AnalyseCards in RedBlack-War/game/internal" />
       <item itemvalue="Go Test.TestClient in RedBlack-War/game/internal" />
-      <item itemvalue="Go Build.go build RedBlack-War" />
     </list>
     <recent_temporary>
       <list>
@@ -3331,10 +3331,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1604722590650" />
-    <state x="254" y="40" width="773" height="600" key="find.popup" timestamp="1604322245183">
+    <state x="254" y="40" width="773" height="600" key="find.popup" timestamp="1605085414794">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="254" y="40" width="773" height="600" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1604322245183" />
+    <state x="254" y="40" width="773" height="600" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1605085414794" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1599051157221">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -3370,7 +3370,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/game/internal/module.go</url>
-          <line>22</line>
+          <line>19</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
