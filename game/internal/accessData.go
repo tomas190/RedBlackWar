@@ -135,6 +135,7 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	req.EndTime = r.FormValue("end_time")
 	req.Page = r.FormValue("page")
 	req.Limit = r.FormValue("limit")
+	log.Debug("获取分页数据:%v", req.Page)
 
 	selector := bson.M{}
 
@@ -171,9 +172,6 @@ func getAccessData(w http.ResponseWriter, r *http.Request) {
 	}
 
 	page, _ := strconv.Atoi(req.Page)
-	if page != 0 {
-		selector["page"] = page
-	}
 
 	limits, _ := strconv.Atoi(req.Limit)
 	//if limits != 0 {
