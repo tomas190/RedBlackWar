@@ -66,13 +66,14 @@ type Player struct {
 
 	Index uint32 // 下一版这里改动一些，将Player的map[Index]去掉
 
-	Id       string
-	RoundId  string
-	PassWord string
-	Token    string
-	NickName string
-	HeadImg  string
-	Account  float64 // 玩家金额
+	Id        string
+	RoundId   string
+	PackageId uint16
+	PassWord  string
+	Token     string
+	NickName  string
+	HeadImg   string
+	Account   float64 // 玩家金额
 
 	room          *Room         //玩家房间信息
 	DownBetMoneys *DownBetMoney //玩家各注池下注的金额

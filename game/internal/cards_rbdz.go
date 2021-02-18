@@ -378,7 +378,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						}
 					}
 
-					tax := taxMoney * taxRate
+					pac := packageTax[v.PackageId]
+					taxR := float64(pac) / 100
+
+					tax := taxMoney * taxR
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
@@ -413,7 +416,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data.CardResult.BlackType = v.room.Cards.BlackType
 						data.SettlementFunds = v.ResultMoney
 						data.SpareCash = v.Account
-						data.TaxRate = taxRate
+						data.TaxRate = taxR
 						InsertAccessData(data)
 					}
 				} else {
@@ -629,7 +632,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						}
 					}
 
-					tax := taxMoney * taxRate
+					pac := packageTax[v.PackageId]
+					taxR := float64(pac) / 100
+
+					tax := taxMoney * taxR
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
@@ -664,7 +670,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data.CardResult.BlackType = v.room.Cards.BlackType
 						data.SettlementFunds = v.ResultMoney
 						data.SpareCash = v.Account
-						data.TaxRate = taxRate
+						data.TaxRate = taxR
 						InsertAccessData(data)
 					}
 				} else {

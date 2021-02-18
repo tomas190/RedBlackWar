@@ -9,10 +9,8 @@
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/c2c.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/c2c.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/room.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room_handleLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/room_handleLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/surplus_pool.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/surplus_pool.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/msg/Protocal/pb_msg.proto" beforeDir="false" afterPath="$PROJECT_DIR$/msg/Protocal/pb_msg.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/cards_rbdz.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/cards_rbdz.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/player_config.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/player_config.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common/hall.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../assets/common/hall/animation.meta" beforeDir="false" />
@@ -3345,7 +3343,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/game/internal/player_config.go</url>
-          <line>83</line>
+          <line>84</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
