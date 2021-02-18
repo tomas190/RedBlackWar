@@ -79,7 +79,7 @@ message DownBetMoney {
 //续投
 message ContinueBet {
     DownBetMoney downBetMoneys = 1;
-    int32 TotalMoneyBet = 4; //本局玩家下注总金额,用于 续投。
+    int32 TotalMoneyBet = 4; // 本局玩家下注总金额,用于 续投。
 }
 
 enum PlayerStatus {

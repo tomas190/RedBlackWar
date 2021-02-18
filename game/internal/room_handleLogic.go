@@ -688,7 +688,6 @@ func (r *Room) CleanPlayerData() {
 			}
 		}
 	}
-
 }
 
 func (r *Room) HandleRobot() {

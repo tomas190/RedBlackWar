@@ -15,7 +15,6 @@ type SurplusPoolDB struct {
 	PlayerNum      int32   //历史玩家人数
 }
 
-
 const (
 	taxRate    float64 = 0.05 //税率
 	SurplusTax float64 = 0.2  //指定盈余池的百分随机数
@@ -36,4 +35,8 @@ var AllPlayerCount []string
 func RecordPlayerCount() int32 {
 	//log.Debug("游戏玩过总人数数量: %v", int32(len(AllPlayerCount)))
 	return int32(len(AllPlayerCount))
+}
+
+func SetPackageTaxM(packageT uint16, tax uint8) {
+	packageTax[packageT] = tax
 }
