@@ -37,3 +37,5 @@ func init() {
 	Processor.Register(&pb_msg.PlayerLeaveHall_C2S{}) //--21
 	Processor.Register(&pb_msg.PlayerLeaveHall_S2C{}) //--22
 }
+
+

@@ -34,8 +34,6 @@ func (r *Room) RoomInit() {
 
 	r.IsLoadRobots = false
 	r.UserLeave = make([]string, 0)
-
-	packageTax = make(map[uint16]uint8)
 }
 
 func (r *Room) GetRoomNumber() string {

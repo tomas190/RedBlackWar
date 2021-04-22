@@ -19,6 +19,8 @@ type Module struct {
 func (m *Module) OnInit() {
 	m.Skeleton = skeleton
 
+	packageTax = make(map[uint16]uint8)
+
 	initMongoDB()
 
 	gameHall.Init()

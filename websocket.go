@@ -124,20 +124,6 @@ func findMsgID(t string) uint16 {
 	return 1024
 }
 
-func tcpTest() {
-	conn := NewTCPConn()
-	m := tcpMsg()
-	// 打印
-	for i, b := range m {
-		fmt.Println(i, "-", b, string(b))
-	}
-
-	// 写入到连接
-	_, err := conn.Write(m)
-	if err != nil {
-		fmt.Println("[write error] ", err)
-	}
-}
 
 func wsTest() {
 	conn, _, err := websocket.DefaultDialer.Dial("ws://"+Host+":"+WSPort, nil)

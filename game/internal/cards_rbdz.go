@@ -350,6 +350,14 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						//同时同步赢分和输分
 						c4c.UserSyncWinScore(v, nowTime, v.RoundId, reason)
+						settle := &SettleDB{}
+						settle.Id = v.Id
+						settle.NickName = v.NickName
+						settle.Account = v.Account
+						settle.RoundID = v.RoundId
+						settle.WinResultMoney = v.WinResultMoney
+						settle.BetMoney = v.DownBetMoneys
+						InsertWinMoney(settle)
 						select {
 						case t := <-winChan:
 							if t == true {
@@ -375,6 +383,14 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//同时同步赢分和输分
 						if v.LoseResultMoney != 0 {
 							c4c.UserSyncLoseScore(v, nowTime, v.RoundId, reason)
+							settle := &SettleDB{}
+							settle.Id = v.Id
+							settle.NickName = v.NickName
+							settle.Account = v.Account
+							settle.RoundID = v.RoundId
+							settle.LoseResultMoney = v.LoseResultMoney
+							settle.BetMoney = v.DownBetMoneys
+							InsertLoseMoney(settle)
 						}
 					}
 
@@ -603,6 +619,14 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 						//同时同步赢分和输分
 						c4c.UserSyncWinScore(v, nowTime, v.RoundId, reason)
+						settle := &SettleDB{}
+						settle.Id = v.Id
+						settle.NickName = v.NickName
+						settle.Account = v.Account
+						settle.RoundID = v.RoundId
+						settle.WinResultMoney = v.WinResultMoney
+						settle.BetMoney = v.DownBetMoneys
+						InsertWinMoney(settle)
 						// todo 后面是用go程处理
 						select {
 						case t := <-winChan:
@@ -629,6 +653,14 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//同时同步赢分和输分
 						if v.LoseResultMoney != 0 {
 							c4c.UserSyncLoseScore(v, nowTime, v.RoundId, reason)
+							settle := &SettleDB{}
+							settle.Id = v.Id
+							settle.NickName = v.NickName
+							settle.Account = v.Account
+							settle.RoundID = v.RoundId
+							settle.LoseResultMoney = v.LoseResultMoney
+							settle.BetMoney = v.DownBetMoneys
+							InsertLoseMoney(settle)
 						}
 					}
 
