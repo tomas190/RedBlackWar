@@ -650,7 +650,7 @@ func (c4c *Conn4Center) SendMsg2Center(data interface{}) {
 }
 
 //UserSyncWinScore 同步赢分
-func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, roundId, reason string) {
+func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, roundId, reason string, betMoney float64) {
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserWinScore
 	id, _ := strconv.Atoi(p.Id)
@@ -662,7 +662,7 @@ func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, roundId, rea
 	userWin.Info.ID = id
 	userWin.Info.LockMoney = 0
 	userWin.Info.Money = p.WinResultMoney
-	userWin.Info.BetMoney = p.DownBetMoneys
+	userWin.Info.BetMoney = betMoney
 	userWin.Info.Order = bson.NewObjectId().Hex()
 
 	userWin.Info.PayReason = reason
@@ -673,7 +673,7 @@ func (c4c *Conn4Center) UserSyncWinScore(p *Player, timeUnix int64, roundId, rea
 }
 
 //UserSyncWinScore 同步输分
-func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, roundId, reason string) {
+func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, roundId, reason string, betMoney float64) {
 	baseData := &BaseMessage{}
 	baseData.Event = msgUserLoseScore
 	id, _ := strconv.Atoi(p.Id)
@@ -685,7 +685,7 @@ func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, roundId, re
 	userLose.Info.ID = id
 	userLose.Info.LockMoney = 0
 	userLose.Info.Money = p.LoseResultMoney
-	userLose.Info.BetMoney = p.DownBetMoneys
+	userLose.Info.BetMoney = betMoney
 	userLose.Info.Order = bson.NewObjectId().Hex()
 	userLose.Info.PayReason = reason
 	userLose.Info.PreMoney = 0
@@ -740,16 +740,6 @@ func (c4c *Conn4Center) UnlockSettlement(p *Player) {
 	lockMoney.Info.RoundId = p.room.RoomId
 	baseData.Data = lockMoney
 	c4c.SendMsg2Center(baseData)
-}
-
-//UserSyncScoreChange 同步尚未同步过的输赢分
-func (c4c *Conn4Center) UserSyncScoreChange(p *Player, reason string) {
-	timeStr := time.Now().Format("2006-01-02_15:04:05")
-	nowTime := time.Now().Unix()
-
-	//同时同步赢分和输分
-	c4c.UserSyncWinScore(p, nowTime, timeStr, reason)
-	c4c.UserSyncLoseScore(p, nowTime, timeStr, reason)
 }
 
 func (c4c *Conn4Center) NoticeWinMoreThan(playerId, playerName string, winGold float64) {

@@ -141,13 +141,6 @@ func (p *Player) StartBreathe() {
 	}()
 }
 
-//SyncScoreChangeToCenter 同步金币变化到中心服
-func (p *Player) SyncScoreChangeToCenter(reason string) {
-	//跨模块调用到login，然后由login调用到Center
-	//login.ChanRPC.Go("SyncCenterScoreChange", p.ID, p.fWinScore, p.fLoseScore)
-	c4c.UserSyncScoreChange(p, reason)
-}
-
 func (p *Player) PlayerLoginHandle(userId string, a gate.Agent) {
 
 }

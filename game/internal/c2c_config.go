@@ -54,16 +54,16 @@ type UserAuth struct {
 
 //UserScoreSync 同步分值数据
 type UserScoreSync struct {
-	ID         int           `json:"id"`
-	CreateTime int64         `json:"create_time"`
-	PayReason  string        `json:"pay_reason"`
-	Money      float64       `json:"money"`
-	BetMoney   *DownBetMoney `json:"bet_money"`
-	LockMoney  float64       `json:"lock_money"`
-	PreMoney   float64       `json:"pre_money"`
-	Order      string        `json:"order"` //唯一ID,方便之后查询
-	GameId     string        `json:"game_id"`
-	RoundId    string        `json:"round_id"` //唯一ID，识别多人是否在同一局游戏
+	ID         int     `json:"id"`
+	CreateTime int64   `json:"create_time"`
+	PayReason  string  `json:"pay_reason"`
+	Money      float64 `json:"money"`
+	BetMoney   float64 `json:"bet_money"`
+	LockMoney  float64 `json:"lock_money"`
+	PreMoney   float64 `json:"pre_money"`
+	Order      string  `json:"order"` //唯一ID,方便之后查询
+	GameId     string  `json:"game_id"`
+	RoundId    string  `json:"round_id"` //唯一ID，识别多人是否在同一局游戏
 }
 
 //UserChangeScore 用户分值改变

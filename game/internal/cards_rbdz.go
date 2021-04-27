@@ -347,9 +347,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//将玩家的税收金额添加到盈余池
 						SurplusPool -= v.WinResultMoney
 						reason := "ResultWinScore"
-
+						betMoney := v.DownBetMoneys.RedDownBet + v.DownBetMoneys.BlackDownBet + v.DownBetMoneys.LuckDownBet
 						//同时同步赢分和输分
-						c4c.UserSyncWinScore(v, nowTime, v.RoundId, reason)
+						c4c.UserSyncWinScore(v, nowTime, v.RoundId, reason, float64(betMoney))
 						select {
 						case t := <-winChan:
 							if t == true {
@@ -371,10 +371,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
 
 						reason := "ResultLoseScore"
-
+						betMoney := v.DownBetMoneys.RedDownBet + v.DownBetMoneys.BlackDownBet + v.DownBetMoneys.LuckDownBet
 						//同时同步赢分和输分
 						if v.LoseResultMoney != 0 {
-							c4c.UserSyncLoseScore(v, nowTime, v.RoundId, reason)
+							c4c.UserSyncLoseScore(v, nowTime, v.RoundId, reason, float64(betMoney))
 						}
 					}
 
@@ -600,9 +600,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						//将玩家的税收金额添加到盈余池
 						SurplusPool -= v.WinResultMoney
 						reason := "ResultWinScore"
-
+						betMoney := v.DownBetMoneys.RedDownBet + v.DownBetMoneys.BlackDownBet + v.DownBetMoneys.LuckDownBet
 						//同时同步赢分和输分
-						c4c.UserSyncWinScore(v, nowTime, v.RoundId, reason)
+						c4c.UserSyncWinScore(v, nowTime, v.RoundId, reason, float64(betMoney))
 
 						// todo 后面是用go程处理
 						select {
@@ -626,10 +626,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						SurplusPool -= v.LoseResultMoney //这个Res是负数 负负得正
 
 						reason := "ResultLoseScore"
-
+						betMoney := v.DownBetMoneys.RedDownBet + v.DownBetMoneys.BlackDownBet + v.DownBetMoneys.LuckDownBet
 						//同时同步赢分和输分
 						if v.LoseResultMoney != 0 {
-							c4c.UserSyncLoseScore(v, nowTime, v.RoundId, reason)
+							c4c.UserSyncLoseScore(v, nowTime, v.RoundId, reason, float64(betMoney))
 						}
 					}
 
