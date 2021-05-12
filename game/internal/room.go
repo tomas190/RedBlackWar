@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var packageTax map[uint16]uint8
+var packageTax map[uint16]float64
 
 func (r *Room) RoomInit() {
 
@@ -35,7 +35,7 @@ func (r *Room) RoomInit() {
 	r.IsLoadRobots = false
 	r.UserLeave = make([]string, 0)
 
-	packageTax = make(map[uint16]uint8)
+	packageTax = make(map[uint16]float64)
 }
 
 func (r *Room) GetRoomNumber() string {

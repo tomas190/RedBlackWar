@@ -37,6 +37,6 @@ func RecordPlayerCount() int32 {
 	return int32(len(AllPlayerCount))
 }
 
-func SetPackageTaxM(packageT uint16, tax uint8) {
+func SetPackageTaxM(packageT uint16, tax float64) {
 	packageTax[packageT] = tax
 }
