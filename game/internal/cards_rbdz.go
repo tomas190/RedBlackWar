@@ -386,8 +386,12 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 					if v.ResultMoney > 0 {
 						gameData.ResultCount = 1
+						// 赢钱锁钱
+						c4c.LockSettlement(v, v.ResultMoney)
 					} else if v.ResultMoney < 0 {
 						gameData.ResultCount = 0
+						// 输钱解锁
+						c4c.UnlockSettlement(v, v.ResultMoney)
 					}
 
 					if v.ResultMoney > PaoMaDeng {
@@ -639,8 +643,12 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 					if v.ResultMoney > 0 {
 						gameData.ResultCount = 1
+						// 赢钱锁钱
+						c4c.LockSettlement(v, v.ResultMoney)
 					} else if v.ResultMoney < 0 {
 						gameData.ResultCount = 0
+						// 输钱解锁
+						c4c.UnlockSettlement(v, v.ResultMoney)
 					}
 
 					if v.ResultMoney > PaoMaDeng { //跑马灯

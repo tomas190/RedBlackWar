@@ -44,10 +44,11 @@ func rpcCloseAgent(args []interface{}) {
 			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 			leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 			a.WriteMsg(leaveHall)
+			c4c.UnlockSettlement(p, p.Account)
 			a.Close()
 		} else {
 			var exist bool
-			for _,v := range p.room.UserLeave{
+			for _, v := range p.room.UserLeave {
 				if v == p.Id {
 					exist = true
 				}

@@ -695,7 +695,7 @@ func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, roundId, re
 }
 
 //锁钱
-func (c4c *Conn4Center) LockSettlement(p *Player) {
+func (c4c *Conn4Center) LockSettlement(p *Player, account float64) {
 	timeStr := time.Now().Format("2006-01-02_15:04:05")
 	loseOrder := p.Id + "_" + timeStr + "_LockMoney"
 
@@ -708,7 +708,7 @@ func (c4c *Conn4Center) LockSettlement(p *Player) {
 	lockMoney.Info.CreateTime = time.Now().Unix()
 	lockMoney.Info.GameId = c4c.GameId
 	lockMoney.Info.ID = id
-	lockMoney.Info.LockMoney = p.Account
+	lockMoney.Info.LockMoney = account
 	lockMoney.Info.Money = 0
 	lockMoney.Info.Order = loseOrder
 	lockMoney.Info.PayReason = "lockMoney"
@@ -719,7 +719,7 @@ func (c4c *Conn4Center) LockSettlement(p *Player) {
 }
 
 //解锁
-func (c4c *Conn4Center) UnlockSettlement(p *Player) {
+func (c4c *Conn4Center) UnlockSettlement(p *Player, account float64) {
 	timeStr := time.Now().Format("2006-01-02_15:04:05")
 	loseOrder := p.Id + "_" + timeStr + "_UnlockMoney"
 
@@ -732,7 +732,7 @@ func (c4c *Conn4Center) UnlockSettlement(p *Player) {
 	lockMoney.Info.CreateTime = time.Now().Unix()
 	lockMoney.Info.GameId = c4c.GameId
 	lockMoney.Info.ID = id
-	lockMoney.Info.LockMoney = p.Account
+	lockMoney.Info.LockMoney = account
 	lockMoney.Info.Money = 0
 	lockMoney.Info.Order = loseOrder
 	lockMoney.Info.PayReason = "UnlockMoney"

@@ -2,6 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c9afdff-253a-49cb-a98b-ad8c890a28f5" name="默认更改列表" comment="">
+      <change afterPath="$PROJECT_DIR$/../fctbj/.idea/fctbj.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/base/skeleton.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/conf/conf.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/conf/json.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/conf/server.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/external.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/internal/c2c.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/internal/c2c_config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/internal/chanrpc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/internal/configData.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/internal/gameHall.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/internal/handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/internal/module.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/internal/player.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/internal/player_handle.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/internal/room.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/game/internal/room_handle.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/gate/external.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/gate/internal/module.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/gate/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/go.sum" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/msg/gen_msg_go.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/msg/msg.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/msg/msg.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fctbj/msg/msg.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../newFile/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../newFile/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../newFile/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../newFile/.idea/newFile.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../newFile/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../newFile/caidaxiao" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../推币机.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.~lock.TOMAS技术测试模块 (3).xlsx#" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.~lock.TOMAS技术测试模块 (4).xlsx#" beforeDir="false" />
@@ -83,8 +121,10 @@
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/c2c.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/c2c.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/room.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/surplus_pool.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/surplus_pool.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/cards_rbdz.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/cards_rbdz.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/chanrpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/chanrpc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/room_handleLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/room_handleLogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TOMAS技术测试模块 (3).xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TOMAS技术测试模块 (4).xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../allGameCDX/allGame" beforeDir="false" afterPath="$PROJECT_DIR$/../allGameCDX/allGame" afterDir="false" />
@@ -3515,9 +3555,10 @@
       <change beforePath="$PROJECT_DIR$/../versiontemp.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../临时文件夹/.idea/临时文件夹.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../多语言资源.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../彩源龍虎鬥API文件.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../德州闪屏问题.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../测试.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../猜大小api文档.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../猜大小api文档.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../猜大小api文档.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../茅台清单/茅台清单01.xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../茅台清单/茅台清单02.xlsx" beforeDir="false" />
     </list>
@@ -3578,7 +3619,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../caidaxiao" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../proj_bcbm" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -3693,6 +3734,10 @@
     <proxy>direct</proxy>
   </component>
   <component name="WindowStateProjectService">
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1624018784702">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1624018784702" />
     <state width="1237" height="247" key="GridCell.Tab.0.bottom" timestamp="1617781319262">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
