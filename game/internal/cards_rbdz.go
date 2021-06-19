@@ -334,6 +334,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						}
 					}
 
+					// 解锁
+					c4c.UnlockSettlement(v)
+
 					nowTime := time.Now().Unix()
 					//连接中心服金币处理
 					if taxMoney > 0 {
@@ -386,12 +389,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 					if v.ResultMoney > 0 {
 						gameData.ResultCount = 1
-						// 赢钱锁钱
-						c4c.LockSettlement(v, v.ResultMoney)
 					} else if v.ResultMoney < 0 {
 						gameData.ResultCount = 0
-						// 输钱解锁
-						c4c.UnlockSettlement(v, v.ResultMoney)
 					}
 
 					if v.ResultMoney > PaoMaDeng {
@@ -588,8 +587,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						}
 					}
 
-					nowTime := time.Now().Unix()
+					// 解锁
+					c4c.UnlockSettlement(v)
 
+					nowTime := time.Now().Unix()
 					//连接中心服金币处理
 					if taxMoney > 0 {
 						v.WinResultMoney = taxMoney
@@ -643,12 +644,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 					if v.ResultMoney > 0 {
 						gameData.ResultCount = 1
-						// 赢钱锁钱
-						c4c.LockSettlement(v, v.ResultMoney)
 					} else if v.ResultMoney < 0 {
 						gameData.ResultCount = 0
-						// 输钱解锁
-						c4c.UnlockSettlement(v, v.ResultMoney)
 					}
 
 					if v.ResultMoney > PaoMaDeng { //跑马灯

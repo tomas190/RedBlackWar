@@ -128,9 +128,6 @@ func handleLoginInfo(args []interface{}) {
 			RegisterPlayer(u)
 			gameHall.UserRecord.Store(u.Id, u)
 
-			// 锁钱
-			c4c.LockSettlement(u, u.Account)
-
 			// 返回游戏大厅数据
 			RspGameHallData(u)
 		})
@@ -193,7 +190,6 @@ func handleLeaveHall(args []interface{}) {
 			gameHall.UserRecord.Delete(p.Id)
 			leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 			a.WriteMsg(leaveHall)
-			c4c.UnlockSettlement(p, p.Account)
 			p.ConnAgent.Close()
 		} else {
 			var exist bool

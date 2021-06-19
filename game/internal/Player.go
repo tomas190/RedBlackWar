@@ -36,6 +36,8 @@ func (p *Player) Init() {
 	p.LuckWinCount = 0
 	p.IsOnline = true
 
+	p.LockMoney = 0
+
 	p.HallRoomData = nil
 
 	p.IsRobot = false

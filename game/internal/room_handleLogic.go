@@ -654,7 +654,6 @@ func (r *Room) KickOutPlayer() {
 					c4c.UserLogoutCenter(v.Id, v.PassWord, v.Token) //, p.PassWord
 					leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 					v.ConnAgent.WriteMsg(leaveHall)
-					c4c.UnlockSettlement(v, v.Account)
 					v.IsOnline = false
 					//v.ConnAgent.Close()
 					log.Debug("踢出房间断线玩家 : %v", v.Id)
@@ -674,6 +673,7 @@ func (r *Room) CleanPlayerData() {
 			v.WinResultMoney = 0
 			v.LoseResultMoney = 0
 			v.ResultMoney = 0
+			v.LockMoney = 0
 
 			//游戏结束玩家金额不足设为观战
 			v.PlayerMoneyHandler()

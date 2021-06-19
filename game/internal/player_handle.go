@@ -204,6 +204,10 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 			p.TotalAmountBet += m.DownBet
 			p.room.PotMoneyCount.LuckMoneyCount += m.DownBet
 		}
+
+		if p.IsRobot == false {
+			c4c.LockSettlement(p, float64(m.DownBet))
+		}
 		//记录续投下注的金额对应注池
 		p.ContinueVot.DownBetMoneys.RedDownBet = p.DownBetMoneys.RedDownBet
 		p.ContinueVot.DownBetMoneys.BlackDownBet = p.DownBetMoneys.BlackDownBet

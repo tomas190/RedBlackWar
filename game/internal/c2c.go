@@ -695,49 +695,46 @@ func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, roundId, re
 }
 
 //锁钱
-func (c4c *Conn4Center) LockSettlement(p *Player, account float64) {
-	timeStr := time.Now().Format("2006-01-02_15:04:05")
-	loseOrder := p.Id + "_" + timeStr + "_LockMoney"
-
+func (c4c *Conn4Center) LockSettlement(p *Player, lockAccount float64) {
+	p.LockMoney += lockAccount
+	id, _ := strconv.Atoi(p.Id)
+	roundId := fmt.Sprintf("%+v-%+v", time.Now().Unix(), p.Id)
 	baseData := &BaseMessage{}
 	baseData.Event = msgLockSettlement
-	id, _ := strconv.Atoi(p.Id)
 	lockMoney := &UserChangeScore{}
 	lockMoney.Auth.DevName = conf.Server.DevName
 	lockMoney.Auth.DevKey = c4c.DevKey
 	lockMoney.Info.CreateTime = time.Now().Unix()
 	lockMoney.Info.GameId = c4c.GameId
 	lockMoney.Info.ID = id
-	lockMoney.Info.LockMoney = account
+	lockMoney.Info.LockMoney = lockAccount
 	lockMoney.Info.Money = 0
-	lockMoney.Info.Order = loseOrder
-	lockMoney.Info.PayReason = "lockMoney"
+	lockMoney.Info.Order = bson.NewObjectId().Hex()
+	lockMoney.Info.PayReason = "加锁投注资金"
 	lockMoney.Info.PreMoney = 0
-	lockMoney.Info.RoundId = p.room.RoomId
+	lockMoney.Info.RoundId = roundId
 	baseData.Data = lockMoney
 	c4c.SendMsg2Center(baseData)
 }
 
 //解锁
-func (c4c *Conn4Center) UnlockSettlement(p *Player, account float64) {
-	timeStr := time.Now().Format("2006-01-02_15:04:05")
-	loseOrder := p.Id + "_" + timeStr + "_UnlockMoney"
-
+func (c4c *Conn4Center) UnlockSettlement(p *Player) {
+	id, _ := strconv.Atoi(p.Id)
+	roundId := fmt.Sprintf("%+v-%+v", time.Now().Unix(), p.Id)
 	baseData := &BaseMessage{}
 	baseData.Event = msgUnlockSettlement
-	id, _ := strconv.Atoi(p.Id)
 	lockMoney := &UserChangeScore{}
 	lockMoney.Auth.DevName = conf.Server.DevName
 	lockMoney.Auth.DevKey = c4c.DevKey
 	lockMoney.Info.CreateTime = time.Now().Unix()
 	lockMoney.Info.GameId = c4c.GameId
 	lockMoney.Info.ID = id
-	lockMoney.Info.LockMoney = account
+	lockMoney.Info.LockMoney = p.LockMoney
 	lockMoney.Info.Money = 0
-	lockMoney.Info.Order = loseOrder
-	lockMoney.Info.PayReason = "UnlockMoney"
+	lockMoney.Info.Order = bson.NewObjectId().Hex()
+	lockMoney.Info.PayReason = "解锁投注资金"
 	lockMoney.Info.PreMoney = 0
-	lockMoney.Info.RoundId = p.room.RoomId
+	lockMoney.Info.RoundId = roundId
 	baseData.Data = lockMoney
 	c4c.SendMsg2Center(baseData)
 }

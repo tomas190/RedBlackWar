@@ -97,6 +97,8 @@ type Player struct {
 	LuckWinCount   int32          //Win总列表幸运的局数
 	TotalCount     int32          //总列表总局数
 
+	LockMoney float64 // 下注锁定的钱
+
 	HallRoomData []*HallDataList //玩家大厅房间数据
 	TwentyData   []*GameDataList //20局玩家数据截取
 
