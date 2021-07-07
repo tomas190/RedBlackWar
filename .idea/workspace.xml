@@ -125,7 +125,6 @@
       <change beforePath="$PROJECT_DIR$/game/internal/Databases.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/Databases.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/accessData.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/accessData.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/cards_rbdz.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/cards_rbdz.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/msg/msg.go" beforeDir="false" afterPath="$PROJECT_DIR$/msg/msg.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TOMAS技术测试模块 (3).xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TOMAS技术测试模块 (4).xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../allGameCDX/allGame" beforeDir="false" afterPath="$PROJECT_DIR$/../allGameCDX/allGame" afterDir="false" />

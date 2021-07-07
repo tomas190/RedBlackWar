@@ -431,7 +431,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						sd.PackageId = v.PackageId
 						sd.WinStatementTotal = v.WinResultMoney
 						sd.LoseStatementTotal = v.LoseResultMoney
-						sd.BetMoney = v.DownBetMoneys.RedDownBet + v.DownBetMoneys.BlackDownBet + v.LuckWinCount
+						sd.BetMoney = v.DownBetMoneys.RedDownBet + v.DownBetMoneys.BlackDownBet + v.DownBetMoneys.LuckDownBet
 						InsertStatementDB(sd)
 					}
 				} else {
@@ -699,7 +699,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						sd.PackageId = v.PackageId
 						sd.WinStatementTotal = v.WinResultMoney
 						sd.LoseStatementTotal = v.LoseResultMoney
-						sd.BetMoney = v.DownBetMoneys.RedDownBet + v.DownBetMoneys.BlackDownBet + v.LuckWinCount
+						sd.BetMoney = v.DownBetMoneys.RedDownBet + v.DownBetMoneys.BlackDownBet + v.DownBetMoneys.LuckDownBet
 						InsertStatementDB(sd)
 					}
 				} else {

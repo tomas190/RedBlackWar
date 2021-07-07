@@ -398,7 +398,7 @@ func InsertStatementDB(sd *StatementData) {
 }
 
 func GetStatementList(selector bson.M) ([]StatementData, error) {
-	s, c := connect(dbName, accessDB)
+	s, c := connect(dbName, StatementDB)
 	defer s.Close()
 
 	var wts []StatementData
