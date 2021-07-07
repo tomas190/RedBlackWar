@@ -89,13 +89,21 @@ type GRobotData struct {
 	LuckPot  *ChipDownBet `json:"luck_pot" bson:"luck_pot"`
 }
 
-//type GRobotChip struct {
-//	Chip1    int32 `json:"chip_1" bson:"chip_1"`
-//	Chip10   int32 `json:"chip_10" bson:"chip_10"`
-//	Chip50   int32 `json:"chip_50" bson:"chip_50"`
-//	Chip100  int32 `json:"chip_100" bson:"chip_100"`
-//	Chip1000 int32 `json:"chip_1000" bson:"chip_1000"`
-//}
+type StatementReq struct {
+	Id        string `form:"id" json:"id"`
+	StartTime string `form:"start_time" json:"start_time"`
+	EndTime   string `form:"end_time" json:"end_time"`
+	PackageId string `form:"package_id" json:"package_id"`
+}
+
+type StatementResp struct {
+	GameId             string  `json:"game_id" bson:"game_id"`
+	GameName           string  `json:"game_name" bson:"game_name"`
+	WinStatementTotal  float64 `json:"win_statement_total" bson:"win_statement_total"`
+	LoseStatementTotal float64 `json:"lose_statement_total" bson:"lose_statement_total"`
+	BetMoney           float64 `json:"bet_money" bson:"bet_money"`
+	Count              []int   `json:"count" json:"count"`
+}
 
 const (
 	SuccCode = 0
@@ -116,6 +124,8 @@ func StartHttpServer() {
 	http.HandleFunc("/api/uptSurplusConf", uptSurplusOne)
 	// 获取机器人数据
 	http.HandleFunc("/api/getRobotData", getRobotData)
+	// 获取游戏统计数据接口
+	http.HandleFunc("/api/getStatementTotal", getStatementTotal)
 
 	err := http.ListenAndServe(":"+conf.Server.HTTPPort, nil)
 	if err != nil {
@@ -414,4 +424,69 @@ func getRobotData(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)
+}
+
+func getStatementTotal(w http.ResponseWriter, r *http.Request) {
+	var req StatementReq
+
+	req.Id = r.FormValue("id")
+	req.PackageId = r.FormValue("package_id")
+	req.StartTime = r.FormValue("start_time")
+	req.EndTime = r.FormValue("end_time")
+
+	selector := bson.M{}
+
+	if req.Id != "" {
+		selector["id"] = req.Id
+	}
+	packId, _ := strconv.Atoi(req.PackageId)
+	if req.PackageId != "" {
+		selector["package_id"] = uint16(packId)
+	}
+
+	sTime, _ := strconv.Atoi(req.StartTime)
+	eTime, _ := strconv.Atoi(req.EndTime)
+
+	if sTime != 0 && eTime != 0 {
+		selector["down_bet_time"] = bson.M{"$gte": sTime, "$lte": eTime}
+	}
+	if sTime != 0 && eTime == 0 {
+		selector["start_time"] = bson.M{"$gte": sTime}
+	}
+	if eTime != 0 && sTime == 0 {
+		selector["end_time"] = bson.M{"$lte": eTime}
+	}
+
+	recodes, _ := GetStatementList(selector)
+	data := &StatementResp{}
+	for _, v := range recodes {
+		data.GameId = v.GameId
+		data.GameName = v.GameName
+		data.WinStatementTotal += v.WinStatementTotal
+		data.LoseStatementTotal += v.LoseStatementTotal
+		data.BetMoney += float64(v.BetMoney)
+		id, _ := strconv.Atoi(v.Id)
+		data.Count = append(data.Count, id)
+	}
+	data.Count = uniqueArr(data.Count)
+
+	js, err := json.Marshal(NewResp(SuccCode, "", data))
+	if err != nil {
+		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+}
+
+func uniqueArr(m []int) []int {
+	d := make([]int, 0)
+	tempMap := make(map[int]bool, len(m))
+	for _, v := range m { // 以值作为键名
+		if tempMap[v] == false {
+			tempMap[v] = true
+			d = append(d, v)
+		}
+	}
+	return d
 }

@@ -23,6 +23,7 @@ const (
 	accessDB        = "accessData"
 	surPool         = "surplus-pool"
 	robotData       = "robotData"
+	StatementDB     = "StatementDB"
 )
 
 // 连接数据库集合的函数 传入集合 默认连接IM数据库
@@ -94,7 +95,6 @@ func FindIdCount() int32 {
 	}
 	return int32(n)
 }
-
 
 //InsertWinMoney 插入赢钱数据
 func InsertWinMoney(base interface{}) {
@@ -370,4 +370,42 @@ func GetRobotData() ([]RobotDATA, error) {
 	}
 	log.Debug("获取机器人数据成功:%v,长度为:%v", rd, len(rd))
 	return rd, nil
+}
+
+type StatementData struct {
+	Id                 string  `json:"id" bson:"id"`
+	GameId             string  `json:"game_id" bson:"game_id"`
+	GameName           string  `json:"game_name" bson:"game_name"`
+	StartTime          int64   `json:"start_time" bson:"start_time"`
+	EndTime            int64   `json:"end_time" bson:"end_time"`
+	DownBetTime        int64   `json:"down_bet_time" bson:"down_bet_time"`
+	PackageId          uint16  `json:"package_id" bson:"package_id"`
+	WinStatementTotal  float64 `json:"win_statement_total" bson:"win_statement_total"`
+	LoseStatementTotal float64 `json:"lose_statement_total" bson:"lose_statement_total"`
+	BetMoney           int32   `json:"bet_money" bson:"bet_money"`
+}
+
+func InsertStatementDB(sd *StatementData) {
+	s, c := connect(dbName, StatementDB)
+	defer s.Close()
+
+	err := c.Insert(sd)
+	if err != nil {
+		log.Debug("插入游戏统计数据失败:%v", err)
+		return
+	}
+	log.Debug("插入游戏统计数据成功~")
+}
+
+func GetStatementList(selector bson.M) ([]StatementData, error) {
+	s, c := connect(dbName, accessDB)
+	defer s.Close()
+
+	var wts []StatementData
+
+	err := c.Find(selector).All(&wts)
+	if err != nil {
+		return nil, err
+	}
+	return wts, nil
 }

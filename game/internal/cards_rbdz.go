@@ -419,6 +419,20 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data.SpareCash = v.Account
 						data.TaxRate = taxR
 						InsertAccessData(data)
+
+						// 插入游戏统计数据
+						sd := &StatementData{}
+						sd.Id = v.Id
+						sd.GameId = conf.Server.GameID
+						sd.GameName = "红黑大战"
+						sd.StartTime = nowTime - 15
+						sd.EndTime = nowTime + 10
+						sd.DownBetTime = nowTime
+						sd.PackageId = v.PackageId
+						sd.WinStatementTotal = v.WinResultMoney
+						sd.LoseStatementTotal = v.LoseResultMoney
+						sd.BetMoney = v.DownBetMoneys.RedDownBet + v.DownBetMoneys.BlackDownBet + v.LuckWinCount
+						InsertStatementDB(sd)
 					}
 				} else {
 
@@ -674,6 +688,19 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						data.SpareCash = v.Account
 						data.TaxRate = taxR
 						InsertAccessData(data)
+
+						// 插入游戏统计数据
+						sd := &StatementData{}
+						sd.Id = v.Id
+						sd.GameId = conf.Server.GameID
+						sd.GameName = "红黑大战"
+						sd.StartTime = nowTime - 15
+						sd.EndTime = nowTime + 10
+						sd.PackageId = v.PackageId
+						sd.WinStatementTotal = v.WinResultMoney
+						sd.LoseStatementTotal = v.LoseResultMoney
+						sd.BetMoney = v.DownBetMoneys.RedDownBet + v.DownBetMoneys.BlackDownBet + v.LuckWinCount
+						InsertStatementDB(sd)
 					}
 				} else {
 					if gw.LuckWin == 1 {
