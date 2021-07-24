@@ -22,6 +22,13 @@ func (r *Room) BroadCastExcept(msg interface{}, p *Player) {
 func (r *Room) BroadCastMsg(msg interface{}) {
 	for _, v := range r.PlayerList {
 		if v != nil {
+			v.IsMove = false
+		}
+	}
+
+	for _, v := range r.PlayerList {
+		if v != nil && v.IsMove == false {
+			v.IsMove = true
 			v.SendMsg(msg)
 		}
 	}
@@ -251,14 +258,6 @@ func (r *Room) StartGameRun() {
 	r.GameTotalCount++
 	r.RoomStat = RoomStatusRun
 	r.GameStat = DownBet
-
-	//更新房间赌神ID
-	r.GetGodGableId()
-	//更新房间列表
-	r.UpdatePlayerList()
-	maintainList := r.PackageRoomPlayerList()
-	//log.Debug("玩家列表信息数据: %v", maintainList)
-	r.BroadCastMsg(maintainList)
 
 	//下注阶段定时任务
 	r.DownBetTimerTask()
@@ -623,13 +622,13 @@ func (r *Room) CompareSettlement() {
 			//根据时间来控制机器人数量
 			r.HandleRobot()
 
-			////更新房间赌神ID
-			//r.GetGodGableId()
-			////更新房间列表
-			//r.UpdatePlayerList()
-			//maintainList := r.PackageRoomPlayerList()
-			////log.Debug("玩家列表信息数据: %v", maintainList)
-			//r.BroadCastMsg(maintainList)
+			//更新房间赌神ID
+			r.GetGodGableId()
+			//更新房间列表
+			r.UpdatePlayerList()
+			maintainList := r.PackageRoomPlayerList()
+			//log.Debug("玩家列表信息数据: %v", maintainList)
+			r.BroadCastMsg(maintainList)
 
 			r.UserLeave = []string{}
 			//清空桌面注池
