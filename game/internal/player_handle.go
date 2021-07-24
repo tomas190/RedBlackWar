@@ -32,40 +32,6 @@ func (p *Player) GetUserRoomInfo() *Player {
 	return nil
 }
 
-//PlayerLoginAgain 用户重新登陆
-func PlayerLoginAgain(p *Player, a gate.Agent) {
-	log.Debug("<------- 用户重新登陆: %v ------->", p.Id)
-	for _, v := range p.room.PlayerList {
-		if v.Id == p.Id {
-			p = v
-		}
-	}
-
-	p.ConnAgent = a
-	p.ConnAgent.SetUserData(p)
-	p.IsOnline = true
-
-	//返回前端信息
-	//fmt.Println("LoginAgain房间信息:", p.room)
-	r := p.room.RspRoomData()
-	enter := &pb_msg.EnterRoom_S2C{}
-	enter.RoomData = r
-	if p.room.GameStat == DownBet {
-		enter.GameTime = DownBetTime - p.room.counter
-		log.Debug("用户重新登陆 DownBetTime.GameTime: %v", enter.GameTime)
-	} else {
-		enter.GameTime = SettleTime - p.room.counter
-		log.Debug("用户重新登陆 SettleTime.GameTime: %v", enter.GameTime)
-	}
-	p.SendMsg(enter)
-
-	//更新房间列表
-	p.room.UpdatePlayerList()
-	maintainList := p.room.PackageRoomPlayerList()
-	p.room.BroadCastExcept(maintainList, p)
-	log.Debug("用户断线重连成功,返回客户端数据~ ")
-}
-
 //PlayerExitRoom 玩家退出房间
 func (p *Player) PlayerReqExit() {
 	if p.room != nil {
