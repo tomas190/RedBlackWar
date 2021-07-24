@@ -31,10 +31,12 @@ func (r *Room) JoinGameRoom(p *Player) {
 	// 看数据用,打印玩家列表信息
 	//r.PrintPlayerList()
 
-	//更新房间列表
-	r.UpdatePlayerList()
-	maintainList := r.PackageRoomPlayerList()
-	r.BroadCastMsg(maintainList)
+	if p.IsRobot == false {
+		//更新房间列表
+		r.UpdatePlayerList()
+		maintainList := r.PackageRoomPlayerList()
+		r.BroadCastMsg(maintainList)
+	}
 
 	//判断房间人数是否小于两人，否则不能开始运行
 	if r.PlayerLength() < 2 {

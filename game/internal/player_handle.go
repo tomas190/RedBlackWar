@@ -47,12 +47,12 @@ func (p *Player) PlayerReqExit() {
 					p.room.UserLeave = append(p.room.UserLeave, p.Id)
 				}
 
-				//更新房间赌神ID
-				p.room.GetGodGableId()
-				//更新房间列表
-				p.room.UpdatePlayerList()
-				maintainList := p.room.PackageRoomPlayerList()
-				p.room.BroadCastExcept(maintainList, p)
+				////更新房间赌神ID
+				//p.room.GetGodGableId()
+				////更新房间列表
+				//p.room.UpdatePlayerList()
+				//maintainList := p.room.PackageRoomPlayerList()
+				//p.room.BroadCastExcept(maintainList, p)
 
 				//广播其他玩家该玩家退出房间
 				leave := &pb_msg.LeaveRoom_S2C{}

@@ -139,9 +139,8 @@
       <change beforePath="$PROJECT_DIR$/../CDX临时文件/规则3.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/player_config.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/player_config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/player_handle.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/player_handle.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/room_handle.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/room_handle.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room_handleLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/room_handleLogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TOMAS技术测试模块 (3).xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TOMAS技术测试模块 (4).xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../allGameCDX/allGame" beforeDir="false" afterPath="$PROJECT_DIR$/../allGameCDX/allGame" afterDir="false" />
