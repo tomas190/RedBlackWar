@@ -150,6 +150,53 @@ func (r *Room) ExitFromRoom(p *Player) {
 	//log.Debug("Player Exit from the Room SUCCESS ~")
 }
 
+//ExitFromRoom 从房间退出处理
+func (r *Room) RobotExitFromRoom(p *Player) {
+
+	//清空用户数据
+	p.GameState = InGameHall
+	p.DownBetMoneys = new(DownBetMoney)
+	p.TotalAmountBet = 0
+	p.IsAction = false
+	p.ContinueVot = new(ContinueBet)
+	p.ContinueVot.DownBetMoneys = new(DownBetMoney)
+	p.WinTotalCount = 0
+	p.PotWinList = nil
+	p.CardTypeList = nil
+	p.RedBlackList = nil
+	p.HallRoomData = nil
+	p.RedWinCount = 0
+	p.BlackWinCount = 0
+	p.LuckWinCount = 0
+	p.NotOnline = 0
+	p.TwentyData = nil
+
+	//从房间列表删除玩家信息,更新房间列表
+	for k, v := range r.PlayerList {
+		if v != nil && v.Id == p.Id {
+			if v.IsRobot == false {
+				p.room = nil
+				//userRoomMap = make(map[string]*Room)
+				log.Debug("p.id:%v k:%v", p.Id, k)
+				r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...) //这里两个同样的用户名退出，会报错
+				log.Debug("%v 玩家从房间列表删除成功 ~", v.Id)
+			} else {
+				p.room = nil
+				r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...)
+				//log.Debug("%v 机器从房间列表删除成功 ~", v.Id)
+				//创建机器人 todo
+				//robot := gRobotCenter.CreateRobot()
+				//r.JoinGameRoom(robot)
+			}
+		}
+	}
+
+	//更新大厅时间和数据
+	RspGameHallData(p)
+
+	//log.Debug("Player Exit from the Room SUCCESS ~")
+}
+
 //LoadRoomRobots 装载机器人
 func (r *Room) LoadRoomRobots(num int) {
 	log.Debug("房间: %v ----- 装载 %v个机器人", r.RoomId, num)

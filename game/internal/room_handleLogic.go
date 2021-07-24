@@ -21,14 +21,7 @@ func (r *Room) BroadCastExcept(msg interface{}, p *Player) {
 //BroadCastMsg 进行广播消息
 func (r *Room) BroadCastMsg(msg interface{}) {
 	for _, v := range r.PlayerList {
-		if v != nil {
-			v.IsMove = false
-		}
-	}
-
-	for _, v := range r.PlayerList {
-		if v != nil && v.IsMove == false {
-			v.IsMove = true
+		if v != nil && v.IsRobot == false {
 			v.SendMsg(msg)
 		}
 	}
@@ -838,7 +831,7 @@ func (r *Room) HandleRobot() {
 			rNum2 := int(rNum * 1000)
 			rNum3 := RandInRange(0, 1000)
 			if rNum3 <= rNum2 {
-				v.room.ExitFromRoom(v)
+				v.room.RobotExitFromRoom(v)
 				time.Sleep(time.Millisecond)
 			}
 		}
@@ -860,7 +853,7 @@ func (r *Room) HandleRobot() {
 	} else if robotNum > handleNum { // 减
 		for _, v := range r.PlayerList {
 			if v != nil && v.IsRobot == true {
-				v.room.ExitFromRoom(v)
+				v.room.RobotExitFromRoom(v)
 				time.Sleep(time.Millisecond)
 				robotNum = r.RobotLength()
 				if robotNum == handleNum {
