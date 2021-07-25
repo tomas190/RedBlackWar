@@ -39,8 +39,6 @@
       <change afterPath="$PROJECT_DIR$/../newFile/.idea/newFile.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../newFile/.idea/vcs.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../newFile/caidaxiao" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../newFile/redblack_outlogdir.tar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../newFile/redblack_outlogdir.tar.gz" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../newFile/redblack_outlogdir/out.log" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../newFile/redblack_outlogdir/out.log.1" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../newFile/redblack_outlogdir/out.log.10" afterDir="false" />
@@ -139,8 +137,7 @@
       <change beforePath="$PROJECT_DIR$/../CDX临时文件/规则3.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/player_handle.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/player_handle.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/room_handle.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/room_handle.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/robot.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/robot.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TOMAS技术测试模块 (3).xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TOMAS技术测试模块 (4).xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../allGameCDX/allGame" beforeDir="false" afterPath="$PROJECT_DIR$/../allGameCDX/allGame" afterDir="false" />
