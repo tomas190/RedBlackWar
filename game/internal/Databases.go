@@ -222,8 +222,21 @@ func GetFindSurPool() *SurPool {
 	sur := &SurPool{}
 	err := c.Find(nil).One(sur)
 	if err != nil {
-		log.Debug("获取GetFindSurPool数据错误:%v", err)
-		return nil
+		log.Debug("获取GetFindSurPool数据为空:%v", err)
+		sur.GameId = conf.Server.GameID
+		sur.TotalPlayer = FindIdCount()
+		sur.FinalPercentage = 0.5
+		sur.PercentageToTotalWin = 1
+		sur.CoefficientToTotalPlayer = sur.TotalPlayer * 0
+		sur.PlayerLoseRateAfterSurplusPool = 0.7
+		sur.DataCorrection = 0
+		sur.PlayerWinRate = 0.6
+		sur.RandomCountAfterWin = 0
+		sur.RandomCountAfterLose = 0
+		sur.RandomPercentageAfterWin = 0.6
+		sur.RandomPercentageAfterLose = 0.6
+		InsertSurPool(sur)
+		return sur
 	}
 	return sur
 }
