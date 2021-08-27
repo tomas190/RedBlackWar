@@ -22,11 +22,11 @@ func SendTgMessage(data string) {
 			"\n启动时间:" + timeStr + "\n环境：DEV")
 		//SendToTelegram(tgMessage)
 	case "ws://172.16.100.2:9502", "ws://172.16.1.41:9502":
-		tgMessage = fmt.Sprintf("发财推币机游戏服务器" + "\n事件:" + data +
+		tgMessage = fmt.Sprintf("红黑大战游戏服务器" + "\n事件:" + data +
 			"\n启动时间:" + timeStr + "\n环境：PRE")
 		SendToTelegram(tgMessage)
 	default:
-		tgMessage = fmt.Sprintf("发财推币机游戏服务器" + "\n事件:" + data +
+		tgMessage = fmt.Sprintf("红黑大战游戏服务器" + "\n事件:" + data +
 			"\n启动时间:" + timeStr + "\n环境：OL")
 		SendToTelegram(tgMessage)
 	}

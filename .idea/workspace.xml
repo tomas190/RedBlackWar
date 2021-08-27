@@ -6358,9 +6358,7 @@
       <change beforePath="$PROJECT_DIR$/../CDX临时文件/规则2.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../CDX临时文件/规则3.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/c2c.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/c2c.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/tgMessage.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/tgMessage.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TOMAS技术测试模块 (3).xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TOMAS技术测试模块 (4).xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../allGameCDX/allGame" beforeDir="false" afterPath="$PROJECT_DIR$/../allGameCDX/allGame" afterDir="false" />
