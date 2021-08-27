@@ -157,6 +157,7 @@ func (c4c *Conn4Center) CreatConnect() {
 		log.Fatal(err.Error())
 	} else {
 		c4c.Run()
+		SendTgMessage("启动成功")
 	}
 }
 
@@ -487,6 +488,7 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 	}
 	if code != 200 {
 		cc.error("同步中心服输钱失败", data)
+		SendTgMessage("玩家输钱失败")
 		return
 	}
 
@@ -519,6 +521,7 @@ func (c4c *Conn4Center) onLockSettlement(msgBody interface{}) {
 		code, err := data["code"].(json.Number).Int64()
 		if err != nil {
 			log.Fatal(err.Error())
+			SendTgMessage("玩家锁钱失败")
 		}
 
 		fmt.Println(code, reflect.TypeOf(code))
