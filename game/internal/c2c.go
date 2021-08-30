@@ -550,14 +550,20 @@ func (c4c *Conn4Center) onLockSettlement(msgBody interface{}) {
 				v, ok := gameHall.OrderIDRecord.Load(order)
 				if ok {
 					p := v.(*Player)
-					p.LockChan <- true
+					p.LockChan <- false
 					gameHall.OrderIDRecord.Delete(order)
 				}
 				return
 			}
 			if data["status"] == "SUCCESS" && code == 200 {
 				log.Debug("<-------- onLockSettlement SUCCESS~!!! -------->")
-				gameHall.OrderIDRecord.Delete(order)
+				v, ok := gameHall.OrderIDRecord.Load(order)
+				if ok {
+					p := v.(*Player)
+					p.LockChan <- true
+					gameHall.OrderIDRecord.Delete(order)
+				}
+				return
 			}
 		}
 	}
@@ -727,7 +733,7 @@ func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, roundId, re
 	userLose.Info.RoundId = roundId
 	baseData.Data = userLose
 	c4c.SendMsg2Center(baseData)
-	gameHall.OrderIDRecord.Store(userLose.Info.Order, p.Id)
+	gameHall.OrderIDRecord.Store(userLose.Info.Order, p)
 }
 
 //锁钱
@@ -751,7 +757,7 @@ func (c4c *Conn4Center) LockSettlement(p *Player, lockAccount float64) {
 	lockMoney.Info.RoundId = roundId
 	baseData.Data = lockMoney
 	c4c.SendMsg2Center(baseData)
-	gameHall.OrderIDRecord.Store(lockMoney.Info.Order, p.Id)
+	gameHall.OrderIDRecord.Store(lockMoney.Info.Order, p)
 }
 
 //解锁

@@ -157,7 +157,7 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 		}
 
 		go func() {
-			timeout := time.NewTimer(time.Second * 2)
+			timeout := time.NewTimer(time.Second)
 			for {
 				select {
 				case <-p.LockChan:
@@ -214,6 +214,8 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 						pot.PotMoneyCount.BlackMoneyCount = p.room.PotMoneyCount.BlackMoneyCount
 						pot.PotMoneyCount.LuckMoneyCount = p.room.PotMoneyCount.LuckMoneyCount
 						p.room.BroadCastMsg(pot)
+						return
+					} else {
 						return
 					}
 				case <-timeout.C:
