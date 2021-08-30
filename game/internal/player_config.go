@@ -109,4 +109,6 @@ type Player struct {
 
 	// 是否是机器人
 	IsRobot bool
+
+	LockChan chan bool // 是否锁钱成功
 }

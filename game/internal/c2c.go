@@ -2,6 +2,7 @@ package internal
 
 import (
 	"RedBlack-War/conf"
+	pb_msg "RedBlack-War/msg/Protocal"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -486,29 +487,47 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 	if err != nil {
 		log.Error(err.Error())
 	}
-	if code != 200 {
-		cc.error("同步中心服输钱失败", data)
-		SendTgMessage("玩家输钱失败")
-		return
-	}
+	msg, ok := data["msg"].(map[string]interface{})
+	if ok {
+		order := msg["order"]
+		if code != 200 {
+			log.Debug("同步中心服输钱失败:%v", data)
+			SendTgMessage("玩家输钱失败")
+			v, ok := gameHall.OrderIDRecord.Load(order)
+			if ok {
+				p := v.(*Player)
+				c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
+				p.IsOnline = false
+				p.IsAction = false
+				p.PlayerReqExit()
+				gameHall.UserRecord.Delete(p.Id)
+				leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
+				p.SendMsg(leaveHall)
+				p.ConnAgent.Close()
+				gameHall.OrderIDRecord.Delete(order)
+			}
+			return
+		}
+		if data["status"] == "SUCCESS" && code == 200 {
+			log.Debug("<-------- UserLoseScore SUCCESS~ -------->")
+			log.Debug("data:%+v, ok:%v", data, ok)
 
-	if data["status"] == "SUCCESS" && code == 200 {
-		log.Debug("<-------- UserLoseScore SUCCESS~ -------->")
-		log.Debug("data:%+v, ok:%v", data, ok)
+			gameHall.OrderIDRecord.Delete(order)
 
-		//将Lose数据插入数据
-		InsertLoseMoney(msgBody)
+			//将Lose数据插入数据
+			InsertLoseMoney(msgBody)
 
-		userInfo, ok := data["msg"].(map[string]interface{})
-		if ok {
-			jsonScore := userInfo["final_pay"]
-			score, err := jsonScore.(json.Number).Float64()
+			userInfo, ok := data["msg"].(map[string]interface{})
+			if ok {
+				jsonScore := userInfo["final_pay"]
+				score, err := jsonScore.(json.Number).Float64()
 
-			cc.log("同步中心服输钱成功", score)
+				cc.log("同步中心服输钱成功", score)
 
-			if err != nil {
-				log.Error(err.Error())
-				return
+				if err != nil {
+					log.Error(err.Error())
+					return
+				}
 			}
 		}
 	}
@@ -521,12 +540,25 @@ func (c4c *Conn4Center) onLockSettlement(msgBody interface{}) {
 		code, err := data["code"].(json.Number).Int64()
 		if err != nil {
 			log.Fatal(err.Error())
-			SendTgMessage("玩家锁钱失败")
 		}
 
-		fmt.Println(code, reflect.TypeOf(code))
-		if data["status"] == "SUCCESS" && code == 200 {
-			log.Debug("<-------- onLockSettlement SUCCESS~!!! -------->")
+		msg, ok := data["msg"].(map[string]interface{})
+		if ok {
+			order := msg["order"]
+			if code != 200 {
+				SendTgMessage("玩家锁钱失败")
+				v, ok := gameHall.OrderIDRecord.Load(order)
+				if ok {
+					p := v.(*Player)
+					p.LockChan <- true
+					gameHall.OrderIDRecord.Delete(order)
+				}
+				return
+			}
+			if data["status"] == "SUCCESS" && code == 200 {
+				log.Debug("<-------- onLockSettlement SUCCESS~!!! -------->")
+				gameHall.OrderIDRecord.Delete(order)
+			}
 		}
 	}
 }
@@ -695,6 +727,7 @@ func (c4c *Conn4Center) UserSyncLoseScore(p *Player, timeUnix int64, roundId, re
 	userLose.Info.RoundId = roundId
 	baseData.Data = userLose
 	c4c.SendMsg2Center(baseData)
+	gameHall.OrderIDRecord.Store(userLose.Info.Order, p.Id)
 }
 
 //锁钱
@@ -718,6 +751,7 @@ func (c4c *Conn4Center) LockSettlement(p *Player, lockAccount float64) {
 	lockMoney.Info.RoundId = roundId
 	baseData.Data = lockMoney
 	c4c.SendMsg2Center(baseData)
+	gameHall.OrderIDRecord.Store(lockMoney.Info.Order, p.Id)
 }
 
 //解锁

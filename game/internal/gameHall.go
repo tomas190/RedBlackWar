@@ -29,6 +29,8 @@ func (gh *GameHall) Init() {
 		gh.RoomRecord.Store(r.RoomId, r)
 		log.Debug("大厅房间数量: %d,房间号: %v", i, gh.roomList[i].RoomId)
 	}
+
+	gh.OrderIDRecord = sync.Map{}
 }
 
 //CreatGameRoom 创建游戏房间

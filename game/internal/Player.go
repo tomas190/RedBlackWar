@@ -42,6 +42,8 @@ func (p *Player) Init() {
 
 	p.IsRobot = false
 	p.NotOnline = 0
+
+	p.LockChan = make(chan bool)
 }
 
 // 用户缓存数据
