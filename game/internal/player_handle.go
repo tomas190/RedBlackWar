@@ -157,7 +157,7 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 		}
 
 		go func() {
-			timeout := time.NewTimer(time.Second)
+			timeout := time.NewTimer(time.Second * 2)
 			for {
 				select {
 				case <-p.LockChan:
