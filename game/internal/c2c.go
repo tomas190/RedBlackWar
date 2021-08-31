@@ -546,7 +546,7 @@ func (c4c *Conn4Center) onLockSettlement(msgBody interface{}) {
 		if ok {
 			order := msg["order"]
 			if code != 200 {
-				SendTgMessage("玩家锁钱失败")
+				log.Debug("锁钱失败:%v", data)
 				v, ok := gameHall.OrderIDRecord.Load(order)
 				if ok {
 					p := v.(*Player)

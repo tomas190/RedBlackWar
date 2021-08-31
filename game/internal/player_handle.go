@@ -154,75 +154,76 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 
 		if p.IsRobot == false {
 			c4c.LockSettlement(p, float64(m.DownBet))
-		}
 
-		go func() {
-			timeout := time.NewTimer(time.Second * 2)
-			for {
-				select {
-				case <-p.LockChan:
-					Act := <-p.LockChan
-					if Act {
-						//记录玩家在该房间总下注 和 房间注池的总金额
-						if m.DownPot == pb_msg.PotType_RedPot {
-							p.Account -= float64(m.DownBet)
-							p.DownBetMoneys.RedDownBet += m.DownBet
-							p.TotalAmountBet += m.DownBet
-							p.room.PotMoneyCount.RedMoneyCount += m.DownBet
+			go func() {
+				timeout := time.NewTimer(time.Second * 2)
+				for {
+					select {
+					case Act := <-p.LockChan:
+						if Act {
+							//记录玩家在该房间总下注 和 房间注池的总金额
+							if m.DownPot == pb_msg.PotType_RedPot {
+								p.Account -= float64(m.DownBet)
+								p.DownBetMoneys.RedDownBet += m.DownBet
+								p.TotalAmountBet += m.DownBet
+								p.room.PotMoneyCount.RedMoneyCount += m.DownBet
+							}
+							if m.DownPot == pb_msg.PotType_BlackPot {
+								p.Account -= float64(m.DownBet)
+								p.DownBetMoneys.BlackDownBet += m.DownBet
+								p.TotalAmountBet += m.DownBet
+								p.room.PotMoneyCount.BlackMoneyCount += m.DownBet
+							}
+							if m.DownPot == pb_msg.PotType_LuckPot {
+								p.Account -= float64(m.DownBet)
+								p.DownBetMoneys.LuckDownBet += m.DownBet
+								p.TotalAmountBet += m.DownBet
+								p.room.PotMoneyCount.LuckMoneyCount += m.DownBet
+							}
+
+							//记录续投下注的金额对应注池
+							p.ContinueVot.DownBetMoneys.RedDownBet = p.DownBetMoneys.RedDownBet
+							p.ContinueVot.DownBetMoneys.BlackDownBet = p.DownBetMoneys.BlackDownBet
+							p.ContinueVot.DownBetMoneys.LuckDownBet = p.DownBetMoneys.LuckDownBet
+							p.ContinueVot.TotalMoneyBet = p.ContinueVot.DownBetMoneys.RedDownBet + p.ContinueVot.DownBetMoneys.BlackDownBet + p.ContinueVot.DownBetMoneys.LuckDownBet
+
+							//返回前端玩家行动,更新玩家最新金额
+							action := &pb_msg.PlayerAction_S2C{}
+							action.Id = p.Id
+							action.DownBet = m.DownBet
+							action.DownPot = m.DownPot
+							action.IsAction = m.IsAction
+							action.Account = p.Account
+							p.room.BroadCastMsg(action)
+							//p.SendMsg(action)
+
+							//玩家各注池下注总金额
+							pool := &pb_msg.PlayerPoolMoney_S2C{}
+							pool.DownBetMoney = new(pb_msg.DownBetMoney)
+							pool.DownBetMoney.RedDownBet = p.DownBetMoneys.RedDownBet
+							pool.DownBetMoney.BlackDownBet = p.DownBetMoneys.BlackDownBet
+							pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
+							p.SendMsg(pool)
+
+							//广播玩家注池金额
+							pot := &pb_msg.PotTotalMoney_S2C{}
+							pot.PotMoneyCount = new(pb_msg.PotMoneyCount)
+							pot.PotMoneyCount.RedMoneyCount = p.room.PotMoneyCount.RedMoneyCount
+							pot.PotMoneyCount.BlackMoneyCount = p.room.PotMoneyCount.BlackMoneyCount
+							pot.PotMoneyCount.LuckMoneyCount = p.room.PotMoneyCount.LuckMoneyCount
+							p.room.BroadCastMsg(pot)
+							return
+						} else {
+							SendTgMessage("玩家锁钱失败并下注失败")
+							return
 						}
-						if m.DownPot == pb_msg.PotType_BlackPot {
-							p.Account -= float64(m.DownBet)
-							p.DownBetMoneys.BlackDownBet += m.DownBet
-							p.TotalAmountBet += m.DownBet
-							p.room.PotMoneyCount.BlackMoneyCount += m.DownBet
-						}
-						if m.DownPot == pb_msg.PotType_LuckPot {
-							p.Account -= float64(m.DownBet)
-							p.DownBetMoneys.LuckDownBet += m.DownBet
-							p.TotalAmountBet += m.DownBet
-							p.room.PotMoneyCount.LuckMoneyCount += m.DownBet
-						}
-
-						//记录续投下注的金额对应注池
-						p.ContinueVot.DownBetMoneys.RedDownBet = p.DownBetMoneys.RedDownBet
-						p.ContinueVot.DownBetMoneys.BlackDownBet = p.DownBetMoneys.BlackDownBet
-						p.ContinueVot.DownBetMoneys.LuckDownBet = p.DownBetMoneys.LuckDownBet
-						p.ContinueVot.TotalMoneyBet = p.ContinueVot.DownBetMoneys.RedDownBet + p.ContinueVot.DownBetMoneys.BlackDownBet + p.ContinueVot.DownBetMoneys.LuckDownBet
-
-						//返回前端玩家行动,更新玩家最新金额
-						action := &pb_msg.PlayerAction_S2C{}
-						action.Id = p.Id
-						action.DownBet = m.DownBet
-						action.DownPot = m.DownPot
-						action.IsAction = m.IsAction
-						action.Account = p.Account
-						p.room.BroadCastMsg(action)
-						//p.SendMsg(action)
-
-						//玩家各注池下注总金额
-						pool := &pb_msg.PlayerPoolMoney_S2C{}
-						pool.DownBetMoney = new(pb_msg.DownBetMoney)
-						pool.DownBetMoney.RedDownBet = p.DownBetMoneys.RedDownBet
-						pool.DownBetMoney.BlackDownBet = p.DownBetMoneys.BlackDownBet
-						pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
-						p.SendMsg(pool)
-
-						//广播玩家注池金额
-						pot := &pb_msg.PotTotalMoney_S2C{}
-						pot.PotMoneyCount = new(pb_msg.PotMoneyCount)
-						pot.PotMoneyCount.RedMoneyCount = p.room.PotMoneyCount.RedMoneyCount
-						pot.PotMoneyCount.BlackMoneyCount = p.room.PotMoneyCount.BlackMoneyCount
-						pot.PotMoneyCount.LuckMoneyCount = p.room.PotMoneyCount.LuckMoneyCount
-						p.room.BroadCastMsg(pot)
-						return
-					} else {
+					case <-timeout.C:
+						log.Debug("超时处理锁钱")
 						return
 					}
-				case <-timeout.C:
-					return
 				}
-			}
-		}()
+			}()
+		}
 	}
 }
 
