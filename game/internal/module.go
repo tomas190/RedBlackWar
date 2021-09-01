@@ -43,5 +43,12 @@ func (m *Module) OnInit() {
 }
 
 func (m *Module) OnDestroy() {
-	c4c.onDestroy()
+	gameHall.UserRecord.Range(func(key, value interface{}) bool {
+		p := value.(*Player)
+		if p.LockMoney > 0 {
+			c4c.UnlockSettlement(p)
+		}
+		c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token)
+		return true
+	})
 }
