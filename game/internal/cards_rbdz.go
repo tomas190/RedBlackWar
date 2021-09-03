@@ -69,7 +69,7 @@ func (this *RBdzDealer) Deal() ([]byte, []byte) {
 	//	}
 	//
 	//}
-	log.Debug("this.Poker:%v", this.Poker)
+	//log.Debug("this.Poker:%v", this.Poker)
 
 	this.Poker = nil
 
