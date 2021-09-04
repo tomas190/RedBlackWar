@@ -99,16 +99,21 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 		return
 	}
 
-	if m.DownBet == 1 || m.DownBet == 10 || m.DownBet == 50 ||
-		m.DownBet == 100 || m.DownBet == 1000 {
-		log.Debug("玩家下注金额:%v", m.DownBet)
-	} else {
-		log.Debug("玩家下注金额错误:%v", m.DownBet)
-		msg := &pb_msg.MsgInfo_S2C{}
-		msg.Error = recodeText[RECODE_RoomCfgMoneyERROR]
-		p.SendMsg(msg)
+	log.Debug("玩家下注金額:", m.DownBet)
+	if m.DownBet <= 0 {
 		return
 	}
+
+	//if m.DownBet == 1 || m.DownBet == 10 || m.DownBet == 50 ||
+	//	m.DownBet == 100 || m.DownBet == 1000 {
+	//	log.Debug("玩家下注金额:%v", m.DownBet)
+	//} else {
+	//	log.Debug("玩家下注金额错误:%v", m.DownBet)
+	//	msg := &pb_msg.MsgInfo_S2C{}
+	//	msg.Error = recodeText[RECODE_RoomCfgMoneyERROR]
+	//	p.SendMsg(msg)
+	//	return
+	//}
 
 	p.IsAction = m.IsAction
 	//判断玩家是否行动,做相应处理
