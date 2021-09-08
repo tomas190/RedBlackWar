@@ -678,12 +678,13 @@ func (r *Room) CleanPlayerData() {
 		}
 	}
 
-	for _, v := range r.PlayerList {
+	for k, v := range r.PlayerList {
 		if v != nil && v.IsRobot == true {
-			if v.Account < RoomLimitMoney { // v.Account > 2000
-				//退出一个机器人就在创建一个机器人
-				//log.Debug("删除机器人！~~~~~~~~~~~~~~~~~~~~~: %v", v.Id)
-				v.room.RobotExitFromRoom(v)
+			if v.Account < RoomLimitMoney {
+				if k < len(r.PlayerList) {
+					v.room = nil
+					r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...)
+				}
 			}
 		}
 	}
@@ -825,14 +826,17 @@ func (r *Room) HandleRobot() {
 		handleNum -= num3
 	}
 
-	for _, v := range r.PlayerList {
+	for k, v := range r.PlayerList {
 		if v != nil && v.IsRobot == true {
 			rNum := 1 / ((v.WinTotalCount + 1) * 2)
 			rNum2 := int(rNum * 1000)
 			rNum3 := RandInRange(0, 1000)
 			if rNum3 <= rNum2 {
-				v.room.RobotExitFromRoom(v)
-				time.Sleep(time.Millisecond)
+				if k < len(r.PlayerList) {
+					v.room = nil
+					r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...)
+					time.Sleep(time.Millisecond)
+				}
 			}
 		}
 	}
@@ -851,14 +855,17 @@ func (r *Room) HandleRobot() {
 			}
 		}
 	} else if robotNum > handleNum { // 减
-		for _, v := range r.PlayerList {
+		for k, v := range r.PlayerList {
 			if v != nil && v.IsRobot == true {
-				v.room.RobotExitFromRoom(v)
-				time.Sleep(time.Millisecond)
-				robotNum = r.RobotLength()
-				if robotNum == handleNum {
-					log.Debug("房间:%v,减机器人数量:%v", r.RoomId, r.RobotLength())
-					break
+				if k < len(r.PlayerList) {
+					v.room = nil
+					r.PlayerList = append(r.PlayerList[:k], r.PlayerList[k+1:]...)
+					time.Sleep(time.Millisecond)
+					robotNum = r.RobotLength()
+					if robotNum == handleNum {
+						log.Debug("房间:%v,减机器人数量:%v", r.RoomId, r.RobotLength())
+						break
+					}
 				}
 			}
 		}
