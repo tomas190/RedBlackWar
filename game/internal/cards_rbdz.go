@@ -335,7 +335,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 
 					// 解锁
-					c4c.UnlockSettlement(v)
+					c4c.UnlockSettlement(v.Id, v.LockMoney)
 
 					nowTime := time.Now().Unix()
 					//连接中心服金币处理
@@ -602,7 +602,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 
 					// 解锁
-					c4c.UnlockSettlement(v)
+					c4c.UnlockSettlement(v.Id, v.LockMoney)
 
 					nowTime := time.Now().Unix()
 					//连接中心服金币处理
