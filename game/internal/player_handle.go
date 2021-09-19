@@ -2,6 +2,7 @@ package internal
 
 import (
 	pb_msg "RedBlack-War/msg/Protocal"
+	"fmt"
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"time"
@@ -230,7 +231,8 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 							p.room.BroadCastMsg(pot)
 							return
 						} else {
-							SendTgMessage("玩家锁钱失败并下注失败")
+							message := fmt.Sprintf("玩家" + p.Id + "锁钱失败并下注失败")
+							SendTgMessage(message)
 							return
 						}
 					case <-timeout.C:
