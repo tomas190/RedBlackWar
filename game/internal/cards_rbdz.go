@@ -762,7 +762,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 	//大厅用户添加列表数据
 	hallData := &pb_msg.GameHallData_S2C{}
-	for _, v := range mapUserIDPlayer {
+	gameHall.UserRecord.Range(func(key, value interface{}) bool {
+		v := value.(*Player)
 		if v != nil && v.GameState == InGameHall {
 			for _, data := range v.HallRoomData {
 				if data.Rid == r.RoomId {
@@ -786,7 +787,8 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 			}
 			v.SendMsg(hallData)
 		}
-	}
+		return true
+	})
 
 	//追加每局红黑Win、Luck、比牌类型的总集合
 	r.RPotWinList = append(r.RPotWinList, gw)
