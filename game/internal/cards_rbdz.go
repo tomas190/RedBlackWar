@@ -761,9 +761,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	r.BroadCastMsg(res)
 
 	//大厅用户添加列表数据
-	hallData := &pb_msg.GameHallData_S2C{}
 	gameHall.UserRecord.Range(func(key, value interface{}) bool {
 		v := value.(*Player)
+		hallData := &pb_msg.GameHallData_S2C{}
 		if v != nil && v.GameState == InGameHall {
 			for _, data := range v.HallRoomData {
 				if data.Rid == r.RoomId {
@@ -780,9 +780,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					hd.CardTypeList = data.HallCardTypeList
 					hd.RedBlackList = data.HallRedBlackList
 					hallData.HallData = append(hallData.HallData, hd)
-
 					hallData.Account = v.Account
-					//log.Debug("<====== 玩家金额:%v =====>", v.Account)
 				}
 			}
 			v.SendMsg(hallData)
