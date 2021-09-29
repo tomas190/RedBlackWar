@@ -308,7 +308,14 @@ func (r *Room) SettlerTimerTask() {
 
 func (r *Room) GetCardSettle() float64 {
 	rb := &RBdzDealer{}
-	a, b := rb.Deal()
+	var a []byte
+	var b []byte
+	for {
+		a, b = rb.Deal()
+		if len(a) == 3 && len(b) == 3 {
+			break
+		}
+	}
 
 	// 可下注的选项数量(0:红赢,1:黑赢,2:幸运一击)
 	ag := dealer.GetGroup(a)

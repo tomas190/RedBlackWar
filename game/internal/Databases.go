@@ -358,7 +358,7 @@ func InsertRobotData(rb *RobotDATA) {
 		log.Debug("插入机器人数据失败:%v", err)
 		return
 	}
-	log.Debug("插入机器人数据成功~")
+	//log.Debug("插入机器人数据成功~")
 }
 
 //GetDownRecodeList 获取盈余池数据
