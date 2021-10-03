@@ -60,7 +60,7 @@ func handleLoginInfo(args []interface{}) {
 				}
 			}
 
-			c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(u *Player) {})
+			//c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(u *Player) {})
 
 			rId := gameHall.UserRoom[p.Id]
 			user, _ := gameHall.UserRecord.Load(p.Id)
