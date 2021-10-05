@@ -127,7 +127,6 @@ func handleLoginInfo(args []interface{}) {
 			u.PassWord = m.GetPassWord()
 			u.Token = m.GetToken()
 
-			RegisterPlayer(u)
 			gameHall.UserRecord.Store(u.Id, u)
 
 			// 返回游戏大厅数据
@@ -188,7 +187,6 @@ func handleLeaveHall(args []interface{}) {
 		if p.IsAction == false {
 			c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
 			p.IsOnline = false
-			DeletePlayer(p)
 			gameHall.UserRecord.Delete(p.Id)
 			leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
 			a.WriteMsg(leaveHall)

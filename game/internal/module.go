@@ -24,7 +24,6 @@ func (m *Module) OnInit() {
 	initMongoDB()
 
 	gameHall.Init()
-	InitMapPlayer()
 
 	//机器人初始化并开始
 	gRobotCenter.Init()
