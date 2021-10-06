@@ -60,9 +60,8 @@ func handleLoginInfo(args []interface{}) {
 				}
 			}
 
-			//c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(u *Player) {})
+			c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(u *Player) {})
 
-			rId := gameHall.UserRoom[p.Id]
 			user, _ := gameHall.UserRecord.Load(p.Id)
 			if user != nil {
 				log.Debug("进来了4")
@@ -84,6 +83,7 @@ func handleLoginInfo(args []interface{}) {
 				RspGameHallData(u)
 			}
 
+			rId := gameHall.UserRoom[p.Id]
 			room, _ := gameHall.RoomRecord.Load(rId)
 			if room != nil {
 				// 玩家如果已在游戏中，则返回房间数据
