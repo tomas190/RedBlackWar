@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c9afdff-253a-49cb-a98b-ad8c890a28f5" name="默认更改列表" comment="">
+      <change afterPath="$PROJECT_DIR$/../dezhoupoker/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../dezhoupoker/.idea/misc.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../dezhoupoker/.idea/modules.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../dezhoupoker/.idea/server.iml" afterDir="false" />
@@ -50,15 +51,9 @@
       <change afterPath="$PROJECT_DIR$/../dezhoupoker/msg/msg.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../dezhoupoker/msg/msg.pb.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../dezhoupoker/msg/msg.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsonSchemas.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/server.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../infoNew.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/internal/c2c.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/c2c.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/handler.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +112,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../proj_bcbm" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -232,10 +227,10 @@
     <proxy>direct</proxy>
   </component>
   <component name="WindowStateProjectService">
-    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1633314540155">
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1633741691067">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1633314540155" />
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1633741691067" />
     <state x="254" y="40" width="773" height="600" key="find.popup" timestamp="1633359636118">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
