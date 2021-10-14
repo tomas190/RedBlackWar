@@ -2,6 +2,7 @@ package internal
 
 import (
 	"RedBlack-War/conf"
+	pb_msg "RedBlack-War/msg/Protocal"
 	"encoding/json"
 	"fmt"
 	"github.com/name5566/leaf/log"
@@ -118,6 +119,8 @@ func StartHttpServer() {
 	http.HandleFunc("/api/getGameData", getAccessData)
 	// 请求玩家退出
 	http.HandleFunc("/api/reqPlayerLeave", reqPlayerLeave)
+	// 解锁金额
+	http.HandleFunc("/api/unLockUserMoney", unLockUserMoney)
 	// 查询子游戏盈余池数据
 	http.HandleFunc("/api/getSurplusOne", getSurplusOne)
 	// 修改盈余池数据
@@ -243,17 +246,15 @@ func reqPlayerLeave(w http.ResponseWriter, r *http.Request) {
 	Id := r.FormValue("id")
 	user, _ := gameHall.UserRecord.Load(Id)
 	if user != nil {
-		u := user.(*Player)
-		u.IsAction = false
-		u.PlayerReqExit()
-		//u.room.ExitFromRoom(u)
-		//gameHall.UserRecord.Delete(u.Id)
-
-		//c4c.UserLogoutCenter(u.Id, u.PassWord, u.Token) //, p.PassWord
-		//leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
-		//u.ConnAgent.WriteMsg(leaveHall)
-		//u.ConnAgent.Close()
-		//log.Debug("强制请求踢出该玩家:%v", u.Id)
+		p := user.(*Player)
+		c4c.UserLogoutCenter(p.Id, p.PassWord, p.Token) //, p.PassWord
+		p.IsOnline = false
+		p.IsAction = false
+		p.PlayerReqExit()
+		gameHall.UserRecord.Delete(p.Id)
+		leaveHall := &pb_msg.PlayerLeaveHall_S2C{}
+		p.SendMsg(leaveHall)
+		p.ConnAgent.Close()
 
 		js, err := json.Marshal(NewResp(SuccCode, "", "已成功T出房间!"))
 		if err != nil {
@@ -262,6 +263,21 @@ func reqPlayerLeave(w http.ResponseWriter, r *http.Request) {
 		}
 		w.Write(js)
 	}
+}
+
+func unLockUserMoney(w http.ResponseWriter, r *http.Request) {
+	Id := r.FormValue("id")
+	lockMoney := r.FormValue("lock_money")
+	log.Debug("unLockUserMoney 解锁金额:%v,%v", Id, lockMoney)
+	money, _ := strconv.ParseFloat(lockMoney, 64)
+	c4c.UnlockSettlement(Id, money)
+
+	js, err := json.Marshal(NewResp(SuccCode, "", "操作解锁玩家金额!"))
+	if err != nil {
+		fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
+		return
+	}
+	w.Write(js)
 }
 
 // 查询子游戏盈余池数据

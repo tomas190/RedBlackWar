@@ -53,7 +53,7 @@
       <change afterPath="$PROJECT_DIR$/../dezhoupoker/msg/msg.proto" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../infoNew.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/internal/c2c.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/c2c.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/internal/accessData.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/internal/accessData.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +112,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../proj_bcbm" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -231,10 +231,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1633741691067" />
-    <state x="254" y="40" width="773" height="600" key="find.popup" timestamp="1633359636118">
+    <state x="254" y="40" width="773" height="600" key="find.popup" timestamp="1634227901530">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="254" y="40" width="773" height="600" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1633359636118" />
+    <state x="254" y="40" width="773" height="600" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1634227901530" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1630066572398">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -265,7 +265,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/game/internal/accessData.go</url>
-          <line>89</line>
+          <line>90</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
