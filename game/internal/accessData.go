@@ -113,8 +113,8 @@ type OnlineTotal struct {
 }
 
 type OnlinePlayer struct {
-	PackageId uint16   `json:"packageID" bson:"packageID"`
-	UserData  []string `json:"userData" bson:"userData"`
+	PackageId uint16 `json:"packageID" bson:"packageID"`
+	UserData  []int  `json:"userData" bson:"userData"`
 }
 
 const (
@@ -515,6 +515,7 @@ func getOnlineTotal(w http.ResponseWriter, r *http.Request) {
 	total := &OnlineTotal{}
 	total.GameId = conf.Server.GameID
 	total.GameName = "红黑大战"
+	total.GameData = []*OnlinePlayer{}
 	if packageId == "" {
 		packageIds := make([]uint16, 0)
 		gameHall.UserRecord.Range(func(key, value interface{}) bool {
@@ -530,7 +531,8 @@ func getOnlineTotal(w http.ResponseWriter, r *http.Request) {
 			gameHall.UserRecord.Range(func(key, value interface{}) bool {
 				user := value.(*Player)
 				if v == user.PackageId {
-					data.UserData = append(data.UserData, user.Id)
+					id, _ := strconv.Atoi(user.Id)
+					data.UserData = append(data.UserData, id)
 				}
 				return true
 			})
@@ -539,18 +541,24 @@ func getOnlineTotal(w http.ResponseWriter, r *http.Request) {
 	} else {
 		packId, _ := strconv.Atoi(packageId)
 		data := &OnlinePlayer{}
-		data.PackageId = uint16(packId)
+
 		gameHall.UserRecord.Range(func(key, value interface{}) bool {
 			user := value.(*Player)
 			if user.PackageId == uint16(packId) {
-				data.UserData = append(data.UserData, user.Id)
+				id, _ := strconv.Atoi(user.Id)
+				data.UserData = append(data.UserData, id)
 				log.Debug("获取玩家信息:%v", user)
 			}
 			return true
 		})
+		//if data.UserData != nil {
+		//	total.GameData = append(total.GameData, data)
+		//}
 		if data.UserData != nil {
-			total.GameData = append(total.GameData, data)
+			data.PackageId = uint16(packId)
 		}
+		total.GameData = make([]*OnlinePlayer, 0)
+		total.GameData = append(total.GameData, data)
 	}
 
 	js, err := json.Marshal(NewResp(SuccCode, "", total))
