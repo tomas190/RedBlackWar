@@ -541,7 +541,7 @@ func getOnlineTotal(w http.ResponseWriter, r *http.Request) {
 	} else {
 		packId, _ := strconv.Atoi(packageId)
 		data := &OnlinePlayer{}
-
+		data.PackageId = uint16(packId)
 		gameHall.UserRecord.Range(func(key, value interface{}) bool {
 			user := value.(*Player)
 			if user.PackageId == uint16(packId) {
