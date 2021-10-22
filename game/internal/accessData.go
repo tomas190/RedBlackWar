@@ -551,14 +551,9 @@ func getOnlineTotal(w http.ResponseWriter, r *http.Request) {
 			}
 			return true
 		})
-		//if data.UserData != nil {
-		//	total.GameData = append(total.GameData, data)
-		//}
 		if data.UserData != nil {
-			data.PackageId = uint16(packId)
+			total.GameData = append(total.GameData, data)
 		}
-		total.GameData = make([]*OnlinePlayer, 0)
-		total.GameData = append(total.GameData, data)
 	}
 
 	js, err := json.Marshal(NewResp(SuccCode, "", total))
