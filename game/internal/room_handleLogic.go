@@ -637,8 +637,6 @@ func (r *Room) CompareSettlement() {
 			r.Cards = new(CardData)
 			r.RoomStat = RoomStatusOver
 			r.counter = 0
-			aCard = nil
-			bCard = nil
 			return
 		}
 	}

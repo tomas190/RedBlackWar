@@ -101,6 +101,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 	//hb := Hex(b)
 	//log.Debug("花牌 数据Black~ : %v", hb)
 
+	log.Debug("牌型数据:%v,%v", a, b)
 	//红黑池牌型赋值
 	r.Cards.ReadCard = HexInt(a)
 	r.Cards.BlackCard = HexInt(b)
