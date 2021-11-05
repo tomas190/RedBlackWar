@@ -463,8 +463,9 @@ func getStatementTotal(w http.ResponseWriter, r *http.Request) {
 	req.StartTime = r.FormValue("start_time")
 	req.EndTime = r.FormValue("end_time")
 
-	selector := bson.M{}
+	log.Debug("获取游戏数据:%v", req)
 
+	selector := bson.M{}
 	if req.Id != "" {
 		selector["id"] = req.Id
 	}
