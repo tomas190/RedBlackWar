@@ -697,6 +697,7 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						sd.GameName = "红黑大战"
 						sd.StartTime = nowTime - 15
 						sd.EndTime = nowTime + 10
+						sd.DownBetTime = nowTime
 						sd.PackageId = v.PackageId
 						sd.WinStatementTotal = v.WinResultMoney
 						sd.LoseStatementTotal = v.LoseResultMoney
