@@ -47,6 +47,28 @@ func initMongoDB() {
 	//打开数据库
 	session.SetMode(mgo.Monotonic, true)
 
+	// 建立index索引
+	createUniqueIndex(surPlusDB, []string{"updatetime"})
+}
+
+func createUniqueIndex(cName string, keys []string) {
+	s, c := connect(dbName, cName)
+	defer s.Close()
+
+	// 設定統計表唯一索引
+	index := mgo.Index{
+		Key:        keys,  // 索引鍵
+		Background: true,  // 不长时间占用写锁
+		Unique:     false, // 唯一索引(在表中會不會有重複資料)
+		DropDups:   true,  // 存在資料後建立, 則自動刪除重複資料
+	}
+
+	err := c.EnsureIndex(index)
+	if err != nil {
+		log.Debug("mongodb建立index失败:%v", err)
+	} else {
+		log.Debug("mongodb建立index:%v,%v", cName, index)
+	}
 }
 
 func connect(dbName, cName string) (*mgo.Session, *mgo.Collection) {

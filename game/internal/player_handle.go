@@ -178,6 +178,9 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 					select {
 					case Act := <-p.LockChan:
 						if Act {
+							if p.Account-float64(m.DownBet) < 0 {
+								return
+							}
 							//记录玩家在该房间总下注 和 房间注池的总金额
 							if m.DownPot == pb_msg.PotType_RedPot {
 								p.Account -= float64(m.DownBet)

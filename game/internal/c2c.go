@@ -349,7 +349,7 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 	}
 
 	if code != 200 {
-		cc.error("同步中心服用户登录失败", data)
+		log.Debug("同步中心服用户登录失败:%v", data)
 		return
 	}
 
@@ -394,7 +394,7 @@ func (c4c *Conn4Center) onUserLogin(msgBody interface{}) {
 							c4c.UnlockSettlement(strId, lockMoney)
 						}
 					}
-				}else {
+				} else {
 					if lockMoney > 0 {
 						c4c.UnlockSettlement(strId, lockMoney)
 					}
@@ -487,7 +487,7 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 	}
 
 	if code != 200 {
-		cc.error("同步中心服赢钱失败", data)
+		log.Debug("同步中心服赢钱失败:%v", data)
 		return
 	}
 
@@ -505,7 +505,7 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 			jsonScore := userInfo["final_pay"]
 			score, err := jsonScore.(json.Number).Float64()
 
-			cc.log("同步中心服赢钱成功", score)
+			log.Debug("同步中心服赢钱成功:%v", score)
 
 			if err != nil {
 				log.Error(err.Error())
@@ -561,7 +561,7 @@ func (c4c *Conn4Center) onUserLoseScore(msgBody interface{}) {
 				jsonScore := userInfo["final_pay"]
 				score, err := jsonScore.(json.Number).Float64()
 
-				cc.log("同步中心服输钱成功", score)
+				log.Debug("同步中心服输钱成功:%v", score)
 
 				if err != nil {
 					log.Error(err.Error())
