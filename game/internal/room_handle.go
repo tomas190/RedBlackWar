@@ -18,7 +18,7 @@ func (r *Room) JoinGameRoom(p *Player) {
 	//将用户添加到用户列表
 	r.PlayerList = append(r.PlayerList, p)
 
-	gameHall.UserRoom[p.Id] = r.RoomId
+	gameHall.UserRoom.Store(p.Id, r.RoomId)
 
 	p.room = r
 
@@ -127,7 +127,7 @@ func (r *Room) ExitFromRoom(p *Player) {
 		}
 	}
 
-	delete(gameHall.UserRoom, p.Id)
+	gameHall.UserRoom.Delete(p.Id)
 
 	//更新房间赌神ID
 	r.GetGodGableId()

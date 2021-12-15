@@ -19,7 +19,7 @@ func (gh *GameHall) Init() {
 	//log.Debug("大厅房间数量: %d, 房间号: %v", len(gh.roomList), gh.roomList[0].RoomId)
 	gh.UserRecord = sync.Map{}
 	gh.RoomRecord = sync.Map{}
-	gh.UserRoom = make(map[string]string)
+	gh.UserRoom = sync.Map{}
 	gh.OrderIDRecord = sync.Map{}
 
 	for i := 0; i < 6; i++ {
@@ -58,7 +58,7 @@ func (gh *GameHall) CreatJoinPackageIdRoom(rid string, p *Player) {
 //PlayerJoinRoom 玩家大厅加入房间
 func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 
-	rId := gameHall.UserRoom[p.Id]
+	rId, _ := gameHall.UserRoom.Load(p.Id)
 	room, _ := gameHall.RoomRecord.Load(rId)
 	if room != nil {
 		// 玩家如果已在游戏中，则返回房间数据

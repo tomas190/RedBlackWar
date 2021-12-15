@@ -80,7 +80,7 @@ func handleLoginInfo(args []interface{}) {
 				RspGameHallData(u)
 			}
 
-			rId := gameHall.UserRoom[p.Id]
+			rId, _ := gameHall.UserRoom.Load(p.Id)
 			room, _ := gameHall.RoomRecord.Load(rId)
 			if room != nil {
 				// 玩家如果已在游戏中，则返回房间数据
