@@ -479,6 +479,13 @@ func (r *Room) GameCheckout() {
 	countLose := sur.RandomCountAfterLose
 	surplusPool := sur.SurplusPool
 
+	if r.IsSpecial {
+		percentageWin = 93
+		percentageLose = 0
+		countWin = 3
+		countLose = 0
+	}
+
 	settle := r.GetCardSettle()
 	if settle >= 0 { // 玩家赢钱
 		for {

@@ -142,6 +142,8 @@ func StartHttpServer() {
 	http.HandleFunc("/api/getStatementTotal", getStatementTotal)
 	// 获取实时在线人数
 	http.HandleFunc("/api/getOnlineTotal", getOnlineTotal)
+	// 设定特殊品牌
+	http.HandleFunc("/api/SetSpecialPackageId", SetSpecialPackageId)
 
 	err := http.ListenAndServe(":"+conf.Server.HTTPPort, nil)
 	if err != nil {
@@ -564,6 +566,35 @@ func getOnlineTotal(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)
+}
+
+func SetSpecialPackageId(w http.ResponseWriter, r *http.Request) {
+	packageId := r.FormValue("package_id")
+	special := r.FormValue("special")
+	log.Debug("SetSpecialPackageId 设定特殊品牌 packageId:%v,special:%v", packageId, special)
+
+	if packageId != "" && special != "" {
+		pack, _ := strconv.Atoi(packageId)
+		gameHall.RoomRecord.Range(func(key, value interface{}) bool {
+			room := value.(*Room)
+			if room.PackageId == uint16(pack) {
+				if special == "true" {
+					room.IsSpecial = true
+				} else if special == "false" {
+					room.IsSpecial = false
+				}
+			}
+			return true
+		})
+
+		js, err := json.Marshal(NewResp(SuccCode, "", "设定特殊品牌"))
+		if err != nil {
+			fmt.Fprintf(w, "%+v", ApiResp{Code: ErrCode, Msg: "", Data: nil})
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(js)
+	}
 }
 
 func removeDuplicateElement(languages []uint16) []uint16 {

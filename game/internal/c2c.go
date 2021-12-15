@@ -290,7 +290,7 @@ func (c4c *Conn4Center) onServerLogin(msgBody interface{}) {
 			log.Fatal(err.Error())
 		}
 
-		fmt.Println(code, reflect.TypeOf(code))
+		log.Debug("code:%v, %v",code, reflect.TypeOf(code))
 		if data["status"] == "SUCCESS" && code == 200 {
 			log.Debug("<-------- serverLogin SUCCESS~!!! -------->")
 
@@ -299,14 +299,12 @@ func (c4c *Conn4Center) onServerLogin(msgBody interface{}) {
 			SendTgMessage("启动成功")
 
 			msginfo := data["msg"].(map[string]interface{})
-			fmt.Println("globals:", msginfo["globals"], reflect.TypeOf(msginfo["globals"]))
+			log.Debug("globals:%v, %v", msginfo["globals"], reflect.TypeOf(msginfo["globals"]))
 
 			globals := msginfo["globals"].([]interface{})
-			fmt.Println("allList", globals)
-			for k, v := range globals {
-				fmt.Println(k, v)
+			for _, v := range globals {
 				info := v.(map[string]interface{})
-				fmt.Println("package_id", info["package_id"])
+				log.Debug("package_id:%v", info["package_id"])
 
 				var nPackage uint16
 				var nTax float64
@@ -315,7 +313,6 @@ func (c4c *Conn4Center) onServerLogin(msgBody interface{}) {
 				if err != nil {
 					log.Fatal(err.Error())
 				} else {
-					fmt.Println("nPackage", uint16(jsonPackageId))
 					nPackage = uint16(jsonPackageId)
 				}
 				jsonTax, err := info["platform_tax_percent"].(json.Number).Float64()
@@ -323,7 +320,7 @@ func (c4c *Conn4Center) onServerLogin(msgBody interface{}) {
 				if err != nil {
 					log.Fatal(err.Error())
 				} else {
-					fmt.Println("tax", jsonTax)
+					log.Debug("tax:%v", jsonTax)
 					nTax = jsonTax
 				}
 
@@ -619,7 +616,7 @@ func (c4c *Conn4Center) onUnlockSettlement(msgBody interface{}) {
 			log.Fatal(err.Error())
 		}
 
-		fmt.Println(code, reflect.TypeOf(code))
+		log.Debug("code:%v, %v",code, reflect.TypeOf(code))
 		if data["status"] == "SUCCESS" && code == 200 {
 			log.Debug("<-------- onUnlockSettlement SUCCESS~!!! -------->")
 		}
@@ -635,7 +632,7 @@ func (c4c *Conn4Center) onWinMoreThanNotice(msgBody interface{}) {
 			log.Fatal(err.Error())
 		}
 
-		fmt.Println(code, reflect.TypeOf(code))
+		log.Debug("code:%v, %v",code, reflect.TypeOf(code))
 		if data["status"] == "SUCCESS" && code == 200 {
 			log.Debug("<-------- onWinMoreThanNotice SUCCESS~!!! -------->")
 		}

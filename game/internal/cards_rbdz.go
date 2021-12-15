@@ -454,10 +454,14 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
 						}
 					}
-					tax := taxMoney * taxRate
+
+					pac := packageTax[r.PackageId]
+					taxR := pac / 100
+					tax := taxMoney * taxR
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
+
 					if v.ResultMoney > 0 {
 						gameData.ResultCount = 1
 					} else if v.ResultMoney < 0 {
@@ -722,7 +726,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinBigPair)
 						}
 					}
-					tax := taxMoney * taxRate
+					pac := packageTax[r.PackageId]
+					taxR := pac / 100
+					tax := taxMoney * taxR
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney

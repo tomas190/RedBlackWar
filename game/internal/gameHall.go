@@ -3,6 +3,7 @@ package internal
 import (
 	pb_msg "RedBlack-War/msg/Protocal"
 	"errors"
+	"fmt"
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"strconv"
@@ -19,6 +20,7 @@ func (gh *GameHall) Init() {
 	gh.UserRecord = sync.Map{}
 	gh.RoomRecord = sync.Map{}
 	gh.UserRoom = make(map[string]string)
+	gh.OrderIDRecord = sync.Map{}
 
 	for i := 0; i < 6; i++ {
 		time.Sleep(time.Millisecond)
@@ -26,11 +28,9 @@ func (gh *GameHall) Init() {
 		ri := i + 1
 		r.RoomId = strconv.Itoa(ri)
 		gh.roomList[i] = r
-		gh.RoomRecord.Store(r.RoomId, r)
+		//gh.RoomRecord.Store(r.RoomId, r)
 		log.Debug("大厅房间数量: %d,房间号: %v", i, gh.roomList[i].RoomId)
 	}
-
-	gh.OrderIDRecord = sync.Map{}
 }
 
 //CreatGameRoom 创建游戏房间
@@ -40,66 +40,93 @@ func (gh *GameHall) CreatGameRoom() *Room {
 	return r
 }
 
+func (gh *GameHall) CreatJoinPackageIdRoom(rid string, p *Player) {
+	r := gh.CreatGameRoom()
+	r.RoomId = fmt.Sprintf(rid + "-" + strconv.Itoa(int(p.PackageId)))
+	r.PackageId = p.PackageId
+	if r.PackageId == 8 || r.PackageId == 11 {
+		r.IsSpecial = true
+	}
+	gh.RoomRecord.Store(r.RoomId, r)
+	// 添加随机机器人
+	num := RandInRange(15, 25)
+	r.LoadRoomRobots(num)
+	// 加入房间
+	r.JoinGameRoom(p)
+}
+
 //PlayerJoinRoom 玩家大厅加入房间
 func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 
-	v, _ := gameHall.RoomRecord.Load(rid)
-	if v != nil {
-		r := v.(*Room)
+	rId := gameHall.UserRoom[p.Id]
+	room, _ := gameHall.RoomRecord.Load(rId)
+	if room != nil {
+		// 玩家如果已在游戏中，则返回房间数据
+		r := room.(*Room)
+
 		for i, userId := range r.UserLeave {
+			log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
 			// 把玩家从掉线列表中移除
 			if userId == p.Id {
-				log.Debug("AllocateUser 清除玩家记录~:%v", len(r.UserLeave))
 				r.UserLeave = append(r.UserLeave[:i], r.UserLeave[i+1:]...)
 				log.Debug("AllocateUser 清除玩家记录~:%v", userId)
-				log.Debug("AllocateUser 清除玩家记录~:%v", len(r.UserLeave))
 				break
 			}
+			log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
 		}
-	}
 
-	for _, r := range gh.roomList {
-		for _, v := range r.PlayerList {
-			if v != nil && v.Id == p.Id {
-				p.room = r
-				msg := &pb_msg.JoinRoom_S2C{}
-				roomData := p.room.RspRoomData()
-				msg.RoomData = roomData
-				if p.room.GameStat == DownBet {
-					msg.GameTime = DownBetTime - p.room.counter
-				} else {
-					msg.GameTime = SettleTime - p.room.counter
-				}
-				p.SendMsg(msg)
-
-				//玩家各注池下注金额
-				pool := &pb_msg.PlayerPoolMoney_S2C{}
-				pool.DownBetMoney = new(pb_msg.DownBetMoney)
-				pool.DownBetMoney.RedDownBet = p.DownBetMoneys.RedDownBet
-				pool.DownBetMoney.BlackDownBet = p.DownBetMoneys.BlackDownBet
-				pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
-				p.SendMsg(pool)
-
-				p.room.GetGodGableId()
-				//更新列表
-				p.room.UpdatePlayerList()
-				maintainList := p.room.PackageRoomPlayerList()
-				p.room.BroadCastMsg(maintainList)
-				return
-			}
+		p.room = r
+		msg := &pb_msg.JoinRoom_S2C{}
+		roomData := p.room.RspRoomData()
+		msg.RoomData = roomData
+		if p.room.GameStat == DownBet {
+			msg.GameTime = DownBetTime - p.room.counter
+		} else {
+			msg.GameTime = SettleTime - p.room.counter
 		}
+		p.SendMsg(msg)
+
+		//玩家各注池下注金额
+		pool := &pb_msg.PlayerPoolMoney_S2C{}
+		pool.DownBetMoney = new(pb_msg.DownBetMoney)
+		pool.DownBetMoney.RedDownBet = p.DownBetMoneys.RedDownBet
+		pool.DownBetMoney.BlackDownBet = p.DownBetMoneys.BlackDownBet
+		pool.DownBetMoney.LuckDownBet = p.DownBetMoneys.LuckDownBet
+		p.SendMsg(pool)
+
+		p.room.GetGodGableId()
+		//更新列表
+		p.room.UpdatePlayerList()
+		maintainList := p.room.PackageRoomPlayerList()
+		p.room.BroadCastMsg(maintainList)
+		return
 	}
 
-	r, _ := gh.RoomRecord.Load(rid)
-	if r != nil {
-		room := r.(*Room)
-		room.JoinGameRoom(p)
+	ok, rm := gh.GetPackageIdRoom(p)
+	if ok {
+		rm.JoinGameRoom(p)
+	} else {
+		gh.CreatJoinPackageIdRoom(rid, p)
 	}
 
-	msg := &pb_msg.MsgInfo_S2C{}
-	msg.Error = recodeText[RECODE_JOINROOMIDERR]
-	p.SendMsg(msg)
+	//msg := &pb_msg.MsgInfo_S2C{}
+	//msg.Error = recodeText[RECODE_JOINROOMIDERR]
+	//p.SendMsg(msg)
 
+}
+
+func (gh *GameHall) GetPackageIdRoom(p *Player) (bool, *Room) {
+	room := &Room{}
+	var IsExist = false
+	gh.RoomRecord.Range(func(key, value interface{}) bool {
+		r := value.(*Room)
+		if r.PackageId == p.PackageId {
+			room = r
+			IsExist = true
+		}
+		return true
+	})
+	return IsExist, room
 }
 
 //LoadHallRobots 为每个房间装载机器人

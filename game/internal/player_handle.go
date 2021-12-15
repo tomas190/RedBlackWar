@@ -19,20 +19,6 @@ func HeartBeatHandle(a gate.Agent) {
 	a.WriteMsg(pong)
 }
 
-//GetUserRoomInfo 用户重新登陆，获取房间信息
-func (p *Player) GetUserRoomInfo() *Player {
-	for _, v := range gameHall.roomList {
-		if v != nil {
-			for _, pl := range v.PlayerList {
-				if pl != nil && pl.Id == p.Id {
-					return pl
-				}
-			}
-		}
-	}
-	return nil
-}
-
 //PlayerExitRoom 玩家退出房间
 func (p *Player) PlayerReqExit() {
 	if p.room != nil {
@@ -47,13 +33,6 @@ func (p *Player) PlayerReqExit() {
 				if exist == false {
 					p.room.UserLeave = append(p.room.UserLeave, p.Id)
 				}
-
-				////更新房间赌神ID
-				//p.room.GetGodGableId()
-				////更新房间列表
-				//p.room.UpdatePlayerList()
-				//maintainList := p.room.PackageRoomPlayerList()
-				//p.room.BroadCastExcept(maintainList, p)
 
 				//广播其他玩家该玩家退出房间
 				leave := &pb_msg.LeaveRoom_S2C{}

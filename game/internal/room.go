@@ -14,6 +14,7 @@ func (r *Room) RoomInit() {
 	//r.RoomId = "1"
 	r.PlayerList = nil
 
+	r.PackageId = 0
 	r.GodGambleName = ""
 	r.RoomStat = RoomStatusNone
 
@@ -34,6 +35,7 @@ func (r *Room) RoomInit() {
 
 	r.IsLoadRobots = false
 	r.UserLeave = make([]string, 0)
+	r.IsSpecial = false
 
 	packageTax = make(map[uint16]float64)
 }

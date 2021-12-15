@@ -41,11 +41,9 @@ func handleLoginInfo(args []interface{}) {
 	if ok { // 说明用户已存在
 		p := v.(*Player)
 		if p.ConnAgent == a { // 用户和链接都相同
-			log.Debug("进来了0")
 			log.Debug("同一用户相同连接重复登录~")
 			return
 		} else { // 用户相同，链接不相同
-			log.Debug("进来了1")
 			// 用户处理
 			if p.room != nil {
 				for i, userId := range p.room.UserLeave {
@@ -64,7 +62,6 @@ func handleLoginInfo(args []interface{}) {
 
 			user, _ := gameHall.UserRecord.Load(p.Id)
 			if user != nil {
-				log.Debug("进来了4")
 				u := user.(*Player)
 				login := &pb_msg.LoginInfo_S2C{}
 				login.PlayerInfo = new(pb_msg.PlayerInfo)
@@ -108,8 +105,7 @@ func handleLoginInfo(args []interface{}) {
 			}
 		}
 	} else if !gameHall.agentExist(a) { // 玩家首次登入
-		log.Debug("进来了2")
-
+		log.Debug("玩家首次登陆:%v", m.Id)
 		c4c.UserLoginCenter(m.GetId(), m.GetPassWord(), m.GetToken(), func(u *Player) {
 			login := &pb_msg.LoginInfo_S2C{}
 			login.PlayerInfo = new(pb_msg.PlayerInfo)

@@ -58,6 +58,7 @@ type CardData struct {
 
 type Room struct {
 	RoomId     string    //房间号
+	PackageId  uint16    //品牌ID
 	PlayerList []*Player //玩家列表
 
 	GodGambleName string     //赌神id
@@ -77,5 +78,5 @@ type Room struct {
 
 	UserLeave []string // 用户是否在房间
 
-
+	IsSpecial bool // 是否为特殊品牌
 }
