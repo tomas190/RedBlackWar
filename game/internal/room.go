@@ -34,8 +34,6 @@ func (r *Room) RoomInit() {
 	r.IsContinue = true
 
 	r.DownBetChannel = make(chan bool)
-
-	packageTax = make(map[uint16]float64)
 }
 
 func (r *Room) GetRoomNumber() string {

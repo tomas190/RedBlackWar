@@ -381,9 +381,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 
 					pac := packageTax[v.PackageId]
-					taxR := float64(pac) / 100
-
+					taxR := pac / 100
 					tax := taxMoney * taxR
+
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
@@ -654,9 +654,9 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 					}
 
 					pac := packageTax[v.PackageId]
-					taxR := float64(pac) / 100
-
+					taxR := pac / 100
 					tax := taxMoney * taxR
+
 					v.ResultMoney = totalWinMoney + taxMoney - tax
 					v.Account += v.ResultMoney
 					v.ResultMoney -= totalLoseMoney
