@@ -79,7 +79,7 @@ func (p *Player) SetPlayerAction(m *pb_msg.PlayerAction_C2S) {
 		return
 	}
 
-	log.Debug("玩家下注金額:", m.DownBet)
+	log.Debug("玩家下注金額:%v", m.DownBet)
 	if m.DownBet <= 0 {
 		return
 	}

@@ -11,7 +11,6 @@ const (
 
 //GameHall 描述游戏大厅
 type GameHall struct {
-	maxPlayerInHall uint32
 	roomList        [RoomNumber]*Room
 	UserRecord      sync.Map // 用户记录
 	RoomRecord      sync.Map // 房间记录

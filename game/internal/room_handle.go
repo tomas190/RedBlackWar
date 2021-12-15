@@ -150,6 +150,8 @@ func (r *Room) ExitFromRoom(p *Player) {
 
 	// 判断当前房间真实玩家是否为0，为0则清空该房间
 	if r.PlayerTrueLength() == 0 {
+		log.Debug("删除该 :%v 品牌房间", r.RoomId)
+		r.IsContinue = false
 		gameHall.RoomRecord.Delete(r.RoomId)
 	}
 }

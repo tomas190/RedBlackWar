@@ -29,10 +29,6 @@ const (
 	RoomLimitMoney = 10 //房间限定金额10,否则处于观战状态
 )
 
-//游戏状态channel
-var DownBetChannel chan bool
-var RobotDownBetChan chan bool
-
 type GameWinList struct {
 	RedWin    int32     //红Win为 1
 	BlackWin  int32     //黑Win为 1
@@ -78,5 +74,8 @@ type Room struct {
 
 	UserLeave []string // 用户是否在房间
 
-	IsSpecial bool // 是否为特殊品牌
+	IsSpecial  bool // 是否为特殊品牌
+	IsContinue bool // 是否继续
+
+	DownBetChannel   chan bool
 }

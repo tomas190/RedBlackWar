@@ -277,6 +277,8 @@ func reqPlayerLeave(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		w.Write(js)
+	} else {
+		c4c.UserLogoutCenter(Id, "", "") //, p.PassWord
 	}
 }
 

@@ -761,8 +761,10 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		}
 	}
 
-	if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
-		InsertSurplusPool(sur)
+	if !r.IsSpecial {
+		if sur.TotalWinMoney != 0 || sur.TotalLoseMoney != 0 {
+			InsertSurplusPool(sur)
+		}
 	}
 
 	//广播开牌结果

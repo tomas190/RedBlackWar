@@ -12,11 +12,7 @@ import (
 )
 
 func (gh *GameHall) Init() {
-	gh.maxPlayerInHall = 5000
-	log.Debug("GameHall Init~!!! This gameHall can hold %d player running ~", gh.maxPlayerInHall)
-	//r := gh.CreatGameRoom()
-	//gh.roomList[0] = r
-	//log.Debug("大厅房间数量: %d, 房间号: %v", len(gh.roomList), gh.roomList[0].RoomId)
+
 	gh.UserRecord = sync.Map{}
 	gh.RoomRecord = sync.Map{}
 	gh.UserRoom = sync.Map{}
@@ -28,7 +24,7 @@ func (gh *GameHall) Init() {
 		ri := i + 1
 		r.RoomId = strconv.Itoa(ri)
 		gh.roomList[i] = r
-		//gh.RoomRecord.Store(r.RoomId, r)
+		gh.RoomRecord.Store(r.RoomId, r)
 		log.Debug("大厅房间数量: %d,房间号: %v", i, gh.roomList[i].RoomId)
 	}
 }
@@ -47,6 +43,7 @@ func (gh *GameHall) CreatJoinPackageIdRoom(rid string, p *Player) {
 	if r.PackageId == 8 || r.PackageId == 11 {
 		r.IsSpecial = true
 	}
+	log.Debug("品牌房间首次进入玩家:%v, %v", r.PackageId, p.Id)
 	gh.RoomRecord.Store(r.RoomId, r)
 	// 添加随机机器人
 	num := RandInRange(15, 25)

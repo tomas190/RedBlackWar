@@ -239,7 +239,7 @@ func (r *Room) StartGameRun() {
 		return
 	}
 
-	//log.Debug("~~~~~~~~~~~~ Room Game Start Running ~~~~~~~~~~~~")
+	//log.Debug("~~~~~~~~~~~~ Room Game Start Running ~~~~~~~~~~~~:%v", r.RoomId)
 	//返回下注阶段倒计时
 	msg := &pb_msg.DownBetTime_S2C{}
 	msg.StartTime = DownBetTime
@@ -265,23 +265,12 @@ func (r *Room) StartGameRun() {
 
 //TimerTask 下注阶段定时器任务
 func (r *Room) DownBetTimerTask() {
-	//go func() {
-	//	//下注阶段定时器
-	//	timer := time.NewTicker(time.Second * DownBetTime)
-	//	select {
-	//	case <-timer.C:
-	//		DownBetChannel <- true
-	//		return
-	//	}
-	//}()
-
 	go func() {
 		for range r.clock.C {
 			r.counter++
-			//log.Debug("downBet clock : %v ", r.counter)
 			if r.counter == DownBetTime {
 				r.counter = 0
-				DownBetChannel <- true
+				r.DownBetChannel <- true
 				//RobotDownBetChan <- true
 				return
 			}
@@ -293,13 +282,15 @@ func (r *Room) DownBetTimerTask() {
 func (r *Room) SettlerTimerTask() {
 	go func() {
 		select {
-		case t := <-DownBetChannel:
+		case t := <-r.DownBetChannel:
 			if t == true {
 				//开始比牌结算任务
 				r.CompareSettlement()
 
-				//开始新一轮游戏,重复调用StartGameRun函数
-				defer r.StartGameRun()
+				if r.IsContinue {
+					//开始新一轮游戏,重复调用StartGameRun函数
+					defer r.StartGameRun()
+				}
 				return
 			}
 		}

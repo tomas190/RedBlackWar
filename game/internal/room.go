@@ -10,8 +10,6 @@ var packageTax map[uint16]float64
 
 func (r *Room) RoomInit() {
 
-	//r.RoomId = r.GetRoomNumber()
-	//r.RoomId = "1"
 	r.PlayerList = nil
 
 	r.PackageId = 0
@@ -24,9 +22,6 @@ func (r *Room) RoomInit() {
 	r.RPotWinList = nil
 	r.GameTotalCount = 0
 
-	DownBetChannel = make(chan bool)
-	RobotDownBetChan = make(chan bool)
-
 	winChan = make(chan bool)
 	loseChan = make(chan bool)
 
@@ -36,6 +31,9 @@ func (r *Room) RoomInit() {
 	r.IsLoadRobots = false
 	r.UserLeave = make([]string, 0)
 	r.IsSpecial = false
+	r.IsContinue = true
+
+	r.DownBetChannel = make(chan bool)
 
 	packageTax = make(map[uint16]float64)
 }
