@@ -32,7 +32,6 @@ func (m *Module) OnInit() {
 	//中心服初始化,主动请求Token
 	c4c.Init()
 	c4c.CreatConnect()
-	//c4c.ReqCenterToken()
 
 	go StartHttpServer()
 

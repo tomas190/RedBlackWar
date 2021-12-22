@@ -23,20 +23,6 @@ const (
 //盈余池
 var SurplusPool float64 = 0
 
-//记录进入大厅玩家的数量,为了统计 盈余池 - 6
-var AllPlayerCount []string
-
-//var (
-//	AllHistoryWin  float64 = 0
-//	AllHistoryLose float64 = 0
-//)
-
-//返回记录的玩家总数量
-func RecordPlayerCount() int32 {
-	//log.Debug("游戏玩过总人数数量: %v", int32(len(AllPlayerCount)))
-	return int32(len(AllPlayerCount))
-}
-
 func SetPackageTaxM(packageT uint16, tax float64) {
 	packageTax[packageT] = tax
 }

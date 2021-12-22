@@ -49,9 +49,6 @@ type Conn4Center struct {
 	waitUser map[string]*UserCallback
 }
 
-var winChan chan bool
-var loseChan chan bool
-
 // 添加互斥锁，防止websocket写并发
 var writeMutex sync.Mutex
 
@@ -62,88 +59,6 @@ func (c4c *Conn4Center) Init() {
 	c4c.LoginStat = false
 
 	c4c.waitUser = make(map[string]*UserCallback)
-	//go changeToken()
-}
-
-var gt CGCenterRsp
-
-//func changeToken() {
-//	for {
-//		time.Sleep(time.Second * 7000)
-//		getToken()
-//		c4c.token = gt.Msg.Token
-//	}
-//}
-
-func getToken() {
-	// 拼接center Url
-	url4Center := fmt.Sprintf("%s?dev_key=%s&dev_name=%s", conf.Server.TokenServer, c4c.DevKey, conf.Server.DevName)
-
-	log.Debug("<--- TokenServer Url --->: %v ", conf.Server.TokenServer)
-	log.Debug("<--- Center access Url --->: %v ", url4Center)
-
-	resp, err1 := http.Get(url4Center)
-	if err1 != nil {
-		panic(err1.Error())
-	}
-	log.Debug("<--- resp --->: %v ", resp)
-
-	defer resp.Body.Close()
-
-	if err1 == nil && resp.StatusCode == 200 {
-		body, err2 := ioutil.ReadAll(resp.Body)
-		if err2 != nil {
-			panic(err2.Error())
-		}
-		//log.Debug("<----- resp.StatusCode ----->: %v", resp.StatusCode)
-		log.Debug("<--- body --->: %v ,<--- err2 --->: %v", string(body), err2)
-
-		err3 := json.Unmarshal(body, &gt)
-		log.Debug("<--- err3 --->: %v <--- Results --->: %v", err3, gt)
-	}
-}
-
-//onDestroy 销毁用户
-func (c4c *Conn4Center) onDestroy() {
-	log.Debug("Conn4Center onDestroy ~")
-	//c4c.UserLogoutCenter("991738698","123456") //测试用户 和 密码
-}
-
-//ReqCenterToken 向中心服务器请求token
-func (c4c *Conn4Center) ReqCenterToken() {
-	// 拼接center Url
-	url4Center := fmt.Sprintf("%s?dev_key=%s&dev_name=%s", conf.Server.TokenServer, c4c.DevKey, conf.Server.DevName)
-
-	//log.Debug("<--- TokenServer Url --->: %v ", conf.Server.TokenServer)
-	log.Debug("<--- Center access Url --->: %v ", url4Center)
-
-	resp, err1 := http.Get(url4Center)
-	if err1 != nil {
-		panic(err1.Error())
-	}
-	log.Debug("<--- resp --->: %v ", resp)
-
-	defer resp.Body.Close()
-
-	if err1 == nil && resp.StatusCode == 200 {
-		body, err2 := ioutil.ReadAll(resp.Body)
-		if err2 != nil {
-			panic(err2.Error())
-		}
-		//log.Debug("<----- resp.StatusCode ----->: %v", resp.StatusCode)
-		log.Debug("<--- body --->: %v ,<--- err2 --->: %v", string(body), err2)
-
-		var t CGCenterRsp
-		err3 := json.Unmarshal(body, &t)
-		log.Debug("<--- err3 --->: %v <--- Results --->: %v", err3, t)
-
-		if t.Status == "SUCCESS" && t.Code == 200 {
-			c4c.token = conf.Server.DevName
-			c4c.CreatConnect()
-		} else {
-			log.Fatal("<--- Request Token Fail~ --->")
-		}
-	}
 }
 
 //CreatConnect 和Center建立链接
@@ -290,7 +205,7 @@ func (c4c *Conn4Center) onServerLogin(msgBody interface{}) {
 			log.Fatal(err.Error())
 		}
 
-		log.Debug("code:%v, %v",code, reflect.TypeOf(code))
+		log.Debug("code:%v, %v", code, reflect.TypeOf(code))
 		if data["status"] == "SUCCESS" && code == 200 {
 			log.Debug("<-------- serverLogin SUCCESS~!!! -------->")
 
@@ -495,8 +410,6 @@ func (c4c *Conn4Center) onUserWinScore(msgBody interface{}) {
 		//将Win数据插入数据
 		InsertWinMoney(msgBody)
 
-		winChan <- true
-
 		userInfo, ok := data["msg"].(map[string]interface{})
 		if ok {
 			jsonScore := userInfo["final_pay"]
@@ -616,7 +529,7 @@ func (c4c *Conn4Center) onUnlockSettlement(msgBody interface{}) {
 			log.Fatal(err.Error())
 		}
 
-		log.Debug("code:%v, %v",code, reflect.TypeOf(code))
+		log.Debug("code:%v, %v", code, reflect.TypeOf(code))
 		if data["status"] == "SUCCESS" && code == 200 {
 			log.Debug("<-------- onUnlockSettlement SUCCESS~!!! -------->")
 		}
@@ -632,7 +545,7 @@ func (c4c *Conn4Center) onWinMoreThanNotice(msgBody interface{}) {
 			log.Fatal(err.Error())
 		}
 
-		log.Debug("code:%v, %v",code, reflect.TypeOf(code))
+		log.Debug("code:%v, %v", code, reflect.TypeOf(code))
 		if data["status"] == "SUCCESS" && code == 200 {
 			log.Debug("<-------- onWinMoreThanNotice SUCCESS~!!! -------->")
 		}

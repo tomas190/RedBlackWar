@@ -1,10 +1,5 @@
 package internal
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 const (
 	RECODE_CHAOCHUXIANHONG   = 4444
 	RECODE_BREATHSTOP        = 1000
@@ -35,15 +30,4 @@ var recodeText = map[int32]string{
 	RECODE_PLAYERHAVESAME:    "当前房间已存在相同的用户ID",
 	RECODE_DOWNBETMONEYFULL:  "玩家下注金额已限红1-20000",
 	RECODE_RoomCfgMoneyERROR: "房间下注配置金额错误",
-}
-
-func jsonData() {
-	reCode, err := json.Marshal(recodeText)
-	if err != nil {
-		fmt.Println("json.Marshal err:", err)
-		return
-	}
-
-	data := string(reCode)
-	fmt.Println("S2C jsonData String ~", data)
 }

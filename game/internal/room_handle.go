@@ -55,8 +55,6 @@ func (r *Room) JoinGameRoom(p *Player) {
 		roomData := p.room.RspRoomData()
 		msg.RoomData = roomData
 		p.SendMsg(msg)
-		//log.Debug("返回客户端房间信息 JoinRoom_S2C ~")
-
 		return
 	}
 
@@ -69,13 +67,11 @@ func (r *Room) JoinGameRoom(p *Player) {
 	msg.RoomData = roomData
 	if r.GameStat == DownBet {
 		msg.GameTime = DownBetTime - r.counter
-		//log.Debug("加入房间 DownBetTime.GameTime: %v", msg.GameTime)
 	} else {
 		msg.GameTime = SettleTime - r.counter
-		//log.Debug("加入房间 SettleTime GameTime: %v", msg.GameTime)
 	}
 	p.SendMsg(msg)
-	//log.Debug("返回客户端房间信息 JoinRoom_S2C ~")
+	log.Debug("返回客户端进入房间 JoinRoom_S2C ~: %v", p.Id)
 
 	if r.RoomStat != RoomStatusRun {
 		// None和Over状态都直接开始运行游戏
@@ -85,8 +81,6 @@ func (r *Room) JoinGameRoom(p *Player) {
 			msg := &pb_msg.MsgInfo_S2C{}
 			msg.Msg = recodeText[RECODE_SELLTENOTDOWNBET]
 			p.SendMsg(msg)
-
-			//log.Debug("当前结算阶段, 不能进行操作 ~")
 		}
 	}
 }

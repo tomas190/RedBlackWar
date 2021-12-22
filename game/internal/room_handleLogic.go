@@ -271,7 +271,6 @@ func (r *Room) DownBetTimerTask() {
 			if r.counter == DownBetTime {
 				r.counter = 0
 				r.DownBetChannel <- true
-				//RobotDownBetChan <- true
 				return
 			}
 		}
