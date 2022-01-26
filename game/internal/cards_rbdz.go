@@ -574,9 +574,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 
 			if v != nil && v.IsAction == true {
 				if v.IsRobot == false {
-					//锁钱
-					//c4c.LockSettlement(v, totalLoseMoney)
-
 					if gw.LuckWin == 1 {
 						if gw.CardTypes == Leopard {
 							taxMoney += float64(v.DownBetMoneys.LuckDownBet * WinLeopard)
@@ -725,7 +722,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 						gameData.ResultCount = 0
 					}
 
-					//log.Debug("<----- 机器人下注: %v, 结算: %v ----->", v.DownBetMoneys, v.ResultMoney)
 				}
 				v.TwentyData = append(v.TwentyData, gameData)
 				if len(v.TwentyData) > 20 {

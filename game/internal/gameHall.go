@@ -40,7 +40,7 @@ func (gh *GameHall) CreatJoinPackageIdRoom(rid string, p *Player) {
 	r := gh.CreatGameRoom()
 	r.RoomId = fmt.Sprintf(rid + "-" + strconv.Itoa(int(p.PackageId)))
 	r.PackageId = p.PackageId
-	if r.PackageId == 8 || r.PackageId == 11 {
+	if r.PackageId == 8 || r.PackageId == 11 || r.PackageId == 12 {
 		r.IsSpecial = true
 	}
 	log.Debug("品牌房间首次进入玩家:%v, %v", r.PackageId, p.Id)
@@ -55,12 +55,11 @@ func (gh *GameHall) CreatJoinPackageIdRoom(rid string, p *Player) {
 //PlayerJoinRoom 玩家大厅加入房间
 func (gh *GameHall) PlayerJoinRoom(rid string, p *Player) {
 
+	// 玩家如果已在游戏中，则返回房间数据
 	rId, _ := gameHall.UserRoom.Load(p.Id)
 	room, _ := gameHall.RoomRecord.Load(rId)
 	if room != nil {
-		// 玩家如果已在游戏中，则返回房间数据
 		r := room.(*Room)
-
 		for i, userId := range r.UserLeave {
 			log.Debug("AllocateUser 长度~:%v", len(r.UserLeave))
 			// 把玩家从掉线列表中移除
