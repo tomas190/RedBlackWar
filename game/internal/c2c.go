@@ -127,7 +127,6 @@ func (c4c *Conn4Center) Run() {
 				typeId, message, err := c4c.conn.ReadMessage()
 				if err != nil {
 					log.Debug("Here is error by ReadMessage~ %v", err)
-					log.Error(err.Error())
 				}
 				if typeId == -1 {
 					log.Debug("中心服异常消息~")

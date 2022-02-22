@@ -274,8 +274,6 @@ func (r *Room) RBdzPk(a []byte, b []byte) {
 		}
 
 		for _, v := range r.PlayerList {
-			//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
-			//log.Debug("<<===== 用户金额Pre: %v =====>>", v.Account)
 
 			v.RoundId = fmt.Sprintf("%+v-%+v", time.Now().Unix(), r.RoomId)
 
